@@ -45,11 +45,11 @@ public abstract class MOSFET extends Component implements NonlinearComponent {
 
   protected double Vthresh;
   protected final double lambda = 0.0125; // 1/early voltage, lower lambda, greater saturation mode slope
-  // protected final double K = 0.17; // mu*Cox*W/L [A/V^2]
-  protected final double K = 5; // mu*Cox*W/L [A/V^2], A.K.A. beta
+  protected final double K = 0.17; // mu*Cox*W/L [A/V^2]
+  //  protected final double K = 5; // mu*Cox*W/L [A/V^2], A.K.A. beta
   private final double n = 1.45; // typical values are between 1.4 and 1.5
 
-  double[] getVgsVdsGuess = null;
+  private double[] VgsVdsGuess = null;
 
   /**
    * Constructor
@@ -79,8 +79,8 @@ public abstract class MOSFET extends Component implements NonlinearComponent {
 
   public double getGmVgsCurrent(double vgsGuess, double vdsGuess) {
 
-    // System.out.println("vgsGuess= " + vgsGuess);
-    // System.out.println("vdsGuess= " + vdsGuess);
+    //    System.out.println("vgsGuess= " + vgsGuess);
+    //    System.out.println("vdsGuess= " + vdsGuess);
 
     // determine operating region
     Mode mode = getOperationMode(vgsGuess, vdsGuess);
@@ -92,13 +92,11 @@ public abstract class MOSFET extends Component implements NonlinearComponent {
       // System.out.println("gm= " + gm);
       // return gm * vgsGuess;
       return 0.000000001;
-    }
-    else if (mode == Mode.SATURATION) { // saturation
+    } else if (mode == Mode.SATURATION) { // saturation
       double Ids = getIdsSaturation(vgsGuess, vdsGuess);
       double gm = getGmSaturation(Ids);
       return gm * vgsGuess;
-    }
-    else { // triode
+    } else { // triode
       double gm = getGmTriode(vdsGuess);
       return gm * vgsGuess;
     }
@@ -113,12 +111,10 @@ public abstract class MOSFET extends Component implements NonlinearComponent {
 
       // return 1 / getGoCutoff(vgsGuess, vdsGuess);
       return 1000000000000.0; // 10^12 Ohm
-    }
-    else if (mode == Mode.SATURATION) { // saturation
+    } else if (mode == Mode.SATURATION) { // saturation
       double Ids = getIdsSaturation(vgsGuess, vdsGuess);
       return 1 / getGoSaturation(Ids);
-    }
-    else { // triode
+    } else { // triode
       return 1 / getGoTriode(vgsGuess, vdsGuess);
     }
   }
@@ -135,14 +131,12 @@ public abstract class MOSFET extends Component implements NonlinearComponent {
       // double go = getGoCutoff(vgsGuess, vdsGuess);
       // return Ids - gm * vgsGuess - go * vdsGuess;
       return 0.000000001;
-    }
-    else if (mode == Mode.SATURATION) { // saturation
+    } else if (mode == Mode.SATURATION) { // saturation
       double Ids = getIdsSaturation(vgsGuess, vdsGuess);
       double gm = getGmSaturation(Ids);
       double go = getGoSaturation(Ids);
       return Ids - gm * vgsGuess - go * vdsGuess;
-    }
-    else { // triode
+    } else { // triode
       double Ids = getIdsTriode(vgsGuess, vdsGuess);
       double gm = getGmTriode(vdsGuess);
       double go = getGoTriode(vgsGuess, vdsGuess);
@@ -164,12 +158,10 @@ public abstract class MOSFET extends Component implements NonlinearComponent {
       // System.out.println("cutoff");
       // return getIdsCutoff(Vgs, Vds);
       return 0.000000001;
-    }
-    else if (mode == Mode.SATURATION) { // saturation
+    } else if (mode == Mode.SATURATION) { // saturation
       // System.out.println("saturation");
       return getIdsSaturation(Vgs, Vds);
-    }
-    else { // triode
+    } else { // triode
       // System.out.println("triode");
       return getIdsTriode(Vgs, Vds);
     }
@@ -177,25 +169,24 @@ public abstract class MOSFET extends Component implements NonlinearComponent {
 
   public Mode getOperationMode(double vgs, double vds) {
 
+    //    System.out.println("vgs " + vgs);
+    //    System.out.println("vds " + vds);
+
     // determine operating region
-    // if (vgs <= Vthresh || vds < 0) { // cutoff
     if (vgs <= Vthresh) { // cutoff
-      // System.out.println("cutoff");
+      //      System.out.println("cutoff");
       return Mode.CUTOFF;
-    }
-    else if (vds <= (vgs - Vthresh)) { // triode
-      // System.out.println("triode");
+    } else if (vds <= (vgs - Vthresh)) { // triode
+      //      System.out.println("triode");
       return Mode.TRIODE;
-    }
-    else if (vds >= (vgs - Vthresh)) { // saturation
-      // System.out.println("saturation");
+    } else if (vds >= (vgs - Vthresh)) { // saturation
+      //      System.out.println("saturation");
       return Mode.SATURATION;
-    }
-    else {
+    } else {
       // return Mode.CUTOFF;
       return Mode.TRIODE;
       // return Mode.SATURATION;
-      // throw new RuntimeException("Strange condition occured in determining NMOS operation mode! Vgs=" + vgs + ",Vds=" + vds);
+      // throw new RuntimeException("Strange condition occurred in determining NMOS operation mode! Vgs= " + vgs + ", Vds=  " + vds);
     }
   }
 
@@ -267,11 +258,17 @@ public abstract class MOSFET extends Component implements NonlinearComponent {
 
   private double getIdsSaturation(double vgsGuess, double vdsGuess) {
 
+    //    System.out.println("vgsGuess " + vgsGuess);
+    //    System.out.println("vdsGuess " + vdsGuess);
+
     double Ids = (K / 2) * (vgsGuess - Vthresh) * (vgsGuess - Vthresh) * (1 + (vdsGuess - (vgsGuess - Vthresh)) * lambda);
     return Ids;
   }
 
   private double getIdsTriode(double vgsGuess, double vdsGuess) {
+
+    //    System.out.println("vgsGuess " + vgsGuess);
+    //    System.out.println("vdsGuess " + vdsGuess);
 
     double Ids = K * ((vgsGuess - Vthresh) - vdsGuess / 2) * vdsGuess;
     return Ids;
@@ -306,45 +303,53 @@ public abstract class MOSFET extends Component implements NonlinearComponent {
   }
 
   @Override
-  public void stampG(double[][] G, NetList netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes, Double timeStep) {
+  public void stampG(double[][] G, NetList netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap,
+      String[] nodes, Double timeStep) {
 
+    System.out.println("stampG");
     // current source
     // no contribution
 
+    //    System.out.println("null = " + (dcOperatingPointResult == null));
+
     // resistor
-    getVgsVdsGuess = getVgsVdsGuess(netList, dcOperatingPointResult, nodes);
-    double VgsGuess = getVgsVdsGuess[0];
-    double VdsGuess = getVgsVdsGuess[1];
+    this.VgsVdsGuess = getVgsVdsGuess(netList, dcOperatingPointResult, nodes);
+    double VgsGuess = VgsVdsGuess[0];
+    double VdsGuess = VgsVdsGuess[1];
+
+    //    System.out.println("VgsGuess= " + VgsGuess);
+    //    System.out.println("VdsGuess= " + VdsGuess);
 
     // Ro
     NetlistComponent req;
     if (this instanceof NMOS) {
       Resistor resistance = new Resistor((getId() + "_Ro"), getRo(VgsGuess, VdsGuess));
-      // System.out.println(resistance);
+      System.out.println("NMOS Res.= " + resistance);
       req = new NetlistComponent(resistance, new String[]{nodes[1], nodes[2]});
-    }
-    else {
+    } else {
       Resistor resistance = new Resistor((getId() + "_Ro"), getRo(-1.0 * VgsGuess, -1.0 * VdsGuess));
       req = new NetlistComponent(resistance, new String[]{nodes[2], nodes[1]});
+      System.out.println("PMOS Res.= " + resistance);
     }
 
     req.stampG(G, netList, dcOperatingPointResult, nodeID2ColumnIdxMap, timeStep);
   }
 
   @Override
-  public void stampRHS(double[] RHS, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes, Double timeStep) {
+  public void stampRHS(double[] RHS, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes,
+      Double timeStep) {
 
     // current sources
-    double VgsGuess = getVgsVdsGuess[0];
-    double VdsGuess = getVgsVdsGuess[1];
+
+    double VgsGuess = VgsVdsGuess[0];
+    double VdsGuess = VgsVdsGuess[1];
 
     // GmVgs
     NetlistComponent GmVgs;
     if (this instanceof NMOS) {
       DCCurrent dcCurrent = new DCCurrent((getId() + "_GmVgs"), getGmVgsCurrent(VgsGuess, VdsGuess));
       GmVgs = new NetlistComponent(dcCurrent, new String[]{nodes[1], nodes[2]});
-    }
-    else {
+    } else {
       DCCurrent dcCurrent = new DCCurrent((getId() + "_GmVgs"), getGmVgsCurrent(-1.0 * VgsGuess, -1.0 * VdsGuess));
       GmVgs = new NetlistComponent(dcCurrent, new String[]{nodes[2], nodes[1]});
     }
@@ -355,11 +360,10 @@ public abstract class MOSFET extends Component implements NonlinearComponent {
     if (this instanceof NMOS) {
       DCCurrent dcCurrent = new DCCurrent((getId() + "_Id,eq"), getEquivalentCurrent(VgsGuess, VdsGuess));
       Ideq = new NetlistComponent(dcCurrent, new String[]{nodes[1], nodes[2]});
-    }
-    else {
+    } else {
       DCCurrent dcCurrent = new DCCurrent((getId() + "_Id,eq"), getEquivalentCurrent(-1.0 * VgsGuess, -1.0 * VdsGuess));
       Ideq = new NetlistComponent(dcCurrent, new String[]{nodes[2], nodes[1]});
-      // System.out.println(dcCurrent.toString());
+      //      System.out.println(dcCurrent.toString());
     }
     Ideq.stampRHS(RHS, dcOperatingPointResult, nodeID2ColumnIdxMap, timeStep);
 
@@ -376,14 +380,10 @@ public abstract class MOSFET extends Component implements NonlinearComponent {
 
       // double defaultVgsGuess = mosfet.getSweepableValue() + getRandomKick(1); // threshold voltage
       double defaultVgsGuess = getSweepableValue(); // threshold voltage
-      // double defaultVgsGuess = mosfet.getSweepableValue() + getRandomFluctuation(); // threshold voltage =/- noise
-      if (this instanceof PMOS) { // invert for PMOS
-        defaultVgsGuess = -1.0 * defaultVgsGuess;
-      }
 
       // Vgs Guess
-      VgsGuess = InitialVoltageDropCalculator.attemptToDetermineVgs(netList, nodes[0], nodes[1], defaultVgsGuess, this instanceof NMOS);
-      // System.out.println("initialVgs(" + mosfet.getID() + ")= " + VgsGuess);
+      VgsGuess = InitialVoltageDropCalculator.attemptToDetermineVgs(netList, nodes[0], nodes[2], defaultVgsGuess, this instanceof NMOS);
+      //      System.out.println("initialVgs(" + this.getId() + ")= " + VgsGuess);
 
       // Vds Guess (if Vgs turns MOSFET on, set voltage drop Vds to zero)
       VdsGuess = defaultVgsGuess;
@@ -391,20 +391,17 @@ public abstract class MOSFET extends Component implements NonlinearComponent {
         if (VgsGuess <= defaultVgsGuess) { // PMOS on, Vds=0
           VdsGuess = 0.0;
         }
-      }
-      else if (this instanceof NMOS) {
+      } else if (this instanceof NMOS) {
         if (VgsGuess >= defaultVgsGuess) { // NMOS on, Vds=0
           VdsGuess = 0.0;
         }
       }
-
       // System.out.println("initialVds(" + mosfet.getID() + ")= " + VdsGuess);
 
-      // System.out.println("mode(" + mosfet.getID() + ")= " + mosfet.getOperationMode(mosfet instanceof PMOS ? -1.0 * VgsGuess : VgsGuess,
-      // VdsGuess));
+      //      System.out.println("vgsGuess= " + VgsGuess);
+      //      System.out.println("vdsGuess= " + VdsGuess);
 
-    }
-    else {
+    } else {
 
       double Vg; // gate
       double Vd; // drain
@@ -415,6 +412,10 @@ public abstract class MOSFET extends Component implements NonlinearComponent {
 
       VgsGuess = Vg - Vs;
       VdsGuess = Vd - Vs;
+      //      System.out.println("vgsGuess= " + VgsGuess);
+      //      System.out.println("Vd= " + Vd);
+      //      System.out.println("Vs= " + Vs);
+      //      System.out.println("vdsGuess= " + VdsGuess);
 
       // System.out.println("Vgs(" + mosfet.getID() + ")= " + VgsGuess);
       // System.out.println("Vds(" + mosfet.getID() + ")= " + VdsGuess);

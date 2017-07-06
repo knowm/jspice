@@ -121,15 +121,12 @@ public final class DCOperatingPointResult {
 
     if (nodeOrDeviceLabel.equals("V(0)")) { // ground
       return 0.0;
-    }
-    else {
+    } else {
       if (nodeLabels2Value.get(nodeOrDeviceLabel) != null) {
         return nodeLabels2Value.get(nodeOrDeviceLabel);
-      }
-      else if (deviceLabels2Value.get(nodeOrDeviceLabel) != null) {
+      } else if (deviceLabels2Value.get(nodeOrDeviceLabel) != null) {
         return deviceLabels2Value.get(nodeOrDeviceLabel);
-      }
-      else {
+      } else {
         Set<String> possibleValues = new HashSet<String>();
         possibleValues.addAll(nodeLabels2Value.keySet());
         possibleValues.addAll(deviceLabels2Value.keySet());
@@ -140,7 +137,8 @@ public final class DCOperatingPointResult {
 
   public String getNodalAnalysisMatrix() {
 
-    return "DCOperatingPointResult: [nodeLabels=" + Arrays.toString(unknownQuantityNames) + ", G=" + GtoString(G) + ", v=" + Arrays.toString(unknownQuantities) + ", i=" + Arrays.toString(RHS) + "]";
+    return "DCOperatingPointResult: [nodeLabels=" + Arrays.toString(unknownQuantityNames) + ", G=" + GtoString(G) + ", v="
+        + Arrays.toString(unknownQuantities) + ", i=" + Arrays.toString(RHS) + "]";
   }
 
   @Override
@@ -191,6 +189,8 @@ public final class DCOperatingPointResult {
   }
 
   public void generateDeviceCurrents(Circuit circuit) {
+
+    //    System.out.println("HERE");
 
     deviceLabels2Value = new TreeMap<String, Double>();
 
@@ -243,15 +243,24 @@ public final class DCOperatingPointResult {
       double Vs = getValue("V(" + netListComponent.getNodes()[2] + ")"); // source
       double Vgs = Vg - Vs;
       double Vds = Vd - Vs;
+
+      //      System.out.println("Vgs= " + Vgs);
+      //      System.out.println("Vds= " + Vds);
+
       double current;
       if (mosfet instanceof NMOS) {
         current = mosfet.getCurrent(Vgs, Vds);
+      } else {
+        current = -1 * mosfet.getCurrent(-1.0 * Vgs, -1.0 * Vds);
+
       }
-      else {
-        current = mosfet.getCurrent(-1 * Vgs, -1 * Vds);
+      // System.out.println("current= " + current);
+      if (mosfet instanceof NMOS) {
+        System.out.println("NMOS mode= " + mosfet.getOperationMode(Vgs, Vds));
+      } else {
+        System.out.println("PMOS mode= " + mosfet.getOperationMode(-1.0 * Vgs, -1.0 * Vds));
       }
 
-      // System.out.println("current= " + current);
       deviceLabels2Value.put("I(" + mosfet.getId() + ")", current);
     }
 
@@ -274,8 +283,7 @@ public final class DCOperatingPointResult {
         // System.out.println("voltageDiff = " + voltageDiff);
         // System.out.println("current = " + current);
         deviceLabels2Value.put("I(" + inductor.getId() + ")", current);
-      }
-      else {
+      } else {
         deviceLabels2Value.put("I(" + inductor.getId() + ")", nodeLabels2Value.get("I(" + inductor.getId() + ")"));
         // System.out.println("current = " + nodeLabels2Value.get("I(" + inductor.getID() + ")"));
       }

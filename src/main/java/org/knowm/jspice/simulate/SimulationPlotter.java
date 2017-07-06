@@ -64,7 +64,7 @@ public class SimulationPlotter {
    *
    * @param title
    * @param simulationResult
-   * @param plotInputSignals
+   * @param valuesToPlot
    */
   public static void plot(String title, SimulationResult simulationResult, String[] valuesToPlot) {
 
@@ -82,10 +82,10 @@ public class SimulationPlotter {
         throw new IllegalArgumentException(valuesToPlot[i] + " is not a valid node value! Please choose from these values: " + simulationResult.getSimulationDataMap().keySet());
       }
 
-      XYSeries series = chart.addSeries(valuesToPlot[i], simulationData.getxData(), simulationData.getyData());
+      chart.addSeries(valuesToPlot[i], simulationData.getxData(), simulationData.getyData());
     }
 
-    new SwingWrapper<XYChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   /**

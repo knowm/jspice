@@ -41,8 +41,9 @@ public class InitialVoltageDropCalculator {
    */
   public static double attemptToDetermineVgs(NetList netlist, String gateNode, String sourceNode, double defaultValue, boolean isNMOS) {
 
-    // System.out.println("gate= " + gate);
-    // System.out.println("source= " + source);
+    //    System.out.println("isNMOS " + isNMOS);
+    //    System.out.println("gate= " + gateNode);
+    //    System.out.println("source= " + sourceNode);
 
     double initialVoltage = defaultValue;
 
@@ -52,13 +53,16 @@ public class InitialVoltageDropCalculator {
     // check for directly connected voltage sources
     List<NetlistComponent> dcVoltageSources = netlist.getNetListDCVoltageSources();
     for (NetlistComponent dcVoltageSource : dcVoltageSources) {
-      // System.out.println(dcVoltageSource.getNodeA());
-      // System.out.println(dcVoltageSource.getNodeB());
+      //      System.out.println(dcVoltageSource.getNodes()[0]);
+      //      System.out.println(dcVoltageSource.getNodes()[1]);
       if (dcVoltageSource.getNodes()[0].equals(gateNode)) {
         Vg = dcVoltageSource.getComponent().getSweepableValue();
+        //        System.out.println("Vg " + Vg);
+
       }
       if (dcVoltageSource.getNodes()[0].equals(sourceNode)) {
         Vs = dcVoltageSource.getComponent().getSweepableValue();
+        //        System.out.println("Vs " + Vs);
       }
     }
 
@@ -69,15 +73,16 @@ public class InitialVoltageDropCalculator {
     if (sourceNode.equals("0")) {
       Vs = 0.0;
     }
+    //    System.out.println("Vg " + Vg);
+    //    System.out.println("Vs " + Vs);
 
     if (Vg != null && Vs != null) { // could determine Vgs!
       initialVoltage = Vg - Vs;
-    }
-    else {
+      //      System.out.println("initialVoltage " + initialVoltage);
+    } else {
       if (Vg != null && Vg == 0.0 && isNMOS) { // infer that if PMOS, and Vg = 0, then it was intended to be off
         initialVoltage = (0.9 * initialVoltage);
-      }
-      else if (Vg != null && Vg == 0.0 && !isNMOS) { // infer that if PMOS, and Vg = 0, then it was intended to be on
+      } else if (Vg != null && Vg == 0.0 && !isNMOS) { // infer that if PMOS, and Vg = 0, then it was intended to be on
         initialVoltage = (1.1 * initialVoltage);
       }
       // System.out.println("could not determine, therefore inferring!");

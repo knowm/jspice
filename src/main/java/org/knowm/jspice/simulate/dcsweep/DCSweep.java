@@ -71,12 +71,10 @@ public class DCSweep {
     if (this.sweepDef1 == null) {
       this.sweepDef1 = sweepDef;
       verify(sweepDef);
-    }
-    else if (this.sweepDefOrthoganol == null) {
+    } else if (this.sweepDefOrthoganol == null) {
       this.sweepDefOrthoganol = sweepDef;
       verify(sweepDef);
-    }
-    else {
+    } else {
       throw new IllegalArgumentException("Only two SweepDefinitions maximum allowed!");
     }
   }
@@ -102,12 +100,12 @@ public class DCSweep {
 
     // 1. load variable to sweep, from sweepDef1
     Component sweepableComponent1 = circuit.getNetlist().getComponent(sweepDef1.getComponentToSweepID());
-    SimulationResult dcSweepResult = null;
+    SimulationResult dcSweepResult;
 
     if (sweepDefOrthoganol == null) {
-      dcSweepResult = new SimulationResult(getSweepLabel(sweepableComponent1), observable, getSingleDCSweepResult(sweepDef1, sweepableComponent1, observable));
-    }
-    else {
+      dcSweepResult = new SimulationResult(getSweepLabel(sweepableComponent1), observable,
+          getSingleDCSweepResult(sweepDef1, sweepableComponent1, observable));
+    } else {
 
       Map<String, SimulationData> combinedSimulationDataMap = new LinkedHashMap<String, SimulationData>();
 
@@ -119,7 +117,8 @@ public class DCSweep {
         circuit.getNetlist().getComponent(sweepDefOrthoganol.getComponentToSweepID()).setSweepValue(i);
         String orthoganolValue = (sweepLabel2 + " = " + i);
         // System.out.println(orthoganolValue);
-        SimulationResult singleSimulationResult = new SimulationResult(getSweepLabel(sweepableComponent1), observable, getSingleDCSweepResult(sweepDef1, sweepableComponent1, observable));
+        SimulationResult singleSimulationResult = new SimulationResult(getSweepLabel(sweepableComponent1), observable,
+            getSingleDCSweepResult(sweepDef1, sweepableComponent1, observable));
         for (Entry<String, SimulationData> entrySet : singleSimulationResult.getSimulationDataMap().entrySet()) {
           String observableValueID = entrySet.getKey();
           SimulationData simulationData = entrySet.getValue();
@@ -139,11 +138,13 @@ public class DCSweep {
    */
   private Map<String, SimulationData> getSingleDCSweepResult(SweepDefinition sweepDefinition, Component sweepableComponent, String observable) {
 
-    Map<String, SimulationData> simulationDataMap = new LinkedHashMap<String, SimulationData>();
+    Map<String, SimulationData> simulationDataMap = new LinkedHashMap<>();
 
+    simulationDataMap.put(sweepableComponent.getId(), new SimulationData());
     simulationDataMap.put(observable, new SimulationData());
 
     // 2. for each step, get DC Operating Point
+    DCOperatingPointResult dCOperatingPointResult = null;
     BigDecimal firstPoint = BigDecimal.valueOf(sweepDefinition.getStartValue());
     BigDecimal stepSize = BigDecimal.valueOf(sweepDefinition.getStepSize());
     BigDecimal stopValue = BigDecimal.valueOf(sweepDefinition.getEndValue());
@@ -151,15 +152,19 @@ public class DCSweep {
 
       sweepableComponent.setSweepValue(i.doubleValue());
 
-      // System.out.println("i= " + i);
+      //      System.out.println("i= " + i);
 
       // Note: sometimes the DC Op will not converge. Therefore we catch the NodalAnalysisConvergenceException and just skip it
       try {
-        DCOperatingPointResult dCOperatingPointResult = new DCOperatingPoint(circuit).run();
-        // System.out.println(dcOpResult.toString());
+        dCOperatingPointResult = new DCOperatingPoint(circuit).run();
+        //        System.out.println(dCOperatingPointResult.toString());
+
+        simulationDataMap.get(sweepableComponent.getId()).getxData().add(i);
+        simulationDataMap.get(sweepableComponent.getId()).getyData().add(i);
 
         simulationDataMap.get(observable).getxData().add(i);
         simulationDataMap.get(observable).getyData().add(dCOperatingPointResult.getValue(observable));
+
       } catch (NodalAnalysisConvergenceException e) {
         System.out.println("skipping value " + i + " because of failure to converge!");
         continue;
@@ -178,20 +183,15 @@ public class DCSweep {
 
     if (sweepableComponent instanceof Resistor) {
       return "R(" + sweepableComponent.getId() + ")";
-    }
-    else if (sweepableComponent instanceof DCCurrent) {
+    } else if (sweepableComponent instanceof DCCurrent) {
       return "I(" + sweepableComponent.getId() + ")";
-    }
-    else if (sweepableComponent instanceof DCVoltage) {
+    } else if (sweepableComponent instanceof DCVoltage) {
       return "V(" + sweepableComponent.getId() + ")";
-    }
-    else if (sweepableComponent instanceof VCCS) {
+    } else if (sweepableComponent instanceof VCCS) {
       return "G(" + sweepableComponent.getId() + ")";
-    }
-    else if (sweepableComponent instanceof VCVS) {
+    } else if (sweepableComponent instanceof VCVS) {
       return "E(" + sweepableComponent.getId() + ")";
-    }
-    else {
+    } else {
       throw new IllegalArgumentException(Component.class.getCanonicalName() + " not yet supported in DCSweep!");
     }
   }

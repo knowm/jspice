@@ -49,5 +49,8 @@ public class DCSweepPMOSInverter {
 
     // plot
     SimulationPlotter.plotAll("DC Sweep", dcSweepResult);
+    //    SimulationPlotter.plotAllSeparate(dcSweepResult);
+    //    SimulationPlotter.plot("DC Sweep", dcSweepResult, new String[]{"V(out)", "Vin"});
+
   }
 }

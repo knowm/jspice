@@ -48,9 +48,5 @@ public class PMOSInverter extends Circuit {
     addNetListComponent(vIn, "in", "0");
     addNetListComponent(m1, "in", "out", "Vdd"); // G, D, S
     addNetListComponent(rout, "out", "0");
-
-    // addNetListComponent(m1, "in", "out", "0");
-    // addNetListComponent(rout, "Vdd", "out");
-
   }
 }

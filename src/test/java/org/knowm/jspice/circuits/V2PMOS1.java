@@ -35,15 +35,15 @@ public class V2PMOS1 extends Circuit {
   public V2PMOS1() {
 
     // define voltage source
-    Source dcVoltageSourceDS = new DCVoltage("Vdd", 5.0);
-    Source dcVoltageSourceGS = new DCVoltage("Vg", 3.3);
+    Source vDD = new DCVoltage("Vdd", 5.0);
+    Source vS = new DCVoltage("Vg", 3.3);
 
     // define components
     Component pmos1 = new PMOS("PMOS1", 2.5);
 
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    addNetListComponent(dcVoltageSourceDS, "1", "0");
-    addNetListComponent(dcVoltageSourceGS, "2", "0");
+    addNetListComponent(vDD, "1", "0");
+    addNetListComponent(vS, "2", "0");
     addNetListComponent(pmos1, "2", "1", "0"); // G, D, S
   }
 }

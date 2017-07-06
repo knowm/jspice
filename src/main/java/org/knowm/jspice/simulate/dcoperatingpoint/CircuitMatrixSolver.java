@@ -106,12 +106,14 @@ public class CircuitMatrixSolver {
    * @param timeStep
    * @return
    */
-  public static double[][] getG(Map<String, Integer> nodeID2ColumnIdxMap, Circuit circuit, DCOperatingPointResult dcOperatingPointResult, Double timeStep) {
+  public static double[][] getG(Map<String, Integer> nodeID2ColumnIdxMap, Circuit circuit, DCOperatingPointResult dcOperatingPointResult,
+      Double timeStep) {
 
     double[][] G = new double[nodeID2ColumnIdxMap.size()][nodeID2ColumnIdxMap.size()];
     // System.out.println("G= " + GtoString(G));
 
     for (NetlistComponent netlistComponent : circuit.getNetlist().getNetListComponents()) {
+      //      System.out.println("netlistComponent " + netlistComponent);
       netlistComponent.stampG(G, circuit.getNetlist(), dcOperatingPointResult, nodeID2ColumnIdxMap, timeStep);
     }
 
@@ -154,7 +156,8 @@ public class CircuitMatrixSolver {
    * @param timeStep
    * @return
    */
-  public static double[] getRHS(Map<String, Integer> nodeID2ColumnIdxMap, Circuit circuit, DCOperatingPointResult dcOperatingPointResult, Double timeStep) {
+  public static double[] getRHS(Map<String, Integer> nodeID2ColumnIdxMap, Circuit circuit, DCOperatingPointResult dcOperatingPointResult,
+      Double timeStep) {
 
     /////////////////////////////////////////////////////////////////////////////////////////
     // current sources
@@ -196,14 +199,12 @@ public class CircuitMatrixSolver {
             }
           }
           a++;
-        }
-        else {
+        } else {
           continue;
         }
       }
       return G2;
-    }
-    else {
+    } else {
       return G;
     }
   }
@@ -230,8 +231,7 @@ public class CircuitMatrixSolver {
         }
       }
       return v2;
-    }
-    else {
+    } else {
       return v;
     }
   }
@@ -269,7 +269,8 @@ public class CircuitMatrixSolver {
     return dcOperatingPointResult;
   }
 
-  public static DCOperatingPointResult solveMatrixWithInitialConditions(double[] solutionVector, double[][] G, String[] unknownVariableNames, double[] RHS) throws SingularMatrixException {
+  public static DCOperatingPointResult solveMatrixWithInitialConditions(double[] solutionVector, double[][] G, String[] unknownVariableNames,
+      double[] RHS) throws SingularMatrixException {
 
     DCOperatingPointResult dcOperatingPointResult = new DCOperatingPointResult(unknownVariableNames, G, solutionVector, RHS);
 

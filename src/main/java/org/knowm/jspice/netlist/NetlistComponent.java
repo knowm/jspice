@@ -21,6 +21,7 @@
  */
 package org.knowm.jspice.netlist;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 
@@ -55,7 +56,8 @@ public class NetlistComponent {
     component.modifyUnknowmQuantitiesVector(nodeIDs, nodes, timeStep);
   }
 
-  public void stampG(double[][] G, NetList netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, Double timeStep) {
+  public void stampG(double[][] G, NetList netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap,
+      Double timeStep) {
 
     component.stampG(G, netList, dcOperatingPointResult, nodeID2ColumnIdxMap, nodes, timeStep);
   }
@@ -85,4 +87,10 @@ public class NetlistComponent {
     sb.append(component.getSweepableValue());
     return sb.toString();
   }
+
+  @Override
+  public String toString() {
+    return "NetlistComponent [component=" + component + ", nodes=" + Arrays.toString(nodes) + "]";
+  }
+
 }

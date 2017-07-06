@@ -23,8 +23,6 @@ package org.knowm.jspice.circuits;
 
 import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.circuit.subcircuit.CMOSInverter;
-import org.knowm.jspice.component.Component;
-import org.knowm.jspice.component.element.linear.Resistor;
 import org.knowm.jspice.component.source.DCVoltage;
 import org.knowm.jspice.component.source.Source;
 
@@ -40,16 +38,16 @@ public class CMOSInverterCircuit extends Circuit {
 
     // define voltage source
     Source vDD = new DCVoltage("VDD", 5.0);
-    Source vIn = new DCVoltage("Vin", 0.0);
+    Source vIn = new DCVoltage("Vin", 2.4);
 
     // define components
-    Component rout = new Resistor("Rout", 1000);
+    //    Component rout = new Resistor("Rout", 1000000000);
 
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
     addNetListComponent(vDD, "Vdd", "0");
     addNetListComponent(vIn, "in", "0");
-    addNetListComponent(rout, "out", "0");
+    //    addNetListComponent(rout, "out", "0");
 
-    addSubCircuit(new CMOSInverter("Vdd", "0", "in", "out", 2.5));
+    addSubCircuit(new CMOSInverter("Vdd", "0", "in", "out", 1.5));
   }
 }

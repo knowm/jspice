@@ -37,7 +37,7 @@ public class NMOSInverter extends Circuit {
 
     // define voltage source
     Source vDD = new DCVoltage("VDD", 5.0);
-    Source vIn = new DCVoltage("Vin", 4);
+    Source vIn = new DCVoltage("Vin", 2.7);
 
     // define components
     Component m1 = new NMOS("M1", 2.5);
@@ -46,7 +46,7 @@ public class NMOSInverter extends Circuit {
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
     addNetListComponent(vDD, "Vdd", "0");
     addNetListComponent(vIn, "in", "0");
-    addNetListComponent(m1, "in", "out", "0");
+    addNetListComponent(m1, "in", "out", "0"); // G, D, S
     addNetListComponent(rout, "Vdd", "out");
   }
 }

@@ -39,7 +39,6 @@ public final class DCOperatingPoint {
    * Constructor
    *
    * @param circuit
-   * @param timeStep
    */
   public DCOperatingPoint(Circuit circuit) {
 
@@ -93,43 +92,44 @@ public final class DCOperatingPoint {
     // System.out.println("unknownQuantities= " + Arrays.toString(unknownQuantities));
     // System.out.println("unknownQuantities.length= " + unknownQuantities.length);
 
-    // G
-    // at this point all the non-linear and reactive component have been converted to resistors, dc voltage and current sources/
-    double[][] G = CircuitMatrixSolver.getG(nodeID2ColumnIdxMap, circuit, dcOperatingPointResult, timeStep);
-    // System.out.println("G= " + CircuitMatrixSolver.GtoString(G));
-
-    // RHS
-    double[] RHS = CircuitMatrixSolver.getRHS(nodeID2ColumnIdxMap, circuit, dcOperatingPointResult, timeStep);
-    // System.out.println("I= " + Arrays.toString(I));
-
-    // trim G, remove "O"th row and column
-    double[][] G_trimmed = CircuitMatrixSolver.trimG(G, nodeID2ColumnIdxMap);
-    // for (int i = 0; i < G2.length; i++) {
-    // for (int j = 0; j < G2[i].length; j++) {
-    // if (G2[i][j] == 0.0) {
-    // G2[i][j] = 0.000000000001; // 10^-12
-    // }
-    // }
-    // }
-    // System.out.println("G_trimmed= " + CircuitMatrixSolver.GtoString(G_trimmed));
-
-    // trim I, remove "O"th row
-    double[] RHS_trimmed = CircuitMatrixSolver.trimVector(RHS, nodeID2ColumnIdxMap);
-    // System.out.println("RHS_trimmed= " + Arrays.toString(RHS_trimmed));
-
     do {
+
+      System.out.println("------------DCOP-------------");
+      // G
+      // at this point all the non-linear and reactive component have been converted to resistors, dc voltage and current sources/
+      double[][] G = CircuitMatrixSolver.getG(nodeID2ColumnIdxMap, circuit, dcOperatingPointResult, timeStep);
+      // System.out.println("G= " + CircuitMatrixSolver.GtoString(G));
+
+      // RHS
+      double[] RHS = CircuitMatrixSolver.getRHS(nodeID2ColumnIdxMap, circuit, dcOperatingPointResult, timeStep);
+      // System.out.println("I= " + Arrays.toString(I));
+
+      // trim G, remove "O"th row and column
+      double[][] G_trimmed = CircuitMatrixSolver.trimG(G, nodeID2ColumnIdxMap);
+      // for (int i = 0; i < G2.length; i++) {
+      // for (int j = 0; j < G2[i].length; j++) {
+      // if (G2[i][j] == 0.0) {
+      // G2[i][j] = 0.000000000001; // 10^-12
+      // }
+      // }
+      // }
+      // System.out.println("G_trimmed= " + CircuitMatrixSolver.GtoString(G_trimmed));
+
+      // trim I, remove "O"th row
+      double[] RHS_trimmed = CircuitMatrixSolver.trimVector(RHS, nodeID2ColumnIdxMap);
+      // System.out.println("RHS_trimmed= " + Arrays.toString(RHS_trimmed));
 
       if (circuit.isInitialConditions()) {
 
         double[] solutionVector = CircuitMatrixSolver.getInitialConditionsSolutionVector(nodeID2ColumnIdxMap, circuit, RHS);
         double[] solutionVector_trimmed = CircuitMatrixSolver.trimVector(solutionVector, nodeID2ColumnIdxMap);
-        dcOperatingPointResult = CircuitMatrixSolver.solveMatrixWithInitialConditions(solutionVector_trimmed, G_trimmed, unknownQuantityNames, RHS_trimmed);
-      }
-      else {
+        dcOperatingPointResult = CircuitMatrixSolver.solveMatrixWithInitialConditions(solutionVector_trimmed, G_trimmed, unknownQuantityNames,
+            RHS_trimmed);
+      } else {
 
         dcOperatingPointResult = CircuitMatrixSolver.solveMatrix(G_trimmed, unknownQuantityNames, RHS_trimmed);
       }
-      // System.out.println(dcOperatingPointResult.getNodalAnalysisMatrix());
+      //      System.out.println(dcOperatingPointResult.getNodalAnalysisMatrix());
 
       dcOperatingPointResult.generateDeviceCurrents(circuit);
     } while (!convergenceTracker.update(dcOperatingPointResult));
@@ -138,7 +138,7 @@ public final class DCOperatingPoint {
 
     // System.out.println(dcOperatingPointResult.getNodalAnalysisMatrix());
 
-    // dcOperatingPointResult.generateDeviceCurrents(circuit);
+    //    dcOperatingPointResult.generateDeviceCurrents(circuit);
 
     // System.out.println("dcOperatingPoint= " + (System.currentTimeMillis() - start));
 
