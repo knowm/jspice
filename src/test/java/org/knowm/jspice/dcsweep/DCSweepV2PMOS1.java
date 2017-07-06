@@ -46,7 +46,7 @@ public class DCSweepV2PMOS1 {
     DCSweep dcSweep = new DCSweep(circuit);
     dcSweep.addSweepDef(sweepDef2);
     dcSweep.addSweepDef(sweepDef1);
-    SimulationResult dcSweepResult = dcSweep.run("I(PMOS1)");
+    SimulationResult dcSweepResult = dcSweep.run();
     System.out.println(dcSweepResult.toString());
 
     // plot

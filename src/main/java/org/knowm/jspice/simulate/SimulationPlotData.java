@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * @author timmolter
  */
-public final class SimulationData {
+public final class SimulationPlotData {
 
   private final List<Number> xData;
   private final List<Number> yData;
@@ -35,7 +35,7 @@ public final class SimulationData {
   /**
    * Constructor
    */
-  public SimulationData() {
+  public SimulationPlotData() {
 
     this.xData = new ArrayList<Number>();
     this.yData = new ArrayList<Number>();

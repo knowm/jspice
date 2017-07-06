@@ -48,7 +48,7 @@ public class DCSweepHalfWaveRectifier {
     // run DC sweep
     DCSweep dcSweep = new DCSweep(circuit);
     dcSweep.addSweepDef(sweepDef);
-    SimulationResult dcSweepResult = dcSweep.run("V(out)");
+    SimulationResult dcSweepResult = dcSweep.run();
     System.out.println(dcSweepResult.toString());
 
     // plot

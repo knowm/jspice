@@ -48,7 +48,7 @@ public class DCSweepI1R2D1 {
     // run DC sweep
     DCSweep dcSweep = new DCSweep(circuit);
     dcSweep.addSweepDef(sweepDef);
-    SimulationResult dcSweepResult = dcSweep.run("V(2)");
+    SimulationResult dcSweepResult = dcSweep.run();
     System.out.println(dcSweepResult.toString());
 
     // plot

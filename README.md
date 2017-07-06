@@ -91,48 +91,55 @@ The costs of the automatic circuit equation formulation:
 
 ##### Code
 
-    public class DCOPI1R3 {
+```java
+public class DCOPI1R3 {
 
-        public static void main(String[] args) {
+  public static void main(String[] args) {
 
-            Circuit circuit = new I1R3();
-            // run DC operating point
-            DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
-            System.out.println(dcOpResult.toString());
-        }
-    }
+    Circuit circuit = new I1R3();
 
-&nbsp;  
+    // run DC operating point
+    DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
+    System.out.println(dcOpResult.toString());
+  }
+}
+```
 
-    public class I1R3 extends Circuit {
+```java
+public class I1R3 extends Circuit {
 
-        public I1R3() {
+  public I1R3() {
 
-            // define current source
-            Source dcCurrentSource = new DCCurrent("a", 1.0);
+    // define current source
+    Source dcCurrentSource = new DCCurrent("a", 1.0);
 
-            // define resistors
-            Component resistor1 = new Resistor("R1", 10);
-            Component resistor2 = new Resistor("R2", 1000);
-            Component resistor3 = new Resistor("R3", 1000);
+    // define resistors
+    Component resistor1 = new Resistor("R1", 10);
+    Component resistor2 = new Resistor("R2", 1000);
+    Component resistor3 = new Resistor("R3", 1000);
 
-            // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-            addNetListComponent(dcCurrentSource, "0", "1");
-            addNetListComponent(resistor1, "1", "0");
-            addNetListComponent(resistor2, "1", "2");
-            addNetListComponent(resistor3, "2", "0");
-        }
-    }
+    // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
+    addNetListComponent(dcCurrentSource, "0", "1");
+    addNetListComponent(resistor1, "1", "0");
+    addNetListComponent(resistor2, "1", "2");
+    addNetListComponent(resistor3, "2", "0");
+  }
+}
+```
 
 ##### Result
 
-    ----nodes----
-    V(1) = 9.950248756218906
-    V(2) = 4.975124378109452
-    ----components----
-    I(R1) = 0.9950248756218907
-    I(R2) = 0.004975124378109454
-    I(R3) = 0.004975124378109453
+```
+----nodes----
+V(1) = 9.950248756218906
+V(2) = 4.975124378109452
+----components----
+I(R1) = 0.9950248756218907
+I(R2) = 0.004975124378109454
+I(R3) = 0.004975124378109453
+I(a) = 1.0
+-------------
+```
 
 
 #### I1V1R6 -  One Current Source, One Voltage Source and Six Resistors
@@ -141,52 +148,58 @@ The costs of the automatic circuit equation formulation:
 
 ##### Code
 
-    public class I1V1R6 extends Circuit {
-    
-        public I1V1R6() {
-      
-          // define current source
-          Source dcCurrentSourceA = new DCCurrent("a", 0.02);
-        
-          // define current source
-          Source dcVoltageSourceX = new DCVoltage("x", 10.0);
-        
-          // define resistors
-          Component resistor1 = new Resistor("R1", 100);
-          Component resistor2 = new Resistor("R2", 1000);
-          Component resistor3 = new Resistor("R3", 1000);
-          Component resistor4 = new Resistor("R4", 100);
-          Component resistor5 = new Resistor("R5", 1000);
-          Component resistor6 = new Resistor("R6", 10000);
-        
-          // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-          addNetListComponent(dcCurrentSourceA, "0", "4");
-          addNetListComponent(dcVoltageSourceX, "2", "5");
-          addNetListComponent(resistor1, "5", "0");
-          addNetListComponent(resistor2, "0", "3");
-          addNetListComponent(resistor3, "2", "3");
-          addNetListComponent(resistor4, "1", "2");
-          addNetListComponent(resistor5, "3", "0");
-          addNetListComponent(resistor6, "1", "4");
-        }
-    }
+```java
+public class I1V1R6 extends Circuit {
+
+  public I1V1R6() {
+
+    // define current source
+    Source dcCurrentSourceA = new DCCurrent("a", 0.02);
+
+    // define current source
+    Source dcVoltageSourceX = new DCVoltage("x", 10.0);
+
+    // define resistors
+    Component resistor1 = new Resistor("R1", 100);
+    Component resistor2 = new Resistor("R2", 1000);
+    Component resistor3 = new Resistor("R3", 1000);
+    Component resistor4 = new Resistor("R4", 100);
+    Component resistor5 = new Resistor("R5", 1000);
+    Component resistor6 = new Resistor("R6", 10000);
+
+    // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
+    addNetListComponent(dcCurrentSourceA, "0", "4");
+    addNetListComponent(dcVoltageSourceX, "2", "5");
+    addNetListComponent(resistor1, "5", "0");
+    addNetListComponent(resistor2, "0", "3");
+    addNetListComponent(resistor3, "2", "3");
+    addNetListComponent(resistor4, "1", "2");
+    addNetListComponent(resistor5, "3", "0");
+    addNetListComponent(resistor6, "1", "4");
+  }
+}
+```
 
 ##### Result
 
-    ----nodes----
-    I(x) = 0.01250000000000003
-    V(1) = 13.250000000000005
-    V(2) = 11.250000000000004
-    V(3) = 3.750000000000001
-    V(4) = 213.25
-    V(5) = 1.2500000000000029
-    ----components----
-    I(R1) = 0.012500000000000028
-    I(R2) = -0.0037500000000000007
-    I(R3) = 0.007500000000000002
-    I(R4) = 0.020000000000000018
-    I(R5) = 0.0037500000000000007
-    I(R6) = -0.02
+```
+----nodes----
+I(x) = 0.01250000000000003
+V(1) = 13.250000000000005
+V(2) = 11.250000000000004
+V(3) = 3.750000000000001
+V(4) = 213.25
+V(5) = 1.2500000000000029
+----components----
+I(R1) = 0.012500000000000028
+I(R2) = -0.0037500000000000007
+I(R3) = 0.007500000000000002
+I(R4) = 0.020000000000000018
+I(R5) = 0.0037500000000000007
+I(R6) = -0.02
+I(a) = 0.02
+-------------
+```
 
 ## DC Sweep Analysis
 
@@ -194,10 +207,10 @@ DC Sweep Analysis is used to calculate a circuit’s bias point over a range of 
 
 JSpice performs DC Sweep Analysis using the following process:
 
-The DC Operating Point is calculated using a specified start value.
-The value from the source is incremented and another DC Operating Point is calculated.
-The increment value is added again and the process continues until the stop value is reached.
-The result is displayed on the Grapher View.
+1. The DC Operating Point is calculated using a specified start value.
+1. The value from the source is incremented and another DC Operating Point is calculated.
+1. The increment value is added again and the process continues until the stop value is reached.
+1. The result is displayed in a chart.
 
 Assumptions: Capacitors are treated as open circuits, inductors as shorts. Only DC values for voltage and current sources are used.
 
@@ -209,32 +222,32 @@ All energy-storage components like capacitors, inductors and semiconductor charg
 
 ##### Code
 
-    public class DCSweepV1R4 {
-    
-        public static void main(String[] args) {
-      
-            // Circuit
-            Circuit circuit = new V1R4();
-        
-            // SweepDef
-            String componentToSweepID = "R1";
-            double startValue = 100.0;
-            double endValue = 10000.0;
-            double stepSize = 100;
-            String idToObserve = "V(3)";
-            SweepDefinition sweepDef = new SweepDefinition(componentToSweepID, startValue, endValue, stepSize, idToObserve);
-        
-            // run DC sweep
-            DCSweep dcSweep = new DCSweep(circuit);
-            dcSweep.addSweepDef(sweepDef);
-            SimulationResult dcSweepResult = dcSweep.run();
-            System.out.println(dcSweepResult.toString());
-        
-            // plot
-            SimulationPlotter.plot("DC Sweep", dcSweepResult, false);
-      
-        }
-    }
+```java
+public class DCSweepV1R4 {
+
+  public static void main(String[] args) {
+
+    // Circuit
+    Circuit circuit = new V1R4();
+
+    // SweepDef
+    String componentToSweepID = "R1";
+    double startValue = 100.0;
+    double endValue = 10000.0;
+    double stepSize = 100;
+    SweepDefinition sweepDef = new SweepDefinition(componentToSweepID, startValue, endValue, stepSize);
+
+    // run DC sweep
+    DCSweep dcSweep = new DCSweep(circuit);
+    dcSweep.addSweepDef(sweepDef);
+    SimulationResult dcSweepResult = dcSweep.run();
+    System.out.println(dcSweepResult.toString());
+
+    // plot
+    SimulationPlotter.plot("DC Sweep", dcSweepResult, new String[]{"V(3)"});
+  }
+}
+```
 
 ##### Result
 
@@ -254,32 +267,32 @@ To simulate real circuits containing transistors and diodes, we are interested i
 
 ##### Code
 
-    public class DCSweepV1D1 {
-    
-        public static void main(String[] args) {
-      
-            // Circuit
-            Circuit circuit = new V1D1();
-        
-            // SweepDef
-            String componentToSweepID = "Va";
-            double startValue = 0.5;
-            double endValue = 0.95;
-            double stepSize = 0.005;
-            String idToObserve = "I(D1)";
-            SweepDefinition sweepDef = new SweepDefinition(componentToSweepID, startValue, endValue, stepSize, idToObserve);
-        
-            // run DC sweep
-            DCSweep dcSweep = new DCSweep(circuit);
-            dcSweep.addSweepDef(sweepDef);
-            SimulationResult dcSweepResult = dcSweep.run();
-            System.out.println(dcSweepResult.toString());
-        
-            // plot
-            SimulationPlotter.plot("DC Sweep", dcSweepResult, false);
-        
-        }
-    }
+```java
+public class DCSweepV1D1 {
+
+  public static void main(String[] args) {
+
+    // Circuit
+    Circuit circuit = new V1D1();
+
+    // SweepDef
+    String componentToSweepID = "Va";
+    double startValue = 0.5;
+    double endValue = 0.95;
+    double stepSize = 0.005;
+    SweepDefinition sweepDef = new SweepDefinition(componentToSweepID, startValue, endValue, stepSize);
+
+    // run DC sweep
+    DCSweep dcSweep = new DCSweep(circuit);
+    dcSweep.addSweepDef(sweepDef);
+    SimulationResult dcSweepResult = dcSweep.run();
+    System.out.println(dcSweepResult.toString());
+
+    // plot
+    SimulationPlotter.plot("DC Sweep", dcSweepResult, new String[]{"I(D1)"});
+  }
+}
+```
 
 ##### Result
 

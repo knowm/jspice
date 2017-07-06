@@ -48,11 +48,11 @@ public class SimulationPlotter {
     XYChart chart = new XYChart(600, 300);
     chart.setTitle(title);
     chart.setXAxisTitle(simulationResult.getxDataLabel());
-    chart.setYAxisTitle(simulationResult.getyDataLabel());
+    //    chart.setYAxisTitle();
 
-    for (Entry<String, SimulationData> entrySet : simulationResult.getSimulationDataMap().entrySet()) {
+    for (Entry<String, SimulationPlotData> entrySet : simulationResult.getSimulationDataMap().entrySet()) {
       String observableValueID = entrySet.getKey();
-      SimulationData simulationData = entrySet.getValue();
+      SimulationPlotData simulationData = entrySet.getValue();
       XYSeries series = chart.addSeries(observableValueID, simulationData.getxData(), simulationData.getyData());
     }
 
@@ -72,14 +72,15 @@ public class SimulationPlotter {
     XYChart chart = new XYChart(600, 300);
     chart.setTitle(title);
     chart.setXAxisTitle(simulationResult.getxDataLabel());
-    chart.setYAxisTitle(simulationResult.getyDataLabel());
+    //    chart.setYAxisTitle();
 
     for (int i = 0; i < valuesToPlot.length; i++) {
 
-      SimulationData simulationData = simulationResult.getSimulationDataMap().get(valuesToPlot[i]);
+      SimulationPlotData simulationData = simulationResult.getSimulationDataMap().get(valuesToPlot[i]);
 
       if (simulationData == null) {
-        throw new IllegalArgumentException(valuesToPlot[i] + " is not a valid node value! Please choose from these values: " + simulationResult.getSimulationDataMap().keySet());
+        throw new IllegalArgumentException(
+            valuesToPlot[i] + " is not a valid node value! Please choose from these values: " + simulationResult.getSimulationDataMap().keySet());
       }
 
       chart.addSeries(valuesToPlot[i], simulationData.getxData(), simulationData.getyData());
@@ -103,9 +104,9 @@ public class SimulationPlotter {
     int rows = 0;
 
     // Create Chart
-    for (Entry<String, SimulationData> entrySet : simulationResult.getSimulationDataMap().entrySet()) {
+    for (Entry<String, SimulationPlotData> entrySet : simulationResult.getSimulationDataMap().entrySet()) {
       String observableValueID = entrySet.getKey();
-      SimulationData simulationData = entrySet.getValue();
+      SimulationPlotData simulationData = entrySet.getValue();
       XYChart chart = new XYChart(width, height);
       chart.setYAxisTitle(observableValueID);
       XYSeries series = chart.addSeries(observableValueID, simulationData.getxData(), simulationData.getyData());
@@ -135,10 +136,11 @@ public class SimulationPlotter {
     // Create Chart
     for (int i = 0; i < valuesToPlot.length; i++) {
 
-      SimulationData simulationData = simulationResult.getSimulationDataMap().get(valuesToPlot[i]);
+      SimulationPlotData simulationData = simulationResult.getSimulationDataMap().get(valuesToPlot[i]);
 
       if (simulationData == null) {
-        throw new IllegalArgumentException(valuesToPlot[i] + " is not a valid node value! Please choose from these values: " + simulationResult.getSimulationDataMap().keySet());
+        throw new IllegalArgumentException(
+            valuesToPlot[i] + " is not a valid node value! Please choose from these values: " + simulationResult.getSimulationDataMap().keySet());
       }
 
       XYChart chart = new XYChart(width, height);
@@ -168,13 +170,15 @@ public class SimulationPlotter {
     chart.setXAxisTitle(valuesToPlot[0]);
     chart.setYAxisTitle(valuesToPlot[1]);
 
-    SimulationData simulationDataX = simulationResult.getSimulationDataMap().get(valuesToPlot[0]);
+    SimulationPlotData simulationDataX = simulationResult.getSimulationDataMap().get(valuesToPlot[0]);
     if (simulationDataX == null) {
-      throw new IllegalArgumentException(valuesToPlot[0] + " is not a valid node value! Please choose from these values: " + simulationResult.getSimulationDataMap().keySet());
+      throw new IllegalArgumentException(
+          valuesToPlot[0] + " is not a valid node value! Please choose from these values: " + simulationResult.getSimulationDataMap().keySet());
     }
-    SimulationData simulationDataY = simulationResult.getSimulationDataMap().get(valuesToPlot[1]);
+    SimulationPlotData simulationDataY = simulationResult.getSimulationDataMap().get(valuesToPlot[1]);
     if (simulationDataY == null) {
-      throw new IllegalArgumentException(valuesToPlot[1] + " is not a valid node value! Please choose from these values: " + simulationResult.getSimulationDataMap().keySet());
+      throw new IllegalArgumentException(
+          valuesToPlot[1] + " is not a valid node value! Please choose from these values: " + simulationResult.getSimulationDataMap().keySet());
     }
 
     XYSeries series = chart.addSeries("X/Y", simulationDataX.getyData(), simulationDataY.getyData());

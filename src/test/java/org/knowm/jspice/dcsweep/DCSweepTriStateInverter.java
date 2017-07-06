@@ -45,7 +45,7 @@ public class DCSweepTriStateInverter {
     // run DC sweep
     DCSweep dcSweep = new DCSweep(circuit);
     dcSweep.addSweepDef(sweepDef1);
-    SimulationResult dcSweepResult = dcSweep.run("V(out)");
+    SimulationResult dcSweepResult = dcSweep.run();
 
     // plot
     SimulationPlotter.plotAll("DC Sweep", dcSweepResult);

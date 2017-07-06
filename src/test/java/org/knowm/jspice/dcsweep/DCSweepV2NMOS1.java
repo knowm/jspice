@@ -46,7 +46,7 @@ public class DCSweepV2NMOS1 {
     DCSweep dcSweep = new DCSweep(circuit);
     dcSweep.addSweepDef(sweepDef1);
     dcSweep.addSweepDef(sweepDef2);
-    SimulationResult dcSweepResult = dcSweep.run("I(NMOS1)");
+    SimulationResult dcSweepResult = dcSweep.run();
     System.out.println(dcSweepResult.toString());
 
     // plot

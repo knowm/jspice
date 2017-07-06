@@ -27,9 +27,9 @@ import java.util.Map;
 
 import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.component.Component;
-import org.knowm.jspice.simulate.SimulationData;
-import org.knowm.jspice.simulate.SimulationPreCheck;
 import org.knowm.jspice.simulate.SimulationResult;
+import org.knowm.jspice.simulate.SimulationPlotData;
+import org.knowm.jspice.simulate.SimulationPreCheck;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPoint;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 import org.knowm.jspice.simulate.dcoperatingpoint.NodalAnalysisConvergenceException;
@@ -63,16 +63,16 @@ public class TransientAnalysis {
     verify(transientAnalysisDefinition);
 
     // add single sweep result to SimulationResult
-    SimulationResult transientAnalyisResult = new SimulationResult("Time [s]", "", getSingleTransientAnalyisResult());
+    SimulationResult transientAnalyisResult = new SimulationResult("Time [s]", getSingleTransientAnalyisResult());
 
     // System.out.println("transientAnalyis= " + (System.currentTimeMillis() - start));
 
     return transientAnalyisResult;
   }
 
-  private Map<String, SimulationData> getSingleTransientAnalyisResult() {
+  private Map<String, SimulationPlotData> getSingleTransientAnalyisResult() {
 
-    Map<String, SimulationData> timeSeriesDataMap = new LinkedHashMap<String, SimulationData>();
+    Map<String, SimulationPlotData> timeSeriesDataMap = new LinkedHashMap<String, SimulationPlotData>();
 
     BigDecimal firstPoint = BigDecimal.ZERO;
     BigDecimal timeStep = BigDecimal.valueOf(transientAnalysisDefinition.getTimeStep());
@@ -102,10 +102,10 @@ public class TransientAnalysis {
         // System.out.println(dCOperatingPointResult.toString());
 
         for (String nodeLabel : dCOperatingPointResult.getNodeLabels2Value().keySet()) {
-          timeSeriesDataMap.put(nodeLabel, new SimulationData());
+          timeSeriesDataMap.put(nodeLabel, new SimulationPlotData());
         }
         for (String deviceID : dCOperatingPointResult.getDeviceLabels2Value().keySet()) {
-          timeSeriesDataMap.put(deviceID, new SimulationData());
+          timeSeriesDataMap.put(deviceID, new SimulationPlotData());
         }
       }
 
