@@ -74,6 +74,6 @@ public class TestStreamingArbitraryDriver extends TestDrivers {
     assertThat(xData.size(), is(equalTo(302)));
     assertThat(y, is(closeTo(0.0, .01)));
 
-    plotData("V(in)", xData, yData);
+    //    plotData("V(in)", xData, yData);
   }
 }

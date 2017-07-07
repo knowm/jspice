@@ -38,7 +38,7 @@ public class CMOSInverterCircuit extends Circuit {
 
     // define voltage source
     Source vDD = new DCVoltage("VDD", 5.0);
-    Source vIn = new DCVoltage("Vin", 2.4);
+    Source vIn = new DCVoltage("Vin", 4);
 
     // define components
     //    Component rout = new Resistor("Rout", 1000000000);

@@ -202,10 +202,10 @@ public class TestDCOPCircuits {
 
     Circuit circuit = new V1D1();
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
-    // System.out.println(dcOpResult.toString());
+    //    System.out.println(dcOpResult.toString());
 
-    assertThat(dcOpResult.getV()[0], is(closeTo(0.95, .01)));
-    assertThat(dcOpResult.getV()[1], is(closeTo(-4.89, .1)));
+    assertThat(dcOpResult.getValue("V(1)"), is(closeTo(0.95, .01)));
+    assertThat(dcOpResult.getValue("I(D1)"), is(closeTo(11.65, .1)));
   }
 
   @Test
@@ -237,10 +237,9 @@ public class TestDCOPCircuits {
 
     Circuit circuit = new CMOSInverterCircuit();
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
-    // System.out.println(dcOpResult.toString());
-    // System.out.println(Arrays.toString(dcOpResult.getV()));
+    //    System.out.println(dcOpResult.toString());
+    //    System.out.println(Arrays.toString(dcOpResult.getV()));
 
-    assertThat(dcOpResult.getV()[0], is(closeTo(0, .01)));
-    assertThat(dcOpResult.getV()[1], is(closeTo(5.0, .1)));
+    assertThat(dcOpResult.getValue("V(out)"), is(closeTo(0, .01)));
   }
 }

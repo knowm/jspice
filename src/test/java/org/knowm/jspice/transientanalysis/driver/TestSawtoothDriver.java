@@ -74,6 +74,6 @@ public class TestSawtoothDriver extends TestDrivers {
     assertThat(xData.size(), is(equalTo(201)));
     assertThat(y, is(closeTo(-3.799, .01)));
 
-    plotData("V(in)", xData, yData);
+    //    plotData("V(in)", xData, yData);
   }
 }

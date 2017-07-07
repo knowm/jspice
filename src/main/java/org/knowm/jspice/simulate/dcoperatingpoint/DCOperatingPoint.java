@@ -94,7 +94,7 @@ public final class DCOperatingPoint {
 
     do {
 
-      System.out.println("------------DCOP-------------");
+      //      System.out.println("------------DCOP-------------");
       // G
       // at this point all the non-linear and reactive component have been converted to resistors, dc voltage and current sources/
       double[][] G = CircuitMatrixSolver.getG(nodeID2ColumnIdxMap, circuit, dcOperatingPointResult, timeStep);

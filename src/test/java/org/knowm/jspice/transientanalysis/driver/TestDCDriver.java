@@ -75,6 +75,6 @@ public class TestDCDriver extends TestDrivers {
     assertThat(xData.size(), is(equalTo(201)));
     assertThat(y, is(closeTo(2.5, .01)));
 
-    plotData("V(in)", xData, yData);
+    //    plotData("V(in)", xData, yData);
   }
 }

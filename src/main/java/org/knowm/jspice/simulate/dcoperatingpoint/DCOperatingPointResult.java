@@ -255,11 +255,11 @@ public final class DCOperatingPointResult {
 
       }
       // System.out.println("current= " + current);
-      if (mosfet instanceof NMOS) {
-        System.out.println("NMOS mode= " + mosfet.getOperationMode(Vgs, Vds));
-      } else {
-        System.out.println("PMOS mode= " + mosfet.getOperationMode(-1.0 * Vgs, -1.0 * Vds));
-      }
+      //      if (mosfet instanceof NMOS) {
+      //        System.out.println("NMOS mode= " + mosfet.getOperationMode(Vgs, Vds));
+      //      } else {
+      //        System.out.println("PMOS mode= " + mosfet.getOperationMode(-1.0 * Vgs, -1.0 * Vds));
+      //      }
 
       deviceLabels2Value.put("I(" + mosfet.getId() + ")", current);
     }

@@ -306,7 +306,7 @@ public abstract class MOSFET extends Component implements NonlinearComponent {
   public void stampG(double[][] G, NetList netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap,
       String[] nodes, Double timeStep) {
 
-    System.out.println("stampG");
+    //    System.out.println("stampG");
     // current source
     // no contribution
 
@@ -324,12 +324,12 @@ public abstract class MOSFET extends Component implements NonlinearComponent {
     NetlistComponent req;
     if (this instanceof NMOS) {
       Resistor resistance = new Resistor((getId() + "_Ro"), getRo(VgsGuess, VdsGuess));
-      System.out.println("NMOS Res.= " + resistance);
+      //      System.out.println("NMOS Res.= " + resistance);
       req = new NetlistComponent(resistance, new String[]{nodes[1], nodes[2]});
     } else {
       Resistor resistance = new Resistor((getId() + "_Ro"), getRo(-1.0 * VgsGuess, -1.0 * VdsGuess));
       req = new NetlistComponent(resistance, new String[]{nodes[2], nodes[1]});
-      System.out.println("PMOS Res.= " + resistance);
+      //      System.out.println("PMOS Res.= " + resistance);
     }
 
     req.stampG(G, netList, dcOperatingPointResult, nodeID2ColumnIdxMap, timeStep);

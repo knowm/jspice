@@ -74,6 +74,6 @@ public class TestTriangleDriver extends TestDrivers {
     assertThat(xData.size(), is(equalTo(201)));
     assertThat(y, is(closeTo(2.599, .01)));
 
-    plotData("V(in)", xData, yData);
+    //    plotData("V(in)", xData, yData);
   }
 }
