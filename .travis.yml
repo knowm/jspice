@@ -7,5 +7,5 @@ jdk:
 # whitelist
 branches:
   only:
-    - develop
+    - master
 
