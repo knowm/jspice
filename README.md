@@ -695,5 +695,7 @@ The following time-based drivers are available: DC, Sine, Triangle, Sawtooth, Sq
 
 ![M-MSS Memristor Transient Response](documentation/Trans_MMSS.png)  
 
-  
 
+## Continuous Integration
+[![Build Status](https://travis-ci.org/knowm/jspice.png?branch=develop)](https://travis-ci.org/knowm/jspice.png)  
+[Build History](https://travis-ci.org/knowm/jspice/builds)
