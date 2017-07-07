@@ -57,6 +57,6 @@ public class TransientAnalysisHalfWaveRectifier {
     SimulationResult simulationResult = transientAnalysis.run();
 
     // plot
-    SimulationPlotter.plot("", simulationResult, new String[]{"V(in)", "V(out)"});
+    SimulationPlotter.plot(simulationResult, new String[]{"V(in)", "V(out)"});
   }
 }

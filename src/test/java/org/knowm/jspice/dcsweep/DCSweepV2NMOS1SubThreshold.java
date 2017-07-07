@@ -50,10 +50,10 @@ public class DCSweepV2NMOS1SubThreshold {
     DCSweep dcSweep = new DCSweep(circuit);
     dcSweep.addSweepDef(sweepDef1);
     dcSweep.addSweepDef(sweepDef2);
-    SimulationResult dcSweepResult = dcSweep.run();
+    SimulationResult dcSweepResult = dcSweep.run("I(NMOS1)");
     System.out.println(dcSweepResult.toString());
 
     // plot
-    SimulationPlotter.plotAll("DC Sweep", dcSweepResult);
+    SimulationPlotter.plotAll(dcSweepResult);
   }
 }

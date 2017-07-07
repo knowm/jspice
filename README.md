@@ -240,11 +240,11 @@ public class DCSweepV1R4 {
     // run DC sweep
     DCSweep dcSweep = new DCSweep(circuit);
     dcSweep.addSweepDef(sweepDef);
-    SimulationResult dcSweepResult = dcSweep.run();
+    SimulationResult dcSweepResult = dcSweep.run("V(3)");
     System.out.println(dcSweepResult.toString());
 
     // plot
-    SimulationPlotter.plot("DC Sweep", dcSweepResult, new String[]{"V(3)"});
+    SimulationPlotter.plot(dcSweepResult, new String[]{"V(3)"});
   }
 }
 ```
@@ -285,11 +285,11 @@ public class DCSweepV1D1 {
     // run DC sweep
     DCSweep dcSweep = new DCSweep(circuit);
     dcSweep.addSweepDef(sweepDef);
-    SimulationResult dcSweepResult = dcSweep.run();
+    SimulationResult dcSweepResult = dcSweep.run("I(D1)");
     System.out.println(dcSweepResult.toString());
 
     // plot
-    SimulationPlotter.plot("DC Sweep", dcSweepResult, new String[]{"I(D1)"});
+    SimulationPlotter.plot(dcSweepResult, new String[]{"I(D1)"});
   }
 }
 ```
@@ -307,29 +307,31 @@ public class DCSweepV1D1 {
 ![V2NMOS1 Circuit Diagram](documentation/v2nmos1.png)  
 
 ##### Code
-    public class DCSweepV2NMOS1 {
-    
-      public static void main(String[] args) {
-    
-        // Circuit
-        Circuit circuit = new V2NMOS1();
-    
-        // SweepDef
-        SweepDefinition sweepDef1 = new SweepDefinition("Vdd", 0.0, 10.0, 0.1);
-        SweepDefinition sweepDef2 = new SweepDefinition("Vg", 0.0, 5.0, 1.0);
-    
-        // run DC sweep
-        DCSweep dcSweep = new DCSweep(circuit);
-        dcSweep.addSweepDef(sweepDef1);
-        dcSweep.addSweepDef(sweepDef2);
-        SimulationResult dcSweepResult = dcSweep.run("I(NMOS1)");
-        System.out.println(dcSweepResult.toString());
-    
-        // plot
-        SimulationPlotter.plotAll("DC Sweep", dcSweepResult);
-    
-      }
-    }
+
+```java
+public class DCSweepV2NMOS1 {
+
+  public static void main(String[] args) {
+
+    // Circuit
+    Circuit circuit = new V2NMOS1();
+
+    // SweepDef
+    SweepDefinition sweepDef1 = new SweepDefinition("Vdd", 0.0, 10.0, 0.1);
+    SweepDefinition sweepDef2 = new SweepDefinition("Vg", 0.0, 5.0, 1.0);
+
+    // run DC sweep
+    DCSweep dcSweep = new DCSweep(circuit);
+    dcSweep.addSweepDef(sweepDef1);
+    dcSweep.addSweepDef(sweepDef2);
+    SimulationResult dcSweepResult = dcSweep.run("I(NMOS1)");
+    System.out.println(dcSweepResult.toString());
+
+    // plot
+    SimulationPlotter.plotAll(dcSweepResult);
+  }
+}
+```
 
 ##### Result
 
@@ -342,66 +344,71 @@ public class DCSweepV1D1 {
 #### DCSweepV2PMOS1 - Two Voltage Sources and One PMOS
 
 ##### Code
-    public class DCSweepV2PMOS1 {
-    
-      public static void main(String[] args) {
-    
-        // Circuit
-        Circuit circuit = new V2PMOS1();
-    
-        // SweepDef
-        SweepDefinition sweepDef1 = new SweepDefinition("Vg", -5.0, 0.0, 1.0);
-        SweepDefinition sweepDef2 = new SweepDefinition("Vdd", -10.0, 0.0, 0.1);
-    
-        // run DC sweep
-        DCSweep dcSweep = new DCSweep(circuit);
-        dcSweep.addSweepDef(sweepDef2);
-        dcSweep.addSweepDef(sweepDef1);
-        SimulationResult dcSweepResult = dcSweep.run("I(PMOS1)");
-        System.out.println(dcSweepResult.toString());
-    
-        // plot
-        SimulationPlotter.plotAll("DC Sweep", dcSweepResult);
-    
-      }
-    }
+
+```java
+public class DCSweepV2PMOS1 {
+
+  public static void main(String[] args) {
+
+    // Circuit
+    Circuit circuit = new V2PMOS1();
+
+    // SweepDef
+    SweepDefinition sweepDef1 = new SweepDefinition("Vg", -5.0, 0.0, 1.0);
+    SweepDefinition sweepDef2 = new SweepDefinition("Vdd", -10.0, 0.0, 0.1);
+
+    // run DC sweep
+    DCSweep dcSweep = new DCSweep(circuit);
+    dcSweep.addSweepDef(sweepDef2);
+    dcSweep.addSweepDef(sweepDef1);
+    SimulationResult dcSweepResult = dcSweep.run("I(PMOS1)");
+    System.out.println(dcSweepResult.toString());
+
+    // plot
+    SimulationPlotter.plotAll(dcSweepResult);
+  }
+}
+```
 
 ##### Result
 
-![CMOS Inverter Circuit Diagram](documentation/cmos-inverter.png)  
+![V2PMOS1 Sweep Result](documentation/DCSweepV2PMOS1.png)  
+
 
 #### CMOSInverter
 
 ##### Code
-    public class DCSweepCMOSInverter {
-    
-      public static void main(String[] args) {
-    
-        // Circuit
-        Circuit circuit = new CMOSInverterCircuit();
-    
-        // SweepDef
-        SweepDefinition sweepDef1 = new SweepDefinition("Vin", 0, 5, .10);
-    
-        // run DC sweep
-        DCSweep dcSweep = new DCSweep(circuit);
-        dcSweep.addSweepDef(sweepDef1);
-        SimulationResult dcSweepResult = dcSweep.run("V(out)");
-        // System.out.println(dcSweepResult.toString());
-    
-        // plot
-        SimulationPlotter.plotAll("DC Sweep", dcSweepResult);
-    
-      }
-    }
+
+```java
+public class DCSweepCMOSInverter {
+
+  public static void main(String[] args) {
+
+    // Circuit
+    Circuit circuit = new CMOSInverterCircuit();
+
+    // SweepDef
+    SweepDefinition sweepDef1 = new SweepDefinition("Vin", 0, 5, .10);
+
+    // run DC sweep
+    DCSweep dcSweep = new DCSweep(circuit);
+    dcSweep.addSweepDef(sweepDef1);
+    SimulationResult dcSweepResult = dcSweep.run("V(out)");
+    // System.out.println(dcSweepResult.toString());
+
+    // plot
+    SimulationPlotter.plotAll(dcSweepResult);
+  }
+}
+```
 
 ##### Result
 
-![CMOS Inverter (Vth=2.5V) Sweep Result](documentation/DCSweepCMOS_Inverter25.png)  
+![CMOS Inverter (Vth=2.5V) Sweep Result](documentation/DCSweepCMOSInverter_Vt25.png)  
 
-![CMOS Inverter (Vth=1.0V) Sweep Result](documentation/DCSweepCMOS_Inverter10.png) 
+![CMOS Inverter (Vth=1.5V) Sweep Result](documentation/DCSweepCMOSInverter_Vt15.png) 
 
-![CMOS Inverter Transfer Curve ([source](courseware.ee.calpoly.edu/dbraun/courses/ee307/F02/02_Shelley/Section2_BasilShelley.htm))](documentation/InverterRegions.png) 
+![CMOS Inverter Transfer Curve](documentation/InverterRegions.png) 
 
  
 

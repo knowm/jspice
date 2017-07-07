@@ -45,10 +45,10 @@ public class DCSweepV1R4 {
     // run DC sweep
     DCSweep dcSweep = new DCSweep(circuit);
     dcSweep.addSweepDef(sweepDef);
-    SimulationResult dcSweepResult = dcSweep.run();
+    SimulationResult dcSweepResult = dcSweep.run("V(3)");
     System.out.println(dcSweepResult.toString());
 
     // plot
-    SimulationPlotter.plot("DC Sweep", dcSweepResult, new String[]{"V(3)"});
+    SimulationPlotter.plot(dcSweepResult, new String[]{"V(3)"});
   }
 }

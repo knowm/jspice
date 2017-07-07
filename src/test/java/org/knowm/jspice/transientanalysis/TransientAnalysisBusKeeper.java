@@ -55,7 +55,7 @@ public class TransientAnalysisBusKeeper {
     SimulationResult simulationResult = transientAnalysis.run();
 
     // plot
-    SimulationPlotter.plot("", simulationResult, new String[]{"V(out)"});
+    SimulationPlotter.plot(simulationResult, new String[]{"V(out)"});
     // SimulationPlotter.plot("Transient Analysis", simulationResult, true);
 
   }

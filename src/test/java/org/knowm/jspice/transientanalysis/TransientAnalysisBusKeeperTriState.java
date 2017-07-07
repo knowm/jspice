@@ -56,6 +56,6 @@ public class TransientAnalysisBusKeeperTriState {
     SimulationResult simulationResult = transientAnalysis.run();
 
     // plot
-    SimulationPlotter.plot("", simulationResult, new String[]{"V(out)"});
+    SimulationPlotter.plot(simulationResult, new String[]{"V(out)"});
   }
 }

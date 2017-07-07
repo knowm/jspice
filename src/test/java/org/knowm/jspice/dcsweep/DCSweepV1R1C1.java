@@ -48,10 +48,10 @@ public class DCSweepV1R1C1 {
     // run DC sweep
     DCSweep dcSweep = new DCSweep(circuit);
     dcSweep.addSweepDef(sweepDef);
-    SimulationResult dcSweepResult = dcSweep.run();
+    SimulationResult dcSweepResult = dcSweep.run("I(V1)");
     System.out.println(dcSweepResult.toString());
 
     // plot
-    SimulationPlotter.plotAll("DC Sweep", dcSweepResult);
+    SimulationPlotter.plot(dcSweepResult, new String[]{"I(V1)"});
   }
 }

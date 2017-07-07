@@ -54,6 +54,6 @@ public class TransientAnalysisV1R1 {
 
     // plot
     // SimulationPlotter.plot("Transient Analysis", simulationResult, false);
-    SimulationPlotter.plot("", simulationResult, new String[]{"I(R1)"});
+    SimulationPlotter.plot(simulationResult, new String[]{"I(R1)"});
   }
 }

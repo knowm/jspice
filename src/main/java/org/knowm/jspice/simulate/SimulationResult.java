@@ -30,17 +30,20 @@ import java.util.Map.Entry;
 public class SimulationResult {
 
   private final String xDataLabel;
+  private final String yDataLabel;
   private final Map<String, SimulationPlotData> simulationDataMap;
 
   /**
    * Constructor
    *
    * @param xDataLabel
+   * @param yDataLabel
    * @param simulationDataMap
    */
-  public SimulationResult(String xDataLabel, Map<String, SimulationPlotData> simulationDataMap) {
+  public SimulationResult(String xDataLabel, String yDataLabel, Map<String, SimulationPlotData> simulationDataMap) {
 
     this.xDataLabel = xDataLabel;
+    this.yDataLabel = yDataLabel;
     this.simulationDataMap = simulationDataMap;
   }
 
@@ -49,7 +52,12 @@ public class SimulationResult {
     return xDataLabel;
   }
 
-  public Map<String, SimulationPlotData> getSimulationDataMap() {
+  public String getyDataLabel() {
+
+    return yDataLabel;
+  }
+
+  public Map<String, SimulationPlotData> getSimulationPlotDataMap() {
 
     return simulationDataMap;
   }
@@ -63,6 +71,8 @@ public class SimulationResult {
     sb.append("SimulationResult");
     sb.append(returnString);
     sb.append("xDataLabel=" + xDataLabel);
+    sb.append(returnString);
+    sb.append("yDataLabel=" + yDataLabel);
     sb.append(returnString);
     for (Entry<String, SimulationPlotData> entrySet : simulationDataMap.entrySet()) {
       String observableValueID = entrySet.getKey();

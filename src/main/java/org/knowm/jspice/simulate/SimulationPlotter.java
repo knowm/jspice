@@ -42,19 +42,23 @@ public class SimulationPlotter {
    * @param simulationResult
    * @param plotInputSignals
    */
-  public static void plotAll(String title, SimulationResult simulationResult) {
+  public static void plotAll(SimulationResult simulationResult) {
+
+    //    System.out.println("simulationResult " + simulationResult);
 
     // Create Chart
     XYChart chart = new XYChart(600, 300);
-    chart.setTitle(title);
     chart.setXAxisTitle(simulationResult.getxDataLabel());
-    //    chart.setYAxisTitle();
+    chart.setYAxisTitle(simulationResult.getyDataLabel());
+    //    Set<String> yLabelsSet = new TreeSet<>();
 
-    for (Entry<String, SimulationPlotData> entrySet : simulationResult.getSimulationDataMap().entrySet()) {
+    for (Entry<String, SimulationPlotData> entrySet : simulationResult.getSimulationPlotDataMap().entrySet()) {
       String observableValueID = entrySet.getKey();
+      //      yLabelsSet.add(observableValueID.indexOf(" ") == -1 ? observableValueID : observableValueID.substring(0, observableValueID.indexOf(" ")));
       SimulationPlotData simulationData = entrySet.getValue();
-      XYSeries series = chart.addSeries(observableValueID, simulationData.getxData(), simulationData.getyData());
+      chart.addSeries(observableValueID, simulationData.getxData(), simulationData.getyData());
     }
+    //    chart.setYAxisTitle(Arrays.toString(yLabelsSet.toArray()));
 
     new SwingWrapper<XYChart>(chart).displayChart();
   }
@@ -66,21 +70,20 @@ public class SimulationPlotter {
    * @param simulationResult
    * @param valuesToPlot
    */
-  public static void plot(String title, SimulationResult simulationResult, String[] valuesToPlot) {
+  public static void plot(SimulationResult simulationResult, String[] valuesToPlot) {
 
     // Create Chart
     XYChart chart = new XYChart(600, 300);
-    chart.setTitle(title);
     chart.setXAxisTitle(simulationResult.getxDataLabel());
-    //    chart.setYAxisTitle();
+    chart.setYAxisTitle(simulationResult.getyDataLabel());
 
     for (int i = 0; i < valuesToPlot.length; i++) {
 
-      SimulationPlotData simulationData = simulationResult.getSimulationDataMap().get(valuesToPlot[i]);
+      SimulationPlotData simulationData = simulationResult.getSimulationPlotDataMap().get(valuesToPlot[i]);
 
       if (simulationData == null) {
         throw new IllegalArgumentException(
-            valuesToPlot[i] + " is not a valid node value! Please choose from these values: " + simulationResult.getSimulationDataMap().keySet());
+            valuesToPlot[i] + " is not a valid node value! Please choose from these values: " + simulationResult.getSimulationPlotDataMap().keySet());
       }
 
       chart.addSeries(valuesToPlot[i], simulationData.getxData(), simulationData.getyData());
@@ -104,7 +107,7 @@ public class SimulationPlotter {
     int rows = 0;
 
     // Create Chart
-    for (Entry<String, SimulationPlotData> entrySet : simulationResult.getSimulationDataMap().entrySet()) {
+    for (Entry<String, SimulationPlotData> entrySet : simulationResult.getSimulationPlotDataMap().entrySet()) {
       String observableValueID = entrySet.getKey();
       SimulationPlotData simulationData = entrySet.getValue();
       XYChart chart = new XYChart(width, height);
@@ -136,11 +139,11 @@ public class SimulationPlotter {
     // Create Chart
     for (int i = 0; i < valuesToPlot.length; i++) {
 
-      SimulationPlotData simulationData = simulationResult.getSimulationDataMap().get(valuesToPlot[i]);
+      SimulationPlotData simulationData = simulationResult.getSimulationPlotDataMap().get(valuesToPlot[i]);
 
       if (simulationData == null) {
         throw new IllegalArgumentException(
-            valuesToPlot[i] + " is not a valid node value! Please choose from these values: " + simulationResult.getSimulationDataMap().keySet());
+            valuesToPlot[i] + " is not a valid node value! Please choose from these values: " + simulationResult.getSimulationPlotDataMap().keySet());
       }
 
       XYChart chart = new XYChart(width, height);
@@ -170,15 +173,15 @@ public class SimulationPlotter {
     chart.setXAxisTitle(valuesToPlot[0]);
     chart.setYAxisTitle(valuesToPlot[1]);
 
-    SimulationPlotData simulationDataX = simulationResult.getSimulationDataMap().get(valuesToPlot[0]);
+    SimulationPlotData simulationDataX = simulationResult.getSimulationPlotDataMap().get(valuesToPlot[0]);
     if (simulationDataX == null) {
       throw new IllegalArgumentException(
-          valuesToPlot[0] + " is not a valid node value! Please choose from these values: " + simulationResult.getSimulationDataMap().keySet());
+          valuesToPlot[0] + " is not a valid node value! Please choose from these values: " + simulationResult.getSimulationPlotDataMap().keySet());
     }
-    SimulationPlotData simulationDataY = simulationResult.getSimulationDataMap().get(valuesToPlot[1]);
+    SimulationPlotData simulationDataY = simulationResult.getSimulationPlotDataMap().get(valuesToPlot[1]);
     if (simulationDataY == null) {
       throw new IllegalArgumentException(
-          valuesToPlot[1] + " is not a valid node value! Please choose from these values: " + simulationResult.getSimulationDataMap().keySet());
+          valuesToPlot[1] + " is not a valid node value! Please choose from these values: " + simulationResult.getSimulationPlotDataMap().keySet());
     }
 
     XYSeries series = chart.addSeries("X/Y", simulationDataX.getyData(), simulationDataY.getyData());

@@ -90,7 +90,7 @@ public class DCSweep {
     SimulationPreCheck.verifyComponentToSweepOrDriveId(circuit, sweepDefinition.getComponentToSweepID());
   }
 
-  public SimulationResult run() {
+  public SimulationResult run(String observable) {
 
     circuit.verifyCircuit();
 
@@ -103,10 +103,11 @@ public class DCSweep {
     SimulationResult dcSweepResult;
 
     if (sweepDefOrthoganol == null) {
-      dcSweepResult = new SimulationResult(getSweepLabel(sweepableComponent1), getSingleDCSweepResult(sweepDef1, sweepableComponent1));
+      dcSweepResult = new SimulationResult(getSweepLabel(sweepableComponent1), observable,
+          getSingleDCSweepResult(sweepDef1, sweepableComponent1, observable));
     } else {
 
-      Map<String, SimulationPlotData> combinedSimulationDataMap = new LinkedHashMap<String, SimulationPlotData>();
+      Map<String, SimulationPlotData> combinedSimulationPlotDataMap = new LinkedHashMap<String, SimulationPlotData>();
 
       Component sweepableComponent2 = circuit.getNetlist().getComponent(sweepDefOrthoganol.getComponentToSweepID());
       String sweepLabel2 = getSweepLabel(sweepableComponent2);
@@ -116,15 +117,19 @@ public class DCSweep {
         circuit.getNetlist().getComponent(sweepDefOrthoganol.getComponentToSweepID()).setSweepValue(i);
         String orthoganolValue = (sweepLabel2 + " = " + i);
         // System.out.println(orthoganolValue);
-        SimulationResult singleSimulationResult = new SimulationResult(getSweepLabel(sweepableComponent1),
-            getSingleDCSweepResult(sweepDef1, sweepableComponent1));
-        for (Entry<String, SimulationPlotData> entrySet : singleSimulationResult.getSimulationDataMap().entrySet()) {
-          String observableValueID = entrySet.getKey();
+        SimulationResult singleSimulationResult = new SimulationResult(getSweepLabel(sweepableComponent1), observable,
+            getSingleDCSweepResult(sweepDef1, sweepableComponent1, observable));
+        for (Entry<String, SimulationPlotData> entrySet : singleSimulationResult.getSimulationPlotDataMap().entrySet()) {
+          //          String observableValueID = entrySet.getKey();
+          //          System.out.println("observableValueID " + observableValueID);
           SimulationPlotData simulationData = entrySet.getValue();
-          combinedSimulationDataMap.put(orthoganolValue, simulationData);
+          combinedSimulationPlotDataMap.put(orthoganolValue, simulationData);
         }
       }
-      dcSweepResult = new SimulationResult(getSweepLabel(sweepableComponent1), combinedSimulationDataMap);
+      //      System.out.println("observable " + observable);
+      dcSweepResult = new SimulationResult(getSweepLabel(sweepableComponent1), observable, combinedSimulationPlotDataMap);
+      //      System.out.println("dcSweepResult " + dcSweepResult);
+
     }
     return dcSweepResult;
   }
@@ -135,12 +140,14 @@ public class DCSweep {
    * @param observable
    * @return
    */
-  private Map<String, SimulationPlotData> getSingleDCSweepResult(SweepDefinition sweepDefinition, Component sweepableComponent) {
+  private Map<String, SimulationPlotData> getSingleDCSweepResult(SweepDefinition sweepDefinition, Component sweepableComponent, String observable) {
 
     Map<String, SimulationPlotData> simulationDataMap = new LinkedHashMap<>();
+    //    System.out.println("sweepableComponent " + sweepableComponent);
+    //    System.out.println("simulationDataMap " + simulationDataMap);
 
-    //    simulationDataMap.put(sweepableComponent.getId(), new SimulationData());
-    //    simulationDataMap.put(observable, new SimulationData());
+    simulationDataMap.put(sweepableComponent.getId(), new SimulationPlotData());
+    simulationDataMap.put(observable, new SimulationPlotData());
 
     // 2. for each step, get DC Operating Point
     DCOperatingPointResult dCOperatingPointResult = null;
@@ -158,30 +165,11 @@ public class DCSweep {
         dCOperatingPointResult = new DCOperatingPoint(circuit).run();
         //        System.out.println(dCOperatingPointResult.toString());
 
-        //        simulationDataMap.get(sweepableComponent.getId()).getxData().add(i);
-        //        simulationDataMap.get(sweepableComponent.getId()).getyData().add(i);
-        //
-        //        simulationDataMap.get(observable).getxData().add(i);
-        //        simulationDataMap.get(observable).getyData().add(dCOperatingPointResult.getValue(observable));
+        simulationDataMap.get(sweepableComponent.getId()).getxData().add(i);
+        simulationDataMap.get(sweepableComponent.getId()).getyData().add(i);
 
-        // add all node voltage values
-        for (String nodeLabel : dCOperatingPointResult.getNodeLabels2Value().keySet()) {
-          if (simulationDataMap.get(nodeLabel) != null) {
-            simulationDataMap.get(nodeLabel).getxData().add(i);
-            simulationDataMap.get(nodeLabel).getyData().add(dCOperatingPointResult.getNodeLabels2Value().get(nodeLabel));
-          } else {
-            simulationDataMap.put(nodeLabel, new SimulationPlotData());
-          }
-        }
-        // add all device current values
-        for (String deviceID : dCOperatingPointResult.getDeviceLabels2Value().keySet()) {
-          if (simulationDataMap.get(deviceID) != null) {
-            simulationDataMap.get(deviceID).getxData().add(i);
-            simulationDataMap.get(deviceID).getyData().add(dCOperatingPointResult.getDeviceLabels2Value().get(deviceID));
-          } else {
-            simulationDataMap.put(deviceID, new SimulationPlotData());
-          }
-        }
+        simulationDataMap.get(observable).getxData().add(i);
+        simulationDataMap.get(observable).getyData().add(dCOperatingPointResult.getValue(observable));
 
       } catch (NodalAnalysisConvergenceException e) {
         System.out.println("skipping value " + i + " because of failure to converge!");

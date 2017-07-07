@@ -44,10 +44,11 @@ public class DCSweepNMOSInverter {
     // run DC sweep
     DCSweep dcSweep = new DCSweep(circuit);
     dcSweep.addSweepDef(sweepDef1);
-    SimulationResult dcSweepResult = dcSweep.run();
+    SimulationResult dcSweepResult = dcSweep.run("V(out)");
     System.out.println(dcSweepResult.toString());
 
     // plot
-    SimulationPlotter.plotAll("DC Sweep", dcSweepResult);
+    SimulationPlotter.plot(dcSweepResult, new String[]{"V(out)"});
+    SimulationPlotter.plotAll(dcSweepResult);
   }
 }

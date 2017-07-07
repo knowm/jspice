@@ -53,6 +53,6 @@ public class TransientAnalysisV1R8C8 {
     SimulationResult simulationResult = transientAnalysis.run();
 
     // plot
-    SimulationPlotter.plot("", simulationResult, new String[]{"V(9)"});
+    SimulationPlotter.plot(simulationResult, new String[]{"V(9)"});
   }
 }

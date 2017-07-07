@@ -28,9 +28,6 @@ import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.dcsweep.DCSweep;
 import org.knowm.jspice.simulate.dcsweep.SweepDefinition;
 
-/**
- * @author timmolter
- */
 public class DCSweepV2PMOS1 {
 
   public static void main(String[] args) {
@@ -46,10 +43,10 @@ public class DCSweepV2PMOS1 {
     DCSweep dcSweep = new DCSweep(circuit);
     dcSweep.addSweepDef(sweepDef2);
     dcSweep.addSweepDef(sweepDef1);
-    SimulationResult dcSweepResult = dcSweep.run();
+    SimulationResult dcSweepResult = dcSweep.run("I(PMOS1)");
     System.out.println(dcSweepResult.toString());
 
     // plot
-    SimulationPlotter.plotAll("DC Sweep", dcSweepResult);
+    SimulationPlotter.plotAll(dcSweepResult);
   }
 }

@@ -55,6 +55,6 @@ public class TransientAnalysisTriStateInverter1 {
     SimulationResult simulationResult = transientAnalysis.run();
 
     // plot
-    SimulationPlotter.plot("", simulationResult, new String[]{"V(out)"});
+    SimulationPlotter.plot(simulationResult, new String[]{"V(out)"});
   }
 }

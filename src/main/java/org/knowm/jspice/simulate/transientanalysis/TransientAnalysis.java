@@ -27,9 +27,9 @@ import java.util.Map;
 
 import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.component.Component;
-import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.SimulationPlotData;
 import org.knowm.jspice.simulate.SimulationPreCheck;
+import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPoint;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 import org.knowm.jspice.simulate.dcoperatingpoint.NodalAnalysisConvergenceException;
@@ -63,7 +63,7 @@ public class TransientAnalysis {
     verify(transientAnalysisDefinition);
 
     // add single sweep result to SimulationResult
-    SimulationResult transientAnalyisResult = new SimulationResult("Time [s]", getSingleTransientAnalyisResult());
+    SimulationResult transientAnalyisResult = new SimulationResult("Time [s]", "", getSingleTransientAnalyisResult());
 
     // System.out.println("transientAnalyis= " + (System.currentTimeMillis() - start));
 

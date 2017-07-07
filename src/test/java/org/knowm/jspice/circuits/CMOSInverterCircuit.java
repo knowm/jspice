@@ -48,6 +48,6 @@ public class CMOSInverterCircuit extends Circuit {
     addNetListComponent(vIn, "in", "0");
     //    addNetListComponent(rout, "out", "0");
 
-    addSubCircuit(new CMOSInverter("Vdd", "0", "in", "out", 1.5));
+    addSubCircuit(new CMOSInverter("Vdd", "0", "in", "out", 2.5));
   }
 }
