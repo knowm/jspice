@@ -134,7 +134,8 @@ public class Diode extends Component implements NonlinearComponent {
   }
 
   @Override
-  public void stampG(double[][] G, NetList netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes, Double timeStep) {
+  public void stampG(double[][] G, NetList netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap,
+      String[] nodes, Double timeStep) {
 
     // current source
     // no contribution
@@ -148,7 +149,8 @@ public class Diode extends Component implements NonlinearComponent {
   }
 
   @Override
-  public void stampRHS(double[] RHS, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes, Double timeStep) {
+  public void stampRHS(double[] RHS, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes,
+      Double timeStep) {
 
     // current source
     double VdGuess = getVdGuess(dcOperatingPointResult, nodes);
@@ -165,8 +167,7 @@ public class Diode extends Component implements NonlinearComponent {
     double VdGuess = 0.0; // Vd = voltage across diode
     if (dcOperatingPointResult == null) { // first iteration
       VdGuess = getInitialVoltageGuess();
-    }
-    else {
+    } else {
       double voltageA = dcOperatingPointResult.getValue("V(" + nodes[0] + ")");
       double voltageB = dcOperatingPointResult.getValue("V(" + nodes[1] + ")");
       VdGuess = voltageA - voltageB;

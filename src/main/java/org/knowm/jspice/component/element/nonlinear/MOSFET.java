@@ -173,7 +173,7 @@ public abstract class MOSFET extends Component implements NonlinearComponent {
     //    System.out.println("vds " + vds);
 
     // determine operating region
-    if (vgs <= Vthresh) { // cutoff
+    if (vgs - .00000000000005 <= Vthresh) { // cutoff, .00000000000005 for bug due to double imprecision
       //      System.out.println("cutoff");
       return Mode.CUTOFF;
     } else if (vds <= (vgs - Vthresh)) { // triode

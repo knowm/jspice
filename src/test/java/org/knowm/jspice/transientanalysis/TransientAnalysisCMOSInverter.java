@@ -28,11 +28,8 @@ import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
 import org.knowm.jspice.simulate.transientanalysis.TransientAnalysisDefinition;
 import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
-import org.knowm.jspice.simulate.transientanalysis.driver.Sine;
+import org.knowm.jspice.simulate.transientanalysis.driver.Triangle;
 
-/**
- * @author timmolter
- */
 public class TransientAnalysisCMOSInverter {
 
   public static void main(String[] args) {
@@ -40,9 +37,9 @@ public class TransientAnalysisCMOSInverter {
     // Circuit
     Circuit circuit = new CMOSInverterCircuit();
 
-    Driver driver = new Sine("Vin", 2.5, 0, 2.5, 1.0);
+    //    Driver driver = new Sine("Vin", 2.5, 0, 2.5, 1.0);
     // Driver driver = new Square("Vin", 2.5, 0, 2.5, 1.0);
-    // Driver driver = new Triangle("Vin", 2.5, 0, 2.5, 1.0);
+    Driver driver = new Triangle("Vin", 2.5, 0, 2.5, 1.0);
     Driver[] drivers = new Driver[]{driver};
     double stopTime = 2;
     double timeStep = .05;
@@ -56,5 +53,7 @@ public class TransientAnalysisCMOSInverter {
 
     // plot
     SimulationPlotter.plot(simulationResult, new String[]{"V(in)", "V(out)"});
+    //    SimulationPlotter.plot(simulationResult, new String[]{"V(in)"});
+    //    SimulationPlotter.plotAll(simulationResult);
   }
 }

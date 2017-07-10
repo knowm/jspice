@@ -85,8 +85,7 @@ public class Capacitor extends ReactiveElement {
     for (int i = 0; i < columnQuantities.length; i++) {
       if (columnQuantities[i].equals(nodes[0]) || columnQuantities[i].equals(nodes[1])) {
         columnQuantities[i] = "V(" + columnQuantities[i] + ")";
-      }
-      else if (columnQuantities[i].equals(getId())) {
+      } else if (columnQuantities[i].equals(getId())) {
         if (timeStep != null) { // transient
           columnQuantities[i] = "I(" + columnQuantities[i] + ")";
         }
@@ -95,12 +94,14 @@ public class Capacitor extends ReactiveElement {
   }
 
   @Override
-  public void stampG(double[][] G, NetList netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes, Double timeStep) {
+  public void stampG(double[][] G, NetList netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap,
+      String[] nodes, Double timeStep) {
 
     // current source
     // no contribution
 
     if (timeStep != null) {
+
       int idxA = nodeID2ColumnIdxMap.get(nodes[0]);
       int idxB = nodeID2ColumnIdxMap.get(nodes[1]);
       int idxI = nodeID2ColumnIdxMap.get(getId());
@@ -134,7 +135,8 @@ public class Capacitor extends ReactiveElement {
   }
 
   @Override
-  public void stampRHS(double[] RHS, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes, Double timeStep) {
+  public void stampRHS(double[] RHS, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes,
+      Double timeStep) {
 
     if (timeStep != null) {
 

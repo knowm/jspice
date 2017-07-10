@@ -31,9 +31,6 @@ import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 import org.knowm.jspice.simulate.transientanalysis.driver.Sine;
 import org.knowm.jspice.simulate.transientanalysis.driver.Square;
 
-/**
- * @author timmolter
- */
 public class TransientAnalysisTransmissionGate {
 
   public static void main(String[] args) {

@@ -30,9 +30,6 @@ import org.knowm.jspice.simulate.transientanalysis.TransientAnalysisDefinition;
 import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 import org.knowm.jspice.simulate.transientanalysis.driver.Sine;
 
-/**
- * @author timmolter
- */
 public class TransientAnalysisHalfWaveRectifier {
 
   public static void main(String[] args) {
@@ -47,10 +44,6 @@ public class TransientAnalysisHalfWaveRectifier {
 
     // TransientAnalysisDefinition
     TransientAnalysisDefinition transientAnalysisDefinition = new TransientAnalysisDefinition(drivers, stopTime, timeStep);
-    // TransientAnalysisDefinition transientAnalysisDefinition = new TransientAnalysisDefinition(driver, stopTime, timeStep, skipInitial, "Vsrc",
-    // "I(C1)");
-    // TransientAnalysisDefinition transientAnalysisDefinition = new TransientAnalysisDefinition(driver, stopTime, timeStep, skipInitial, "Vsrc",
-    // "I(Rload)");
 
     // run TransientAnalysis
     TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);

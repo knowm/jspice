@@ -30,9 +30,6 @@ import org.knowm.jspice.simulate.transientanalysis.TransientAnalysisDefinition;
 import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 import org.knowm.jspice.simulate.transientanalysis.driver.Sine;
 
-/**
- * @author timmolter
- */
 public class TransientAnalysisV1MMSSMem {
 
   public static void main(String[] args) {

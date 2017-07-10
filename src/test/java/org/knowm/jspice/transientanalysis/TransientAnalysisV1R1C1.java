@@ -28,11 +28,8 @@ import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
 import org.knowm.jspice.simulate.transientanalysis.TransientAnalysisDefinition;
 import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
-import org.knowm.jspice.simulate.transientanalysis.driver.Sine;
+import org.knowm.jspice.simulate.transientanalysis.driver.Square;
 
-/**
- * @author timmolter
- */
 public class TransientAnalysisV1R1C1 {
 
   public static void main(String[] args) {
@@ -40,8 +37,8 @@ public class TransientAnalysisV1R1C1 {
     // Circuit
     Circuit circuit = new V1R1C1();
 
-    // Driver driver = new Square("V1", 2.5, 0, 2.5, 1.0);
-    Driver driver = new Sine("V1", 0, 0, 2.5, 1.0);
+    Driver driver = new Square("V1", 2.5, 0, 2.5, 1.0);
+    //    Driver driver = new Sine("V1", 0, 0, 2.5, 1.0);
     Driver[] drivers = new Driver[]{driver};
     double stopTime = 2;
     double timeStep = .01;

@@ -487,30 +487,32 @@ The following time-based drivers are available: DC, Sine, Triangle, Sawtooth, Sq
 ![CMOS Inverter Circuit Diagram](documentation/cmos-inverter.png)  
 
 ##### Code
-    public class TransientAnalysisCMOSInverter {
-    
-        public static void main(String[] args) {
-      
-            // Circuit
-            Circuit circuit = new CMOSInverterCircuit();
-        
-            Driver driver = new Triangle("Vin", 2.5, 0, 2.5, 1.0);
-            Driver[] drivers = new Driver[] { driver };
-            double stopTime = 2;
-            double timeStep = .05;
-            boolean skipInitial = false;
-        
-            // TransientAnalysisDefinition
-            TransientAnalysisDefinition transientAnalysisDefinition = new TransientAnalysisDefinition(drivers, stopTime, timeStep, skipInitial, "V(out)");
-        
-            // run TransientAnalysis
-            TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
-            SimulationResult simulationResult = transientAnalysis.run();
-        
-            // plot
-            SimulationPlotter.plot("", simulationResult, new String[] { "V(out)" });
-        }
-    }
+
+```java
+public class TransientAnalysisCMOSInverter {
+
+  public static void main(String[] args) {
+
+    // Circuit
+    Circuit circuit = new CMOSInverterCircuit();
+
+    Driver driver = new Triangle("Vin", 2.5, 0, 2.5, 1.0);
+    Driver[] drivers = new Driver[]{driver};
+    double stopTime = 2;
+    double timeStep = .05;
+
+    // TransientAnalysisDefinition
+    TransientAnalysisDefinition transientAnalysisDefinition = new TransientAnalysisDefinition(drivers, stopTime, timeStep);
+
+    // run TransientAnalysis
+    TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
+    SimulationResult simulationResult = transientAnalysis.run();
+
+    // plot
+    SimulationPlotter.plot(simulationResult, new String[]{"V(in)", "V(out)"});
+  }
+}
+```
 
 ##### Result
 
@@ -522,31 +524,34 @@ The following time-based drivers are available: DC, Sine, Triangle, Sawtooth, Sq
 ![RC Circuit Diagram](documentation/rc-time-domain.png)  
 
 ##### Code
-    public class TransientAnalysisV1R1C1 {
-    
-      public static void main(String[] args) {
-    
-        // Circuit
-        Circuit circuit = new V1R1C1();
-    
-        Driver driver = new Square("V1", 2.5, 0, 2.5, 1.0);
-        Driver[] drivers = new Driver[] { driver };
-        double stopTime = 2;
-        double timeStep = .01;
-        boolean skipInitial = false;
-    
-        // TransientAnalysisDefinition
-        TransientAnalysisDefinition transientAnalysisDefinition = new TransientAnalysisDefinition(drivers, stopTime, timeStep, skipInitial);
-    
-        // run TransientAnalysis
-        TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
-        SimulationResult simulationResult = transientAnalysis.run();
-    
-        // plot
-        SimulationPlotter.plot("", simulationResult, new String[] { "V(1)", "V(2)" });
-    
-      }
-    }
+
+```java
+public class TransientAnalysisV1R1C1 {
+
+  public static void main(String[] args) {
+
+    // Circuit
+    Circuit circuit = new V1R1C1();
+
+    Driver driver = new Square("V1", 2.5, 0, 2.5, 1.0);
+    //    Driver driver = new Sine("V1", 0, 0, 2.5, 1.0);
+    Driver[] drivers = new Driver[]{driver};
+    double stopTime = 2;
+    double timeStep = .01;
+
+    // TransientAnalysisDefinition
+    TransientAnalysisDefinition transientAnalysisDefinition = new TransientAnalysisDefinition(drivers, stopTime, timeStep);
+
+    // run TransientAnalysis
+    TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
+    SimulationResult simulationResult = transientAnalysis.run();
+
+    // plot
+    SimulationPlotter.plot(simulationResult, new String[]{"V(1)", "V(2)"});
+    // SimulationPlotter.plotAllSeparate(simulationResult);
+  }
+}
+```
 
 ##### Result
 
@@ -558,104 +563,69 @@ The following time-based drivers are available: DC, Sine, Triangle, Sawtooth, Sq
 
 ##### Code
 
-    public class TransientAnalysisHalfWaveRectifier {
-    
-      public static void main(String[] args) {
-    
-        // Circuit
-        Circuit circuit = new HalfWaveRectifier();
-    
-        Driver driver = new Sine("Vsrc", 0, 0, 12, 60.0);
-        Driver[] drivers = new Driver[] { driver };
-        double stopTime = .0833333333;
-        double timeStep = .0002;
-        boolean skipInitial = false;
-    
-        // TransientAnalysisDefinition
-        TransientAnalysisDefinition transientAnalysisDefinition = new TransientAnalysisDefinition(drivers, stopTime, timeStep, skipInitial);
-    
-        // run TransientAnalysis
-        TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
-        SimulationResult simulationResult = transientAnalysis.run();
-    
-        // plot
-        SimulationPlotter.plot("", simulationResult, new String[] { "V(in)", "V(out)" });
-    
-      }
-    }
+```java
+public class TransientAnalysisHalfWaveRectifier {
+
+  public static void main(String[] args) {
+
+    // Circuit
+    Circuit circuit = new HalfWaveRectifier();
+
+    Driver driver = new Sine("Vsrc", 0, 0, 12, 60.0);
+    Driver[] drivers = new Driver[]{driver};
+    double stopTime = .0833333333;
+    double timeStep = .0002;
+
+    // TransientAnalysisDefinition
+    TransientAnalysisDefinition transientAnalysisDefinition = new TransientAnalysisDefinition(drivers, stopTime, timeStep);
+
+    // run TransientAnalysis
+    TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
+    SimulationResult simulationResult = transientAnalysis.run();
+
+    // plot
+    SimulationPlotter.plot(simulationResult, new String[]{"V(in)", "V(out)"});
+  }
+}
+```
 
 ##### Result
 
 ![Half-Wave Rectifier Circuit Transient Response](documentation/Half_Wave_Rectifier.png)  
-
-#### CMOS Inverter with Sine Driver
-
-![CMOS Inverter Circuit Diagram](documentation/cmos-inverter.png)  
-
-##### Code
-    public class TransientAnalysisCMOSInverter {
-    
-      public static void main(String[] args) {
-    
-        // Circuit
-        Circuit circuit = new CMOSInverterCircuit();
-    
-        Driver driver = new Sine("Vin", 2.5, 0, 2.5, 1.0);
-        // Driver driver = new Square("Vin", 2.5, 0, 2.5, 1.0);
-        // Driver driver = new Triangle("Vin", 2.5, 0, 2.5, 1.0);
-        Driver[] drivers = new Driver[] { driver };
-        double stopTime = 2;
-        double timeStep = .05;
-        boolean skipInitial = false;
-    
-        // TransientAnalysisDefinition
-        TransientAnalysisDefinition transientAnalysisDefinition = new TransientAnalysisDefinition(drivers, stopTime, timeStep, skipInitial);
-    
-        // run TransientAnalysis
-        TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
-        SimulationResult simulationResult = transientAnalysis.run();
-    
-        // plot
-        SimulationPlotter.plot("", simulationResult, new String[] { "V(in)", "V(out)" });
-    
-      }
-    }
-
-##### Result
-
-![CMOS Inverter Transient Response](documentation/CMOS_Inverter_Trans.png)  
 
 #### Pass Gate (Transmission Gate)
 
 ![Pass Gate Circuit Diagram](documentation/transmission-gate.png)  
 
 ##### Code
-    public class TransientAnalysisTransmissionGate {
-    
-      public static void main(String[] args) {
-    
-        // Circuit
-        Circuit circuit = new TransmissionGateCircuit();
-    
-        Driver in = new Sine("Vin", 0, 0, 1.0, 10.0);
-        Driver clk = new Square("Vclk", 2.5, 0, 2.5, 1.0);
-        Driver clkBar = new Square("VclkBar", 2.5, 0.5, 2.5, 1.0);
-        Driver[] drivers = new Driver[] { in, clk, clkBar };
-        double stopTime = 2;
-        double timeStep = .005;
-        boolean skipInitial = false;
-    
-        // TransientAnalysisDefinition
-        TransientAnalysisDefinition transientAnalysisDefinition = new TransientAnalysisDefinition(drivers, stopTime, timeStep, skipInitial);
-    
-        // run TransientAnalysis
-        TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
-        SimulationResult simulationResult = transientAnalysis.run();
-    
-        // plot
-        SimulationPlotter.plotSeparate(simulationResult, new String[] { "V(out)", "V(in)", "V(CLK)", "V(CLKBAR)" });
-      }
-    }
+
+```java
+public class TransientAnalysisTransmissionGate {
+
+  public static void main(String[] args) {
+
+    // Circuit
+    Circuit circuit = new TransmissionGateCircuit();
+
+    Driver in = new Sine("Vin", 0, 0, 1.0, 10.0);
+    Driver clk = new Square("Vclk", 2.5, 0, 2.5, 1.0);
+    Driver clkBar = new Square("VclkBar", 2.5, 0.5, 2.5, 1.0);
+    Driver[] drivers = new Driver[]{in, clk, clkBar};
+    double stopTime = 2;
+    double timeStep = .005;
+
+    // TransientAnalysisDefinition
+    TransientAnalysisDefinition transientAnalysisDefinition = new TransientAnalysisDefinition(drivers, stopTime, timeStep);
+
+    // run TransientAnalysis
+    TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
+    SimulationResult simulationResult = transientAnalysis.run();
+
+    // plot
+    SimulationPlotter.plotSeparate(simulationResult, new String[]{"V(out)", "V(in)", "V(CLK)", "V(CLKBAR)"});
+  }
+}
+```
 
 ##### Result
 
@@ -663,40 +633,42 @@ The following time-based drivers are available: DC, Sine, Triangle, Sawtooth, Sq
 
 ## Memristor Simulation
 
-### Simple Hysterisis Curves
+### Simple Hysteresis Curves
 
 #### Ag-Chalcogenide from Boise State University Driven by Square Wave
 
 ##### Code
 
-    public class TransientAnalysisV1MMSSMem {
-    
-      public static void main(String[] args) {
-    
-        // Circuit
-        Circuit circuit = new V1MMSSMem();
-    
-        Driver driver = new Sine("Vdd", 0.0, 0, 0.5, 100.0);
-        Driver[] drivers = new Driver[] { driver };
-        double stopTime = .04;
-        double timeStep = .0001;
-    
-        // TransientAnalysisDefinition
-        TransientAnalysisDefinition transientAnalysisDefinition = new TransientAnalysisDefinition(drivers, stopTime, timeStep);
-    
-        // run TransientAnalysis
-        TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
-        SimulationResult simulationResult = transientAnalysis.run();
-    
-        // plot
-        // SimulationPlotter.plotAllSeparate(simulationResult);
-        SimulationPlotter.plotSeparate(simulationResult, new String[] { "V(VDD)", "I(M1)" });
-        SimulationPlotter.plotTransientInOutCurve("I/V Curve", simulationResult, new String[] { "V(VDD)", "I(M1)" });
-    
-        // export data
-        // SimulationPlotter.printTransientInOut(simulationResult);
-      }
-    }
+```java
+public class TransientAnalysisV1MMSSMem {
+
+  public static void main(String[] args) {
+
+    // Circuit
+    Circuit circuit = new V1MMSSMem();
+
+    Driver driver = new Sine("Vdd", 0.0, 0, 0.5, 100.0);
+    Driver[] drivers = new Driver[]{driver};
+    double stopTime = .04;
+    double timeStep = .0001;
+
+    // TransientAnalysisDefinition
+    TransientAnalysisDefinition transientAnalysisDefinition = new TransientAnalysisDefinition(drivers, stopTime, timeStep);
+
+    // run TransientAnalysis
+    TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
+    SimulationResult simulationResult = transientAnalysis.run();
+
+    // plot
+    // SimulationPlotter.plotAllSeparate(simulationResult);
+    SimulationPlotter.plotSeparate(simulationResult, new String[]{"V(VDD)", "I(M1)"});
+    SimulationPlotter.plotTransientInOutCurve("I/V Curve", simulationResult, new String[]{"V(VDD)", "I(M1)"});
+
+    // export data
+    // SimulationPlotter.printTransientInOut(simulationResult);
+  }
+}
+```
 
 ##### Result
 

@@ -29,7 +29,7 @@ import java.util.Map.Entry;
  */
 public class ConvergenceTracker {
 
-  private static final int MAX_NUM_ITERATIONS = 100;
+  private static final int MAX_NUM_ITERATIONS = 1000;
 
   /**
    * relative tolerance
@@ -44,7 +44,7 @@ public class ConvergenceTracker {
   /**
    * absolute current tolerance
    */
-  private static final double ABSTOL = .00000000001; // 1 pA
+  private static final double ABSTOL = .0000000001; // 100 pA
 
   private final boolean nonLinearCircuit;
   private final boolean isInitialConditions;
@@ -114,15 +114,13 @@ public class ConvergenceTracker {
             // System.out.println(nodeLabel + " difference= " + difference);
             converged = false;
           }
-        }
-        else if (nodeLabel.startsWith("I")) {
+        } else if (nodeLabel.startsWith("I")) {
           if (difference > Math.abs(nodeValue) * RELTOL + ABSTOL) {
             // System.out.println("toleranceI= " + Math.abs(nodeValue) * RELTOL + VNTOL);
             // System.out.println(nodeLabel + " difference= " + difference);
             converged = false;
           }
-        }
-        else {
+        } else {
           throw new IllegalArgumentException("Unknown node label type encountered!");
         }
 

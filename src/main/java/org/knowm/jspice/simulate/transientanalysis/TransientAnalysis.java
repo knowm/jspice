@@ -88,8 +88,8 @@ public class TransientAnalysis {
 
         Driver driver = transientAnalysisDefinition.getDrivers()[i];
         double signal = driver.getSignal(t.doubleValue());
-        // System.out.println(t);
-        // System.out.println(signal);
+        //        System.out.println(t);
+        //        System.out.println(signal);
 
         Component sweepableComponent = circuit.getNetlist().getComponent(transientAnalysisDefinition.getDrivers()[i].getId());
         sweepableComponent.setSweepValue(signal);
@@ -99,7 +99,7 @@ public class TransientAnalysis {
 
         // get operating point to generate a node list for keeping track of time series data map
         dCOperatingPointResult = new DCOperatingPoint(circuit).run();
-        // System.out.println(dCOperatingPointResult.toString());
+        //        System.out.println(dCOperatingPointResult.toString());
 
         for (String nodeLabel : dCOperatingPointResult.getNodeLabels2Value().keySet()) {
           timeSeriesDataMap.put(nodeLabel, new SimulationPlotData());
@@ -107,6 +107,7 @@ public class TransientAnalysis {
         for (String deviceID : dCOperatingPointResult.getDeviceLabels2Value().keySet()) {
           timeSeriesDataMap.put(deviceID, new SimulationPlotData());
         }
+        continue;
       }
 
       // ////////////////////////////////////////////////////
@@ -116,7 +117,7 @@ public class TransientAnalysis {
 
         // solve DC operating point
         dCOperatingPointResult = new DCOperatingPoint(dCOperatingPointResult, circuit, transientAnalysisDefinition.getTimeStep()).run();
-        // System.out.println(dCOperatingPointResult.toString());
+        //        System.out.println(dCOperatingPointResult.toString());
 
         // add all node voltage values
         for (String nodeLabel : dCOperatingPointResult.getNodeLabels2Value().keySet()) {

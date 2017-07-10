@@ -83,20 +83,20 @@ public final class DCOperatingPoint {
 
     convergenceTracker = new ConvergenceTracker(circuit.isNonlinearCircuit(), circuit.isInitialConditions());
 
-    // determine array indices
-    Map<String, Integer> nodeID2ColumnIdxMap = CircuitMatrixSolver.getNodeID2ColumnIdxMap(circuit, timeStep); // <nodeName, array index>
-    // System.out.println("nodeID2ColumnIdxMap= " + nodeID2ColumnIdxMap);
-
-    // unknown Quantity Names
-    String[] unknownQuantityNames = CircuitMatrixSolver.getUnknownVariableNames(nodeID2ColumnIdxMap, circuit, timeStep);
-    // System.out.println("unknownQuantities= " + Arrays.toString(unknownQuantities));
-    // System.out.println("unknownQuantities.length= " + unknownQuantities.length);
-
     do {
-
       //      System.out.println("------------DCOP-------------");
+
+      // determine array indices
+      Map<String, Integer> nodeID2ColumnIdxMap = CircuitMatrixSolver.getNodeID2ColumnIdxMap(circuit, timeStep); // <nodeName, array index>
+      // System.out.println("nodeID2ColumnIdxMap= " + nodeID2ColumnIdxMap);
+
+      // unknown Quantity Names
+      String[] unknownQuantityNames = CircuitMatrixSolver.getUnknownVariableNames(nodeID2ColumnIdxMap, circuit, timeStep);
+      // System.out.println("unknownQuantities= " + Arrays.toString(unknownQuantities));
+      // System.out.println("unknownQuantities.length= " + unknownQuantities.length);
+
       // G
-      // at this point all the non-linear and reactive component have been converted to resistors, dc voltage and current sources/
+      // at this point all the non-linear and reactive component have been converted to resistors, dc voltages and current sources.
       double[][] G = CircuitMatrixSolver.getG(nodeID2ColumnIdxMap, circuit, dcOperatingPointResult, timeStep);
       // System.out.println("G= " + CircuitMatrixSolver.GtoString(G));
 
@@ -132,11 +132,12 @@ public final class DCOperatingPoint {
       //      System.out.println(dcOperatingPointResult.getNodalAnalysisMatrix());
 
       dcOperatingPointResult.generateDeviceCurrents(circuit);
+
     } while (!convergenceTracker.update(dcOperatingPointResult));
 
-    // System.out.println("Iterations= " + convergenceTracker.getNumIterationsToConvergence());
+    //    System.out.println("Iterations= " + convergenceTracker.getNumIterationsToConvergence());
 
-    // System.out.println(dcOperatingPointResult.getNodalAnalysisMatrix());
+    //    System.out.println(dcOperatingPointResult.getNodalAnalysisMatrix());
 
     //    dcOperatingPointResult.generateDeviceCurrents(circuit);
 

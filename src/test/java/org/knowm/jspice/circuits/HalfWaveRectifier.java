@@ -40,7 +40,7 @@ public class HalfWaveRectifier extends Circuit {
   public HalfWaveRectifier() {
 
     // define voltage source
-    Source dcVoltageSource = new DCVoltage("Vsrc", 10.0);
+    Source dcVoltageSource = new DCVoltage("Vsrc", 0.0);
 
     // define resistor
     Component resistorSrc = new Resistor("Rsrc", 50);
