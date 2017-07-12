@@ -25,12 +25,9 @@ import java.util.Map;
 
 import org.knowm.jspice.netlist.Netlist;
 
-/**
- * @author timmolter
- */
 public final class DCOperatingPoint {
 
-  private final Netlist circuit;
+  private final Netlist netlist;
   private final Double timeStep;
   private final DCOperatingPointResult previousDcOperatingPointResult;
   private ConvergenceTracker convergenceTracker;
@@ -64,7 +61,7 @@ public final class DCOperatingPoint {
   public DCOperatingPoint(DCOperatingPointResult previousDcOperatingPointResult, Netlist circuit, Double timeStep) {
 
     this.previousDcOperatingPointResult = previousDcOperatingPointResult;
-    this.circuit = circuit;
+    this.netlist = circuit;
     this.timeStep = timeStep;
   }
 
@@ -77,31 +74,31 @@ public final class DCOperatingPoint {
 
     // long start = System.currentTimeMillis();
 
-    circuit.verifyCircuit();
+    netlist.verifyCircuit();
 
     DCOperatingPointResult dcOperatingPointResult = previousDcOperatingPointResult;
 
-    convergenceTracker = new ConvergenceTracker(circuit.isNonlinearCircuit(), circuit.isInitialConditions());
+    convergenceTracker = new ConvergenceTracker(netlist.isNonlinearCircuit(), netlist.isInitialConditions());
 
     do {
       //      System.out.println("------------DCOP-------------");
 
       // determine array indices
-      Map<String, Integer> nodeID2ColumnIdxMap = CircuitMatrixSolver.getNodeID2ColumnIdxMap(circuit, timeStep); // <nodeName, array index>
+      Map<String, Integer> nodeID2ColumnIdxMap = CircuitMatrixSolver.getNodeID2ColumnIdxMap(netlist, timeStep); // <nodeName, array index>
       // System.out.println("nodeID2ColumnIdxMap= " + nodeID2ColumnIdxMap);
 
       // unknown Quantity Names
-      String[] unknownQuantityNames = CircuitMatrixSolver.getUnknownVariableNames(nodeID2ColumnIdxMap, circuit, timeStep);
+      String[] unknownQuantityNames = CircuitMatrixSolver.getUnknownVariableNames(nodeID2ColumnIdxMap, netlist, timeStep);
       // System.out.println("unknownQuantities= " + Arrays.toString(unknownQuantities));
       // System.out.println("unknownQuantities.length= " + unknownQuantities.length);
 
       // G
       // at this point all the non-linear and reactive component have been converted to resistors, dc voltages and current sources.
-      double[][] G = CircuitMatrixSolver.getG(nodeID2ColumnIdxMap, circuit, dcOperatingPointResult, timeStep);
+      double[][] G = CircuitMatrixSolver.getG(nodeID2ColumnIdxMap, netlist, dcOperatingPointResult, timeStep);
       // System.out.println("G= " + CircuitMatrixSolver.GtoString(G));
 
       // RHS
-      double[] RHS = CircuitMatrixSolver.getRHS(nodeID2ColumnIdxMap, circuit, dcOperatingPointResult, timeStep);
+      double[] RHS = CircuitMatrixSolver.getRHS(nodeID2ColumnIdxMap, netlist, dcOperatingPointResult, timeStep);
       // System.out.println("I= " + Arrays.toString(I));
 
       // trim G, remove "O"th row and column
@@ -119,9 +116,9 @@ public final class DCOperatingPoint {
       double[] RHS_trimmed = CircuitMatrixSolver.trimVector(RHS, nodeID2ColumnIdxMap);
       // System.out.println("RHS_trimmed= " + Arrays.toString(RHS_trimmed));
 
-      if (circuit.isInitialConditions()) {
+      if (netlist.isInitialConditions()) {
 
-        double[] solutionVector = CircuitMatrixSolver.getInitialConditionsSolutionVector(nodeID2ColumnIdxMap, circuit, RHS);
+        double[] solutionVector = CircuitMatrixSolver.getInitialConditionsSolutionVector(nodeID2ColumnIdxMap, netlist, RHS);
         double[] solutionVector_trimmed = CircuitMatrixSolver.trimVector(solutionVector, nodeID2ColumnIdxMap);
         dcOperatingPointResult = CircuitMatrixSolver.solveMatrixWithInitialConditions(solutionVector_trimmed, G_trimmed, unknownQuantityNames,
             RHS_trimmed);
@@ -131,7 +128,7 @@ public final class DCOperatingPoint {
       }
       //      System.out.println(dcOperatingPointResult.getNodalAnalysisMatrix());
 
-      dcOperatingPointResult.generateDeviceCurrents(circuit);
+      dcOperatingPointResult.generateDeviceCurrents(netlist);
 
     } while (!convergenceTracker.update(dcOperatingPointResult));
 

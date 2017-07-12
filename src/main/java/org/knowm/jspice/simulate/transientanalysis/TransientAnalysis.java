@@ -35,9 +35,6 @@ import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 import org.knowm.jspice.simulate.dcoperatingpoint.NodalAnalysisConvergenceException;
 import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 
-/**
- * @author timmolter
- */
 public class TransientAnalysis {
 
   private final Netlist netlist;

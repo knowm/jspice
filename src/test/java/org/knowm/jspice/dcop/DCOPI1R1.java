@@ -23,6 +23,8 @@ package org.knowm.jspice.dcop;
 
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.netlist.NetlistBuilder;
+import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPoint;
+import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 
 /**
  * @author timmolter
@@ -39,13 +41,15 @@ public class DCOPI1R1 {
 
     // Via Builder
 
-    NetlistBuilder builder = new NetlistBuilder()
+    NetlistBuilder builder = new NetlistBuilder().addNetlistDCCurrent("a", 1.0, "1", "0").addNetlistResistor("R1", 1000, "0", "1")
+        .addDCOPSimulationConfig();
 
-        .addNetlistDCCurrent("a", 1.0, new String[]{"1", "0"}).addNetlistResistor("R1", 1000, new String[]{"0", "1"});
-
-    Netlist netList = builder.build();
+    Netlist netlist = builder.build();
 
     System.out.println("builder.getYAML() " + builder.getYAML());
+
+    DCOperatingPointResult dcOpResult = new DCOperatingPoint(netlist).run();
+    System.out.println(dcOpResult.toString());
   }
 
 }

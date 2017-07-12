@@ -3,8 +3,10 @@ package org.knowm.jspice;
 import java.io.IOException;
 
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.simulate.SimulationConfig;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPoint;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
+import org.knowm.jspice.simulate.dcoperatingpoint.SimulationConfigDCOP;
 
 import io.dropwizard.configuration.ConfigurationException;
 import io.dropwizard.configuration.ConfigurationFactory;
@@ -42,14 +44,21 @@ public class JSpice {
 
     ConfigurationSourceProvider provider = new FileConfigurationSourceProvider();
 
-    Netlist netList = yamlConfigurationFactory.build(provider, fileName);
+    Netlist netlist = yamlConfigurationFactory.build(provider, fileName);
 
-    System.out.println("config: " + netList);
+    System.out.println("netList: \n" + netlist);
+
+    //    DCOperatingPointResult dcOpResult = new DCOperatingPoint(netlist).run();
+    //    System.out.println(dcOpResult.toString());
 
     // 3. Run it  
-    //    Circuit circuit = new Circuit(netList);
-    DCOperatingPointResult dcOpResult = new DCOperatingPoint(netList).run();
-    System.out.println(dcOpResult.toString());
+
+    SimulationConfig simulationConfig = netlist.getSimulationConfig();
+    if (simulationConfig instanceof SimulationConfigDCOP) {
+      DCOperatingPointResult dcOpResult = new DCOperatingPoint(netlist).run();
+      System.out.println(dcOpResult.toString());
+    }
+
   }
 
 }

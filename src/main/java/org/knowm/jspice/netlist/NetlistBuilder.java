@@ -3,8 +3,8 @@ package org.knowm.jspice.netlist;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.knowm.jspice.NetlistDCCurrent;
-import org.knowm.jspice.NetlistResistor;
+import org.knowm.jspice.simulate.SimulationConfig;
+import org.knowm.jspice.simulate.dcoperatingpoint.SimulationConfigDCOP;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,19 +15,27 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature;
 
 public class NetlistBuilder {
 
-  Netlist netList;
+  private Netlist netList;
 
-  public List<NetlistComponent> components = new ArrayList<>();
+  List<NetlistComponent> netlistComponents = new ArrayList<>();
 
-  public NetlistBuilder addNetlistResistor(String id, double resistance, String[] nodes) {
+  SimulationConfig simulationConfig;
 
-    components.add(new NetlistResistor(id, resistance, nodes));
+  public NetlistBuilder addNetlistResistor(String id, double resistance, String... nodes) {
+
+    netlistComponents.add(new NetlistResistor(id, resistance, nodes));
     return this;
   }
 
-  public NetlistBuilder addNetlistDCCurrent(String id, double current, String[] nodes) {
+  public NetlistBuilder addNetlistDCCurrent(String id, double current, String... nodes) {
 
-    components.add(new NetlistDCCurrent(id, current, nodes));
+    netlistComponents.add(new NetlistDCCurrent(id, current, nodes));
+    return this;
+  }
+
+  public NetlistBuilder addDCOPSimulationConfig() {
+
+    this.simulationConfig = new SimulationConfigDCOP();
     return this;
   }
 

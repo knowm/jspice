@@ -29,8 +29,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.StringUtils;
-import org.knowm.jspice.NetlistDCCurrent;
-import org.knowm.jspice.NetlistResistor;
 import org.knowm.jspice.component.Component;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 
@@ -44,12 +42,13 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
-@JsonSubTypes({@Type(value = NetlistResistor.class, name = "resistor"), @Type(value = NetlistDCCurrent.class, name = "current")})
+@JsonSubTypes({@Type(value = NetlistResistor.class, name = "resistor"), @Type(value = NetlistDCCurrent.class, name = "dc_current")})
 @JsonPropertyOrder({"nodes"})
 public class NetlistComponent {
 
   @JsonIgnore
   private Component component;
+
   @Valid
   @NotNull
   @JsonProperty("id")
@@ -75,7 +74,7 @@ public class NetlistComponent {
    * @param component
    * @param nodesAsArray
    */
-  public NetlistComponent(Component component, String[] nodesAsArray) {
+  public NetlistComponent(Component component, String... nodesAsArray) {
 
     this.component = component;
     this.id = component.getId();

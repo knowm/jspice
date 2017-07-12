@@ -61,7 +61,7 @@ public class CircuitMatrixSolver {
     // A Set so duplicates are not added
     Set<String> nodeNameSet = new HashSet<String>();
 
-    for (NetlistComponent netlistComponent : netlist.getNetListComponents()) {
+    for (NetlistComponent netlistComponent : netlist.getNetlistComponents()) {
       nodeNameSet.addAll(netlistComponent.getGMatrixColumnIDs(timeStep));
     }
 
@@ -90,7 +90,7 @@ public class CircuitMatrixSolver {
 
     String[] nodeIDs = nodeID2ColumnIdxMap.keySet().toArray(new String[nodeID2ColumnIdxMap.keySet().size()]);
 
-    for (NetlistComponent netlistComponent : netlist.getNetListComponents()) {
+    for (NetlistComponent netlistComponent : netlist.getNetlistComponents()) {
       netlistComponent.modifyUnknownQuantitiesVector(nodeIDs, timeStep);
     }
     return Arrays.copyOfRange(nodeIDs, 1, nodeIDs.length); // trim V(0) off the front of the array
@@ -111,7 +111,7 @@ public class CircuitMatrixSolver {
     double[][] G = new double[nodeID2ColumnIdxMap.size()][nodeID2ColumnIdxMap.size()];
     // System.out.println("G= " + GtoString(G));
 
-    for (NetlistComponent netlistComponent : netlist.getNetListComponents()) {
+    for (NetlistComponent netlistComponent : netlist.getNetlistComponents()) {
       //      System.out.println("netlistComponent " + netlistComponent);
       netlistComponent.stampG(G, netlist, dcOperatingPointResult, nodeID2ColumnIdxMap, timeStep);
     }
@@ -167,7 +167,7 @@ public class CircuitMatrixSolver {
 
     // System.out.println("G= " + GtoString(G));
 
-    for (NetlistComponent netlistComponent : netlist.getNetListComponents()) {
+    for (NetlistComponent netlistComponent : netlist.getNetlistComponents()) {
       netlistComponent.stampRHS(RHS, dcOperatingPointResult, nodeID2ColumnIdxMap, timeStep);
     }
 
