@@ -12,21 +12,10 @@ JSpice was originally written at a time before any mainstream SPICE applications
 
 JSpice is however still useful for rapid prototyping and serves as the simulation engine for [mem-sim](https://github.com/knowm/mem-sim). JSpice may interest you if you are interested in learning the mechanics of modified nodal analysis and your favorite programming langauge is Java. 
 
-## Building
+## Running
 
-JSpice is built with Maven, which also handles dependency management.
+    java -jar jspice.jar test.yml
 
-### general
-
-    cd path/to/project
-    mvn clean install  
-    mvn javadoc:aggregate  
-
-### maven-license-plugin
-
-    mvn license:check
-    mvn license:format
-    mvn license:remove
 
 ## Flow Chart of JSpice
 
@@ -676,5 +665,22 @@ public class TransientAnalysisV1MMSSMem {
 
 
 ## Continuous Integration
+
 [![Build Status](https://travis-ci.org/knowm/jspice.png?branch=develop)](https://travis-ci.org/knowm/jspice.png)  
 [Build History](https://travis-ci.org/knowm/jspice/builds)
+
+## Building
+
+JSpice is built with Maven, which also handles dependency management.
+
+### general
+
+    cd path/to/project
+    mvn clean package  
+    mvn javadoc:aggregate  
+
+### maven-license-plugin
+
+    mvn license:check
+    mvn license:format
+    mvn license:remove

@@ -21,6 +21,8 @@
  */
 package org.knowm.jspice.component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * @author timmolter
  */
@@ -28,5 +30,6 @@ public interface Sweepable {
 
   public void setSweepValue(double value);
 
+  @JsonIgnore
   public double getSweepableValue();
 }

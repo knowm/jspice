@@ -25,14 +25,23 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import org.knowm.jspice.netlist.NetList;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author timmolter
  */
 public class DCCurrent extends Source {
 
+  @Valid
+  @NotNull
+  @JsonProperty("current")
   private double dcCurrent;
 
   /**
@@ -41,7 +50,8 @@ public class DCCurrent extends Source {
    * @param id
    * @param dcCurrent
    */
-  public DCCurrent(String id, double dcCurrent) {
+  @JsonCreator
+  public DCCurrent(@JsonProperty("id") String id, @JsonProperty("current") double dcCurrent) {
 
     super(id);
     this.dcCurrent = dcCurrent;
@@ -69,7 +79,7 @@ public class DCCurrent extends Source {
   public Set<String> getGMatrixColumnIDs(String[] nodes, Double timeStep) {
 
     // Do nothing
-    return Collections.<String>emptySet();
+    return Collections.<String> emptySet();
   }
 
   @Override
@@ -78,21 +88,22 @@ public class DCCurrent extends Source {
     for (int i = 0; i < columnQuantities.length; i++) {
       if (columnQuantities[i].equals(nodes[0]) || columnQuantities[i].equals(nodes[1])) {
         columnQuantities[i] = "V(" + columnQuantities[i] + ")";
-      }
-      else if (columnQuantities[i].equals(getId())) {
+      } else if (columnQuantities[i].equals(getId())) {
         columnQuantities[i] = "I(" + columnQuantities[i] + ")";
       }
     }
   }
 
   @Override
-  public void stampG(double[][] G, NetList netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes, Double timeStep) {
+  public void stampG(double[][] G, NetList netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap,
+      String[] nodes, Double timeStep) {
 
     // Do nothing
   }
 
   @Override
-  public void stampRHS(double[] RHS, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes, Double timeStep) {
+  public void stampRHS(double[] RHS, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes,
+      Double timeStep) {
 
     int idxA = nodeID2ColumnIdxMap.get(nodes[0]);
     int idxB = nodeID2ColumnIdxMap.get(nodes[1]);

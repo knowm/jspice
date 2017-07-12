@@ -25,46 +25,97 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
+import org.apache.commons.lang3.StringUtils;
+import org.knowm.jspice.NetlistDCCurrent;
+import org.knowm.jspice.NetlistResistor;
 import org.knowm.jspice.component.Component;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 
-/**
- * @author timmolter
- */
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({@Type(value = NetlistResistor.class, name = "resistor"), @Type(value = NetlistDCCurrent.class, name = "current")})
+@JsonPropertyOrder({"nodes"})
 public class NetlistComponent {
 
-  private final Component component;
-  private final String[] nodes; // order matters!
+  @JsonIgnore
+  private Component component;
+  @Valid
+  @NotNull
+  @JsonProperty("id")
+  String id;
+
+  @Valid
+  @NotNull
+  String nodes;
+
+  @JsonIgnore
+  String[] nodesAsArray;
 
   /**
+   * Constructor
+   */
+  public NetlistComponent() {
+
+  }
+
+  /**
+   * Constructor
+   * 
+   * @param component
+   * @param nodesAsArray
+   */
+  public NetlistComponent(Component component, String[] nodesAsArray) {
+
+    this.component = component;
+    this.id = component.getId();
+    this.nodesAsArray = nodesAsArray;
+    this.nodes = StringUtils.join(nodesAsArray, ",");
+  }
+
+  /**
+   * Constructor
+   * 
    * @param component
    * @param nodes
    */
-  public NetlistComponent(Component component, String[] nodes) {
+  public NetlistComponent(Component component, String nodes) {
 
     this.component = component;
+    this.id = component.getId();
+    this.nodesAsArray = nodes.split(",");
     this.nodes = nodes;
   }
 
   public Set<String> getGMatrixColumnIDs(Double timeStep) {
 
-    return component.getGMatrixColumnIDs(nodes, timeStep);
+    return component.getGMatrixColumnIDs(nodesAsArray, timeStep);
   }
 
   public void modifyUnknownQuantitiesVector(String[] nodeIDs, Double timeStep) {
 
-    component.modifyUnknowmQuantitiesVector(nodeIDs, nodes, timeStep);
+    component.modifyUnknowmQuantitiesVector(nodeIDs, nodesAsArray, timeStep);
   }
 
   public void stampG(double[][] G, NetList netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap,
       Double timeStep) {
 
-    component.stampG(G, netList, dcOperatingPointResult, nodeID2ColumnIdxMap, nodes, timeStep);
+    component.stampG(G, netList, dcOperatingPointResult, nodeID2ColumnIdxMap, nodesAsArray, timeStep);
   }
 
   public void stampRHS(double[] RHS, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, Double timeStep) {
 
-    component.stampRHS(RHS, dcOperatingPointResult, nodeID2ColumnIdxMap, nodes, timeStep);
+    component.stampRHS(RHS, dcOperatingPointResult, nodeID2ColumnIdxMap, nodesAsArray, timeStep);
   }
 
   public Component getComponent() {
@@ -72,17 +123,42 @@ public class NetlistComponent {
     return component;
   }
 
-  public String[] getNodes() {
+  public String getId() {
+    return id;
+  }
 
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  @JsonIgnore
+  public String[] getNodesAsArray() {
+    return nodesAsArray;
+  }
+
+  @JsonProperty("nodes")
+  public String getNodes() {
     return nodes;
+  }
+
+  @JsonIgnore
+  public void setNodes(String[] nodesAsArray) {
+    this.nodesAsArray = nodesAsArray;
+    this.nodes = StringUtils.join(nodesAsArray, ",");
+  }
+
+  @JsonProperty("nodes")
+  public void setNodes(String nodesCSV) {
+    this.nodesAsArray = nodes.split(",");
+    this.nodes = nodesCSV;
   }
 
   public String toSpiceString() {
 
     StringBuilder sb = new StringBuilder();
     sb.append(component.getId().toLowerCase() + " ");
-    for (int i = 0; i < nodes.length; i++) {
-      sb.append(nodes[i] + " ");
+    for (int i = 0; i < nodesAsArray.length; i++) {
+      sb.append(nodesAsArray[i] + " ");
     }
     sb.append(component.getSweepableValue());
     return sb.toString();
@@ -90,7 +166,6 @@ public class NetlistComponent {
 
   @Override
   public String toString() {
-    return "NetlistComponent [component=" + component + ", nodes=" + Arrays.toString(nodes) + "]";
+    return "NetlistComponent [component=" + component + ", id=" + id + ", nodes=" + Arrays.toString(getNodesAsArray()) + "]";
   }
-
 }

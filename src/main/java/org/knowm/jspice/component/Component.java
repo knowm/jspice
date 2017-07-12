@@ -27,6 +27,9 @@ import java.util.Set;
 import org.knowm.jspice.netlist.NetList;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * @author timmolter
  */
@@ -44,6 +47,7 @@ public abstract class Component implements Sweepable {
   public static final double BETA = Q / (K * TEMP_25_CELCIUS);
   public static final double VT = 1.0 / BETA;
 
+  @JsonProperty("id")
   private final String id;
 
   private double temperature = TEMP_25_CELCIUS;
@@ -64,9 +68,11 @@ public abstract class Component implements Sweepable {
 
   public abstract void modifyUnknowmQuantitiesVector(String[] nodeIDs, String[] nodes, Double timeStep);
 
-  public abstract void stampG(double[][] G, NetList netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes, Double timeStep);
+  public abstract void stampG(double[][] G, NetList netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap,
+      String[] nodes, Double timeStep);
 
-  public abstract void stampRHS(double[] RHS, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes, Double timeStep);
+  public abstract void stampRHS(double[] RHS, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes,
+      Double timeStep);
 
   public String getId() {
 
@@ -80,16 +86,19 @@ public abstract class Component implements Sweepable {
     vt = 1.0 / beta;
   }
 
+  @JsonIgnore
   public double getTemperature() {
 
     return temperature;
   }
 
+  @JsonIgnore
   public double getBeta() {
 
     return beta;
   }
 
+  @JsonIgnore
   public double getVt() {
 
     return vt;

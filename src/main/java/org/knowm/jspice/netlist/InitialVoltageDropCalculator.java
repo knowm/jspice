@@ -55,12 +55,12 @@ public class InitialVoltageDropCalculator {
     for (NetlistComponent dcVoltageSource : dcVoltageSources) {
       //      System.out.println(dcVoltageSource.getNodes()[0]);
       //      System.out.println(dcVoltageSource.getNodes()[1]);
-      if (dcVoltageSource.getNodes()[0].equals(gateNode)) {
+      if (dcVoltageSource.getNodesAsArray()[0].equals(gateNode)) {
         Vg = dcVoltageSource.getComponent().getSweepableValue();
         //        System.out.println("Vg " + Vg);
 
       }
-      if (dcVoltageSource.getNodes()[0].equals(sourceNode)) {
+      if (dcVoltageSource.getNodesAsArray()[0].equals(sourceNode)) {
         Vs = dcVoltageSource.getComponent().getSweepableValue();
         //        System.out.println("Vs " + Vs);
       }

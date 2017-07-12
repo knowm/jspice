@@ -41,8 +41,16 @@ public class Circuit {
   private boolean isNonlinearCircuit = false;
   private boolean isInitialConditions = false;
 
-  // private NonLinearNetlist nonLinearNetlist = null;
-  // private ReactiveNetlist reactiveNetlist = null;
+  public Circuit() {
+
+  }
+
+  public Circuit(NetList jSpiceNetlist) {
+
+    for (NetlistComponent netlistComponent : jSpiceNetlist.getNetListComponents()) {
+      addNetListComponent(netlistComponent.getComponent(), netlistComponent.getNodesAsArray());
+    }
+  }
 
   public void addNetListComponent(Component component, String[] nodes) {
 
@@ -83,7 +91,7 @@ public class Circuit {
 
     for (NetlistComponent netlistComponent : subCircuit.getNetlist().getNetListComponents()) {
       Component component = netlistComponent.getComponent();
-      addNetListComponent(component, netlistComponent.getNodes());
+      addNetListComponent(component, netlistComponent.getNodesAsArray());
     }
   }
 
@@ -102,13 +110,12 @@ public class Circuit {
     for (NetlistComponent netListComponent : netlist.getNetListComponents()) {
       // System.out.println(netListComponent.getComponent().getID() + ": " + netListComponent.getNodeA() + "-" + netListComponent.getNodeB());
 
-      for (int i = 0; i < netListComponent.getNodes().length; i++) {
-        String nodeID = netListComponent.getNodes()[i];
+      for (int i = 0; i < netListComponent.getNodesAsArray().length; i++) {
+        String nodeID = netListComponent.getNodesAsArray()[i];
         Integer count = nodeId2CountMap.get(nodeID);
         if (count == null) {
           nodeId2CountMap.put(nodeID, 1);
-        }
-        else {
+        } else {
           nodeId2CountMap.put(nodeID, count + 1);
         }
       }
@@ -142,19 +149,17 @@ public class Circuit {
         if (dcCurrentSource1.equals(dcCurrentSource2)) {
           // System.out.println("equals");
           continue;
-        }
-        else {
+        } else {
           // System.out.println("comparing");
-          String node1A = dcCurrentSource1.getNodes()[0];
-          String node1B = dcCurrentSource1.getNodes()[1];
-          String node2A = dcCurrentSource2.getNodes()[0];
-          String node2B = dcCurrentSource2.getNodes()[1];
+          String node1A = dcCurrentSource1.getNodesAsArray()[0];
+          String node1B = dcCurrentSource1.getNodesAsArray()[1];
+          String node2A = dcCurrentSource2.getNodesAsArray()[0];
+          String node2B = dcCurrentSource2.getNodesAsArray()[1];
 
           if (node1A.equals(node2A) || node1A.equals(node2B)) { // if one of the nodes matches
             if (node1B.equals(node2A) || node1B.equals(node2B)) {
               // all good parallel
-            }
-            else {
+            } else {
               // only one of the nodes matched, not both!
               if (!node1A.equals("0") && !node1B.equals("0")) { // we don't cound the ground node
                 throw new IllegalArgumentException("Current sources cannot be in series!");
@@ -174,13 +179,12 @@ public class Circuit {
         if (dcVoltageSource1.equals(dcVoltageSource2)) {
           // System.out.println("equals");
           continue;
-        }
-        else {
+        } else {
           // System.out.println("comparing");
-          String node1A = dcVoltageSource1.getNodes()[0];
-          String node1B = dcVoltageSource1.getNodes()[1];
-          String node2A = dcVoltageSource2.getNodes()[0];
-          String node2B = dcVoltageSource2.getNodes()[1];
+          String node1A = dcVoltageSource1.getNodesAsArray()[0];
+          String node1B = dcVoltageSource1.getNodesAsArray()[1];
+          String node2A = dcVoltageSource2.getNodesAsArray()[0];
+          String node2B = dcVoltageSource2.getNodesAsArray()[1];
 
           if (node1A.equals(node2A) || node1A.equals(node2B)) { // if one of the nodes matches
             if (node1B.equals(node2A) || node1B.equals(node2B)) {

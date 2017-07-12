@@ -139,11 +139,13 @@ public class CircuitMatrixSolver {
     double[] solutionVector = new double[RHS_trimmed.length];
 
     for (NetlistComponent netlistComponent : circuit.getNetlist().getNetListCapacitors()) {
-      ((ReactiveElement) netlistComponent.getComponent()).stampSolutionVector(solutionVector, nodeID2ColumnIdxMap, netlistComponent.getNodes());
+      ((ReactiveElement) netlistComponent.getComponent()).stampSolutionVector(solutionVector, nodeID2ColumnIdxMap,
+          netlistComponent.getNodesAsArray());
     }
 
     for (NetlistComponent netlistComponent : circuit.getNetlist().getNetListInductors()) {
-      ((ReactiveElement) netlistComponent.getComponent()).stampSolutionVector(solutionVector, nodeID2ColumnIdxMap, netlistComponent.getNodes());
+      ((ReactiveElement) netlistComponent.getComponent()).stampSolutionVector(solutionVector, nodeID2ColumnIdxMap,
+          netlistComponent.getNodesAsArray());
     }
     return solutionVector;
   }

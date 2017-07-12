@@ -216,8 +216,8 @@ public final class DCOperatingPointResult {
     for (NetlistComponent netListComponent : netlist.getNetListResistors()) {
 
       Resistor resistor = (Resistor) netListComponent.getComponent();
-      double voltageA = getValue("V(" + netListComponent.getNodes()[0] + ")");
-      double voltageB = getValue("V(" + netListComponent.getNodes()[1] + ")");
+      double voltageA = getValue("V(" + netListComponent.getNodesAsArray()[0] + ")");
+      double voltageB = getValue("V(" + netListComponent.getNodesAsArray()[1] + ")");
       double voltageDiff = voltageA - voltageB;
       double current = resistor.getCurrent(voltageDiff);
       deviceLabels2Value.put("I(" + resistor.getId() + ")", current);
@@ -227,8 +227,8 @@ public final class DCOperatingPointResult {
     for (NetlistComponent netListComponent : netlist.getNetListDiodes()) {
 
       Diode diode = (Diode) netListComponent.getComponent();
-      double voltageA = getValue("V(" + netListComponent.getNodes()[0] + ")");
-      double voltageB = getValue("V(" + netListComponent.getNodes()[1] + ")");
+      double voltageA = getValue("V(" + netListComponent.getNodesAsArray()[0] + ")");
+      double voltageB = getValue("V(" + netListComponent.getNodesAsArray()[1] + ")");
       double voltageDiff = voltageA - voltageB;
       double current = diode.getCurrent(voltageDiff);
       deviceLabels2Value.put("I(" + diode.getId() + ")", current);
@@ -238,9 +238,9 @@ public final class DCOperatingPointResult {
     for (NetlistComponent netListComponent : netlist.getNetListMOSFETs()) {
 
       MOSFET mosfet = (MOSFET) netListComponent.getComponent();
-      double Vg = getValue("V(" + netListComponent.getNodes()[0] + ")"); // gate
-      double Vd = getValue("V(" + netListComponent.getNodes()[1] + ")"); // drain
-      double Vs = getValue("V(" + netListComponent.getNodes()[2] + ")"); // source
+      double Vg = getValue("V(" + netListComponent.getNodesAsArray()[0] + ")"); // gate
+      double Vd = getValue("V(" + netListComponent.getNodesAsArray()[1] + ")"); // drain
+      double Vs = getValue("V(" + netListComponent.getNodesAsArray()[2] + ")"); // source
       double Vgs = Vg - Vs;
       double Vds = Vd - Vs;
 
@@ -276,8 +276,8 @@ public final class DCOperatingPointResult {
 
       Inductor inductor = (Inductor) netListComponent.getComponent();
       if (nodeLabels2Value.get("I(" + inductor.getId() + ")") == null) {
-        double voltageA = getValue("V(" + netListComponent.getNodes()[0] + ")");
-        double voltageB = getValue("V(" + netListComponent.getNodes()[1] + ")");
+        double voltageA = getValue("V(" + netListComponent.getNodesAsArray()[0] + ")");
+        double voltageB = getValue("V(" + netListComponent.getNodesAsArray()[1] + ")");
         double voltageDiff = voltageA - voltageB;
         double current = voltageDiff / Inductor.INDUCTOR_DC_RESISTANCE;
         // System.out.println("voltageDiff = " + voltageDiff);
@@ -293,8 +293,8 @@ public final class DCOperatingPointResult {
     for (NetlistComponent netListComponent : netlist.getNetListMemristors()) {
 
       Memristor memristor = (Memristor) netListComponent.getComponent();
-      double voltageA = getValue("V(" + netListComponent.getNodes()[0] + ")");
-      double voltageB = getValue("V(" + netListComponent.getNodes()[1] + ")");
+      double voltageA = getValue("V(" + netListComponent.getNodesAsArray()[0] + ")");
+      double voltageB = getValue("V(" + netListComponent.getNodesAsArray()[1] + ")");
       double voltageDiff = voltageA - voltageB;
       double current = memristor.getCurrent(voltageDiff);
       deviceLabels2Value.put("I(" + memristor.getId() + ")", current);
@@ -304,8 +304,8 @@ public final class DCOperatingPointResult {
     for (NetlistComponent netListComponent : netlist.getNetListVCCSs()) {
 
       VCCS vCCS = (VCCS) netListComponent.getComponent();
-      double voltageA = getValue("V(" + netListComponent.getNodes()[2] + ")");
-      double voltageB = getValue("V(" + netListComponent.getNodes()[3] + ")");
+      double voltageA = getValue("V(" + netListComponent.getNodesAsArray()[2] + ")");
+      double voltageB = getValue("V(" + netListComponent.getNodesAsArray()[3] + ")");
       double voltageDiff = voltageA - voltageB;
       double current = vCCS.getCurrent(voltageDiff);
       deviceLabels2Value.put("I(" + vCCS.getId() + ")", current);

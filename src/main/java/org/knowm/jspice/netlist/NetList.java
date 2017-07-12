@@ -26,6 +26,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import org.knowm.jspice.component.Component;
 import org.knowm.jspice.component.element.linear.Resistor;
 import org.knowm.jspice.component.element.memristor.Memristor;
@@ -40,6 +43,9 @@ import org.knowm.jspice.component.source.DCVoltageArbitrary;
 import org.knowm.jspice.component.source.VCCS;
 import org.knowm.jspice.component.source.VCVS;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * @author timmolter
  */
@@ -48,72 +54,105 @@ public class NetList {
   /**
    * Component List
    */
-  protected final List<NetlistComponent> netListComponents = new ArrayList<NetlistComponent>();
+  @Valid
+  @NotNull
+  @JsonProperty("components")
+  protected List<NetlistComponent> netListComponents = new ArrayList<>();
 
   /**
    * componentId, Component
    */
-  protected Map<String, Component> componentIDMap = new HashMap<String, Component>();
+  @JsonIgnore
+  protected Map<String, Component> componentIDMap = new HashMap<>();
 
   /**
    * Resistor List
    */
-  protected List<NetlistComponent> netListResistors = new ArrayList<NetlistComponent>();
+  @JsonIgnore
+  protected List<NetlistComponent> netListResistors = new ArrayList<>();
 
   /**
    * DCVoltage Source List
    */
-  protected List<NetlistComponent> netListDCVoltageSources = new ArrayList<NetlistComponent>();
+  @JsonIgnore
+  protected List<NetlistComponent> netListDCVoltageSources = new ArrayList<>();
 
   /**
    * DCCurrent Source List
    */
-  protected List<NetlistComponent> netListDCCurrentSources = new ArrayList<NetlistComponent>();
+  @JsonIgnore
+  protected List<NetlistComponent> netListDCCurrentSources = new ArrayList<>();
 
   /**
    * Diode List
    */
-  private final List<NetlistComponent> netListDiodes = new ArrayList<NetlistComponent>();
+  @JsonIgnore
+  private final List<NetlistComponent> netListDiodes = new ArrayList<>();
 
   /**
    * NMOS List
    */
-  private final List<NetlistComponent> netListMOSFETs = new ArrayList<NetlistComponent>();
+  @JsonIgnore
+  private final List<NetlistComponent> netListMOSFETs = new ArrayList<>();
 
   /**
    * Capacitor List
    */
-  private final List<NetlistComponent> netListCapacitors = new ArrayList<NetlistComponent>();
+  @JsonIgnore
+  private final List<NetlistComponent> netListCapacitors = new ArrayList<>();
 
   /**
    * Inductor List
    */
-  private final List<NetlistComponent> netListInductors = new ArrayList<NetlistComponent>();
+  @JsonIgnore
+  private final List<NetlistComponent> netListInductors = new ArrayList<>();
 
   /**
    * Memristor List
    */
-  private final List<NetlistComponent> netListMemristors = new ArrayList<NetlistComponent>();
+  @JsonIgnore
+  private final List<NetlistComponent> netListMemristors = new ArrayList<>();
 
   /**
    * VCCS List
    */
-  private final List<NetlistComponent> netListVCCSs = new ArrayList<NetlistComponent>();
+  @JsonIgnore
+  private final List<NetlistComponent> netListVCCSs = new ArrayList<>();
 
   /**
    * VCVS List
    */
-  private final List<NetlistComponent> netListVCVSs = new ArrayList<NetlistComponent>();
+  @JsonIgnore
+  private final List<NetlistComponent> netListVCVSs = new ArrayList<>();
 
   /**
    * DCVoltageArbitrary List
    */
-  private final List<NetlistComponent> netListDCVoltageArbitrarys = new ArrayList<NetlistComponent>();
+  @JsonIgnore
+  private final List<NetlistComponent> netListDCVoltageArbitrarys = new ArrayList<>();
 
   /**
    * DCCurrentArbitrary List
    */
-  private final List<NetlistComponent> netListDCCurrentArbitrarys = new ArrayList<NetlistComponent>();
+  @JsonIgnore
+  private final List<NetlistComponent> netListDCCurrentArbitrarys = new ArrayList<>();
+
+  /**
+   * no-args Constructor - need this!
+   */
+  public NetList() {
+
+  }
+
+  /**
+   * Constructor
+   *
+   * @param jSpiceNetlistBuilder
+   */
+  public NetList(NetlistBuilder jSpiceNetlistBuilder) {
+
+    this.netListComponents = jSpiceNetlistBuilder.components;
+  }
 
   /**
    * Add a NetListComponent to the Netlist
@@ -133,8 +172,7 @@ public class NetList {
     Component existingComponent = componentIDMap.get(component.getId());
     if (existingComponent != null) {
       throw new IllegalArgumentException("The component ID " + component.getId() + " is not unique!");
-    }
-    else {
+    } else {
       componentIDMap.put(component.getId(), component);
     }
 
@@ -152,8 +190,7 @@ public class NetList {
     else if (component instanceof DCVoltage) {
       if (component instanceof DCVoltageArbitrary) {
         netListDCVoltageArbitrarys.add(netListComponent);
-      }
-      else {
+      } else {
         netListDCVoltageSources.add(netListComponent);
       }
     }
@@ -162,8 +199,7 @@ public class NetList {
     else if (component instanceof DCCurrent) {
       if (component instanceof DCCurrentArbitrary) {
         netListDCCurrentArbitrarys.add(netListComponent);
-      }
-      else {
+      } else {
         netListDCCurrentSources.add(netListComponent);
       }
     }
@@ -202,8 +238,7 @@ public class NetList {
     // add to MOSFET list
     else if (component instanceof MOSFET) {
       netListMOSFETs.add(netListComponent);
-    }
-    else {
+    } else {
       throw new IllegalArgumentException("Unknown  Component Type!");
     }
   }

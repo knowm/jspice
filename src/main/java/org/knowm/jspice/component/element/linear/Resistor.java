@@ -25,8 +25,14 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 import org.knowm.jspice.netlist.NetList;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * A constant-value resistor. No temperature dependence or higher-order dynamic behavior
@@ -35,6 +41,10 @@ import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
  */
 public class Resistor extends LinearElement {
 
+  @Valid
+  @NotNull
+  @JsonProperty("resistance")
+  @Min(0)
   private double resistance;
 
   /**
@@ -43,7 +53,7 @@ public class Resistor extends LinearElement {
    * @param id
    * @param resistance
    */
-  public Resistor(String id, double resistance) {
+  public Resistor(@JsonProperty("id") String id, @JsonProperty("resistance") double resistance) {
 
     super(id);
     this.resistance = resistance;
@@ -98,7 +108,8 @@ public class Resistor extends LinearElement {
   }
 
   @Override
-  public void stampG(double[][] G, NetList netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes, Double timeStep) {
+  public void stampG(double[][] G, NetList netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap,
+      String[] nodes, Double timeStep) {
 
     int idxA = nodeID2ColumnIdxMap.get(nodes[0]);
     int idxB = nodeID2ColumnIdxMap.get(nodes[1]);
@@ -121,7 +132,8 @@ public class Resistor extends LinearElement {
   }
 
   @Override
-  public void stampRHS(double[] RHS, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes, Double timeStep) {
+  public void stampRHS(double[] RHS, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes,
+      Double timeStep) {
 
     // Do nothing
 
