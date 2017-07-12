@@ -107,7 +107,7 @@ public class NetlistComponent {
     component.modifyUnknowmQuantitiesVector(nodeIDs, nodesAsArray, timeStep);
   }
 
-  public void stampG(double[][] G, NetList2 netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap,
+  public void stampG(double[][] G, Netlist netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap,
       Double timeStep) {
 
     component.stampG(G, netList, dcOperatingPointResult, nodeID2ColumnIdxMap, nodesAsArray, timeStep);

@@ -24,7 +24,7 @@ package org.knowm.jspice.component;
 import java.util.Map;
 import java.util.Set;
 
-import org.knowm.jspice.netlist.NetList2;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -68,7 +68,7 @@ public abstract class Component implements Sweepable {
 
   public abstract void modifyUnknowmQuantitiesVector(String[] nodeIDs, String[] nodes, Double timeStep);
 
-  public abstract void stampG(double[][] G, NetList2 netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap,
+  public abstract void stampG(double[][] G, Netlist netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap,
       String[] nodes, Double timeStep);
 
   public abstract void stampRHS(double[] RHS, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes,

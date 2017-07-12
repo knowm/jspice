@@ -28,7 +28,7 @@ import java.util.Map.Entry;
 import org.knowm.jspice.component.Component;
 import org.knowm.jspice.component.NonlinearComponent;
 import org.knowm.jspice.component.element.reactive.ReactiveElement;
-import org.knowm.jspice.netlist.NetList2;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.netlist.NetlistComponent;
 
 /**
@@ -37,7 +37,7 @@ import org.knowm.jspice.netlist.NetlistComponent;
 // TODO get rid of this class?? It just wraps NetList.
 public class Circuit {
 
-  private NetList2 netlist = new NetList2();
+  private Netlist netlist = new Netlist();
   private boolean isNonlinearCircuit = false;
   private boolean isInitialConditions = false;
 
@@ -45,7 +45,7 @@ public class Circuit {
 
   }
 
-  public Circuit(NetList2 jSpiceNetlist) {
+  public Circuit(Netlist jSpiceNetlist) {
 
     for (NetlistComponent netlistComponent : jSpiceNetlist.getNetListComponents()) {
       addNetListComponent(netlistComponent.getComponent(), netlistComponent.getNodesAsArray());
@@ -215,7 +215,7 @@ public class Circuit {
     this.isInitialConditions = isInitialConditions;
   }
 
-  public NetList2 getNetlist() {
+  public Netlist getNetlist() {
 
     return netlist;
   }

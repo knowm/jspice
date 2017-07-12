@@ -39,7 +39,7 @@ public class InitialVoltageDropCalculator {
    * @param isNMOS
    * @return
    */
-  public static double attemptToDetermineVgs(NetList2 netlist, String gateNode, String sourceNode, double defaultValue, boolean isNMOS) {
+  public static double attemptToDetermineVgs(Netlist netlist, String gateNode, String sourceNode, double defaultValue, boolean isNMOS) {
 
     //    System.out.println("isNMOS " + isNMOS);
     //    System.out.println("gate= " + gateNode);

@@ -29,7 +29,7 @@ import org.knowm.jspice.component.Component;
 import org.knowm.jspice.component.NonlinearComponent;
 import org.knowm.jspice.component.element.linear.Resistor;
 import org.knowm.jspice.component.source.DCCurrent;
-import org.knowm.jspice.netlist.NetList2;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.netlist.NetlistComponent;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 
@@ -134,7 +134,7 @@ public class Diode extends Component implements NonlinearComponent {
   }
 
   @Override
-  public void stampG(double[][] G, NetList2 netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap,
+  public void stampG(double[][] G, Netlist netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap,
       String[] nodes, Double timeStep) {
 
     // current source

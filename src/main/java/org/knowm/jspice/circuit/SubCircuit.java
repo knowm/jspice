@@ -22,14 +22,14 @@
 package org.knowm.jspice.circuit;
 
 import org.knowm.jspice.component.Component;
-import org.knowm.jspice.netlist.NetList2;
+import org.knowm.jspice.netlist.Netlist;
 
 /**
  * @author timmolter
  */
 public class SubCircuit {
 
-  private NetList2 subCircuitNetlist = new NetList2();
+  private Netlist subCircuitNetlist = new Netlist();
 
   public void addNetListComponent(Component component, String[] nodes) {
 
@@ -51,7 +51,7 @@ public class SubCircuit {
     addNetListComponent(component, new String[]{nodeA, nodeB, nodeC, nodeD});
   }
 
-  public NetList2 getNetlist() {
+  public Netlist getNetlist() {
 
     return subCircuitNetlist;
   }

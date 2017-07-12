@@ -39,7 +39,7 @@ import org.knowm.jspice.component.element.reactive.Inductor;
 import org.knowm.jspice.component.source.DCCurrent;
 import org.knowm.jspice.component.source.DCCurrentArbitrary;
 import org.knowm.jspice.component.source.VCCS;
-import org.knowm.jspice.netlist.NetList2;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.netlist.NetlistComponent;
 
 /**
@@ -194,7 +194,7 @@ public final class DCOperatingPointResult {
 
     deviceLabels2Value = new TreeMap<String, Double>();
 
-    NetList2 netlist = circuit.getNetlist();
+    Netlist netlist = circuit.getNetlist();
 
     // DC Current Sources
     for (NetlistComponent netListComponent : netlist.getNetListDCCurrentSources()) {

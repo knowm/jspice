@@ -30,7 +30,7 @@ import org.knowm.jspice.component.NonlinearComponent;
 import org.knowm.jspice.component.element.linear.Resistor;
 import org.knowm.jspice.component.source.DCCurrent;
 import org.knowm.jspice.netlist.InitialVoltageDropCalculator;
-import org.knowm.jspice.netlist.NetList2;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.netlist.NetlistComponent;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 
@@ -303,7 +303,7 @@ public abstract class MOSFET extends Component implements NonlinearComponent {
   }
 
   @Override
-  public void stampG(double[][] G, NetList2 netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap,
+  public void stampG(double[][] G, Netlist netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap,
       String[] nodes, Double timeStep) {
 
     //    System.out.println("stampG");
@@ -371,7 +371,7 @@ public abstract class MOSFET extends Component implements NonlinearComponent {
     // no contribution
   }
 
-  private double[] getVgsVdsGuess(NetList2 netList, DCOperatingPointResult dcOperatingPointResult, String[] nodes) {
+  private double[] getVgsVdsGuess(Netlist netList, DCOperatingPointResult dcOperatingPointResult, String[] nodes) {
 
     double VgsGuess = 0.0;
     double VdsGuess = 0.0;
