@@ -1,0 +1,16 @@
+components:
+- type: dc_current
+  nodes: 1,0
+  id: a
+  current: 1.0
+- type: resistor
+  nodes: 0,1
+  id: R1
+  resistance: 1000.0
+sim:
+  type: sweep
+  sweep_id: a
+  observe_id: I(R1)
+  start_value: 0.0
+  end_value: 10.0
+  step_size: 1.0

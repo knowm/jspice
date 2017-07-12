@@ -53,5 +53,12 @@ public class DCSweepI1R1 {
 
     // plot
     SimulationPlotter.plot(dcSweepResult, new String[]{"I(R1)"});
+
+    //    // run via NetlistBuilder
+    //    NetlistBuilder builder = new NetlistBuilder().addNetlistDCCurrent("a", 1.0, "1", "0").addNetlistResistor("R1", 1000, "0", "1")
+    //        .addDCSweepSimulationConfig("a", "I(R1)", 0.0, 10.0, 1.0);
+    //    Netlist netlist = builder.build();
+    //    System.out.println("builder.getYAML() " + builder.getYAML());
+    //    JSpice.simulate(netlist);
   }
 }

@@ -35,33 +35,33 @@ public final class DCOperatingPoint {
   /**
    * Constructor
    *
-   * @param circuit
+   * @param netlist
    */
-  public DCOperatingPoint(Netlist circuit) {
+  public DCOperatingPoint(Netlist netlist) {
 
-    this(circuit, null);
+    this(null, netlist, null);
   }
 
-  /**
-   * Constructor
-   *
-   * @param circuit
-   * @param timeStep
-   */
-  public DCOperatingPoint(Netlist circuit, Double timeStep) {
-
-    this(null, circuit, timeStep);
-  }
+  //  /**
+  //   * Constructor
+  //   *
+  //   * @param netlist
+  //   * @param timeStep
+  //   */
+  //  public DCOperatingPoint(Netlist netlist, Double timeStep) {
+  //
+  //    this(null, netlist, timeStep);
+  //  }
 
   /**
    * @param previousDcOperatingPointResult
-   * @param circuit
+   * @param netlist
    * @param timeStep
    */
-  public DCOperatingPoint(DCOperatingPointResult previousDcOperatingPointResult, Netlist circuit, Double timeStep) {
+  public DCOperatingPoint(DCOperatingPointResult previousDcOperatingPointResult, Netlist netlist, Double timeStep) {
 
     this.previousDcOperatingPointResult = previousDcOperatingPointResult;
-    this.netlist = circuit;
+    this.netlist = netlist;
     this.timeStep = timeStep;
   }
 

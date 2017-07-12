@@ -24,9 +24,6 @@ package org.knowm.jspice.simulate;
 import java.util.Map;
 import java.util.Map.Entry;
 
-/**
- * @author timmolter
- */
 public class SimulationResult {
 
   private final String xDataLabel;

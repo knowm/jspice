@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.knowm.jspice.simulate.SimulationConfig;
 import org.knowm.jspice.simulate.dcoperatingpoint.SimulationConfigDCOP;
+import org.knowm.jspice.simulate.dcsweep.SimulationConfigDCSweep;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,6 +37,12 @@ public class NetlistBuilder {
   public NetlistBuilder addDCOPSimulationConfig() {
 
     this.simulationConfig = new SimulationConfigDCOP();
+    return this;
+  }
+
+  public NetlistBuilder addDCSweepSimulationConfig(String sweepID, String observeID, double startValue, double endValue, double stepSize) {
+
+    this.simulationConfig = new SimulationConfigDCSweep(sweepID, observeID, startValue, endValue, stepSize);
     return this;
   }
 

@@ -212,7 +212,7 @@ public class Netlist {
     // add to Resistor list
     if (component instanceof Resistor) {
 
-      //      netListComponent = new NetlistResistor(component.getId(), component.getSweepableValue(), nodes);
+      netListComponent = new NetlistResistor(component.getId(), component.getSweepableValue(), nodes);
       netListResistors.add(netListComponent);
       netlistComponents.add(netListComponent);
     }
@@ -234,7 +234,7 @@ public class Netlist {
         netListDCCurrentArbitrarys.add(netListComponent);
       } else {
         netListDCCurrentSources.add(netListComponent);
-        //        netListComponent = new NetlistDCCurrent(component.getId(), component.getSweepableValue(), nodes);
+        netListComponent = new NetlistDCCurrent(component.getId(), component.getSweepableValue(), nodes);
         netlistComponents.add(netListComponent);
       }
     }
@@ -415,6 +415,14 @@ public class Netlist {
       sb.append(component.toString());
       sb.append(returnString);
     }
+
+    sb.append("isNonlinearCircuit: ");
+    sb.append(isNonlinearCircuit);
+    sb.append(returnString);
+
+    sb.append("isInitialConditions: ");
+    sb.append(isInitialConditions);
+    sb.append(returnString);
 
     return sb.toString();
   }
