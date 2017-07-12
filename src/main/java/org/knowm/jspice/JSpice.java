@@ -3,7 +3,7 @@ package org.knowm.jspice;
 import java.io.IOException;
 
 import org.knowm.jspice.circuit.Circuit;
-import org.knowm.jspice.netlist.NetList;
+import org.knowm.jspice.netlist.NetList2;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPoint;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 
@@ -38,12 +38,12 @@ public class JSpice {
     //    System.out.println("location " + location);
     // 2. Parse it
 
-    ConfigurationFactory<NetList> yamlConfigurationFactory = new YamlConfigurationFactory<NetList>(NetList.class, BaseValidator.newValidator(),
+    ConfigurationFactory<NetList2> yamlConfigurationFactory = new YamlConfigurationFactory<NetList2>(NetList2.class, BaseValidator.newValidator(),
         Jackson.newObjectMapper(), "");
 
     ConfigurationSourceProvider provider = new FileConfigurationSourceProvider();
 
-    NetList netList = yamlConfigurationFactory.build(provider, fileName);
+    NetList2 netList = yamlConfigurationFactory.build(provider, fileName);
 
     System.out.println("config: " + netList);
 

@@ -49,7 +49,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * @author timmolter
  */
-public class NetList {
+public class NetList2 {
 
   /**
    * Component List
@@ -140,7 +140,7 @@ public class NetList {
   /**
    * no-args Constructor - need this!
    */
-  public NetList() {
+  public NetList2() {
 
   }
 
@@ -149,7 +149,7 @@ public class NetList {
    *
    * @param jSpiceNetlistBuilder
    */
-  public NetList(NetlistBuilder jSpiceNetlistBuilder) {
+  public NetList2(NetlistBuilder jSpiceNetlistBuilder) {
 
     this.netListComponents = jSpiceNetlistBuilder.components;
   }

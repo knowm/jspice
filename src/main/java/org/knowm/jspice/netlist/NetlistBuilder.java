@@ -15,7 +15,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature;
 
 public class NetlistBuilder {
 
-  NetList netList;
+  NetList2 netList;
 
   public List<NetlistComponent> components = new ArrayList<>();
 
@@ -31,9 +31,9 @@ public class NetlistBuilder {
     return this;
   }
 
-  public NetList build() {
+  public NetList2 build() {
 
-    netList = new NetList(this);
+    netList = new NetList2(this);
 
     return netList;
   }

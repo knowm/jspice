@@ -25,7 +25,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.knowm.jspice.netlist.NetList;
+import org.knowm.jspice.netlist.NetList2;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 
 /**
@@ -101,7 +101,7 @@ public class Inductor extends ReactiveElement {
   }
 
   @Override
-  public void stampG(double[][] G, NetList netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes, Double timeStep) {
+  public void stampG(double[][] G, NetList2 netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes, Double timeStep) {
 
     double r_eq = 0.0;
     if (timeStep != null) {

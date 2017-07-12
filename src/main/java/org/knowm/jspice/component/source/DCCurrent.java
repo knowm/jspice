@@ -28,7 +28,7 @@ import java.util.Set;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import org.knowm.jspice.netlist.NetList;
+import org.knowm.jspice.netlist.NetList2;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -95,7 +95,7 @@ public class DCCurrent extends Source {
   }
 
   @Override
-  public void stampG(double[][] G, NetList netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap,
+  public void stampG(double[][] G, NetList2 netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap,
       String[] nodes, Double timeStep) {
 
     // Do nothing

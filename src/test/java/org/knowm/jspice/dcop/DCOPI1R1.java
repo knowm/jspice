@@ -21,7 +21,7 @@
  */
 package org.knowm.jspice.dcop;
 
-import org.knowm.jspice.netlist.NetList;
+import org.knowm.jspice.netlist.NetList2;
 import org.knowm.jspice.netlist.NetlistBuilder;
 
 /**
@@ -43,7 +43,7 @@ public class DCOPI1R1 {
 
         .addNetlistDCCurrent("a", 1.0, new String[]{"1", "0"}).addNetlistResistor("R1", 1000, new String[]{"0", "1"});
 
-    NetList jSpiceNetlist = builder.build();
+    NetList2 netList = builder.build();
 
     System.out.println("builder.getYAML() " + builder.getYAML());
   }
