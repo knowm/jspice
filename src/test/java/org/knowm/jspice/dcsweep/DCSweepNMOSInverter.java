@@ -21,8 +21,8 @@
  */
 package org.knowm.jspice.dcsweep;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.circuits.NMOSInverter;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.dcsweep.DCSweep;
@@ -36,7 +36,7 @@ public class DCSweepNMOSInverter {
   public static void main(String[] args) {
 
     // Circuit
-    Circuit circuit = new NMOSInverter();
+    Netlist circuit = new NMOSInverter();
 
     // SweepDef
     SweepDefinition sweepDef1 = new SweepDefinition("Vin", 0, 5.0, .10);

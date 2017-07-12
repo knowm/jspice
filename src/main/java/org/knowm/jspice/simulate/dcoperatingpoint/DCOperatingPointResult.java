@@ -28,7 +28,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.component.element.linear.Resistor;
 import org.knowm.jspice.component.element.memristor.Memristor;
 import org.knowm.jspice.component.element.nonlinear.Diode;
@@ -188,13 +187,11 @@ public final class DCOperatingPointResult {
     return sb.toString();
   }
 
-  public void generateDeviceCurrents(Circuit circuit) {
+  public void generateDeviceCurrents(Netlist netlist) {
 
     //    System.out.println("HERE");
 
     deviceLabels2Value = new TreeMap<String, Double>();
-
-    Netlist netlist = circuit.getNetlist();
 
     // DC Current Sources
     for (NetlistComponent netListComponent : netlist.getNetListDCCurrentSources()) {
@@ -320,7 +317,7 @@ public final class DCOperatingPointResult {
     // }
 
     // invalidate all calculated results as these would be bogus anyway when in initial conditions are given
-    if (circuit.isInitialConditions()) {
+    if (netlist.isInitialConditions()) {
       for (String key : deviceLabels2Value.keySet()) {
         // deviceLabels2Value.put(key, null);
         deviceLabels2Value.put(key, 0.01);

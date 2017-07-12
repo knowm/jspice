@@ -21,18 +21,18 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.component.Component;
 import org.knowm.jspice.component.element.linear.Resistor;
 import org.knowm.jspice.component.source.DCCurrent;
 import org.knowm.jspice.component.source.Source;
+import org.knowm.jspice.netlist.Netlist;
 
 /**
  * This circuit is simply a dc current source and a single resistor
  *
  * @author timmolter
  */
-public class I1R1 extends Circuit {
+public class I1R1 extends Netlist {
 
   /**
    * Constructor

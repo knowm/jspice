@@ -26,13 +26,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.component.Component;
 import org.knowm.jspice.component.element.linear.Resistor;
 import org.knowm.jspice.component.source.DCCurrent;
 import org.knowm.jspice.component.source.DCVoltage;
 import org.knowm.jspice.component.source.VCCS;
 import org.knowm.jspice.component.source.VCVS;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotData;
 import org.knowm.jspice.simulate.SimulationPreCheck;
 import org.knowm.jspice.simulate.SimulationResult;
@@ -45,7 +45,7 @@ import org.knowm.jspice.simulate.dcoperatingpoint.NodalAnalysisConvergenceExcept
  */
 public class DCSweep {
 
-  private final Circuit circuit;
+  private final Netlist netlist;
 
   private SweepDefinition sweepDef1;
   private SweepDefinition sweepDefOrthoganol;
@@ -53,11 +53,11 @@ public class DCSweep {
   /**
    * Constructor
    *
-   * @param circuit
+   * @param netlist
    */
-  public DCSweep(Circuit circuit) {
+  public DCSweep(Netlist netlist) {
 
-    this.circuit = circuit;
+    this.netlist = netlist;
   }
 
   /**
@@ -87,19 +87,19 @@ public class DCSweep {
   private void verify(SweepDefinition sweepDefinition) {
 
     // make sure componentToSweepID is actually in the circuit netlist
-    SimulationPreCheck.verifyComponentToSweepOrDriveId(circuit, sweepDefinition.getComponentToSweepID());
+    SimulationPreCheck.verifyComponentToSweepOrDriveId(netlist, sweepDefinition.getComponentToSweepID());
   }
 
   public SimulationResult run(String observable) {
 
-    circuit.verifyCircuit();
+    netlist.verifyCircuit();
 
     if (sweepDef1 == null) {
       throw new IllegalArgumentException("No sweepDef found! Use addSweepDef() to add one!");
     }
 
     // 1. load variable to sweep, from sweepDef1
-    Component sweepableComponent1 = circuit.getNetlist().getComponent(sweepDef1.getComponentToSweepID());
+    Component sweepableComponent1 = netlist.getComponent(sweepDef1.getComponentToSweepID());
     SimulationResult dcSweepResult;
 
     if (sweepDefOrthoganol == null) {
@@ -109,12 +109,12 @@ public class DCSweep {
 
       Map<String, SimulationPlotData> combinedSimulationPlotDataMap = new LinkedHashMap<String, SimulationPlotData>();
 
-      Component sweepableComponent2 = circuit.getNetlist().getComponent(sweepDefOrthoganol.getComponentToSweepID());
+      Component sweepableComponent2 = netlist.getComponent(sweepDefOrthoganol.getComponentToSweepID());
       String sweepLabel2 = getSweepLabel(sweepableComponent2);
       for (double i = sweepDefOrthoganol.getStartValue(); i <= sweepDefOrthoganol.getEndValue(); i += sweepDefOrthoganol.getStepSize()) {
 
         // change component value in sweep 1 to i
-        circuit.getNetlist().getComponent(sweepDefOrthoganol.getComponentToSweepID()).setSweepValue(i);
+        netlist.getComponent(sweepDefOrthoganol.getComponentToSweepID()).setSweepValue(i);
         String orthoganolValue = (sweepLabel2 + " = " + i);
         // System.out.println(orthoganolValue);
         SimulationResult singleSimulationResult = new SimulationResult(getSweepLabel(sweepableComponent1), observable,
@@ -162,7 +162,7 @@ public class DCSweep {
 
       // Note: sometimes the DC Op will not converge. Therefore we catch the NodalAnalysisConvergenceException and just skip it
       try {
-        dCOperatingPointResult = new DCOperatingPoint(circuit).run();
+        dCOperatingPointResult = new DCOperatingPoint(netlist).run();
         //        System.out.println(dCOperatingPointResult.toString());
 
         simulationDataMap.get(sweepableComponent.getId()).getxData().add(i);

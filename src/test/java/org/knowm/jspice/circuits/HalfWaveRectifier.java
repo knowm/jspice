@@ -21,18 +21,18 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.component.Component;
 import org.knowm.jspice.component.element.linear.Resistor;
 import org.knowm.jspice.component.element.nonlinear.Diode;
 import org.knowm.jspice.component.element.reactive.Capacitor;
 import org.knowm.jspice.component.source.DCVoltage;
 import org.knowm.jspice.component.source.Source;
+import org.knowm.jspice.netlist.Netlist;
 
 /**
  * @author timmolter
  */
-public class HalfWaveRectifier extends Circuit {
+public class HalfWaveRectifier extends Netlist {
 
   /**
    * Constructor

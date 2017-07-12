@@ -28,8 +28,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import java.util.Map;
 
 import org.junit.Test;
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.circuits.I1V1R6;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.dcoperatingpoint.CircuitMatrixSolver;
 
 /**
@@ -37,7 +37,7 @@ import org.knowm.jspice.simulate.dcoperatingpoint.CircuitMatrixSolver;
  */
 public class TestCircuitMatrixSolver {
 
-  Circuit circuit = new I1V1R6();
+  Netlist circuit = new I1V1R6();
 
   @Test
   public void testGetNodeID2ColumnIdxMap() {

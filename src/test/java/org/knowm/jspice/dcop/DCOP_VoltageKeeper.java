@@ -21,8 +21,8 @@
  */
 package org.knowm.jspice.dcop;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.circuits.VoltageKeeper;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPoint;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 
@@ -33,7 +33,7 @@ public class DCOP_VoltageKeeper {
 
   public static void main(String[] args) {
 
-    Circuit circuit = new VoltageKeeper();
+    Netlist circuit = new VoltageKeeper();
 
     // run DC operating point
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();

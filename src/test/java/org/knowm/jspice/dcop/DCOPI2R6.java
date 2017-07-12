@@ -21,8 +21,8 @@
  */
 package org.knowm.jspice.dcop;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.circuits.I2R6;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPoint;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 
@@ -33,7 +33,7 @@ public class DCOPI2R6 {
 
   public static void main(String[] args) {
 
-    Circuit circuit = new I2R6();
+    Netlist circuit = new I2R6();
 
     // run DC operating point
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();

@@ -21,15 +21,15 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.circuit.subcircuit.TriStateInverter;
 import org.knowm.jspice.component.source.DCVoltage;
 import org.knowm.jspice.component.source.Source;
+import org.knowm.jspice.netlist.Netlist;
 
 /**
  * @author timmolter
  */
-public class TriStateInverterCircuit extends Circuit {
+public class TriStateInverterCircuit extends Netlist {
 
   public TriStateInverterCircuit() {
 

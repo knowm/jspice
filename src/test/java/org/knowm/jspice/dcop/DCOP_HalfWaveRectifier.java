@@ -21,8 +21,8 @@
  */
 package org.knowm.jspice.dcop;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.circuits.HalfWaveRectifier;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPoint;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 
@@ -34,7 +34,7 @@ public class DCOP_HalfWaveRectifier {
   public static void main(String[] args) {
 
     // Circuit
-    Circuit circuit = new HalfWaveRectifier();
+    Netlist circuit = new HalfWaveRectifier();
 
     // run DC operating point
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();

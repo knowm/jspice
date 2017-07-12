@@ -23,14 +23,14 @@ package org.knowm.jspice.simulate.dcoperatingpoint;
 
 import java.util.Map;
 
-import org.knowm.jspice.circuit.Circuit;
+import org.knowm.jspice.netlist.Netlist;
 
 /**
  * @author timmolter
  */
 public final class DCOperatingPoint {
 
-  private final Circuit circuit;
+  private final Netlist circuit;
   private final Double timeStep;
   private final DCOperatingPointResult previousDcOperatingPointResult;
   private ConvergenceTracker convergenceTracker;
@@ -40,7 +40,7 @@ public final class DCOperatingPoint {
    *
    * @param circuit
    */
-  public DCOperatingPoint(Circuit circuit) {
+  public DCOperatingPoint(Netlist circuit) {
 
     this(circuit, null);
   }
@@ -51,7 +51,7 @@ public final class DCOperatingPoint {
    * @param circuit
    * @param timeStep
    */
-  public DCOperatingPoint(Circuit circuit, Double timeStep) {
+  public DCOperatingPoint(Netlist circuit, Double timeStep) {
 
     this(null, circuit, timeStep);
   }
@@ -61,7 +61,7 @@ public final class DCOperatingPoint {
    * @param circuit
    * @param timeStep
    */
-  public DCOperatingPoint(DCOperatingPointResult previousDcOperatingPointResult, Circuit circuit, Double timeStep) {
+  public DCOperatingPoint(DCOperatingPointResult previousDcOperatingPointResult, Netlist circuit, Double timeStep) {
 
     this.previousDcOperatingPointResult = previousDcOperatingPointResult;
     this.circuit = circuit;

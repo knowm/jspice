@@ -21,8 +21,8 @@
  */
 package org.knowm.jspice.transientanalysis;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.circuits.BusKeeper;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
@@ -38,7 +38,7 @@ public class TransientAnalysisBusKeeper {
   public static void main(String[] args) {
 
     // Circuit
-    Circuit circuit = new BusKeeper();
+    Netlist circuit = new BusKeeper();
 
     // Driver driver = new Sine("Vin", 2.5, 0, 2.5, 1.0);
     // Driver driver = new Square("Vin", 2.5, 0, 2.5, 1.0);

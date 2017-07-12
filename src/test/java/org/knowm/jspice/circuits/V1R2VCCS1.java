@@ -21,17 +21,17 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.component.Component;
 import org.knowm.jspice.component.element.linear.Resistor;
 import org.knowm.jspice.component.source.DCVoltage;
 import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.component.source.VCCS;
+import org.knowm.jspice.netlist.Netlist;
 
 /**
  * @author timmolter
  */
-public class V1R2VCCS1 extends Circuit {
+public class V1R2VCCS1 extends Netlist {
 
   /**
    * Constructor

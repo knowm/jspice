@@ -38,8 +38,8 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 import org.apache.commons.math3.linear.SingularMatrixException;
 import org.apache.commons.math3.linear.SingularValueDecomposition;
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.component.element.reactive.ReactiveElement;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.netlist.NetlistComponent;
 
 /**
@@ -50,19 +50,18 @@ public class CircuitMatrixSolver {
   /**
    * Find all the nodes (and dc voltage sources that need a column) in the circuit, and maps the given node labels to an array index
    *
-   * @param circuit
-   * @param timeStep
+   * @param netlist
    * @param timeStep
    * @return
    */
-  public static Map<String, Integer> getNodeID2ColumnIdxMap(Circuit circuit, Double timeStep) {
+  public static Map<String, Integer> getNodeID2ColumnIdxMap(Netlist netlist, Double timeStep) {
 
     Map<String, Integer> nodeID2ColumnIdxMap = new TreeMap<String, Integer>(); // return value
 
     // A Set so duplicates are not added
     Set<String> nodeNameSet = new HashSet<String>();
 
-    for (NetlistComponent netlistComponent : circuit.getNetlist().getNetListComponents()) {
+    for (NetlistComponent netlistComponent : netlist.getNetListComponents()) {
       nodeNameSet.addAll(netlistComponent.getGMatrixColumnIDs(timeStep));
     }
 
@@ -83,15 +82,15 @@ public class CircuitMatrixSolver {
    * Get the unknowns we are solving for, aka the `v` vector
    *
    * @param nodeID2ColumnIdxMap
-   * @param circuit
+   * @param netlist
    * @param timeStep
    * @return
    */
-  public static String[] getUnknownVariableNames(Map<String, Integer> nodeID2ColumnIdxMap, Circuit circuit, Double timeStep) {
+  public static String[] getUnknownVariableNames(Map<String, Integer> nodeID2ColumnIdxMap, Netlist netlist, Double timeStep) {
 
     String[] nodeIDs = nodeID2ColumnIdxMap.keySet().toArray(new String[nodeID2ColumnIdxMap.keySet().size()]);
 
-    for (NetlistComponent netlistComponent : circuit.getNetlist().getNetListComponents()) {
+    for (NetlistComponent netlistComponent : netlist.getNetListComponents()) {
       netlistComponent.modifyUnknownQuantitiesVector(nodeIDs, timeStep);
     }
     return Arrays.copyOfRange(nodeIDs, 1, nodeIDs.length); // trim V(0) off the front of the array
@@ -101,20 +100,20 @@ public class CircuitMatrixSolver {
    * builds G for G v = i
    *
    * @param nodeID2ColumnIdxMap
-   * @param circuit
+   * @param netlist
    * @param dcOperatingPointResult
    * @param timeStep
    * @return
    */
-  public static double[][] getG(Map<String, Integer> nodeID2ColumnIdxMap, Circuit circuit, DCOperatingPointResult dcOperatingPointResult,
+  public static double[][] getG(Map<String, Integer> nodeID2ColumnIdxMap, Netlist netlist, DCOperatingPointResult dcOperatingPointResult,
       Double timeStep) {
 
     double[][] G = new double[nodeID2ColumnIdxMap.size()][nodeID2ColumnIdxMap.size()];
     // System.out.println("G= " + GtoString(G));
 
-    for (NetlistComponent netlistComponent : circuit.getNetlist().getNetListComponents()) {
+    for (NetlistComponent netlistComponent : netlist.getNetListComponents()) {
       //      System.out.println("netlistComponent " + netlistComponent);
-      netlistComponent.stampG(G, circuit.getNetlist(), dcOperatingPointResult, nodeID2ColumnIdxMap, timeStep);
+      netlistComponent.stampG(G, netlist, dcOperatingPointResult, nodeID2ColumnIdxMap, timeStep);
     }
 
     return G;
@@ -134,16 +133,16 @@ public class CircuitMatrixSolver {
     return sb.toString();
   }
 
-  public static double[] getInitialConditionsSolutionVector(Map<String, Integer> nodeID2ColumnIdxMap, Circuit circuit, double[] RHS_trimmed) {
+  public static double[] getInitialConditionsSolutionVector(Map<String, Integer> nodeID2ColumnIdxMap, Netlist netlist, double[] RHS_trimmed) {
 
     double[] solutionVector = new double[RHS_trimmed.length];
 
-    for (NetlistComponent netlistComponent : circuit.getNetlist().getNetListCapacitors()) {
+    for (NetlistComponent netlistComponent : netlist.getNetListCapacitors()) {
       ((ReactiveElement) netlistComponent.getComponent()).stampSolutionVector(solutionVector, nodeID2ColumnIdxMap,
           netlistComponent.getNodesAsArray());
     }
 
-    for (NetlistComponent netlistComponent : circuit.getNetlist().getNetListInductors()) {
+    for (NetlistComponent netlistComponent : netlist.getNetListInductors()) {
       ((ReactiveElement) netlistComponent.getComponent()).stampSolutionVector(solutionVector, nodeID2ColumnIdxMap,
           netlistComponent.getNodesAsArray());
     }
@@ -154,11 +153,11 @@ public class CircuitMatrixSolver {
    * builds i for G v = i
    *
    * @param nodeID2ColumnIdxMap
-   * @param circuit
+   * @param netlist
    * @param timeStep
    * @return
    */
-  public static double[] getRHS(Map<String, Integer> nodeID2ColumnIdxMap, Circuit circuit, DCOperatingPointResult dcOperatingPointResult,
+  public static double[] getRHS(Map<String, Integer> nodeID2ColumnIdxMap, Netlist netlist, DCOperatingPointResult dcOperatingPointResult,
       Double timeStep) {
 
     /////////////////////////////////////////////////////////////////////////////////////////
@@ -168,7 +167,7 @@ public class CircuitMatrixSolver {
 
     // System.out.println("G= " + GtoString(G));
 
-    for (NetlistComponent netlistComponent : circuit.getNetlist().getNetListComponents()) {
+    for (NetlistComponent netlistComponent : netlist.getNetListComponents()) {
       netlistComponent.stampRHS(RHS, dcOperatingPointResult, nodeID2ColumnIdxMap, timeStep);
     }
 

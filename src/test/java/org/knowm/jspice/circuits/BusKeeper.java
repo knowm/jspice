@@ -21,15 +21,15 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.circuit.subcircuit.CMOSInverter;
 import org.knowm.jspice.component.source.DCVoltage;
 import org.knowm.jspice.component.source.Source;
+import org.knowm.jspice.netlist.Netlist;
 
 /**
  * @author timmolter
  */
-public class BusKeeper extends Circuit {
+public class BusKeeper extends Netlist {
 
   /**
    * Constructor

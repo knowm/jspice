@@ -23,16 +23,16 @@ package org.knowm.jspice.simulate;
 
 import java.util.Set;
 
-import org.knowm.jspice.circuit.Circuit;
+import org.knowm.jspice.netlist.Netlist;
 
 /**
  * @author timmolter
  */
 public class SimulationPreCheck {
 
-  public static void verifyComponentToSweepOrDriveId(Circuit circuit, String componentId) {
+  public static void verifyComponentToSweepOrDriveId(Netlist netlist, String componentId) {
 
-    Set<String> componentIDs = circuit.getNetlist().getComponentIDMap().keySet();
+    Set<String> componentIDs = netlist.getComponentIDMap().keySet();
     if (!componentIDs.contains(componentId)) {
       throw new IllegalArgumentException(componentId + " could not be found in the circuit!");
     }

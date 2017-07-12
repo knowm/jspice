@@ -21,8 +21,8 @@
  */
 package org.knowm.jspice.transientanalysis;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.circuits.HalfWaveRectifier;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
@@ -35,7 +35,7 @@ public class TransientAnalysisHalfWaveRectifier {
   public static void main(String[] args) {
 
     // Circuit
-    Circuit circuit = new HalfWaveRectifier();
+    Netlist circuit = new HalfWaveRectifier();
 
     Driver driver = new Sine("Vsrc", 0, 0, 12, 60.0);
     Driver[] drivers = new Driver[]{driver};

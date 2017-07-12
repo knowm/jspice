@@ -21,19 +21,19 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.component.Component;
 import org.knowm.jspice.component.element.linear.Resistor;
 import org.knowm.jspice.component.element.reactive.Capacitor;
 import org.knowm.jspice.component.source.DCCurrentArbitrary;
 import org.knowm.jspice.component.source.DCVoltage;
 import org.knowm.jspice.component.source.Source;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 
 /**
  * @author timmolter
  */
-public class Integrator2 extends Circuit {
+public class Integrator2 extends Netlist {
 
   /**
    * Constructor

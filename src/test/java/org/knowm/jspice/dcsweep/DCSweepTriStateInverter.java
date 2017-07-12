@@ -21,8 +21,8 @@
  */
 package org.knowm.jspice.dcsweep;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.circuits.TriStateInverterCircuit;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.dcsweep.DCSweep;
@@ -37,7 +37,7 @@ public class DCSweepTriStateInverter {
 
     // Circuit
     // Circuit circuit = new TriStateInverter_Debug();
-    Circuit circuit = new TriStateInverterCircuit();
+    Netlist circuit = new TriStateInverterCircuit();
 
     // SweepDef
     SweepDefinition sweepDef1 = new SweepDefinition("Vin", 0, 5, .10);

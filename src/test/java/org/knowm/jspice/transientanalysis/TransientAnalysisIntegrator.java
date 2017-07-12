@@ -21,8 +21,8 @@
  */
 package org.knowm.jspice.transientanalysis;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.circuits.Integrator;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
@@ -38,7 +38,7 @@ public class TransientAnalysisIntegrator {
   public static void main(String[] args) {
 
     // Circuit
-    Circuit circuit = new Integrator();
+    Netlist circuit = new Integrator();
 
     Driver driver = new Sine("V1", 0, 0, 1.0, 1.0);
     Driver[] drivers = new Driver[]{driver};

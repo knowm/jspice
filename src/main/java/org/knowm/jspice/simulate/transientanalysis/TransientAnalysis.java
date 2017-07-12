@@ -25,8 +25,8 @@ import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.component.Component;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotData;
 import org.knowm.jspice.simulate.SimulationPreCheck;
 import org.knowm.jspice.simulate.SimulationResult;
@@ -40,18 +40,18 @@ import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
  */
 public class TransientAnalysis {
 
-  private final Circuit circuit;
+  private final Netlist netlist;
   private final TransientAnalysisDefinition transientAnalysisDefinition;
 
   /**
    * Constructor
    *
-   * @param circuit
+   * @param netlist
    * @param transientAnalysisDefinition
    */
-  public TransientAnalysis(Circuit circuit, TransientAnalysisDefinition transientAnalysisDefinition) {
+  public TransientAnalysis(Netlist netlist, TransientAnalysisDefinition transientAnalysisDefinition) {
 
-    this.circuit = circuit;
+    this.netlist = netlist;
     this.transientAnalysisDefinition = transientAnalysisDefinition;
   }
 
@@ -91,14 +91,14 @@ public class TransientAnalysis {
         //        System.out.println(t);
         //        System.out.println(signal);
 
-        Component sweepableComponent = circuit.getNetlist().getComponent(transientAnalysisDefinition.getDrivers()[i].getId());
+        Component sweepableComponent = netlist.getComponent(transientAnalysisDefinition.getDrivers()[i].getId());
         sweepableComponent.setSweepValue(signal);
       }
 
       if (dCOperatingPointResult == null) { // initial DC operating point, no reactive component linear companion models
 
         // get operating point to generate a node list for keeping track of time series data map
-        dCOperatingPointResult = new DCOperatingPoint(circuit).run();
+        dCOperatingPointResult = new DCOperatingPoint(netlist).run();
         //        System.out.println(dCOperatingPointResult.toString());
 
         for (String nodeLabel : dCOperatingPointResult.getNodeLabels2Value().keySet()) {
@@ -113,10 +113,10 @@ public class TransientAnalysis {
       // ////////////////////////////////////////////////////
 
       try {
-        circuit.setInitialConditions(false);
+        netlist.setInitialConditions(false);
 
         // solve DC operating point
-        dCOperatingPointResult = new DCOperatingPoint(dCOperatingPointResult, circuit, transientAnalysisDefinition.getTimeStep()).run();
+        dCOperatingPointResult = new DCOperatingPoint(dCOperatingPointResult, netlist, transientAnalysisDefinition.getTimeStep()).run();
         //        System.out.println(dCOperatingPointResult.toString());
 
         // add all node voltage values
@@ -150,7 +150,7 @@ public class TransientAnalysis {
 
     // make sure componentToSweepID is actually in the circuit netlist
     for (int j = 0; j < transientAnalysisDefinition.getDrivers().length; j++) {
-      SimulationPreCheck.verifyComponentToSweepOrDriveId(circuit, transientAnalysisDefinition.getDrivers()[j].getId());
+      SimulationPreCheck.verifyComponentToSweepOrDriveId(netlist, transientAnalysisDefinition.getDrivers()[j].getId());
     }
   }
 }

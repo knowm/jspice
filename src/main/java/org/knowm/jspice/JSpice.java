@@ -2,7 +2,6 @@ package org.knowm.jspice;
 
 import java.io.IOException;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPoint;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
@@ -48,8 +47,8 @@ public class JSpice {
     System.out.println("config: " + netList);
 
     // 3. Run it  
-    Circuit circuit = new Circuit(netList);
-    DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
+    //    Circuit circuit = new Circuit(netList);
+    DCOperatingPointResult dcOpResult = new DCOperatingPoint(netList).run();
     System.out.println(dcOpResult.toString());
   }
 

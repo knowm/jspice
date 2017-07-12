@@ -27,12 +27,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.component.element.linear.LinearElement;
 import org.knowm.jspice.component.element.linear.Resistor;
 import org.knowm.jspice.component.source.DCCurrent;
 import org.knowm.jspice.component.source.DCVoltage;
 import org.knowm.jspice.component.source.Source;
+import org.knowm.jspice.netlist.Netlist;
 
 /**
  * @author timmolter
@@ -42,7 +42,7 @@ public class TestCircuitRuntimeExceptions {
   @Test
   public void testNoNode0Exception() {
 
-    Circuit circuit = new Circuit();
+    Netlist circuit = new Netlist();
 
     // define current source
     Source dcCurrentSource = new DCCurrent("a", 1.0);
@@ -69,7 +69,7 @@ public class TestCircuitRuntimeExceptions {
   @Test
   public void testDanglingNodeException() {
 
-    Circuit circuit = new Circuit();
+    Netlist circuit = new Netlist();
 
     // define current source
     Source dcCurrentSource = new DCCurrent("a", 1.0);
@@ -94,7 +94,7 @@ public class TestCircuitRuntimeExceptions {
   @Test
   public void testMinimumNetListSizeException() {
 
-    Circuit circuit = new Circuit();
+    Netlist circuit = new Netlist();
 
     // define current source
     Source dcCurrentSource = new DCCurrent("a", 1.0);
@@ -113,7 +113,7 @@ public class TestCircuitRuntimeExceptions {
   @Test
   public void testNonUniqueNameException() {
 
-    Circuit circuit = new Circuit();
+    Netlist circuit = new Netlist();
 
     // define current source
     Source dcCurrentSource = new DCCurrent("a", 1.0);
@@ -140,7 +140,7 @@ public class TestCircuitRuntimeExceptions {
   @Test
   public void testConnectedToSameNodeException() {
 
-    Circuit circuit = new Circuit();
+    Netlist circuit = new Netlist();
 
     // define resistors
     LinearElement resistor1 = new Resistor("R1", 10);
@@ -158,7 +158,7 @@ public class TestCircuitRuntimeExceptions {
   @Test
   public void testSeriesCurrentSourcesException() {
 
-    Circuit circuit = new Circuit();
+    Netlist circuit = new Netlist();
 
     // define current source
     Source dcCurrentSourceA = new DCCurrent("a", 1.0);
@@ -183,7 +183,7 @@ public class TestCircuitRuntimeExceptions {
   @Test
   public void testParalleVoltageSourcesException() {
 
-    Circuit circuit = new Circuit();
+    Netlist circuit = new Netlist();
 
     // define current source
     Source dcVoltageSourceA = new DCVoltage("a", 10.0);

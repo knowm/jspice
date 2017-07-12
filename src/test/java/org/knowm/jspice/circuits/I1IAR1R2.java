@@ -21,18 +21,18 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.component.Component;
 import org.knowm.jspice.component.element.linear.Resistor;
 import org.knowm.jspice.component.source.DCCurrent;
 import org.knowm.jspice.component.source.DCCurrentArbitrary;
 import org.knowm.jspice.component.source.Source;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 
 /**
  * @author timmolter
  */
-public class I1IAR1R2 extends Circuit {
+public class I1IAR1R2 extends Netlist {
 
   public I1IAR1R2() {
 

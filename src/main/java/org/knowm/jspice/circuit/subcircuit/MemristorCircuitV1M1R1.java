@@ -21,17 +21,17 @@
  */
 package org.knowm.jspice.circuit.subcircuit;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.component.Component;
 import org.knowm.jspice.component.element.linear.Resistor;
 import org.knowm.jspice.component.element.memristor.Memristor;
 import org.knowm.jspice.component.source.DCVoltage;
 import org.knowm.jspice.component.source.Source;
+import org.knowm.jspice.netlist.Netlist;
 
 /**
  * @author timmolter
  */
-public class MemristorCircuitV1M1R1 extends Circuit {
+public class MemristorCircuitV1M1R1 extends Netlist {
 
   /**
    * Constructor

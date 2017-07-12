@@ -21,8 +21,8 @@
  */
 package org.knowm.jspice.transientanalysis;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.circuits.V1MMSSMem;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
@@ -35,7 +35,7 @@ public class TransientAnalysisV1MMSSMem {
   public static void main(String[] args) {
 
     // Circuit
-    Circuit circuit = new V1MMSSMem();
+    Netlist circuit = new V1MMSSMem();
 
     Driver driver = new Sine("Vdd", 0.0, 0, 0.5, 100.0);
     Driver[] drivers = new Driver[]{driver};

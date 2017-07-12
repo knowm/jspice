@@ -27,7 +27,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 
 import org.junit.Test;
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.circuits.CMOSInverterCircuit;
 import org.knowm.jspice.circuits.I1R1;
 import org.knowm.jspice.circuits.I1R3;
@@ -44,6 +43,7 @@ import org.knowm.jspice.circuits.V1R4;
 import org.knowm.jspice.circuits.V2R4;
 import org.knowm.jspice.circuits.V2R5;
 import org.knowm.jspice.circuits.V2R6;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPoint;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 
@@ -55,7 +55,7 @@ public class TestDCOPCircuits {
   @Test
   public void testI1R1() {
 
-    Circuit circuit = new I1R1();
+    Netlist circuit = new I1R1();
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
@@ -65,7 +65,7 @@ public class TestDCOPCircuits {
   @Test
   public void testI1R3() {
 
-    Circuit circuit = new I1R3();
+    Netlist circuit = new I1R3();
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
@@ -76,7 +76,7 @@ public class TestDCOPCircuits {
   @Test
   public void testI1R4() {
 
-    Circuit circuit = new I1R4();
+    Netlist circuit = new I1R4();
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
@@ -88,7 +88,7 @@ public class TestDCOPCircuits {
   @Test
   public void testI2R4() {
 
-    Circuit circuit = new I2R4();
+    Netlist circuit = new I2R4();
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
@@ -100,7 +100,7 @@ public class TestDCOPCircuits {
   @Test
   public void testI2R6() {
 
-    Circuit circuit = new I2R6();
+    Netlist circuit = new I2R6();
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
@@ -114,7 +114,7 @@ public class TestDCOPCircuits {
   @Test
   public void testI1V1R6() {
 
-    Circuit circuit = new I1V1R6();
+    Netlist circuit = new I1V1R6();
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
@@ -128,7 +128,7 @@ public class TestDCOPCircuits {
   @Test
   public void testV1R1() {
 
-    Circuit circuit = new V1R1();
+    Netlist circuit = new V1R1();
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
@@ -138,7 +138,7 @@ public class TestDCOPCircuits {
   @Test
   public void testV1R3() {
 
-    Circuit circuit = new V1R3();
+    Netlist circuit = new V1R3();
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
@@ -149,7 +149,7 @@ public class TestDCOPCircuits {
   @Test
   public void testV1R4() {
 
-    Circuit circuit = new V1R4();
+    Netlist circuit = new V1R4();
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
@@ -161,7 +161,7 @@ public class TestDCOPCircuits {
   @Test
   public void testV2R4() {
 
-    Circuit circuit = new V2R4();
+    Netlist circuit = new V2R4();
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
@@ -174,7 +174,7 @@ public class TestDCOPCircuits {
   @Test
   public void testV2R5() {
 
-    Circuit circuit = new V2R5();
+    Netlist circuit = new V2R5();
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
@@ -187,7 +187,7 @@ public class TestDCOPCircuits {
   @Test
   public void testV2R6() {
 
-    Circuit circuit = new V2R6();
+    Netlist circuit = new V2R6();
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
@@ -200,7 +200,7 @@ public class TestDCOPCircuits {
   @Test
   public void testV1D1() {
 
-    Circuit circuit = new V1D1();
+    Netlist circuit = new V1D1();
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     //    System.out.println(dcOpResult.toString());
 
@@ -211,7 +211,7 @@ public class TestDCOPCircuits {
   @Test
   public void testNMOSInverter() {
 
-    Circuit circuit = new NMOSInverter();
+    Netlist circuit = new NMOSInverter();
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
     // System.out.println(Arrays.toString(dcOpResult.getV()));
@@ -223,7 +223,7 @@ public class TestDCOPCircuits {
   @Test
   public void testPMOSInverter() {
 
-    Circuit circuit = new PMOSInverter();
+    Netlist circuit = new PMOSInverter();
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
     // System.out.println(Arrays.toString(dcOpResult.getV()));
@@ -235,7 +235,7 @@ public class TestDCOPCircuits {
   @Test
   public void testCMOSInverter() {
 
-    Circuit circuit = new CMOSInverterCircuit();
+    Netlist circuit = new CMOSInverterCircuit();
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     //    System.out.println(dcOpResult.toString());
     //    System.out.println(Arrays.toString(dcOpResult.getV()));

@@ -21,8 +21,8 @@
  */
 package org.knowm.jspice.transientanalysis;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.circuits.V1R8C8;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
@@ -38,7 +38,7 @@ public class TransientAnalysisV1R8C8 {
   public static void main(String[] args) {
 
     // Circuit
-    Circuit circuit = new V1R8C8();
+    Netlist circuit = new V1R8C8();
 
     Driver driver = new Square("V1", 5, 0, 5, 1000.0);
     Driver[] drivers = new Driver[]{driver};

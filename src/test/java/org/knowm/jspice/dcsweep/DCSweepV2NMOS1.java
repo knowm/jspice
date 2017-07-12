@@ -21,8 +21,8 @@
  */
 package org.knowm.jspice.dcsweep;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.circuits.V2NMOS1;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.dcsweep.DCSweep;
@@ -33,7 +33,7 @@ public class DCSweepV2NMOS1 {
   public static void main(String[] args) {
 
     // Circuit
-    Circuit circuit = new V2NMOS1();
+    Netlist circuit = new V2NMOS1();
 
     // SweepDef
     SweepDefinition sweepDef1 = new SweepDefinition("Vdd", 0.0, 10.0, 0.1);

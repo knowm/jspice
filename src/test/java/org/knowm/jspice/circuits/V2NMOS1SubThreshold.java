@@ -21,16 +21,16 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.component.Component;
 import org.knowm.jspice.component.element.nonlinear.NMOS;
 import org.knowm.jspice.component.source.DCVoltage;
 import org.knowm.jspice.component.source.Source;
+import org.knowm.jspice.netlist.Netlist;
 
 /**
  * @author timmolter
  */
-public class V2NMOS1SubThreshold extends Circuit {
+public class V2NMOS1SubThreshold extends Netlist {
 
   public V2NMOS1SubThreshold() {
 

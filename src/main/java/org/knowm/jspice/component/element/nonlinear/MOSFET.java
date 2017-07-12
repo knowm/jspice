@@ -29,8 +29,8 @@ import org.knowm.jspice.component.Component;
 import org.knowm.jspice.component.NonlinearComponent;
 import org.knowm.jspice.component.element.linear.Resistor;
 import org.knowm.jspice.component.source.DCCurrent;
-import org.knowm.jspice.netlist.InitialVoltageDropCalculator;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.InitialVoltageDropCalculator;
 import org.knowm.jspice.netlist.NetlistComponent;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 

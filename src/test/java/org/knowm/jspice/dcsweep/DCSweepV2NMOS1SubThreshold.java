@@ -21,8 +21,8 @@
  */
 package org.knowm.jspice.dcsweep;
 
-import org.knowm.jspice.circuit.Circuit;
 import org.knowm.jspice.circuits.V2NMOS1SubThreshold;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.dcsweep.DCSweep;
@@ -36,7 +36,7 @@ public class DCSweepV2NMOS1SubThreshold {
   public static void main(String[] args) {
 
     // Circuit
-    Circuit circuit = new V2NMOS1SubThreshold();
+    Netlist circuit = new V2NMOS1SubThreshold();
 
     // SweepDef
     // SweepDefinition sweepDef1 = new SweepDefinition("Vgs", 2.3, 2.4999, .001, "I(NMOS1)");
