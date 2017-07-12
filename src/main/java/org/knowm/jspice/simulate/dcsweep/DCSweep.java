@@ -159,12 +159,12 @@ public class DCSweep {
 
       sweepableComponent.setSweepValue(i.doubleValue());
 
-      System.out.println("i= " + i);
+      //      System.out.println("i= " + i);
 
       // Note: sometimes the DC Op will not converge. Therefore we catch the NodalAnalysisConvergenceException and just skip it
       try {
         dCOperatingPointResult = new DCOperatingPoint(netlist).run();
-        System.out.println(dCOperatingPointResult.toString());
+        //        System.out.println(dCOperatingPointResult.toString());
 
         simulationDataMap.get(sweepableComponent.getId()).getxData().add(i);
         simulationDataMap.get(sweepableComponent.getId()).getyData().add(i);

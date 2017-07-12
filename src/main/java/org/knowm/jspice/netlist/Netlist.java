@@ -200,8 +200,6 @@ public class Netlist {
     Component existingComponent = componentIDMap.get(component.getId());
     if (existingComponent != null) {
       throw new IllegalArgumentException("The component ID " + component.getId() + " is not unique!");
-    } else {
-      componentIDMap.put(component.getId(), component);
     }
 
     NetlistComponent netListComponent = new NetlistComponent(component, nodes);
@@ -215,6 +213,7 @@ public class Netlist {
       netListComponent = new NetlistResistor(component.getId(), component.getSweepableValue(), nodes);
       netListResistors.add(netListComponent);
       netlistComponents.add(netListComponent);
+      componentIDMap.put(netListComponent.getComponent().getId(), netListComponent.getComponent());
     }
 
     // add to DCVoltage list
@@ -233,9 +232,10 @@ public class Netlist {
         netlistComponents.add(netListComponent);
         netListDCCurrentArbitrarys.add(netListComponent);
       } else {
-        netListDCCurrentSources.add(netListComponent);
         netListComponent = new NetlistDCCurrent(component.getId(), component.getSweepableValue(), nodes);
+        netListDCCurrentSources.add(netListComponent);
         netlistComponents.add(netListComponent);
+        componentIDMap.put(netListComponent.getComponent().getId(), netListComponent.getComponent());
       }
     }
 

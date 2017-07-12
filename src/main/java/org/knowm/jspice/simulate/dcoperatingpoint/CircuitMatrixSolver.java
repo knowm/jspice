@@ -168,6 +168,7 @@ public class CircuitMatrixSolver {
     // System.out.println("G= " + GtoString(G));
 
     for (NetlistComponent netlistComponent : netlist.getNetlistComponents()) {
+      //      System.out.println("netlistComponent " + netlistComponent);
       netlistComponent.stampRHS(RHS, dcOperatingPointResult, nodeID2ColumnIdxMap, timeStep);
     }
 

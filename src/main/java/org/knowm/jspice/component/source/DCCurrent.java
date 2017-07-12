@@ -105,6 +105,8 @@ public class DCCurrent extends Source {
   public void stampRHS(double[] RHS, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes,
       Double timeStep) {
 
+    //    System.out.println("dcCurrent " + dcCurrent);
+
     int idxA = nodeID2ColumnIdxMap.get(nodes[0]);
     int idxB = nodeID2ColumnIdxMap.get(nodes[1]);
 
