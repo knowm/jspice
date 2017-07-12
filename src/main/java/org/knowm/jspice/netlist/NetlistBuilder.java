@@ -6,6 +6,8 @@ import java.util.List;
 import org.knowm.jspice.simulate.SimulationConfig;
 import org.knowm.jspice.simulate.dcoperatingpoint.SimulationConfigDCOP;
 import org.knowm.jspice.simulate.dcsweep.SimulationConfigDCSweep;
+import org.knowm.jspice.simulate.transientanalysis.SimulationConfigTransient;
+import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +18,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature;
 
 public class NetlistBuilder {
 
-  private Netlist netList;
+  private Netlist netlist;
 
   List<NetlistComponent> netlistComponents = new ArrayList<>();
 
@@ -34,6 +36,12 @@ public class NetlistBuilder {
     return this;
   }
 
+  public NetlistBuilder addNetlistDCVoltage(String id, double voltage, String... nodes) {
+
+    netlistComponents.add(new NetlistDCVoltage(id, voltage, nodes));
+    return this;
+  }
+
   public NetlistBuilder addDCOPSimulationConfig() {
 
     this.simulationConfig = new SimulationConfigDCOP();
@@ -46,11 +54,17 @@ public class NetlistBuilder {
     return this;
   }
 
+  public NetlistBuilder addTransientSimulationConfig(double stopTime, double timeStep, Driver[] drivers) {
+
+    this.simulationConfig = new SimulationConfigTransient(stopTime, timeStep, drivers);
+    return this;
+  }
+
   public Netlist build() {
 
-    netList = new Netlist(this);
+    netlist = new Netlist(this);
 
-    return netList;
+    return netlist;
   }
 
   public String getJSON() {
@@ -61,7 +75,7 @@ public class NetlistBuilder {
     // create JSON
     String json = null;
     try {
-      json = mapper.writeValueAsString(netList);
+      json = mapper.writeValueAsString(netlist);
 
     } catch (JsonProcessingException e) {
       e.printStackTrace();
@@ -81,7 +95,7 @@ public class NetlistBuilder {
     // create YAML
     String yaml = null;
     try {
-      yaml = mapper.writeValueAsString(netList);
+      yaml = mapper.writeValueAsString(netlist);
 
     } catch (JsonProcessingException e) {
       e.printStackTrace();

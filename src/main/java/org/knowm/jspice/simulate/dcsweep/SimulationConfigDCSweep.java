@@ -1,6 +1,7 @@
 package org.knowm.jspice.simulate.dcsweep;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.knowm.jspice.simulate.SimulationConfig;
@@ -22,16 +23,19 @@ public class SimulationConfigDCSweep extends SimulationConfig {
   @Valid
   @NotNull
   @JsonProperty("start_value")
+  @Min(0)
   private double startValue;
 
   @Valid
   @NotNull
   @JsonProperty("end_value")
+  @Min(0)
   private double endValue;
 
   @Valid
   @NotNull
   @JsonProperty("step_size")
+  @Min(0)
   private double stepSize;
 
   public SimulationConfigDCSweep(@JsonProperty("sweep_id") String sweepID, @JsonProperty("observe_id") String observeID,

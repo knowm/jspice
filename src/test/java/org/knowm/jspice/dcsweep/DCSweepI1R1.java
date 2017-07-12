@@ -21,12 +21,9 @@
  */
 package org.knowm.jspice.dcsweep;
 
-import org.knowm.jspice.circuits.I1R1;
+import org.knowm.jspice.JSpice;
 import org.knowm.jspice.netlist.Netlist;
-import org.knowm.jspice.simulate.SimulationPlotter;
-import org.knowm.jspice.simulate.SimulationResult;
-import org.knowm.jspice.simulate.dcsweep.DCSweep;
-import org.knowm.jspice.simulate.dcsweep.SweepDefinition;
+import org.knowm.jspice.netlist.NetlistBuilder;
 
 /**
  * @author timmolter
@@ -35,30 +32,30 @@ public class DCSweepI1R1 {
 
   public static void main(String[] args) {
 
-    // Circuit
-    Netlist circuit = new I1R1();
+    //    // Circuit
+    //    Netlist circuit = new I1R1();
+    //
+    //    // SweepDef
+    //    String componentToSweepID = "a";
+    //    double startValue = 0.0;
+    //    double endValue = 10.0;
+    //    double stepSize = 1.0;
+    //    SweepDefinition sweepDef = new SweepDefinition(componentToSweepID, startValue, endValue, stepSize);
+    //
+    //    // run DC sweep
+    //    DCSweep dcSweep = new DCSweep(circuit);
+    //    dcSweep.addSweepDef(sweepDef);
+    //    SimulationResult dcSweepResult = dcSweep.run("I(R1)");
+    //    System.out.println(dcSweepResult.toString());
+    //
+    //    // plot
+    //    SimulationPlotter.plot(dcSweepResult, new String[]{"I(R1)"});
 
-    // SweepDef
-    String componentToSweepID = "a";
-    double startValue = 0.0;
-    double endValue = 10.0;
-    double stepSize = 1.0;
-    SweepDefinition sweepDef = new SweepDefinition(componentToSweepID, startValue, endValue, stepSize);
-
-    // run DC sweep
-    DCSweep dcSweep = new DCSweep(circuit);
-    dcSweep.addSweepDef(sweepDef);
-    SimulationResult dcSweepResult = dcSweep.run("I(R1)");
-    System.out.println(dcSweepResult.toString());
-
-    // plot
-    SimulationPlotter.plot(dcSweepResult, new String[]{"I(R1)"});
-
-    //    // run via NetlistBuilder
-    //    NetlistBuilder builder = new NetlistBuilder().addNetlistDCCurrent("a", 1.0, "1", "0").addNetlistResistor("R1", 1000, "0", "1")
-    //        .addDCSweepSimulationConfig("a", "I(R1)", 0.0, 10.0, 1.0);
-    //    Netlist netlist = builder.build();
-    //    System.out.println("builder.getYAML() " + builder.getYAML());
-    //    JSpice.simulate(netlist);
+    // run via NetlistBuilder
+    NetlistBuilder builder = new NetlistBuilder().addNetlistDCCurrent("a", 1.0, "1", "0").addNetlistResistor("R1", 1000, "0", "1")
+        .addDCSweepSimulationConfig("a", "I(R1)", 0.0, 10.0, 1.0);
+    Netlist netlist = builder.build();
+    System.out.println("builder.getYAML() " + builder.getYAML());
+    JSpice.simulate(netlist);
   }
 }

@@ -12,6 +12,8 @@ import org.knowm.jspice.simulate.dcoperatingpoint.SimulationConfigDCOP;
 import org.knowm.jspice.simulate.dcsweep.DCSweep;
 import org.knowm.jspice.simulate.dcsweep.SimulationConfigDCSweep;
 import org.knowm.jspice.simulate.dcsweep.SweepDefinition;
+import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
+import org.knowm.jspice.simulate.transientanalysis.SimulationConfigTransient;
 
 import io.dropwizard.configuration.ConfigurationException;
 import io.dropwizard.configuration.ConfigurationFactory;
@@ -64,9 +66,11 @@ public class JSpice {
   public static void simulate(Netlist netlist) {
 
     SimulationConfig simulationConfig = netlist.getSimulationConfig();
+
     if (simulationConfig instanceof SimulationConfigDCOP) {
       DCOperatingPointResult dcOpResult = new DCOperatingPoint(netlist).run();
       System.out.println(dcOpResult.toString());
+
     } else if (simulationConfig instanceof SimulationConfigDCSweep) {
 
       SimulationConfigDCSweep simulationConfigDCSweep = (SimulationConfigDCSweep) simulationConfig;
@@ -77,10 +81,22 @@ public class JSpice {
       // run DC sweep
       DCSweep dcSweep = new DCSweep(netlist);
       dcSweep.addSweepDef(sweepDef);
-      SimulationResult dcSweepResult = dcSweep.run(simulationConfigDCSweep.getObserveID());
-      System.out.println(dcSweepResult.toString());
-      SimulationPlotter.plot(dcSweepResult, new String[]{simulationConfigDCSweep.getObserveID()});
+      SimulationResult simulationResult = dcSweep.run(simulationConfigDCSweep.getObserveID());
+      System.out.println(simulationResult.toString());
+      SimulationPlotter.plot(simulationResult, new String[]{simulationConfigDCSweep.getObserveID()});
 
+    }
+
+    else if (simulationConfig instanceof SimulationConfigTransient) {
+
+      SimulationConfigTransient simulationConfigTransient = (SimulationConfigTransient) simulationConfig;
+
+      // run TransientAnalysis
+      TransientAnalysis transientAnalysis = new TransientAnalysis(netlist, simulationConfigTransient);
+      SimulationResult simulationResult = transientAnalysis.run();
+      System.out.println(simulationResult.toString());
+      // plot
+      SimulationPlotter.plotAll(simulationResult);
     }
 
   }

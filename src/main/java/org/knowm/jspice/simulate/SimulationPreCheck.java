@@ -25,9 +25,6 @@ import java.util.Set;
 
 import org.knowm.jspice.netlist.Netlist;
 
-/**
- * @author timmolter
- */
 public class SimulationPreCheck {
 
   public static void verifyComponentToSweepOrDriveId(Netlist netlist, String componentId) {

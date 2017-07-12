@@ -21,15 +21,45 @@
  */
 package org.knowm.jspice.simulate.transientanalysis.driver;
 
-/**
- * @author timmolter
- */
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({@Type(value = Pulse.class, name = "pulse"), @Type(value = Arbitrary.class, name = "arbitrary"), @Type(value = DC.class, name = "dc"),
+    @Type(value = Sawtooth.class, name = "sawtooth"), @Type(value = Square.class, name = "square"),
+    @Type(value = StreamingArbitrary.class, name = "streaming_arbitrary"), @Type(value = Triangle.class, name = "triangle")})
 public abstract class Driver {
 
+  @Valid
+  @NotNull
+  @JsonProperty("id")
   protected final String id;
+
+  @Valid
+  @NotNull
+  @JsonProperty("dc_offset")
   protected final double dcOffset;
+
+  @Valid
+  @NotNull
+  @JsonProperty("phase")
   protected final double phase;
+
+  @Valid
+  @NotNull
+  @JsonProperty("amplitude")
   protected final double amplitude;
+
+  @Valid
+  @NotNull
+  @JsonProperty("frequency")
   protected final double frequency;
 
   /**
@@ -41,7 +71,8 @@ public abstract class Driver {
    * @param amplitude
    * @param frequency
    */
-  public Driver(String id, double dcOffset, double phase, double amplitude, double frequency) {
+  public Driver(@JsonProperty("id") String id, @JsonProperty("dc_offset") double dcOffset, @JsonProperty("phase") double phase,
+      @JsonProperty("amplitude") double amplitude, @JsonProperty("frequency") double frequency) {
 
     this.id = id;
     this.dcOffset = dcOffset;

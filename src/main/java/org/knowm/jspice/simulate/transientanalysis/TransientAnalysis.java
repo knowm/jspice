@@ -38,7 +38,7 @@ import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 public class TransientAnalysis {
 
   private final Netlist netlist;
-  private final TransientAnalysisDefinition transientAnalysisDefinition;
+  private final SimulationConfigTransient transientAnalysisDefinition;
 
   /**
    * Constructor
@@ -46,7 +46,7 @@ public class TransientAnalysis {
    * @param netlist
    * @param transientAnalysisDefinition
    */
-  public TransientAnalysis(Netlist netlist, TransientAnalysisDefinition transientAnalysisDefinition) {
+  public TransientAnalysis(Netlist netlist, SimulationConfigTransient transientAnalysisDefinition) {
 
     this.netlist = netlist;
     this.transientAnalysisDefinition = transientAnalysisDefinition;
@@ -60,11 +60,11 @@ public class TransientAnalysis {
     verify(transientAnalysisDefinition);
 
     // add single sweep result to SimulationResult
-    SimulationResult transientAnalyisResult = new SimulationResult("Time [s]", "", getSingleTransientAnalyisResult());
+    SimulationResult simulationResult = new SimulationResult("Time [s]", "", getSingleTransientAnalyisResult());
 
     // System.out.println("transientAnalyis= " + (System.currentTimeMillis() - start));
 
-    return transientAnalyisResult;
+    return simulationResult;
   }
 
   private Map<String, SimulationPlotData> getSingleTransientAnalyisResult() {
@@ -89,6 +89,7 @@ public class TransientAnalysis {
         //        System.out.println(signal);
 
         Component sweepableComponent = netlist.getComponent(transientAnalysisDefinition.getDrivers()[i].getId());
+        //        System.out.println("sweepableComponent " + sweepableComponent);
         sweepableComponent.setSweepValue(signal);
       }
 
@@ -143,7 +144,7 @@ public class TransientAnalysis {
    *
    * @param sweepDefinition
    */
-  private void verify(TransientAnalysisDefinition transientAnalysisDefinition) {
+  private void verify(SimulationConfigTransient transientAnalysisDefinition) {
 
     // make sure componentToSweepID is actually in the circuit netlist
     for (int j = 0; j < transientAnalysisDefinition.getDrivers().length; j++) {

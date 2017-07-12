@@ -221,7 +221,11 @@ public class Netlist {
       if (component instanceof DCVoltageArbitrary) {
         netListDCVoltageArbitrarys.add(netListComponent);
       } else {
+
+        netListComponent = new NetlistDCVoltage(component.getId(), component.getSweepableValue(), nodes);
         netListDCVoltageSources.add(netListComponent);
+        netlistComponents.add(netListComponent);
+        componentIDMap.put(netListComponent.getComponent().getId(), netListComponent.getComponent());
       }
       netlistComponents.add(netListComponent);
     }
