@@ -25,8 +25,8 @@ import org.knowm.jspice.circuits.CMOSInverterCircuit;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
-import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
 import org.knowm.jspice.simulate.transientanalysis.SimulationConfigTransient;
+import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
 import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 import org.knowm.jspice.simulate.transientanalysis.driver.Triangle;
 
@@ -35,25 +35,22 @@ public class TransientAnalysisCMOSInverter {
   public static void main(String[] args) {
 
     // Circuit
-    Netlist circuit = new CMOSInverterCircuit();
+    Netlist netlist = new CMOSInverterCircuit();
 
-    //    Driver driver = new Sine("Vin", 2.5, 0, 2.5, 1.0);
-    // Driver driver = new Square("Vin", 2.5, 0, 2.5, 1.0);
     Driver driver = new Triangle("Vin", 2.5, 0, 2.5, 1.0);
     Driver[] drivers = new Driver[]{driver};
     double stopTime = 2;
     double timeStep = .05;
 
     // TransientAnalysisDefinition
-    SimulationConfigTransient transientAnalysisDefinition = new SimulationConfigTransient(timeStep, stopTime, drivers);
+    SimulationConfigTransient simulationConfigTransient = new SimulationConfigTransient(stopTime, timeStep, drivers);
 
     // run TransientAnalysis
-    TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
+    TransientAnalysis transientAnalysis = new TransientAnalysis(netlist, simulationConfigTransient);
     SimulationResult simulationResult = transientAnalysis.run();
+    System.out.println("simulationResult " + simulationResult);
 
     // plot
-    SimulationPlotter.plot(simulationResult, new String[]{"V(in)", "V(out)"});
-    //    SimulationPlotter.plot(simulationResult, new String[]{"V(in)"});
-    //    SimulationPlotter.plotAll(simulationResult);
+    SimulationPlotter.plot(simulationResult, "V(in)", "V(out)");
   }
 }

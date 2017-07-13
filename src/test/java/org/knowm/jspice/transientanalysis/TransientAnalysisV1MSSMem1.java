@@ -46,7 +46,7 @@ public class TransientAnalysisV1MSSMem1 {
     double timeStep = .00001;
 
     // TransientAnalysisDefinition
-    SimulationConfigTransient transientAnalysisDefinition = new SimulationConfigTransient(timeStep, stopTime, drivers);
+    SimulationConfigTransient transientAnalysisDefinition = new SimulationConfigTransient(stopTime, timeStep, drivers);
 
     // run TransientAnalysis
     TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);

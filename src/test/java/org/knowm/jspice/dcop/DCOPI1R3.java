@@ -26,9 +26,6 @@ import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPoint;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 
-/**
- * @author timmolter
- */
 public class DCOPI1R3 {
 
   public static void main(String[] args) {

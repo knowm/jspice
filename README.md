@@ -85,7 +85,7 @@ public class DCOPI1R3 {
 
   public static void main(String[] args) {
 
-    Circuit circuit = new I1R3();
+    Netlist circuit = new I1R3();
 
     // run DC operating point
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
@@ -95,23 +95,15 @@ public class DCOPI1R3 {
 ```
 
 ```java
-public class I1R3 extends Circuit {
+public class I1R3 extends Netlist {
 
   public I1R3() {
 
-    // define current source
-    Source dcCurrentSource = new DCCurrent("a", 1.0);
-
-    // define resistors
-    Component resistor1 = new Resistor("R1", 10);
-    Component resistor2 = new Resistor("R2", 1000);
-    Component resistor3 = new Resistor("R3", 1000);
-
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    addNetListComponent(dcCurrentSource, "0", "1");
-    addNetListComponent(resistor1, "1", "0");
-    addNetListComponent(resistor2, "1", "2");
-    addNetListComponent(resistor3, "2", "0");
+    addNetListComponent(new NetlistDCCurrent("a", 1.0, "0", "1"));
+    addNetListComponent(new NetlistResistor("R1", 10, "1", "0"));
+    addNetListComponent(new NetlistResistor("R2", 1000, "1", "2"));
+    addNetListComponent(new NetlistResistor("R3", 1000, "2", "0"));
   }
 }
 ```
@@ -138,33 +130,19 @@ I(a) = 1.0
 ##### Code
 
 ```java
-public class I1V1R6 extends Circuit {
+public class I1V1R6 extends Netlist {
 
   public I1V1R6() {
 
-    // define current source
-    Source dcCurrentSourceA = new DCCurrent("a", 0.02);
-
-    // define current source
-    Source dcVoltageSourceX = new DCVoltage("x", 10.0);
-
-    // define resistors
-    Component resistor1 = new Resistor("R1", 100);
-    Component resistor2 = new Resistor("R2", 1000);
-    Component resistor3 = new Resistor("R3", 1000);
-    Component resistor4 = new Resistor("R4", 100);
-    Component resistor5 = new Resistor("R5", 1000);
-    Component resistor6 = new Resistor("R6", 10000);
-
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    addNetListComponent(dcCurrentSourceA, "0", "4");
-    addNetListComponent(dcVoltageSourceX, "2", "5");
-    addNetListComponent(resistor1, "5", "0");
-    addNetListComponent(resistor2, "0", "3");
-    addNetListComponent(resistor3, "2", "3");
-    addNetListComponent(resistor4, "1", "2");
-    addNetListComponent(resistor5, "3", "0");
-    addNetListComponent(resistor6, "1", "4");
+    addNetListComponent(new NetlistDCCurrent("a", 0.02, "0", "4"));
+    addNetListComponent(new NetlistDCVoltage("x", 10.0, "2", "5"));
+    addNetListComponent(new NetlistResistor("R1", 100, "5", "0"));
+    addNetListComponent(new NetlistResistor("R2", 1000, "0", "3"));
+    addNetListComponent(new NetlistResistor("R3", 1000, "2", "3"));
+    addNetListComponent(new NetlistResistor("R4", 100, "1", "2"));
+    addNetListComponent(new NetlistResistor("R5", 1000, "3", "0"));
+    addNetListComponent(new NetlistResistor("R6", 10000, "1", "4"));
   }
 }
 ```
@@ -217,7 +195,7 @@ public class DCSweepV1R4 {
   public static void main(String[] args) {
 
     // Circuit
-    Circuit circuit = new V1R4();
+    Netlist circuit = new V1R4();
 
     // SweepDef
     String componentToSweepID = "R1";
@@ -262,7 +240,7 @@ public class DCSweepV1D1 {
   public static void main(String[] args) {
 
     // Circuit
-    Circuit circuit = new V1D1();
+    Netlist circuit = new V1D1();
 
     // SweepDef
     String componentToSweepID = "Va";
@@ -303,7 +281,7 @@ public class DCSweepV2NMOS1 {
   public static void main(String[] args) {
 
     // Circuit
-    Circuit circuit = new V2NMOS1();
+    Netlist circuit = new V2NMOS1();
 
     // SweepDef
     SweepDefinition sweepDef1 = new SweepDefinition("Vdd", 0.0, 10.0, 0.1);
@@ -340,7 +318,7 @@ public class DCSweepV2PMOS1 {
   public static void main(String[] args) {
 
     // Circuit
-    Circuit circuit = new V2PMOS1();
+    Netlist circuit = new V2PMOS1();
 
     // SweepDef
     SweepDefinition sweepDef1 = new SweepDefinition("Vg", -5.0, 0.0, 1.0);
@@ -374,7 +352,7 @@ public class DCSweepCMOSInverter {
   public static void main(String[] args) {
 
     // Circuit
-    Circuit circuit = new CMOSInverterCircuit();
+    Netlist circuit = new CMOSInverterCircuit();
 
     // SweepDef
     SweepDefinition sweepDef1 = new SweepDefinition("Vin", 0, 5, .10);
@@ -483,7 +461,7 @@ public class TransientAnalysisCMOSInverter {
   public static void main(String[] args) {
 
     // Circuit
-    Circuit circuit = new CMOSInverterCircuit();
+    Netlist netlist = new CMOSInverterCircuit();
 
     Driver driver = new Triangle("Vin", 2.5, 0, 2.5, 1.0);
     Driver[] drivers = new Driver[]{driver};
@@ -491,14 +469,15 @@ public class TransientAnalysisCMOSInverter {
     double timeStep = .05;
 
     // TransientAnalysisDefinition
-    TransientAnalysisDefinition transientAnalysisDefinition = new TransientAnalysisDefinition(drivers, stopTime, timeStep);
+    SimulationConfigTransient simulationConfigTransient = new SimulationConfigTransient(stopTime, timeStep, drivers);
 
     // run TransientAnalysis
-    TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
+    TransientAnalysis transientAnalysis = new TransientAnalysis(netlist, simulationConfigTransient);
     SimulationResult simulationResult = transientAnalysis.run();
+    System.out.println("simulationResult " + simulationResult);
 
     // plot
-    SimulationPlotter.plot(simulationResult, new String[]{"V(in)", "V(out)"});
+    SimulationPlotter.plot(simulationResult, "V(in)", "V(out)");
   }
 }
 ```
@@ -520,16 +499,15 @@ public class TransientAnalysisV1R1C1 {
   public static void main(String[] args) {
 
     // Circuit
-    Circuit circuit = new V1R1C1();
+    Netlist circuit = new V1R1C1();
 
     Driver driver = new Square("V1", 2.5, 0, 2.5, 1.0);
-    //    Driver driver = new Sine("V1", 0, 0, 2.5, 1.0);
     Driver[] drivers = new Driver[]{driver};
     double stopTime = 2;
     double timeStep = .01;
 
     // TransientAnalysisDefinition
-    TransientAnalysisDefinition transientAnalysisDefinition = new TransientAnalysisDefinition(drivers, stopTime, timeStep);
+    SimulationConfigTransient transientAnalysisDefinition = new SimulationConfigTransient(stopTime, timeStep, drivers);
 
     // run TransientAnalysis
     TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
@@ -537,7 +515,6 @@ public class TransientAnalysisV1R1C1 {
 
     // plot
     SimulationPlotter.plot(simulationResult, new String[]{"V(1)", "V(2)"});
-    // SimulationPlotter.plotAllSeparate(simulationResult);
   }
 }
 ```
@@ -558,7 +535,7 @@ public class TransientAnalysisHalfWaveRectifier {
   public static void main(String[] args) {
 
     // Circuit
-    Circuit circuit = new HalfWaveRectifier();
+    Netlist circuit = new HalfWaveRectifier();
 
     Driver driver = new Sine("Vsrc", 0, 0, 12, 60.0);
     Driver[] drivers = new Driver[]{driver};
@@ -566,7 +543,7 @@ public class TransientAnalysisHalfWaveRectifier {
     double timeStep = .0002;
 
     // TransientAnalysisDefinition
-    TransientAnalysisDefinition transientAnalysisDefinition = new TransientAnalysisDefinition(drivers, stopTime, timeStep);
+    SimulationConfigTransient transientAnalysisDefinition = new SimulationConfigTransient(stopTime, timeStep, drivers);
 
     // run TransientAnalysis
     TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
@@ -594,7 +571,7 @@ public class TransientAnalysisTransmissionGate {
   public static void main(String[] args) {
 
     // Circuit
-    Circuit circuit = new TransmissionGateCircuit();
+    Netlist circuit = new TransmissionGateCircuit();
 
     Driver in = new Sine("Vin", 0, 0, 1.0, 10.0);
     Driver clk = new Square("Vclk", 2.5, 0, 2.5, 1.0);
@@ -604,7 +581,7 @@ public class TransientAnalysisTransmissionGate {
     double timeStep = .005;
 
     // TransientAnalysisDefinition
-    TransientAnalysisDefinition transientAnalysisDefinition = new TransientAnalysisDefinition(drivers, stopTime, timeStep);
+    SimulationConfigTransient transientAnalysisDefinition = new SimulationConfigTransient(stopTime, timeStep, drivers);
 
     // run TransientAnalysis
     TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
@@ -634,7 +611,7 @@ public class TransientAnalysisV1MMSSMem {
   public static void main(String[] args) {
 
     // Circuit
-    Circuit circuit = new V1MMSSMem();
+    Netlist circuit = new V1MMSSMem();
 
     Driver driver = new Sine("Vdd", 0.0, 0, 0.5, 100.0);
     Driver[] drivers = new Driver[]{driver};
@@ -642,7 +619,7 @@ public class TransientAnalysisV1MMSSMem {
     double timeStep = .0001;
 
     // TransientAnalysisDefinition
-    TransientAnalysisDefinition transientAnalysisDefinition = new TransientAnalysisDefinition(drivers, stopTime, timeStep);
+    SimulationConfigTransient transientAnalysisDefinition = new SimulationConfigTransient(stopTime, timeStep, drivers);
 
     // run TransientAnalysis
     TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
@@ -653,8 +630,6 @@ public class TransientAnalysisV1MMSSMem {
     SimulationPlotter.plotSeparate(simulationResult, new String[]{"V(VDD)", "I(M1)"});
     SimulationPlotter.plotTransientInOutCurve("I/V Curve", simulationResult, new String[]{"V(VDD)", "I(M1)"});
 
-    // export data
-    // SimulationPlotter.printTransientInOut(simulationResult);
   }
 }
 ```

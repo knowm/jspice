@@ -26,9 +26,6 @@ import org.knowm.jspice.netlist.NetlistDCCurrent;
 import org.knowm.jspice.netlist.NetlistDCVoltage;
 import org.knowm.jspice.netlist.NetlistResistor;
 
-/**
- * @author timmolter
- */
 public class I1V1R6 extends Netlist {
 
   public I1V1R6() {

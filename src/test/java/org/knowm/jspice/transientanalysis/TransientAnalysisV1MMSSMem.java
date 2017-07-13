@@ -25,8 +25,8 @@ import org.knowm.jspice.circuits.V1MMSSMem;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
-import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
 import org.knowm.jspice.simulate.transientanalysis.SimulationConfigTransient;
+import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
 import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 import org.knowm.jspice.simulate.transientanalysis.driver.Sine;
 
@@ -43,7 +43,7 @@ public class TransientAnalysisV1MMSSMem {
     double timeStep = .0001;
 
     // TransientAnalysisDefinition
-    SimulationConfigTransient transientAnalysisDefinition = new SimulationConfigTransient(timeStep, stopTime, drivers);
+    SimulationConfigTransient transientAnalysisDefinition = new SimulationConfigTransient(stopTime, timeStep, drivers);
 
     // run TransientAnalysis
     TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
@@ -54,7 +54,5 @@ public class TransientAnalysisV1MMSSMem {
     SimulationPlotter.plotSeparate(simulationResult, new String[]{"V(VDD)", "I(M1)"});
     SimulationPlotter.plotTransientInOutCurve("I/V Curve", simulationResult, new String[]{"V(VDD)", "I(M1)"});
 
-    // export data
-    // SimulationPlotter.printTransientInOut(simulationResult);
   }
 }

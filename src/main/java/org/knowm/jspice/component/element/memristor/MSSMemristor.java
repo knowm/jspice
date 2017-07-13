@@ -30,7 +30,7 @@ import java.util.Random;
  *
  * @author timmolter
  */
-public class MSSMemristorV2 extends Memristor {
+public class MSSMemristor extends Memristor {
 
   private final static Random RANDOM = new Random();
 
@@ -73,7 +73,7 @@ public class MSSMemristorV2 extends Memristor {
   /**
    * Constructor
    */
-  public MSSMemristorV2(String id, double rInit, double rOn, double rOff, double n, double tau, double vOn, double vOff, double phi,
+  public MSSMemristor(String id, double rInit, double rOn, double rOff, double n, double tau, double vOn, double vOff, double phi,
       double schottkyForwardAlpha, double schottkyForwardBeta, double schottkyReverseAlpha, double schottkyReverseBeta) {
 
     super(id);

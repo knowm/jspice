@@ -3,7 +3,7 @@ package org.knowm.jspice.netlist;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import org.knowm.jspice.component.element.memristor.MSSMemristorV2;
+import org.knowm.jspice.component.element.memristor.MSSMemristor;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -72,7 +72,7 @@ public class NetlistMSSMemristor extends NetlistComponent {
   public NetlistMSSMemristor(String id, double rInit, double rOn, double rOff, double n, double tau, double vOn, double vOff, double phi,
       double schottkyForwardAlpha, double schottkyForwardBeta, double schottkyReverseAlpha, double schottkyReverseBeta, String... nodes) {
 
-    super(new MSSMemristorV2(id, rInit, rOn, rOff, n, tau, vOn, vOff, phi, schottkyForwardAlpha, schottkyForwardBeta, schottkyReverseAlpha,
+    super(new MSSMemristor(id, rInit, rOn, rOff, n, tau, vOn, vOff, phi, schottkyForwardAlpha, schottkyForwardBeta, schottkyReverseAlpha,
         schottkyReverseBeta), nodes);
     this.rInit = rInit;
     this.rOn = rOn;
@@ -95,7 +95,7 @@ public class NetlistMSSMemristor extends NetlistComponent {
       @JsonProperty("schottky_forward_beta") double schottkyForwardBeta, @JsonProperty("schottky_reverse_alpha") double schottkyReverseAlpha,
       @JsonProperty("schottky_reverse_beta") double schottkyReverseBeta, @JsonProperty("nodes") String nodes) {
 
-    super(new MSSMemristorV2(id, rInit, rOn, rOff, n, tau, vOn, vOff, phi, schottkyForwardAlpha, schottkyForwardBeta, schottkyReverseAlpha,
+    super(new MSSMemristor(id, rInit, rOn, rOff, n, tau, vOn, vOff, phi, schottkyForwardAlpha, schottkyForwardBeta, schottkyReverseAlpha,
         schottkyReverseBeta), nodes);
     this.rInit = rInit;
     this.rOn = rOn;

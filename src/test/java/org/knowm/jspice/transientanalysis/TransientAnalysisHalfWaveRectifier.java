@@ -25,8 +25,8 @@ import org.knowm.jspice.circuits.HalfWaveRectifier;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
-import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
 import org.knowm.jspice.simulate.transientanalysis.SimulationConfigTransient;
+import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
 import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 import org.knowm.jspice.simulate.transientanalysis.driver.Sine;
 
@@ -43,7 +43,7 @@ public class TransientAnalysisHalfWaveRectifier {
     double timeStep = .0002;
 
     // TransientAnalysisDefinition
-    SimulationConfigTransient transientAnalysisDefinition = new SimulationConfigTransient(timeStep, stopTime, drivers);
+    SimulationConfigTransient transientAnalysisDefinition = new SimulationConfigTransient(stopTime, timeStep, drivers);
 
     // run TransientAnalysis
     TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);

@@ -188,6 +188,6 @@ public class SimulationPlotter {
     series.setMarker(SeriesMarkers.NONE);
 
     chart.getStyler().setLegendVisible(false);
-    new SwingWrapper(chart).displayChart();
+    new SwingWrapper<XYChart>(chart).displayChart();
   }
 }
