@@ -15,7 +15,7 @@ public class NetlistDCVoltage extends NetlistComponent {
   @JsonProperty("voltage")
   double voltage;
 
-  public NetlistDCVoltage(@JsonProperty("id") String id, @JsonProperty("voltage") double voltage, @JsonProperty("nodes") String... nodes) {
+  public NetlistDCVoltage(String id, double voltage, String... nodes) {
 
     super(new DCVoltage(id, voltage), nodes);
     this.voltage = voltage;

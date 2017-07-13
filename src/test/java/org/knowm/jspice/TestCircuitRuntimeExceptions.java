@@ -27,12 +27,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
-import org.knowm.jspice.component.element.linear.LinearElement;
-import org.knowm.jspice.component.element.linear.Resistor;
-import org.knowm.jspice.component.source.DCCurrent;
-import org.knowm.jspice.component.source.DCVoltage;
-import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistDCCurrent;
+import org.knowm.jspice.netlist.NetlistDCVoltage;
+import org.knowm.jspice.netlist.NetlistResistor;
 
 /**
  * @author timmolter
@@ -42,24 +40,16 @@ public class TestCircuitRuntimeExceptions {
   @Test
   public void testNoNode0Exception() {
 
-    Netlist circuit = new Netlist();
-
-    // define current source
-    Source dcCurrentSource = new DCCurrent("a", 1.0);
-
-    // define resistors
-    LinearElement resistor1 = new Resistor("R1", 10);
-    LinearElement resistor2 = new Resistor("R2", 1000);
-    LinearElement resistor3 = new Resistor("R3", 1000);
+    Netlist netlist = new Netlist();
 
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    circuit.addNetListComponent(dcCurrentSource, "99", "1");
-    circuit.addNetListComponent(resistor1, "1", "99");
-    circuit.addNetListComponent(resistor2, "1", "2");
-    circuit.addNetListComponent(resistor3, "2", "99");
+    netlist.addNetListComponent(new NetlistDCCurrent("a", 1.0, "99", "1"));
+    netlist.addNetListComponent(new NetlistResistor("R1", 10, "1", "99"));
+    netlist.addNetListComponent(new NetlistResistor("R2", 1000, "1", "2"));
+    netlist.addNetListComponent(new NetlistResistor("R3", 1000, "2", "99"));
 
     try {
-      circuit.verifyCircuit();
+      netlist.verifyCircuit();
       fail("Expected exception");
     } catch (IllegalArgumentException e) {
       assertThat(e.getMessage(), is(equalTo("Node \"0\" must be part of the netlist representing ground!")));
@@ -69,22 +59,15 @@ public class TestCircuitRuntimeExceptions {
   @Test
   public void testDanglingNodeException() {
 
-    Netlist circuit = new Netlist();
-
-    // define current source
-    Source dcCurrentSource = new DCCurrent("a", 1.0);
-
-    // define resistors
-    LinearElement resistor1 = new Resistor("R1", 10);
-    LinearElement resistor2 = new Resistor("R2", 1000);
+    Netlist netlist = new Netlist();
 
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    circuit.addNetListComponent(dcCurrentSource, "0", "1");
-    circuit.addNetListComponent(resistor1, "1", "0");
-    circuit.addNetListComponent(resistor2, "1", "2");
+    netlist.addNetListComponent(new NetlistDCCurrent("a", 1.0, "0", "1"));
+    netlist.addNetListComponent(new NetlistResistor("R1", 10, "1", "0"));
+    netlist.addNetListComponent(new NetlistResistor("R2", 1000, "1", "2"));
 
     try {
-      circuit.verifyCircuit();
+      netlist.verifyCircuit();
       fail("Expected exception");
     } catch (IllegalArgumentException e) {
       assertThat(e.getMessage(), is(equalTo("Must have at least 2 Connections for node 2!")));
@@ -94,16 +77,13 @@ public class TestCircuitRuntimeExceptions {
   @Test
   public void testMinimumNetListSizeException() {
 
-    Netlist circuit = new Netlist();
-
-    // define current source
-    Source dcCurrentSource = new DCCurrent("a", 1.0);
+    Netlist netlist = new Netlist();
 
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    circuit.addNetListComponent(dcCurrentSource, "0", "1");
+    netlist.addNetListComponent(new NetlistDCCurrent("a", 1.0, "0", "1"));
 
     try {
-      circuit.verifyCircuit();
+      netlist.verifyCircuit();
       fail("Expected exception");
     } catch (IllegalArgumentException e) {
       assertThat(e.getMessage(), is(equalTo("Must have at least 2 NetListParts!")));
@@ -113,24 +93,16 @@ public class TestCircuitRuntimeExceptions {
   @Test
   public void testNonUniqueNameException() {
 
-    Netlist circuit = new Netlist();
-
-    // define current source
-    Source dcCurrentSource = new DCCurrent("a", 1.0);
-
-    // define resistors
-    LinearElement resistor1 = new Resistor("R1", 10);
-    LinearElement resistor2 = new Resistor("R2", 1000);
-    LinearElement resistor3 = new Resistor("R1", 1000);
+    Netlist netlist = new Netlist();
 
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    circuit.addNetListComponent(dcCurrentSource, "0", "1");
-    circuit.addNetListComponent(resistor1, "1", "0");
-    circuit.addNetListComponent(resistor2, "1", "2");
+    netlist.addNetListComponent(new NetlistDCCurrent("a", 1.0, "0", "1"));
+    netlist.addNetListComponent(new NetlistResistor("R1", 10, "1", "0"));
+    netlist.addNetListComponent(new NetlistResistor("R2", 1000, "1", "2"));
     try {
-      circuit.addNetListComponent(resistor3, "2", "0");
+      netlist.addNetListComponent(new NetlistResistor("R1", 1000, "2", "0"));
 
-      circuit.verifyCircuit();
+      netlist.verifyCircuit();
       fail("Expected exception");
     } catch (IllegalArgumentException e) {
       assertThat(e.getMessage(), is(equalTo("The component ID R1 is not unique!")));
@@ -140,15 +112,12 @@ public class TestCircuitRuntimeExceptions {
   @Test
   public void testConnectedToSameNodeException() {
 
-    Netlist circuit = new Netlist();
-
-    // define resistors
-    LinearElement resistor1 = new Resistor("R1", 10);
+    Netlist netlist = new Netlist();
 
     try {
-      circuit.addNetListComponent(resistor1, "2", "2");
+      netlist.addNetListComponent(new NetlistResistor("R1", 10, "2", "2"));
 
-      circuit.verifyCircuit();
+      netlist.verifyCircuit();
       fail("Expected exception");
     } catch (IllegalArgumentException e) {
       assertThat(e.getMessage(), is(equalTo("A component cannot be connected to the same node twice!")));
@@ -158,22 +127,15 @@ public class TestCircuitRuntimeExceptions {
   @Test
   public void testSeriesCurrentSourcesException() {
 
-    Netlist circuit = new Netlist();
-
-    // define current source
-    Source dcCurrentSourceA = new DCCurrent("a", 1.0);
-    Source dcCurrentSourceB = new DCCurrent("b", 1.0);
-
-    // define resistors
-    LinearElement resistor1 = new Resistor("R1", 10);
+    Netlist netlist = new Netlist();
 
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    circuit.addNetListComponent(dcCurrentSourceA, "0", "1");
-    circuit.addNetListComponent(dcCurrentSourceB, "1", "2");
-    circuit.addNetListComponent(resistor1, "0", "2");
+    netlist.addNetListComponent(new NetlistDCCurrent("a", 1.0, "0", "1"));
+    netlist.addNetListComponent(new NetlistDCCurrent("b", 1.0, "1", "2"));
+    netlist.addNetListComponent(new NetlistResistor("R1", 10, "0", "2"));
 
     try {
-      circuit.verifyCircuit();
+      netlist.verifyCircuit();
       fail("Expected exception");
     } catch (IllegalArgumentException e) {
       assertThat(e.getMessage(), is(equalTo("Current sources cannot be in series!")));
@@ -183,22 +145,15 @@ public class TestCircuitRuntimeExceptions {
   @Test
   public void testParalleVoltageSourcesException() {
 
-    Netlist circuit = new Netlist();
-
-    // define current source
-    Source dcVoltageSourceA = new DCVoltage("a", 10.0);
-    Source dcVoltageSourceB = new DCVoltage("b", 10.0);
-
-    // define resistors
-    LinearElement resistor1 = new Resistor("R1", 10);
+    Netlist netlist = new Netlist();
 
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    circuit.addNetListComponent(dcVoltageSourceA, "0", "1");
-    circuit.addNetListComponent(dcVoltageSourceB, "0", "1");
-    circuit.addNetListComponent(resistor1, "0", "1");
+    netlist.addNetListComponent(new NetlistDCVoltage("a", 10.0, "0", "1"));
+    netlist.addNetListComponent(new NetlistDCVoltage("b", 10.0, "0", "1"));
+    netlist.addNetListComponent(new NetlistResistor("R1", 10, "0", "1"));
 
     try {
-      circuit.verifyCircuit();
+      netlist.verifyCircuit();
       fail("Expected exception");
     } catch (IllegalArgumentException e) {
       assertThat(e.getMessage(), is(equalTo("Voltage sources cannot be in parallel!")));

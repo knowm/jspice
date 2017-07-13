@@ -21,32 +21,19 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.component.Component;
-import org.knowm.jspice.component.element.linear.Resistor;
-import org.knowm.jspice.component.element.nonlinear.PMOS;
-import org.knowm.jspice.component.source.DCVoltage;
-import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistDCVoltage;
+import org.knowm.jspice.netlist.NetlistPMOS;
+import org.knowm.jspice.netlist.NetlistResistor;
 
-/**
- * @author timmolter
- */
 public class PMOSInverter extends Netlist {
 
   public PMOSInverter() {
 
-    // define voltage source
-    Source vDD = new DCVoltage("VDD", 5.0);
-    Source vIn = new DCVoltage("Vin", 0.30);
-
-    // define components
-    Component m1 = new PMOS("M1", 2.5);
-    Component rout = new Resistor("Rout", 100000);
-
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    addNetListComponent(vDD, "Vdd", "0");
-    addNetListComponent(vIn, "in", "0");
-    addNetListComponent(m1, "in", "out", "Vdd"); // G, D, S
-    addNetListComponent(rout, "out", "0");
+    addNetListComponent(new NetlistDCVoltage("VDD", 5.0, "Vdd", "0"));
+    addNetListComponent(new NetlistDCVoltage("Vin", 0.30, "in", "0"));
+    addNetListComponent(new NetlistPMOS("M1", 2.5, "in", "out", "Vdd")); // G, D, S
+    addNetListComponent(new NetlistResistor("Rout", 100000, "out", "0"));
   }
 }

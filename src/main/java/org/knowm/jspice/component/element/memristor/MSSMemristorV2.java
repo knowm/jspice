@@ -24,9 +24,9 @@ package org.knowm.jspice.component.element.memristor;
 import java.util.Random;
 
 /**
- * This class represents a memristor that is based on Alex's "collection of meta-stable switches" memristor model.
- * This version is different from MSSMemristorV1 in that it defines key params as Ron, Roff, Von, Voff, and x.
- * Extenders of this class are just one particular device with a set of real-value model parameters.
+ * This class represents a memristor that is based on Alex's "collection of meta-stable switches" memristor model. This version is different from
+ * MSSMemristorV1 in that it defines key params as Ron, Roff, Von, Voff, and x. Extenders of this class are just one particular device with a set of
+ * real-value model parameters.
  *
  * @author timmolter
  */
@@ -46,6 +46,7 @@ public class MSSMemristorV2 extends Memristor {
    */
   private double n;
 
+  private double rInit;
   private double rOff;
   private double rOn;
 
@@ -72,11 +73,12 @@ public class MSSMemristorV2 extends Memristor {
   /**
    * Constructor
    */
-  public MSSMemristorV2(String id, double rInit, double rOn, double rOff, double n, double tau, double vOn, double vOff, double phi, double schottkyForwardAlpha, double schottkyForwardBeta,
-                        double schottkyReverseAlpha, double schottkyReverseBeta) {
+  public MSSMemristorV2(String id, double rInit, double rOn, double rOff, double n, double tau, double vOn, double vOff, double phi,
+      double schottkyForwardAlpha, double schottkyForwardBeta, double schottkyReverseAlpha, double schottkyReverseBeta) {
 
     super(id);
 
+    this.rInit = rInit;
     if (rInit > rOff || rInit < rOn) {
       throw new IllegalArgumentException("Memristance must be between rOn and rOff, inclusive!!!");
     }
@@ -104,8 +106,9 @@ public class MSSMemristorV2 extends Memristor {
    * update device conductance
    *
    * @param voltage - the instantaneous voltage
-   * @param dt      - how much time passed since the last update
+   * @param dt - how much time passed since the last update
    */
+  @Override
   public void dG(double voltage, double dt) {
 
     // Probabilities
@@ -132,8 +135,7 @@ public class MSSMemristorV2 extends Memristor {
     x += (n0ff2on - nOn2Off) / n;
     if (x > 1) {
       x = 1;
-    }
-    else if (x < 0) {
+    } else if (x < 0) {
       x = 0;
     }
     // System.out.println(x);
@@ -188,6 +190,7 @@ public class MSSMemristorV2 extends Memristor {
    *
    * @return
    */
+  @Override
   public double getConductance() {
 
     double G = (x / rOn + (1 - x) / rOff);
@@ -200,6 +203,7 @@ public class MSSMemristorV2 extends Memristor {
    *
    * @return the combined MSS and Schottkey current
    */
+  @Override
   public double getCurrent(double voltage) {
 
     double mssCurrent = voltage * getConductance();
@@ -212,12 +216,14 @@ public class MSSMemristorV2 extends Memristor {
 
   public double getSchottkyCurrent(double voltage) {
 
-    return schottkyReverseAlpha * (-1 * Math.exp(-1 * schottkyReverseBeta * voltage)) + schottkyForwardAlpha * (Math.exp(schottkyForwardBeta * voltage));
+    return schottkyReverseAlpha * (-1 * Math.exp(-1 * schottkyReverseBeta * voltage))
+        + schottkyForwardAlpha * (Math.exp(schottkyForwardBeta * voltage));
   }
 
   public double getSchottkyCurrentWithPhi(double voltage) {
 
-    double schottkeyCurrent = (1 - phi) * (schottkyReverseAlpha * (-1 * Math.exp(-1 * schottkyReverseBeta * voltage)) + schottkyForwardAlpha * (Math.exp(schottkyForwardBeta * voltage)));
+    double schottkeyCurrent = (1 - phi) * (schottkyReverseAlpha * (-1 * Math.exp(-1 * schottkyReverseBeta * voltage))
+        + schottkyForwardAlpha * (Math.exp(schottkyForwardBeta * voltage)));
     return schottkeyCurrent;
     // return (1 - phi) * (schottkyReverseAlpha * (-1 * Math.exp(-1 * schottkyReverseBeta * voltage)) + schottkyForwardAlpha * (Math.exp(schottkyForwardBeta * voltage)));
   }
@@ -310,6 +316,30 @@ public class MSSMemristorV2 extends Memristor {
   public void setPhi(double phi) {
 
     this.phi = phi;
+  }
+
+  public double getrInit() {
+    return rInit;
+  }
+
+  public double getrOff() {
+    return rOff;
+  }
+
+  public double getrOn() {
+    return rOn;
+  }
+
+  public double getvOn() {
+    return vOn;
+  }
+
+  public double getvOff() {
+    return vOff;
+  }
+
+  public double getX() {
+    return x;
   }
 
   @Override

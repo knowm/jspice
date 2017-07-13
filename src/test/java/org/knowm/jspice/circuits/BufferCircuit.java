@@ -27,6 +27,8 @@ import org.knowm.jspice.component.element.linear.Resistor;
 import org.knowm.jspice.component.source.DCVoltage;
 import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistDCVoltage;
+import org.knowm.jspice.netlist.NetlistResistor;
 
 /**
  * @author timmolter
@@ -46,9 +48,9 @@ public class BufferCircuit extends Netlist {
     Component rout = new Resistor("Rout", 1000);
 
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    addNetListComponent(vDD, "Vdd", "0");
-    addNetListComponent(vIn, "in", "0");
-    addNetListComponent(rout, "out", "0");
+    addNetListComponent(new NetlistDCVoltage("VDD", 5.0, "Vdd", "0"));
+    addNetListComponent(new NetlistDCVoltage("Vin", 0.0, "in", "0"));
+    addNetListComponent(new NetlistResistor("Rout", 1000, "out", "0"));
 
     addSubCircuit(new Buffer("Vdd", "0", "in", "out", 1.2));
   }

@@ -21,15 +21,10 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.component.Component;
-import org.knowm.jspice.component.element.memristor.JoglekarMemristor;
-import org.knowm.jspice.component.source.DCVoltage;
-import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistDCVoltage;
+import org.knowm.jspice.netlist.NetlistJoglekarMemristor;
 
-/**
- * @author timmolter
- */
 public class V1JoglekarMemristor1 extends Netlist {
 
   private final double Rinit = 11_000;
@@ -39,19 +34,10 @@ public class V1JoglekarMemristor1 extends Netlist {
   private final double uv = 10e-15;
   private final double p = 1;
 
-  /**
-   * Constructor
-   */
   public V1JoglekarMemristor1() {
 
-    // define voltage source
-    Source dcVoltageSource = new DCVoltage("Vdd", 1.0);
-
-    // define memristors
-    Component m1 = new JoglekarMemristor("M1", Rinit, Ron, Roff, D, uv, p);
-
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    addNetListComponent(dcVoltageSource, "VDD", "0");
-    addNetListComponent(m1, "VDD", "0");
+    addNetListComponent(new NetlistDCVoltage("Vdd", 1.0, "VDD", "0"));
+    addNetListComponent(new NetlistJoglekarMemristor("M1", Rinit, Ron, Roff, D, uv, p, "VDD", "0"));
   }
 }

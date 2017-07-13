@@ -21,12 +21,12 @@
  */
 package org.knowm.jspice.transientanalysis;
 
-import org.knowm.jspice.component.element.memristor.MSSMemristorV1;
+import org.knowm.jspice.component.element.memristor.MSSMemristorV2;
 
 /**
  * @author timmolter
  */
-public class IdealMSSMemristorV1 extends MSSMemristorV1 {
+public class IdealMSSMemristorV2 extends MSSMemristorV2 {
 
   /**
    * characteristic time scale of the device
@@ -57,7 +57,7 @@ public class IdealMSSMemristorV1 extends MSSMemristorV1 {
    * @param id
    * @param memristance
    */
-  public IdealMSSMemristorV1(String id, double memristance) {
+  public IdealMSSMemristorV2(String id, double memristance) {
 
     super(id, memristance, G_OFF, G_ON, N, TC, VA, VB, phi, schottkeyAlpha, schottkeyBeta, schottkeyAlpha, schottkeyBeta);
   }

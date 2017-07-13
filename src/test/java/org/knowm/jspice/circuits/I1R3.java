@@ -21,31 +21,18 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.component.Component;
-import org.knowm.jspice.component.element.linear.Resistor;
-import org.knowm.jspice.component.source.DCCurrent;
-import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistDCCurrent;
+import org.knowm.jspice.netlist.NetlistResistor;
 
-/**
- * @author timmolter
- */
 public class I1R3 extends Netlist {
 
   public I1R3() {
 
-    // define current source
-    Source dcCurrentSource = new DCCurrent("a", 1.0);
-
-    // define resistors
-    Component resistor1 = new Resistor("R1", 10);
-    Component resistor2 = new Resistor("R2", 1000);
-    Component resistor3 = new Resistor("R3", 1000);
-
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    addNetListComponent(dcCurrentSource, "0", "1");
-    addNetListComponent(resistor1, "1", "0");
-    addNetListComponent(resistor2, "1", "2");
-    addNetListComponent(resistor3, "2", "0");
+    addNetListComponent(new NetlistDCCurrent("a", 1.0, "0", "1"));
+    addNetListComponent(new NetlistResistor("R1", 10, "1", "0"));
+    addNetListComponent(new NetlistResistor("R2", 1000, "1", "2"));
+    addNetListComponent(new NetlistResistor("R3", 1000, "2", "0"));
   }
 }

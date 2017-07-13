@@ -25,6 +25,7 @@ import org.knowm.jspice.circuit.subcircuit.TriStateInverter;
 import org.knowm.jspice.component.source.DCVoltage;
 import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistDCVoltage;
 
 /**
  * @author timmolter
@@ -39,10 +40,10 @@ public class TriStateInverterCircuit extends Netlist {
     Source vCLK = new DCVoltage("Vclk", 5.0);
     Source vCLKBar = new DCVoltage("VclkBar", 0.0);
 
-    addNetListComponent(vDD, "Vdd", "0");
-    addNetListComponent(vIn, "in", "0");
-    addNetListComponent(vCLK, "CLK", "0");
-    addNetListComponent(vCLKBar, "CLKBAR", "0");
+    addNetListComponent(new NetlistDCVoltage("VDD", 5.0, "Vdd", "0"));
+    addNetListComponent(new NetlistDCVoltage("Vin", 0.3, "in", "0"));
+    addNetListComponent(new NetlistDCVoltage("Vclk", 5.0, "CLK", "0"));
+    addNetListComponent(new NetlistDCVoltage("VclkBar", 0.0, "CLKBAR", "0"));
 
     addSubCircuit(new TriStateInverter("Vdd", "0", "in", "out", "CLK", "CLKBAR", 2.5));
   }

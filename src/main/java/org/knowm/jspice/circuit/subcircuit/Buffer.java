@@ -24,48 +24,21 @@ package org.knowm.jspice.circuit.subcircuit;
 import java.util.UUID;
 
 import org.knowm.jspice.circuit.SubCircuit;
-import org.knowm.jspice.component.Component;
-import org.knowm.jspice.component.element.nonlinear.NMOS;
-import org.knowm.jspice.component.element.nonlinear.PMOS;
+import org.knowm.jspice.netlist.NetlistNMOS;
+import org.knowm.jspice.netlist.NetlistPMOS;
 
-/**
- * <p>
- * terminals are:
- * </p>
- * <ul>
- * <li>Vdd</li>
- * <li>0</li>
- * <li>in</li>
- * <li>out</li>
- * </ul>
- *
- * @author timmolter
- */
 public class Buffer extends SubCircuit {
 
-  /**
-   * Constructor
-   *
-   * @param Vdd
-   * @param gnd
-   * @param in
-   * @param out
-   * @param Vthreshold
-   */
   public Buffer(String Vdd, String gnd, String in, String out, double Vthreshold) {
 
     String deviceId = UUID.randomUUID().toString();
 
     // inverter1
-    Component p1 = new PMOS(deviceId + "_" + "P1", Vthreshold);
-    Component n1 = new NMOS(deviceId + "_" + "N1", Vthreshold);
-    addNetListComponent(p1, in, deviceId + "_" + "x", Vdd); // G, D, S
-    addNetListComponent(n1, in, deviceId + "_" + "x", gnd); // G, D, S
+    addNetListComponent(new NetlistPMOS(deviceId + "_" + "P1", Vthreshold, in, deviceId + "_" + "x", Vdd)); // G, D, S
+    addNetListComponent(new NetlistNMOS(deviceId + "_" + "N1", Vthreshold, in, deviceId + "_" + "x", gnd)); // G, D, S
 
     // inverter2
-    Component p2 = new PMOS(deviceId + "_" + "P2", Vthreshold);
-    Component n2 = new NMOS(deviceId + "_" + "N2", Vthreshold);
-    addNetListComponent(p2, deviceId + "_" + "x", out, Vdd); // G, D, S
-    addNetListComponent(n2, deviceId + "_" + "x", out, gnd); // G, D, S
+    addNetListComponent(new NetlistPMOS(deviceId + "_" + "P2", Vthreshold, deviceId + "_" + "x", out, Vdd)); // G, D, S
+    addNetListComponent(new NetlistNMOS(deviceId + "_" + "N2", Vthreshold, deviceId + "_" + "x", out, gnd)); // G, D, S
   }
 }

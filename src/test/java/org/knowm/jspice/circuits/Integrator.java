@@ -21,37 +21,20 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.component.Component;
-import org.knowm.jspice.component.element.linear.Resistor;
-import org.knowm.jspice.component.element.reactive.Capacitor;
-import org.knowm.jspice.component.source.DCVoltage;
-import org.knowm.jspice.component.source.Source;
-import org.knowm.jspice.component.source.VCCS;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistCapacitor;
+import org.knowm.jspice.netlist.NetlistDCVoltage;
+import org.knowm.jspice.netlist.NetlistResistor;
+import org.knowm.jspice.netlist.NetlistVCCS;
 
-/**
- * @author timmolter
- */
 public class Integrator extends Netlist {
 
-  /**
-   * Constructor
-   */
   public Integrator() {
 
-    Source v1 = new DCVoltage("V1", 1.0);
-    Component resistor1 = new Resistor("R1", 1);
-
-    Component vccs = new VCCS("Gx", 1);
-    Capacitor capacitorX = new Capacitor("Cx", 1);
-    capacitorX.setInitialCondition(.4);
-    Component resistorX = new Resistor("Rx", 1_000_000_000);
-
-    addNetListComponent(v1, "1", "0");
-    addNetListComponent(resistor1, "1", "0");
-
-    addNetListComponent(vccs, "0", "x", "1", "0");
-    addNetListComponent(capacitorX, "x", "0");
-    addNetListComponent(resistorX, "x", "0");
+    addNetListComponent(new NetlistDCVoltage("V1", 1.0, "1", "0"));
+    addNetListComponent(new NetlistResistor("R1", 1, "1", "0"));
+    addNetListComponent(new NetlistVCCS("Gx", 1, "0", "x", "1", "0"));
+    addNetListComponent(new NetlistCapacitor("Cx", 1, "x", "0"));
+    addNetListComponent(new NetlistResistor("Rx", 1_000_000_000, "x", "0"));
   }
 }

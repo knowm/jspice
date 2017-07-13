@@ -26,6 +26,8 @@ import org.knowm.jspice.component.element.memristor.MMSSMemristor;
 import org.knowm.jspice.component.source.DCVoltage;
 import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistDCVoltage;
+import org.knowm.jspice.netlist.NetlistMMSSMemristor;
 
 /**
  * @author timmolter
@@ -66,7 +68,8 @@ public class V1MMSSMem extends Netlist {
     Component m1 = new MMSSMemristor("M1", R_INIT, R_ON, R_OFF, TAU, V_ON, V_OFF, phi, schottkeyAlpha, schottkeyBeta, schottkeyAlpha, schottkeyBeta);
 
     // build netlist, the nodes can be named anything except for ground whose node ..................
-    addNetListComponent(dcVoltageSource, "VDD", "0");
-    addNetListComponent(m1, "VDD", "0");
+    addNetListComponent(new NetlistDCVoltage("Vdd", 1.0, "VDD", "0"));
+    addNetListComponent(new NetlistMMSSMemristor("M1", R_INIT, R_ON, R_OFF, TAU, V_ON, V_OFF, phi, schottkeyAlpha, schottkeyBeta, schottkeyAlpha,
+        schottkeyBeta, "VDD", "0"));
   }
 }

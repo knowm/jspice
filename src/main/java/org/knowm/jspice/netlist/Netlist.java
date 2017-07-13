@@ -34,19 +34,9 @@ import javax.validation.constraints.NotNull;
 import org.knowm.jspice.circuit.SubCircuit;
 import org.knowm.jspice.component.Component;
 import org.knowm.jspice.component.NonlinearComponent;
-import org.knowm.jspice.component.element.linear.Resistor;
 import org.knowm.jspice.component.element.memristor.Memristor;
-import org.knowm.jspice.component.element.nonlinear.Diode;
 import org.knowm.jspice.component.element.nonlinear.MOSFET;
-import org.knowm.jspice.component.element.reactive.Capacitor;
-import org.knowm.jspice.component.element.reactive.Inductor;
 import org.knowm.jspice.component.element.reactive.ReactiveElement;
-import org.knowm.jspice.component.source.DCCurrent;
-import org.knowm.jspice.component.source.DCCurrentArbitrary;
-import org.knowm.jspice.component.source.DCVoltage;
-import org.knowm.jspice.component.source.DCVoltageArbitrary;
-import org.knowm.jspice.component.source.VCCS;
-import org.knowm.jspice.component.source.VCVS;
 import org.knowm.jspice.simulate.SimulationConfig;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -167,7 +157,7 @@ public class Netlist {
 
     this.simulationConfig = netlistBuilder.simulationConfig;
     for (NetlistComponent netlistComponent : netlistBuilder.netlistComponents) {
-      addNetListComponent(netlistComponent.getComponent(), netlistComponent.getNodesAsArray());
+      addNetListComponent(netlistComponent);
     }
   }
 
@@ -176,114 +166,93 @@ public class Netlist {
    *
    * @param netListComponent
    */
-  public void addNetListComponent(Component component, String... nodes) {
+  public void addNetListComponent(NetlistComponent netListComponent) {
 
-    if (component instanceof NonlinearComponent) {
+    if (netListComponent.getComponent() instanceof NonlinearComponent) {
       this.isNonlinearCircuit = true;
     }
-    if (component instanceof ReactiveElement) {
+    if (netListComponent.getComponent() instanceof ReactiveElement) {
 
-      ReactiveElement reactiveElement = (ReactiveElement) component;
+      ReactiveElement reactiveElement = (ReactiveElement) netListComponent.getComponent();
       if (reactiveElement.getInitialCondition() != null) {
         this.isInitialConditions = true;
       }
     }
 
     // make sure node names are not the exact same
-    for (int i = 0; i < nodes.length - 1; i++) {
-      if (nodes[i].equals(nodes[i + 1])) {
+    for (int i = 0; i < netListComponent.getNodesAsArray().length - 1; i++) {
+      if (netListComponent.getNodesAsArray()[i].equals(netListComponent.getNodesAsArray()[i + 1])) {
         throw new IllegalArgumentException("A component cannot be connected to the same node twice!");
       }
     }
 
     // make sure no components have the same name
-    Component existingComponent = componentIDMap.get(component.getId());
+    Component existingComponent = componentIDMap.get(netListComponent.getComponent().getId());
     if (existingComponent != null) {
-      throw new IllegalArgumentException("The component ID " + component.getId() + " is not unique!");
+      throw new IllegalArgumentException("The component ID " + netListComponent.getComponent().getId() + " is not unique!");
     }
 
-    NetlistComponent netListComponent = new NetlistComponent(component, nodes);
+    //    NetlistComponent netListComponent = new NetlistComponent(component, nodes);
 
     // add to component list
     //    netListComponents.add(netListComponent);
 
-    // add to Resistor list
-    if (component instanceof Resistor) {
+    netlistComponents.add(netListComponent);
+    componentIDMap.put(netListComponent.getComponent().getId(), netListComponent.getComponent());
 
-      netListComponent = new NetlistResistor(component.getId(), component.getSweepableValue(), nodes);
+    // add to Resistor list
+    if (netListComponent instanceof NetlistResistor) {
+
       netListResistors.add(netListComponent);
-      netlistComponents.add(netListComponent);
-      componentIDMap.put(netListComponent.getComponent().getId(), netListComponent.getComponent());
     }
 
     // add to DCVoltage list
-    else if (component instanceof DCVoltage) {
-      if (component instanceof DCVoltageArbitrary) {
+    else if (netListComponent instanceof NetlistDCVoltage) {
+      if (netListComponent instanceof NetlistDCVoltageArbitrary) {
         netListDCVoltageArbitrarys.add(netListComponent);
       } else {
 
-        netListComponent = new NetlistDCVoltage(component.getId(), component.getSweepableValue(), nodes);
         netListDCVoltageSources.add(netListComponent);
-        netlistComponents.add(netListComponent);
-        componentIDMap.put(netListComponent.getComponent().getId(), netListComponent.getComponent());
       }
-      netlistComponents.add(netListComponent);
     }
 
     // add to DCCurrent list
-    else if (component instanceof DCCurrent) {
-      if (component instanceof DCCurrentArbitrary) {
-        netlistComponents.add(netListComponent);
+    else if (netListComponent instanceof NetlistDCCurrent) {
+      if (netListComponent instanceof NetlistDCCurrentArbitrary) {
         netListDCCurrentArbitrarys.add(netListComponent);
       } else {
-        netListComponent = new NetlistDCCurrent(component.getId(), component.getSweepableValue(), nodes);
         netListDCCurrentSources.add(netListComponent);
-        netlistComponents.add(netListComponent);
-        componentIDMap.put(netListComponent.getComponent().getId(), netListComponent.getComponent());
       }
     }
 
     // add to Diode list
-    else if (component instanceof Diode) {
-
+    else if (netListComponent instanceof NetlistDiode) {
       netListDiodes.add(netListComponent);
-      netlistComponents.add(netListComponent);
     }
 
     // add to Capacitor list
-    else if (component instanceof Capacitor) {
-
+    else if (netListComponent instanceof NetlistCapacitor) {
       netListCapacitors.add(netListComponent);
-      netlistComponents.add(netListComponent);
     }
     // add to Inductor list
-    else if (component instanceof Inductor) {
-
+    else if (netListComponent instanceof NetlistInductor) {
       netListInductors.add(netListComponent);
-      netlistComponents.add(netListComponent);
-    }
-
-    // add to Memristor list
-    else if (component instanceof Memristor) {
-
-      netListMemristors.add(netListComponent);
-      netlistComponents.add(netListComponent);
-    }
-    // add to VCCS list
-    else if (component instanceof VCCS) {
-
-      netListVCCSs.add(netListComponent);
-      netlistComponents.add(netListComponent);
-    } // add to VCVS list
-    else if (component instanceof VCVS) {
-
-      netListVCVSs.add(netListComponent);
-      netlistComponents.add(netListComponent);
     }
     // add to MOSFET list
-    else if (component instanceof MOSFET) {
+    else if (netListComponent.getComponent() instanceof MOSFET) {
       netListMOSFETs.add(netListComponent);
-      netlistComponents.add(netListComponent);
+    }
+    // add to Memristor list
+    else if (netListComponent.getComponent() instanceof Memristor) {
+      netListMemristors.add(netListComponent);
+    }
+    // add to VCCS list
+    else if (netListComponent instanceof NetlistVCCS) {
+      netListVCCSs.add(netListComponent);
+    }
+    // add to VCVS list
+    else if (netListComponent instanceof NetlistVCVS) {
+      netListVCVSs.add(netListComponent);
     } else {
       throw new IllegalArgumentException("Unknown Component Type!");
     }
@@ -607,8 +576,7 @@ public class Netlist {
   public void addSubCircuit(SubCircuit subCircuit) {
 
     for (NetlistComponent netlistComponent : subCircuit.getNetlist().getNetlistComponents()) {
-      Component component = netlistComponent.getComponent();
-      addNetListComponent(component, netlistComponent.getNodesAsArray());
+      addNetListComponent(netlistComponent);
     }
   }
 
@@ -634,6 +602,10 @@ public class Netlist {
     return simulationConfig;
   }
 
+  public void setSimulationConfig(SimulationConfig simulationConfig) {
+    this.simulationConfig = simulationConfig;
+  }
+
   /**
    * This is called by the YML deserializer
    * 
@@ -642,7 +614,7 @@ public class Netlist {
   public void setNetlistComponents(List<NetlistComponent> netlistComponents) {
 
     for (NetlistComponent netlistComponent : netlistComponents) {
-      addNetListComponent(netlistComponent.getComponent(), netlistComponent.getNodesAsArray());
+      addNetListComponent(netlistComponent);
     }
   }
 

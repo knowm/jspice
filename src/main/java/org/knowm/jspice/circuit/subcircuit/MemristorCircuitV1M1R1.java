@@ -21,31 +21,18 @@
  */
 package org.knowm.jspice.circuit.subcircuit;
 
-import org.knowm.jspice.component.Component;
-import org.knowm.jspice.component.element.linear.Resistor;
 import org.knowm.jspice.component.element.memristor.Memristor;
-import org.knowm.jspice.component.source.DCVoltage;
-import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistDCVoltage;
+import org.knowm.jspice.netlist.NetlistMemristor;
+import org.knowm.jspice.netlist.NetlistResistor;
 
-/**
- * @author timmolter
- */
 public class MemristorCircuitV1M1R1 extends Netlist {
-
-  /**
-   * Constructor
-   */
   public MemristorCircuitV1M1R1(Memristor memristor, int resistance) {
 
-    // define voltage source
-    Source dcVoltageSource = new DCVoltage("Vdd", 1.0);
-
-    Component r1 = new Resistor("R1", resistance);
-
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    addNetListComponent(dcVoltageSource, "1", "0");
-    addNetListComponent(memristor, "1", "y");
-    addNetListComponent(r1, "y", "0");
+    addNetListComponent(new NetlistDCVoltage("Vdd", 1.0, "1", "0"));
+    addNetListComponent(new NetlistMemristor(memristor, "1", "y"));
+    addNetListComponent(new NetlistResistor("R1", resistance, "y", "0"));
   }
 }

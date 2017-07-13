@@ -21,29 +21,17 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.component.Component;
-import org.knowm.jspice.component.element.nonlinear.PMOS;
-import org.knowm.jspice.component.source.DCVoltage;
-import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistDCVoltage;
+import org.knowm.jspice.netlist.NetlistPMOS;
 
-/**
- * @author timmolter
- */
 public class V2PMOS1 extends Netlist {
 
   public V2PMOS1() {
 
-    // define voltage source
-    Source vDD = new DCVoltage("Vdd", 5.0);
-    Source vS = new DCVoltage("Vg", 3.3);
-
-    // define components
-    Component pmos1 = new PMOS("PMOS1", 2.5);
-
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    addNetListComponent(vDD, "1", "0");
-    addNetListComponent(vS, "2", "0");
-    addNetListComponent(pmos1, "2", "1", "0"); // G, D, S
+    addNetListComponent(new NetlistDCVoltage("Vdd", 5.0, "1", "0"));
+    addNetListComponent(new NetlistDCVoltage("Vg", 3.3, "2", "0"));
+    addNetListComponent(new NetlistPMOS("PMOS1", 2.5, "2", "1", "0")); // G, D, S
   }
 }

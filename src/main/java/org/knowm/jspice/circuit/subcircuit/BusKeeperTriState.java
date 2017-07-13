@@ -24,53 +24,28 @@ package org.knowm.jspice.circuit.subcircuit;
 import java.util.UUID;
 
 import org.knowm.jspice.circuit.SubCircuit;
-import org.knowm.jspice.component.Component;
-import org.knowm.jspice.component.element.nonlinear.NMOS;
-import org.knowm.jspice.component.element.nonlinear.PMOS;
+import org.knowm.jspice.netlist.NetlistNMOS;
+import org.knowm.jspice.netlist.NetlistPMOS;
 
-/**
- * @author timmolter
- */
 public class BusKeeperTriState extends SubCircuit {
 
-  /**
-   * Constructor
-   *
-   * @param Vdd
-   * @param gnd
-   * @param in
-   * @param out
-   * @param clk
-   * @param clkBar
-   * @param Vthreshold
-   */
   public BusKeeperTriState(String Vdd, String gnd, String in, String out, String clk, String clkBar, double Vthreshold) {
 
     String deviceId = UUID.randomUUID().toString();
-
-    Component p1 = new PMOS(deviceId + "_" + "P1", Vthreshold);
-    Component p2 = new PMOS(deviceId + "_" + "P2", Vthreshold + .02);
-    Component n1 = new NMOS(deviceId + "_" + "N1", Vthreshold + .02);
-    Component n2 = new NMOS(deviceId + "_" + "N2", Vthreshold);
-
-    Component p3 = new PMOS(deviceId + "_" + "P3", Vthreshold);
-    Component p4 = new PMOS(deviceId + "_" + "P4", Vthreshold + .02);
-    Component n3 = new NMOS(deviceId + "_" + "N3", Vthreshold + .02);
-    Component n4 = new NMOS(deviceId + "_" + "N4", Vthreshold);
 
     String uniqueNodeIdA = deviceId + "_" + "a";
     String uniqueNodeIdB = deviceId + "_" + "b";
     String uniqueNodeIdC = deviceId + "_" + "c";
     String uniqueNodeIdD = deviceId + "_" + "d";
 
-    addNetListComponent(p1, in, uniqueNodeIdA, Vdd); // G, D, S
-    addNetListComponent(p2, clkBar, out, uniqueNodeIdA); // G, D, S
-    addNetListComponent(n1, clk, out, uniqueNodeIdB); // G, D, S
-    addNetListComponent(n2, in, uniqueNodeIdB, gnd); // G, D, S
+    addNetListComponent(new NetlistPMOS(deviceId + "_" + "P1", Vthreshold, in, uniqueNodeIdA, Vdd)); // G, D, S
+    addNetListComponent(new NetlistPMOS(deviceId + "_" + "P2", Vthreshold + .02, clkBar, out, uniqueNodeIdA)); // G, D, S
+    addNetListComponent(new NetlistNMOS(deviceId + "_" + "N1", Vthreshold + .02, clk, out, uniqueNodeIdB)); // G, D, S
+    addNetListComponent(new NetlistNMOS(deviceId + "_" + "N2", Vthreshold)); // G, D, S
 
-    addNetListComponent(p3, out, uniqueNodeIdC, Vdd); // G, D, S
-    addNetListComponent(p4, clkBar, in, uniqueNodeIdC); // G, D, S
-    addNetListComponent(n3, clk, in, uniqueNodeIdD); // G, D, S
-    addNetListComponent(n4, out, uniqueNodeIdD, gnd); // G, D, S
+    addNetListComponent(new NetlistPMOS(deviceId + "_" + "P3", Vthreshold, out, uniqueNodeIdC, Vdd)); // G, D, S
+    addNetListComponent(new NetlistPMOS(deviceId + "_" + "P4", Vthreshold + .02, clkBar, in, uniqueNodeIdC)); // G, D, S
+    addNetListComponent(new NetlistNMOS(deviceId + "_" + "N3", Vthreshold + .02, clk, in, uniqueNodeIdD)); // G, D, S
+    addNetListComponent(new NetlistNMOS(deviceId + "_" + "N4", Vthreshold, out, uniqueNodeIdD, gnd)); // G, D, S
   }
 }

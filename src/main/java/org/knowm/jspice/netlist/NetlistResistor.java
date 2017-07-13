@@ -15,7 +15,7 @@ public class NetlistResistor extends NetlistComponent {
   @JsonProperty("resistance")
   double resistance;
 
-  public NetlistResistor(@JsonProperty("id") String id, @JsonProperty("resistance") double resistance, @JsonProperty("nodes") String... nodes) {
+  public NetlistResistor(String id, double resistance, String... nodes) {
 
     super(new Resistor(id, resistance), nodes);
     this.resistance = resistance;

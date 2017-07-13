@@ -21,39 +21,20 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.component.Component;
-import org.knowm.jspice.component.element.memristor.RSMemristor;
-import org.knowm.jspice.component.source.DCVoltage;
-import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistDCVoltage;
+import org.knowm.jspice.netlist.NetlistRSMemristor;
 
-/**
- * @author timmolter
- */
 public class V1RSMem extends Netlist {
-
-  /**
-   * barrier potentials
-   */
-  private static final double V_OFF = .27;
-  private static final double V_ON = .27;
 
   private final static double schottkeyAlpha = 0; // N/A
   private final static double schottkeyBeta = 0; // N/A
   private final static double phi = 1;
 
-  /**
-   * Constructor
-   */
   public V1RSMem() {
 
-    // define voltage source
-    Source dcVoltageSource = new DCVoltage("Vdd", 1.0);
-
-    // define memristors
-    Component m1 = new RSMemristor("M1", schottkeyAlpha, schottkeyBeta, schottkeyAlpha, schottkeyBeta, phi);
     // build netlist, the nodes can be named anything except for ground whose node ..................
-    addNetListComponent(dcVoltageSource, "VDD", "0");
-    addNetListComponent(m1, "VDD", "0");
+    addNetListComponent(new NetlistDCVoltage("Vdd", 1.0, "VDD", "0"));
+    addNetListComponent(new NetlistRSMemristor("M1", schottkeyAlpha, schottkeyBeta, schottkeyAlpha, schottkeyBeta, phi, "VDD", "0"));
   }
 }

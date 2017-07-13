@@ -21,28 +21,37 @@
  */
 package org.knowm.jspice.dcop;
 
+import java.io.IOException;
+
 import org.knowm.jspice.JSpice;
-import org.knowm.jspice.netlist.Netlist;
-import org.knowm.jspice.netlist.NetlistBuilder;
+
+import io.dropwizard.configuration.ConfigurationException;
 
 /**
  * @author timmolter
  */
 public class DCOPI1R1 {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException, ConfigurationException {
 
     //    // run DC operating point
-    //    Netlist circuit = new I1R1();
-    //    DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
-    //    System.out.println(dcOpResult.toString());
+    //    Netlist netlist = new I1R1();
+    //    netlist.setSimulationConfig(new SimulationConfigDCOP());
+    //    JSpice.simulate(netlist);
 
-    // run via NetlistBuilder
-    NetlistBuilder builder = new NetlistBuilder().addNetlistDCCurrent("a", 1.0, "1", "0").addNetlistResistor("R1", 1000, "0", "1")
-        .addDCOPSimulationConfig();
-    Netlist netlist = builder.build();
-    System.out.println("builder.getYAML() " + builder.getYAML());
-    JSpice.simulate(netlist);
+    //    // run via NetlistBuilder
+    //    NetlistBuilder builder = new NetlistBuilder().addNetlistDCCurrent("a", 1.0, "1", "0").addNetlistResistor("R1", 1000, "0", "1")
+    //        .addDCOPSimulationConfig();
+    //    Netlist netlist = builder.build();
+    //    System.out.println("builder.getYAML() " + builder.getYAML());
+    //    JSpice.simulate(netlist);
+
+    // run via Yml file
+    JSpice.simulate("dcopi1r1.yml");
+
+    // run via jar
+    // java -jar jspice.jar dcopi1r1.yml
+
   }
 
 }

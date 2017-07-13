@@ -22,31 +22,19 @@
 package org.knowm.jspice.circuits;
 
 import org.knowm.jspice.circuit.subcircuit.TransmissionGate;
-import org.knowm.jspice.component.Component;
-import org.knowm.jspice.component.element.linear.Resistor;
-import org.knowm.jspice.component.source.DCVoltage;
-import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistDCVoltage;
+import org.knowm.jspice.netlist.NetlistResistor;
 
-/**
- * @author timmolter
- */
 public class TransmissionGateCircuit extends Netlist {
 
   public TransmissionGateCircuit() {
 
-    // define voltage source
-    Source vIn = new DCVoltage("Vin", 0.3);
-    Source vCLK = new DCVoltage("Vclk", 5.0);
-    Source vCLKBar = new DCVoltage("VclkBar", 0.0);
+    addNetListComponent(new NetlistDCVoltage("Vin", 0.3, "in", "0"));
+    addNetListComponent(new NetlistDCVoltage("Vclk", 5.0, "CLK", "0"));
+    addNetListComponent(new NetlistDCVoltage("VclkBar", 0.0, "CLKBAR", "0"));
 
-    Component rout = new Resistor("Rout", 100000);
-
-    addNetListComponent(vIn, "in", "0");
-    addNetListComponent(vCLK, "CLK", "0");
-    addNetListComponent(vCLKBar, "CLKBAR", "0");
-
-    addNetListComponent(rout, "out", "0");
+    addNetListComponent(new NetlistResistor("Rout", 100000, "out", "0"));
 
     addSubCircuit(new TransmissionGate("in", "out", "CLK", "CLKBAR", 2.5));
   }

@@ -27,15 +27,12 @@ import org.knowm.jspice.component.element.reactive.Capacitor;
 import org.knowm.jspice.component.source.DCVoltage;
 import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistCapacitor;
+import org.knowm.jspice.netlist.NetlistDCVoltage;
+import org.knowm.jspice.netlist.NetlistResistor;
 
-/**
- * @author timmolter
- */
 public class V1R1C1 extends Netlist {
 
-  /**
-   * Constructor
-   */
   public V1R1C1() {
 
     // define voltage source
@@ -49,8 +46,8 @@ public class V1R1C1 extends Netlist {
     capacitor1.setInitialCondition(0.6);
 
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    addNetListComponent(dcVoltageSource, "1", "0");
-    addNetListComponent(resistor1, "1", "2");
-    addNetListComponent(capacitor1, "2", "0");
+    addNetListComponent(new NetlistDCVoltage("V1", 0.0, "1", "0"));
+    addNetListComponent(new NetlistResistor("R1", 160000, "1", "2"));
+    addNetListComponent(new NetlistCapacitor("C1", 16E-8, "2", "0"));
   }
 }

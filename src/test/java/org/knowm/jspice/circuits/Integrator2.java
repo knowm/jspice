@@ -21,13 +21,13 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.component.Component;
-import org.knowm.jspice.component.element.linear.Resistor;
 import org.knowm.jspice.component.element.reactive.Capacitor;
 import org.knowm.jspice.component.source.DCCurrentArbitrary;
-import org.knowm.jspice.component.source.DCVoltage;
-import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistCapacitor;
+import org.knowm.jspice.netlist.NetlistDCCurrentArbitrary;
+import org.knowm.jspice.netlist.NetlistDCVoltage;
+import org.knowm.jspice.netlist.NetlistResistor;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 
 /**
@@ -35,32 +35,25 @@ import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
  */
 public class Integrator2 extends Netlist {
 
-  /**
-   * Constructor
-   */
   public Integrator2() {
 
-    Source v1 = new DCVoltage("V1", 1.0);
-    Component resistor1 = new Resistor("R1", 1);
-
     // State variable X
-    Source Gx = new DCCurrentArbitrary("Gx") {
+    DCCurrentArbitrary Gx = new DCCurrentArbitrary("Gx") {
 
+      @Override
       public double getArbitraryCurrent(DCOperatingPointResult dcOperatingPointResult) {
 
-        // System.out.println("---" + dcOperatingPointResult.getValue("V(1)"));
         return dcOperatingPointResult.getValue("V(1)");
       }
     };
     Capacitor capacitorX = new Capacitor("Cx", 1);
     capacitorX.setInitialCondition(.4);
-    Component resistorX = new Resistor("Rx", 1_000_000_000);
 
-    addNetListComponent(v1, "1", "0");
-    addNetListComponent(resistor1, "1", "0");
+    addNetListComponent(new NetlistDCVoltage("V1", 1.0, "1", "0"));
+    addNetListComponent(new NetlistResistor("R1", 1, "1", "0"));
 
-    addNetListComponent(Gx, "0", "x");
-    addNetListComponent(capacitorX, "x", "0");
-    addNetListComponent(resistorX, "x", "0");
+    addNetListComponent(new NetlistDCCurrentArbitrary(Gx, "0", "x"));
+    addNetListComponent(new NetlistCapacitor("Cx", 1, "x", "0"));
+    addNetListComponent(new NetlistResistor("Rx", 1_000_000_000, "x", "0"));
   }
 }

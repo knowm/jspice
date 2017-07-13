@@ -70,7 +70,7 @@ public class SimulationPlotter {
    * @param simulationResult
    * @param valuesToPlot
    */
-  public static void plot(SimulationResult simulationResult, String[] valuesToPlot) {
+  public static void plot(SimulationResult simulationResult, String... valuesToPlot) {
 
     // Create Chart
     XYChart chart = new XYChart(600, 300);

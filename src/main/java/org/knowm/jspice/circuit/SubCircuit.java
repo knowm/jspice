@@ -21,8 +21,8 @@
  */
 package org.knowm.jspice.circuit;
 
-import org.knowm.jspice.component.Component;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistComponent;
 
 /**
  * @author timmolter
@@ -31,24 +31,9 @@ public class SubCircuit {
 
   private Netlist subCircuitNetlist = new Netlist();
 
-  public void addNetListComponent(Component component, String[] nodes) {
+  public void addNetListComponent(NetlistComponent component) {
 
-    subCircuitNetlist.addNetListComponent(component, nodes);
-  }
-
-  public void addNetListComponent(Component component, String nodeA, String nodeB) {
-
-    addNetListComponent(component, new String[]{nodeA, nodeB});
-  }
-
-  public void addNetListComponent(Component component, String nodeA, String nodeB, String nodeC) {
-
-    addNetListComponent(component, new String[]{nodeA, nodeB, nodeC});
-  }
-
-  public void addNetListComponent(Component component, String nodeA, String nodeB, String nodeC, String nodeD) {
-
-    addNetListComponent(component, new String[]{nodeA, nodeB, nodeC, nodeD});
+    subCircuitNetlist.addNetListComponent(component);
   }
 
   public Netlist getNetlist() {

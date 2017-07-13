@@ -24,42 +24,16 @@ package org.knowm.jspice.circuit.subcircuit;
 import java.util.UUID;
 
 import org.knowm.jspice.circuit.SubCircuit;
-import org.knowm.jspice.component.Component;
-import org.knowm.jspice.component.element.nonlinear.NMOS;
-import org.knowm.jspice.component.element.nonlinear.PMOS;
+import org.knowm.jspice.netlist.NetlistNMOS;
+import org.knowm.jspice.netlist.NetlistPMOS;
 
-/**
- * <p>
- * terminals are:
- * </p>
- * <ul>
- * <li>Vdd</li>
- * <li>0</li>
- * <li>in</li>
- * <li>out</li>
- * </ul>
- *
- * @author timmolter
- */
 public class CMOSInverter extends SubCircuit {
 
-  /**
-   * Constructor
-   *
-   * @param Vdd
-   * @param gnd
-   * @param in
-   * @param out
-   * @param Vthreshold
-   */
   public CMOSInverter(String Vdd, String gnd, String in, String out, double Vthreshold) {
 
     String deviceId = UUID.randomUUID().toString();
 
-    // define components
-    Component p1 = new PMOS(deviceId + "_" + "P1", Vthreshold);
-    Component n1 = new NMOS(deviceId + "_" + "N1", Vthreshold);
-    addNetListComponent(p1, in, out, Vdd); // G, D, S
-    addNetListComponent(n1, in, out, gnd); // G, D, S
+    addNetListComponent(new NetlistPMOS(deviceId + "_" + "P1", Vthreshold, in, out, Vdd)); // G, D, S
+    addNetListComponent(new NetlistNMOS(deviceId + "_" + "N1", Vthreshold, in, out, gnd)); // G, D, S
   }
 }

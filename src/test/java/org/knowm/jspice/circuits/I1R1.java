@@ -21,11 +21,9 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.component.Component;
-import org.knowm.jspice.component.element.linear.Resistor;
-import org.knowm.jspice.component.source.DCCurrent;
-import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistDCCurrent;
+import org.knowm.jspice.netlist.NetlistResistor;
 
 /**
  * This circuit is simply a dc current source and a single resistor
@@ -39,14 +37,7 @@ public class I1R1 extends Netlist {
    */
   public I1R1() {
 
-    // define current source
-    Source dcCurrentSource = new DCCurrent("a", 1.0);
-
-    // define resistor
-    Component resistor1 = new Resistor("R1", 1000);
-
-    // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    addNetListComponent(dcCurrentSource, "0", "1");
-    addNetListComponent(resistor1, "1", "0");
+    addNetListComponent(new NetlistDCCurrent("a", 1.0, "0", "1"));
+    addNetListComponent(new NetlistResistor("R1", 1000, "1", "0"));
   }
 }

@@ -21,11 +21,9 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.component.Component;
-import org.knowm.jspice.component.element.linear.Resistor;
-import org.knowm.jspice.component.source.DCVoltage;
-import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistDCVoltage;
+import org.knowm.jspice.netlist.NetlistResistor;
 
 /**
  * @author timmolter
@@ -37,14 +35,8 @@ public class V1R1 extends Netlist {
    */
   public V1R1() {
 
-    // define voltage source
-    Source dcVoltageSource = new DCVoltage("V1", 10.0);
-
-    // define resistor
-    Component resistor1 = new Resistor("R1", 1000);
-
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    addNetListComponent(dcVoltageSource, "1", "0");
-    addNetListComponent(resistor1, "1", "0");
+    addNetListComponent(new NetlistDCVoltage("V1", 10.0, "1", "0"));
+    addNetListComponent(new NetlistResistor("R1", 1000, "1", "0"));
   }
 }

@@ -21,37 +21,21 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.component.Component;
-import org.knowm.jspice.component.element.nonlinear.NMOS;
-import org.knowm.jspice.component.element.nonlinear.PMOS;
-import org.knowm.jspice.component.source.DCVoltage;
-import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistDCVoltage;
+import org.knowm.jspice.netlist.NetlistNMOS;
+import org.knowm.jspice.netlist.NetlistPMOS;
 
-/**
- * @author timmolter
- */
 public class VoltageKeeper extends Netlist {
 
   public VoltageKeeper() {
 
-    // define voltage source
-    Source vDD = new DCVoltage("VDD", 5.0);
-    Source vIn = new DCVoltage("Vin", 0.0);
-    // Source vIn = new DCVoltage("Vin", 2.5);
-
-    // define components
-    Component p1 = new PMOS("P1", 2.5);
-    Component n1 = new NMOS("N1", 2.5);
-    Component p2 = new PMOS("P2", 2.5);
-    Component n2 = new NMOS("N2", 2.5);
-
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    addNetListComponent(vDD, "Vdd", "0");
-    addNetListComponent(vIn, "in", "0");
-    addNetListComponent(p1, "in", "out", "Vdd"); // G, D, S
-    addNetListComponent(n1, "in", "out", "0"); // G, D, S
-    addNetListComponent(p2, "out", "in", "Vdd"); // G, D, S
-    addNetListComponent(n2, "out", "in", "0"); // G, D, S
+    addNetListComponent(new NetlistDCVoltage("VDD", 5.0, "Vdd", "0"));
+    addNetListComponent(new NetlistDCVoltage("Vin", 0.0, "in", "0"));
+    addNetListComponent(new NetlistPMOS("P1", 2.5, "in", "out", "Vdd")); // G, D, S
+    addNetListComponent(new NetlistNMOS("N1", 2.5, "in", "out", "0")); // G, D, S
+    addNetListComponent(new NetlistPMOS("P2", 2.5, "out", "in", "Vdd")); // G, D, S
+    addNetListComponent(new NetlistNMOS("N2", 2.5, "out", "in", "0")); // G, D, S
   }
 }

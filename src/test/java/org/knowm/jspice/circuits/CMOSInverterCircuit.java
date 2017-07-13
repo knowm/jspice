@@ -25,6 +25,7 @@ import org.knowm.jspice.circuit.subcircuit.CMOSInverter;
 import org.knowm.jspice.component.source.DCVoltage;
 import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistDCVoltage;
 
 /**
  * @author timmolter
@@ -44,8 +45,8 @@ public class CMOSInverterCircuit extends Netlist {
     //    Component rout = new Resistor("Rout", 1000000000);
 
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    addNetListComponent(vDD, "Vdd", "0");
-    addNetListComponent(vIn, "in", "0");
+    addNetListComponent(new NetlistDCVoltage("VDD", 5.0, "Vdd", "0"));
+    addNetListComponent(new NetlistDCVoltage("Vin", 4, "in", "0"));
     //    addNetListComponent(rout, "out", "0");
 
     addSubCircuit(new CMOSInverter("Vdd", "0", "in", "out", 2.5));

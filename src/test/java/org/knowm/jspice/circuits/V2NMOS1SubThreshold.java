@@ -21,29 +21,17 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.component.Component;
-import org.knowm.jspice.component.element.nonlinear.NMOS;
-import org.knowm.jspice.component.source.DCVoltage;
-import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistDCVoltage;
+import org.knowm.jspice.netlist.NetlistNMOS;
 
-/**
- * @author timmolter
- */
 public class V2NMOS1SubThreshold extends Netlist {
 
   public V2NMOS1SubThreshold() {
 
-    // define voltage source
-    Source dcVoltageSourceDS = new DCVoltage("Vds", 2);
-    Source dcVoltageSourceGS = new DCVoltage("Vgs", 1.0);
-
-    // define components
-    Component nmos1 = new NMOS("NMOS1", 2.5);
-
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    addNetListComponent(dcVoltageSourceDS, "1", "0");
-    addNetListComponent(dcVoltageSourceGS, "2", "0");
-    addNetListComponent(nmos1, "2", "1", "0");
+    addNetListComponent(new NetlistDCVoltage("Vds", 2, "1", "0"));
+    addNetListComponent(new NetlistDCVoltage("Vgs", 1.0, "2", "0"));
+    addNetListComponent(new NetlistNMOS("NMOS1", 2.5, "2", "1", "0"));
   }
 }

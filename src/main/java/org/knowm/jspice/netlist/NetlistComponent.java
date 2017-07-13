@@ -43,7 +43,12 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({@Type(value = NetlistResistor.class, name = "resistor"), @Type(value = NetlistDCCurrent.class, name = "dc_current"),
-    @Type(value = NetlistDCVoltage.class, name = "dc_voltage")})
+    @Type(value = NetlistDCVoltage.class, name = "dc_voltage"), @Type(value = NetlistCapacitor.class, name = "capacitor"),
+    @Type(value = NetlistInductor.class, name = "inductor"), @Type(value = NetlistDiode.class, name = "diode"),
+    @Type(value = NetlistNMOS.class, name = "nmos"), @Type(value = NetlistPMOS.class, name = "pmos"), @Type(value = NetlistVCCS.class, name = "vccs"),
+    @Type(value = NetlistVCVS.class, name = "vcvs"), @Type(value = NetlistRSMemristor.class, name = "rs_mem"),
+    @Type(value = NetlistMSSMemristor.class, name = "mss_mem"), @Type(value = NetlistMMSSMemristor.class, name = "mmss_mem"),
+    @Type(value = NetlistJoglekarMemristor.class, name = "jog_mem")})
 @JsonPropertyOrder({"nodes"})
 public class NetlistComponent {
 

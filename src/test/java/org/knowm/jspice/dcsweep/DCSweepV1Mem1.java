@@ -21,7 +21,7 @@
  */
 package org.knowm.jspice.dcsweep;
 
-import org.knowm.jspice.circuits.V1MSSMemV1;
+import org.knowm.jspice.circuits.V1MSSMemV2;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
@@ -36,7 +36,7 @@ public class DCSweepV1Mem1 {
   public static void main(String[] args) {
 
     // Circuit
-    Netlist circuit = new V1MSSMemV1();
+    Netlist circuit = new V1MSSMemV2();
 
     // SweepDef
     String componentToSweepID = "Vdd";

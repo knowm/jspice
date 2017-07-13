@@ -21,44 +21,21 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.component.Component;
-import org.knowm.jspice.component.element.linear.Resistor;
-import org.knowm.jspice.component.element.nonlinear.Diode;
-import org.knowm.jspice.component.element.reactive.Capacitor;
-import org.knowm.jspice.component.source.DCVoltage;
-import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistCapacitor;
+import org.knowm.jspice.netlist.NetlistDCVoltage;
+import org.knowm.jspice.netlist.NetlistDiode;
+import org.knowm.jspice.netlist.NetlistResistor;
 
-/**
- * @author timmolter
- */
 public class HalfWaveRectifier extends Netlist {
 
-  /**
-   * Constructor
-   */
   public HalfWaveRectifier() {
 
-    // define voltage source
-    Source dcVoltageSource = new DCVoltage("Vsrc", 0.0);
-
-    // define resistor
-    Component resistorSrc = new Resistor("Rsrc", 50);
-
-    // define resistor
-    Component diode = new Diode("D1", 3.872e-9);
-
-    // define capacitor
-    Component capacitor = new Capacitor("C1", 0.00001);
-
-    // define resistor
-    Component resistorLoad = new Resistor("Rload", 1000);
-
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    addNetListComponent(dcVoltageSource, "in", "0");
-    addNetListComponent(resistorSrc, "in", "D");
-    addNetListComponent(diode, "D", "out");
-    addNetListComponent(capacitor, "out", "0");
-    addNetListComponent(resistorLoad, "out", "0");
+    addNetListComponent(new NetlistDCVoltage("Vsrc", 0.0, "in", "0"));
+    addNetListComponent(new NetlistResistor("Rsrc", 50, "in", "D"));
+    addNetListComponent(new NetlistDiode("D1", 3.872e-9, "D", "out"));
+    addNetListComponent(new NetlistCapacitor("C1", 0.00001, "out", "0"));
+    addNetListComponent(new NetlistResistor("Rload", 1000, "out", "0"));
   }
 }

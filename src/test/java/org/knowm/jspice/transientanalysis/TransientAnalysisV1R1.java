@@ -22,8 +22,11 @@
 package org.knowm.jspice.transientanalysis;
 
 import org.knowm.jspice.JSpice;
+import org.knowm.jspice.circuits.V1R1;
 import org.knowm.jspice.netlist.Netlist;
-import org.knowm.jspice.netlist.NetlistBuilder;
+import org.knowm.jspice.simulate.SimulationPlotter;
+import org.knowm.jspice.simulate.SimulationResult;
+import org.knowm.jspice.simulate.transientanalysis.SimulationConfigTransient;
 import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 import org.knowm.jspice.simulate.transientanalysis.driver.Sine;
 
@@ -34,31 +37,17 @@ public class TransientAnalysisV1R1 {
 
   public static void main(String[] args) {
 
-    //    // Circuit
-    //    Netlist circuit = new V1R1();
-    //
-    //    Driver driver = new Sine("V1", 2.5, 0, 2.5, 1.0);
-    //    Driver[] drivers = new Driver[]{driver};
-    //    double stopTime = 2;
-    //    double timeStep = .01;
-    //
-    //    // TransientAnalysisDefinition
-    //    TransientAnalysisDefinition transientAnalysisDefinition = new TransientAnalysisDefinition(drivers, stopTime, timeStep);
-    //
-    //    // run TransientAnalysis
-    //    TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
-    //    SimulationResult simulationResult = transientAnalysis.run();
-    //
-    //    // plot
-    //    // SimulationPlotter.plot("Transient Analysis", simulationResult, false);
-    //    SimulationPlotter.plot(simulationResult, new String[]{"I(R1)"});
+    Netlist netlist = new V1R1();
+    netlist.setSimulationConfig(new SimulationConfigTransient(2, .01, new Driver[]{new Sine("V1", 2.5, 0, 2.5, 1.0)}));
+    SimulationResult simulationResult = JSpice.simulate(netlist);
+    SimulationPlotter.plot(simulationResult, "I(R1)");
 
-    // run via NetlistBuilder
-    NetlistBuilder builder = new NetlistBuilder().addNetlistDCVoltage("V1", 1.0, "1", "0").addNetlistResistor("R1", 1000, "1", "0")
-        .addTransientSimulationConfig(2, .01, new Driver[]{new Sine("V1", 2.5, 0, 2.5, 1.0)});
-    Netlist netlist = builder.build();
-    System.out.println("builder.getYAML() " + builder.getYAML());
-    JSpice.simulate(netlist);
+    //    // run via NetlistBuilder
+    //    NetlistBuilder builder = new NetlistBuilder().addNetlistDCVoltage("V1", 1.0, "1", "0").addNetlistResistor("R1", 1000, "1", "0")
+    //        .addTransientSimulationConfig(2, .01, new Driver[]{new Sine("V1", 2.5, 0, 2.5, 1.0)});
+    //    Netlist netlist = builder.build();
+    //    System.out.println("builder.getYAML() " + builder.getYAML());
+    //    JSpice.simulate(netlist);
 
   }
 }

@@ -15,7 +15,7 @@ public class NetlistDCCurrent extends NetlistComponent {
   @JsonProperty("current")
   double current;
 
-  public NetlistDCCurrent(@JsonProperty("id") String id, @JsonProperty("current") double current, @JsonProperty("nodes") String... nodes) {
+  public NetlistDCCurrent(String id, double current, String... nodes) {
 
     super(new DCCurrent(id, current), nodes);
     this.current = current;

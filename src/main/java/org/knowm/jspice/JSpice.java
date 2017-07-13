@@ -12,8 +12,8 @@ import org.knowm.jspice.simulate.dcoperatingpoint.SimulationConfigDCOP;
 import org.knowm.jspice.simulate.dcsweep.DCSweep;
 import org.knowm.jspice.simulate.dcsweep.SimulationConfigDCSweep;
 import org.knowm.jspice.simulate.dcsweep.SweepDefinition;
-import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
 import org.knowm.jspice.simulate.transientanalysis.SimulationConfigTransient;
+import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
 
 import io.dropwizard.configuration.ConfigurationException;
 import io.dropwizard.configuration.ConfigurationFactory;
@@ -32,19 +32,11 @@ public class JSpice {
       System.exit(0);
     }
 
-    JSpice jSpice = new JSpice();
-    jSpice.go(args[0]);
+    simulate(args[0]);
 
   }
 
-  private void go(String fileName) throws IOException, ConfigurationException {
-
-    // 1. Get file
-
-    //    // jar location
-    //    final URL location = getClass().getProtectionDomain().getCodeSource().getLocation();
-    //    System.out.println("location " + location);
-    // 2. Parse it
+  public static void simulate(String fileName) throws IOException, ConfigurationException {
 
     ConfigurationFactory<Netlist> yamlConfigurationFactory = new YamlConfigurationFactory<Netlist>(Netlist.class, BaseValidator.newValidator(),
         Jackson.newObjectMapper(), "");
@@ -63,13 +55,15 @@ public class JSpice {
 
   }
 
-  public static void simulate(Netlist netlist) {
+  public static SimulationResult simulate(Netlist netlist) {
 
     SimulationConfig simulationConfig = netlist.getSimulationConfig();
 
     if (simulationConfig instanceof SimulationConfigDCOP) {
+
       DCOperatingPointResult dcOpResult = new DCOperatingPoint(netlist).run();
       System.out.println(dcOpResult.toString());
+      return null;
 
     } else if (simulationConfig instanceof SimulationConfigDCSweep) {
 
@@ -84,7 +78,7 @@ public class JSpice {
       SimulationResult simulationResult = dcSweep.run(simulationConfigDCSweep.getObserveID());
       System.out.println(simulationResult.toString());
       SimulationPlotter.plot(simulationResult, new String[]{simulationConfigDCSweep.getObserveID()});
-
+      return simulationResult;
     }
 
     else if (simulationConfig instanceof SimulationConfigTransient) {
@@ -97,6 +91,10 @@ public class JSpice {
       System.out.println(simulationResult.toString());
       // plot
       SimulationPlotter.plotAll(simulationResult);
+      return simulationResult;
+
+    } else {
+      return null;
     }
 
   }

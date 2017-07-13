@@ -24,34 +24,16 @@ package org.knowm.jspice.circuit.subcircuit;
 import java.util.UUID;
 
 import org.knowm.jspice.circuit.SubCircuit;
-import org.knowm.jspice.component.Component;
-import org.knowm.jspice.component.element.nonlinear.NMOS;
-import org.knowm.jspice.component.element.nonlinear.PMOS;
+import org.knowm.jspice.netlist.NetlistNMOS;
+import org.knowm.jspice.netlist.NetlistPMOS;
 
-/**
- * @author timmolter
- */
 public class TransmissionGate extends SubCircuit {
 
-  /**
-   * Constructor
-   *
-   * @param Vdd
-   * @param gnd
-   * @param in
-   * @param out
-   * @param clk
-   * @param clkBar
-   * @param Vthreshold
-   */
   public TransmissionGate(String in, String out, String clk, String clkBar, double Vthreshold) {
 
     String deviceId = UUID.randomUUID().toString();
 
-    Component p1 = new PMOS(deviceId + "_" + "P1", Vthreshold);
-    Component n1 = new NMOS(deviceId + "_" + "N1", Vthreshold);
-
-    addNetListComponent(p1, clkBar, out, in); // G, D, S
-    addNetListComponent(n1, clk, in, out); // G, D, S
+    addNetListComponent(new NetlistPMOS(deviceId + "_" + "P1", Vthreshold, clkBar, out, in)); // G, D, S
+    addNetListComponent(new NetlistNMOS(deviceId + "_" + "N1", Vthreshold, clk, in, out)); // G, D, S
   }
 }

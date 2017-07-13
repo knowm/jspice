@@ -21,30 +21,16 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.component.Component;
-import org.knowm.jspice.component.element.nonlinear.Diode;
-import org.knowm.jspice.component.source.DCCurrent;
-import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistDCCurrent;
+import org.knowm.jspice.netlist.NetlistDiode;
 
-/**
- * @author timmolter
- */
 public class I1D1 extends Netlist {
 
-  /**
-   * Constructor
-   */
   public I1D1() {
 
-    // define current source
-    Source dcCurrentSource = new DCCurrent("Ia", .10);
-
-    // define diode
-    Component diode1 = new Diode("D1", 0.000000000000001);
-
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    addNetListComponent(dcCurrentSource, "0", "1");
-    addNetListComponent(diode1, "1", "0");
+    addNetListComponent(new NetlistDCCurrent("Ia", .10, "0", "1"));
+    addNetListComponent(new NetlistDiode("D1", 0.000000000000001, "1", "0"));
   }
 }

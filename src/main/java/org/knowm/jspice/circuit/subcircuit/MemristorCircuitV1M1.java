@@ -22,24 +22,15 @@
 package org.knowm.jspice.circuit.subcircuit;
 
 import org.knowm.jspice.component.element.memristor.Memristor;
-import org.knowm.jspice.component.source.DCVoltage;
-import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistDCVoltage;
+import org.knowm.jspice.netlist.NetlistMemristor;
 
-/**
- * @author timmolter
- */
 public class MemristorCircuitV1M1 extends Netlist {
 
-  /**
-   * Constructor
-   */
   public MemristorCircuitV1M1(Memristor memristor) {
 
-    // define voltage source
-    Source dcVoltageSource = new DCVoltage("Vdd", 1.0);
-
-    addNetListComponent(dcVoltageSource, "1", "0");
-    addNetListComponent(memristor, "1", "0");
+    addNetListComponent(new NetlistDCVoltage("Vdd", 1.0, "1", "0"));
+    addNetListComponent(new NetlistMemristor(memristor, "1", "0"));
   }
 }

@@ -21,33 +21,19 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.component.Component;
-import org.knowm.jspice.component.element.linear.Resistor;
-import org.knowm.jspice.component.source.DCVoltage;
-import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistDCVoltage;
+import org.knowm.jspice.netlist.NetlistResistor;
 
-/**
- * @author timmolter
- */
 public class V1R4 extends Netlist {
 
   public V1R4() {
 
-    // define voltage source
-    Source dcVoltageSourceX = new DCVoltage("x", 10.0);
-
-    // define resistors
-    Component resistor1 = new Resistor("R1", 100);
-    Component resistor2 = new Resistor("R2", 1000);
-    Component resistor3 = new Resistor("R3", 1000);
-    Component resistor4 = new Resistor("R4", 100);
-
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    addNetListComponent(dcVoltageSourceX, "1", "0");
-    addNetListComponent(resistor4, "1", "2");
-    addNetListComponent(resistor3, "2", "3");
-    addNetListComponent(resistor2, "3", "0");
-    addNetListComponent(resistor1, "2", "0");
+    addNetListComponent(new NetlistDCVoltage("x", 10.0, "1", "0"));
+    addNetListComponent(new NetlistResistor("R4", 100, "1", "2"));
+    addNetListComponent(new NetlistResistor("R3", 1000, "2", "3"));
+    addNetListComponent(new NetlistResistor("R2", 1000, "3", "0"));
+    addNetListComponent(new NetlistResistor("R1", 100, "2", "0"));
   }
 }

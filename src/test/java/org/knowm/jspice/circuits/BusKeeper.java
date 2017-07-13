@@ -25,6 +25,7 @@ import org.knowm.jspice.circuit.subcircuit.CMOSInverter;
 import org.knowm.jspice.component.source.DCVoltage;
 import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistDCVoltage;
 
 /**
  * @author timmolter
@@ -41,8 +42,8 @@ public class BusKeeper extends Netlist {
     Source vIn = new DCVoltage("Vin", 0.0);
 
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    addNetListComponent(vDD, "Vdd", "0");
-    addNetListComponent(vIn, "in", "0");
+    addNetListComponent(new NetlistDCVoltage("VDD", 5.0, "Vdd", "0"));
+    addNetListComponent(new NetlistDCVoltage("Vin", 0.0, "in", "0"));
 
     addSubCircuit(new CMOSInverter("Vdd", "0", "in", "out", 2.5));
     addSubCircuit(new CMOSInverter("Vdd", "0", "out", "in", 2.5));
