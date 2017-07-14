@@ -21,22 +21,15 @@
  */
 package org.knowm.jspice.dcop;
 
+import org.knowm.jspice.JSpice;
 import org.knowm.jspice.circuits.PMOSInverter;
 import org.knowm.jspice.netlist.Netlist;
-import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPoint;
-import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 
-/**
- * @author timmolter
- */
 public class DCOP_PMOSInverter {
 
   public static void main(String[] args) {
 
-    Netlist circuit = new PMOSInverter();
-
-    // run DC operating point
-    DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
-    System.out.println(dcOpResult.toString());
+    Netlist netlist = new PMOSInverter();
+    JSpice.simulate(netlist);
   }
 }

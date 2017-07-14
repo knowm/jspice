@@ -6,13 +6,13 @@ import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationConfig;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
+import org.knowm.jspice.simulate.dcoperatingpoint.DCOPConfig;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPoint;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
-import org.knowm.jspice.simulate.dcoperatingpoint.DCOPConfig;
 import org.knowm.jspice.simulate.dcsweep.DCSweep;
 import org.knowm.jspice.simulate.dcsweep.DCSweepConfig;
-import org.knowm.jspice.simulate.transientanalysis.TransientConfig;
 import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
+import org.knowm.jspice.simulate.transientanalysis.TransientConfig;
 
 import io.dropwizard.configuration.ConfigurationException;
 import io.dropwizard.configuration.ConfigurationFactory;
@@ -58,7 +58,7 @@ public class JSpice {
 
     SimulationConfig simulationConfig = netlist.getSimulationConfig();
 
-    if (simulationConfig instanceof DCOPConfig) {
+    if (simulationConfig == null || simulationConfig instanceof DCOPConfig) {
 
       DCOperatingPointResult dcOpResult = new DCOperatingPoint(netlist).run();
       System.out.println(dcOpResult.toString());
