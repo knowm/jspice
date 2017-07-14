@@ -21,37 +21,17 @@
  */
 package org.knowm.jspice.dcsweep;
 
+import org.knowm.jspice.JSpice;
 import org.knowm.jspice.circuits.HalfWaveRectifier;
 import org.knowm.jspice.netlist.Netlist;
-import org.knowm.jspice.simulate.SimulationPlotter;
-import org.knowm.jspice.simulate.SimulationResult;
-import org.knowm.jspice.simulate.dcsweep.DCSweep;
-import org.knowm.jspice.simulate.dcsweep.SweepDefinition;
+import org.knowm.jspice.simulate.dcsweep.DCSweepConfig;
 
-/**
- * @author timmolter
- */
 public class DCSweepHalfWaveRectifier {
 
   public static void main(String[] args) {
 
-    // Circuit
-    Netlist circuit = new HalfWaveRectifier();
-
-    // SweepDef
-    String componentToSweepID = "Vsrc";
-    double startValue = 0.0;
-    double endValue = 5;
-    double stepSize = 0.05;
-    SweepDefinition sweepDef = new SweepDefinition(componentToSweepID, startValue, endValue, stepSize);
-
-    // run DC sweep
-    DCSweep dcSweep = new DCSweep(circuit);
-    dcSweep.addSweepDef(sweepDef);
-    SimulationResult dcSweepResult = dcSweep.run("I(D1)");
-    System.out.println(dcSweepResult.toString());
-
-    // plot
-    SimulationPlotter.plot(dcSweepResult, new String[]{"I(D1)"});
+    Netlist netlist = new HalfWaveRectifier();
+    netlist.setSimulationConfig(new DCSweepConfig("Vsrc", "I(D1)", 0, 5.0, .05));
+    JSpice.simulate(netlist);
   }
 }

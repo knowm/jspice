@@ -26,23 +26,23 @@ import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.dcsweep.DCSweep;
-import org.knowm.jspice.simulate.dcsweep.SweepDefinition;
+import org.knowm.jspice.simulate.dcsweep.DCSweepConfig;
 
 public class DCSweepV2PMOS1 {
 
   public static void main(String[] args) {
 
     // Circuit
-    Netlist circuit = new V2PMOS1();
+    Netlist netlist = new V2PMOS1();
 
     // SweepDef
-    SweepDefinition sweepDef1 = new SweepDefinition("Vg", -5.0, 0.0, 1.0);
-    SweepDefinition sweepDef2 = new SweepDefinition("Vdd", -10.0, 0.0, 0.1);
+    DCSweepConfig sweepDef1 = new DCSweepConfig("Vg", "I(PMOS1)", -5.0, 0.0, 1.0);
+    DCSweepConfig sweepDef2 = new DCSweepConfig("Vdd", "I(PMOS1)", -10.0, 0.0, 0.1);
 
     // run DC sweep
-    DCSweep dcSweep = new DCSweep(circuit);
-    dcSweep.addSweepDef(sweepDef2);
-    dcSweep.addSweepDef(sweepDef1);
+    DCSweep dcSweep = new DCSweep(netlist);
+    dcSweep.addSweepConfig(sweepDef2);
+    dcSweep.addSweepConfig(sweepDef1);
     SimulationResult dcSweepResult = dcSweep.run("I(PMOS1)");
     System.out.println(dcSweepResult.toString());
 

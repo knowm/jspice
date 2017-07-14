@@ -38,7 +38,7 @@ import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 public class TransientAnalysis {
 
   private final Netlist netlist;
-  private final SimulationConfigTransient transientAnalysisDefinition;
+  private final TransientConfig transientAnalysisDefinition;
 
   /**
    * Constructor
@@ -46,7 +46,7 @@ public class TransientAnalysis {
    * @param netlist
    * @param transientAnalysisDefinition
    */
-  public TransientAnalysis(Netlist netlist, SimulationConfigTransient transientAnalysisDefinition) {
+  public TransientAnalysis(Netlist netlist, TransientConfig transientAnalysisDefinition) {
 
     this.netlist = netlist;
     this.transientAnalysisDefinition = transientAnalysisDefinition;
@@ -144,7 +144,7 @@ public class TransientAnalysis {
    *
    * @param sweepDefinition
    */
-  private void verify(SimulationConfigTransient transientAnalysisDefinition) {
+  private void verify(TransientConfig transientAnalysisDefinition) {
 
     // make sure componentToSweepID is actually in the circuit netlist
     for (int j = 0; j < transientAnalysisDefinition.getDrivers().length; j++) {

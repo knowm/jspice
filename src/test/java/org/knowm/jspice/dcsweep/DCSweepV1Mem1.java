@@ -21,37 +21,17 @@
  */
 package org.knowm.jspice.dcsweep;
 
+import org.knowm.jspice.JSpice;
 import org.knowm.jspice.circuits.V1MSSMemV2;
 import org.knowm.jspice.netlist.Netlist;
-import org.knowm.jspice.simulate.SimulationPlotter;
-import org.knowm.jspice.simulate.SimulationResult;
-import org.knowm.jspice.simulate.dcsweep.DCSweep;
-import org.knowm.jspice.simulate.dcsweep.SweepDefinition;
+import org.knowm.jspice.simulate.dcsweep.DCSweepConfig;
 
-/**
- * @author timmolter
- */
 public class DCSweepV1Mem1 {
 
   public static void main(String[] args) {
 
-    // Circuit
-    Netlist circuit = new V1MSSMemV2();
-
-    // SweepDef
-    String componentToSweepID = "Vdd";
-    double startValue = 0.0;
-    double endValue = 1.0;
-    double stepSize = 0.05;
-    SweepDefinition sweepDef = new SweepDefinition(componentToSweepID, startValue, endValue, stepSize);
-
-    // run DC sweep
-    DCSweep dcSweep = new DCSweep(circuit);
-    dcSweep.addSweepDef(sweepDef);
-    SimulationResult dcSweepResult = dcSweep.run("I(M1)");
-    System.out.println(dcSweepResult.toString());
-
-    // plot
-    SimulationPlotter.plot(dcSweepResult, new String[]{"I(M1)"});
+    Netlist netlist = new V1MSSMemV2();
+    netlist.setSimulationConfig(new DCSweepConfig("Vdd", "I(M1)", 0.0, 1.0, .05));
+    JSpice.simulate(netlist);
   }
 }

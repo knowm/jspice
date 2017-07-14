@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.knowm.jspice.simulate.SimulationConfig;
-import org.knowm.jspice.simulate.dcoperatingpoint.SimulationConfigDCOP;
-import org.knowm.jspice.simulate.dcsweep.SimulationConfigDCSweep;
-import org.knowm.jspice.simulate.transientanalysis.SimulationConfigTransient;
+import org.knowm.jspice.simulate.dcoperatingpoint.DCOPConfig;
+import org.knowm.jspice.simulate.dcsweep.DCSweepConfig;
+import org.knowm.jspice.simulate.transientanalysis.TransientConfig;
 import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -44,19 +44,19 @@ public class NetlistBuilder {
 
   public NetlistBuilder addDCOPSimulationConfig() {
 
-    this.simulationConfig = new SimulationConfigDCOP();
+    this.simulationConfig = new DCOPConfig();
     return this;
   }
 
   public NetlistBuilder addDCSweepSimulationConfig(String sweepID, String observeID, double startValue, double endValue, double stepSize) {
 
-    this.simulationConfig = new SimulationConfigDCSweep(sweepID, observeID, startValue, endValue, stepSize);
+    this.simulationConfig = new DCSweepConfig(sweepID, observeID, startValue, endValue, stepSize);
     return this;
   }
 
   public NetlistBuilder addTransientSimulationConfig(double stopTime, double timeStep, Driver[] drivers) {
 
-    this.simulationConfig = new SimulationConfigTransient(stopTime, timeStep, drivers);
+    this.simulationConfig = new TransientConfig(stopTime, timeStep, drivers);
     return this;
   }
 

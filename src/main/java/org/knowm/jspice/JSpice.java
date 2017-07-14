@@ -8,11 +8,10 @@ import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPoint;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
-import org.knowm.jspice.simulate.dcoperatingpoint.SimulationConfigDCOP;
+import org.knowm.jspice.simulate.dcoperatingpoint.DCOPConfig;
 import org.knowm.jspice.simulate.dcsweep.DCSweep;
-import org.knowm.jspice.simulate.dcsweep.SimulationConfigDCSweep;
-import org.knowm.jspice.simulate.dcsweep.SweepDefinition;
-import org.knowm.jspice.simulate.transientanalysis.SimulationConfigTransient;
+import org.knowm.jspice.simulate.dcsweep.DCSweepConfig;
+import org.knowm.jspice.simulate.transientanalysis.TransientConfig;
 import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
 
 import io.dropwizard.configuration.ConfigurationException;
@@ -59,31 +58,28 @@ public class JSpice {
 
     SimulationConfig simulationConfig = netlist.getSimulationConfig();
 
-    if (simulationConfig instanceof SimulationConfigDCOP) {
+    if (simulationConfig instanceof DCOPConfig) {
 
       DCOperatingPointResult dcOpResult = new DCOperatingPoint(netlist).run();
       System.out.println(dcOpResult.toString());
       return null;
 
-    } else if (simulationConfig instanceof SimulationConfigDCSweep) {
+    } else if (simulationConfig instanceof DCSweepConfig) {
 
-      SimulationConfigDCSweep simulationConfigDCSweep = (SimulationConfigDCSweep) simulationConfig;
-
-      SweepDefinition sweepDef = new SweepDefinition(simulationConfigDCSweep.getSweepID(), simulationConfigDCSweep.getStartValue(),
-          simulationConfigDCSweep.getEndValue(), simulationConfigDCSweep.getStepSize());
+      DCSweepConfig dcSweepConfig = (DCSweepConfig) simulationConfig;
 
       // run DC sweep
       DCSweep dcSweep = new DCSweep(netlist);
-      dcSweep.addSweepDef(sweepDef);
-      SimulationResult simulationResult = dcSweep.run(simulationConfigDCSweep.getObserveID());
+      dcSweep.addSweepConfig(dcSweepConfig);
+      SimulationResult simulationResult = dcSweep.run(dcSweepConfig.getObserveID());
       System.out.println(simulationResult.toString());
-      SimulationPlotter.plot(simulationResult, new String[]{simulationConfigDCSweep.getObserveID()});
+      SimulationPlotter.plot(simulationResult, new String[]{dcSweepConfig.getObserveID()});
       return simulationResult;
     }
 
-    else if (simulationConfig instanceof SimulationConfigTransient) {
+    else if (simulationConfig instanceof TransientConfig) {
 
-      SimulationConfigTransient simulationConfigTransient = (SimulationConfigTransient) simulationConfig;
+      TransientConfig simulationConfigTransient = (TransientConfig) simulationConfig;
 
       // run TransientAnalysis
       TransientAnalysis transientAnalysis = new TransientAnalysis(netlist, simulationConfigTransient);

@@ -26,7 +26,7 @@ import org.knowm.jspice.circuits.V1R1;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
-import org.knowm.jspice.simulate.transientanalysis.SimulationConfigTransient;
+import org.knowm.jspice.simulate.transientanalysis.TransientConfig;
 import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 import org.knowm.jspice.simulate.transientanalysis.driver.Sine;
 
@@ -38,7 +38,7 @@ public class TransientAnalysisV1R1 {
   public static void main(String[] args) {
 
     Netlist netlist = new V1R1();
-    netlist.setSimulationConfig(new SimulationConfigTransient(2, .01, new Driver[]{new Sine("V1", 2.5, 0, 2.5, 1.0)}));
+    netlist.setSimulationConfig(new TransientConfig(2, .01, new Driver[]{new Sine("V1", 2.5, 0, 2.5, 1.0)}));
     SimulationResult simulationResult = JSpice.simulate(netlist);
     SimulationPlotter.plot(simulationResult, "I(R1)");
 

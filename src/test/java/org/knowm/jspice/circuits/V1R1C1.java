@@ -21,11 +21,7 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.component.Component;
-import org.knowm.jspice.component.element.linear.Resistor;
 import org.knowm.jspice.component.element.reactive.Capacitor;
-import org.knowm.jspice.component.source.DCVoltage;
-import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.netlist.NetlistCapacitor;
 import org.knowm.jspice.netlist.NetlistDCVoltage;
@@ -34,12 +30,6 @@ import org.knowm.jspice.netlist.NetlistResistor;
 public class V1R1C1 extends Netlist {
 
   public V1R1C1() {
-
-    // define voltage source
-    Source dcVoltageSource = new DCVoltage("V1", 0.0);
-
-    // define resistor
-    Component resistor1 = new Resistor("R1", 160000);
 
     // define capacitor
     Capacitor capacitor1 = new Capacitor("C1", 16E-8);

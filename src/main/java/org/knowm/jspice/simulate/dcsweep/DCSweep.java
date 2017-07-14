@@ -40,15 +40,12 @@ import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPoint;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 import org.knowm.jspice.simulate.dcoperatingpoint.NodalAnalysisConvergenceException;
 
-/**
- * @author timmolter
- */
 public class DCSweep {
 
   private final Netlist netlist;
 
-  private SweepDefinition sweepDef1;
-  private SweepDefinition sweepDefOrthoganol;
+  private DCSweepConfig dcSweepConfig;
+  private DCSweepConfig dcSweepConfigOrthoganol;
 
   /**
    * Constructor
@@ -65,14 +62,14 @@ public class DCSweep {
    *
    * @param sweepDef
    */
-  public void addSweepDef(SweepDefinition sweepDef) {
+  public void addSweepConfig(DCSweepConfig sweepDef) {
 
     // sanity check
-    if (this.sweepDef1 == null) {
-      this.sweepDef1 = sweepDef;
+    if (this.dcSweepConfig == null) {
+      this.dcSweepConfig = sweepDef;
       verify(sweepDef);
-    } else if (this.sweepDefOrthoganol == null) {
-      this.sweepDefOrthoganol = sweepDef;
+    } else if (this.dcSweepConfigOrthoganol == null) {
+      this.dcSweepConfigOrthoganol = sweepDef;
       verify(sweepDef);
     } else {
       throw new IllegalArgumentException("Only two SweepDefinitions maximum allowed!");
@@ -84,10 +81,10 @@ public class DCSweep {
    *
    * @param sweepDefinition
    */
-  private void verify(SweepDefinition sweepDefinition) {
+  private void verify(DCSweepConfig sweepDefinition) {
 
     // make sure componentToSweepID is actually in the circuit netlist
-    SimulationPreCheck.verifyComponentToSweepOrDriveId(netlist, sweepDefinition.getComponentToSweepID());
+    SimulationPreCheck.verifyComponentToSweepOrDriveId(netlist, sweepDefinition.getSweepID());
   }
 
   public SimulationResult run(String observable) {
@@ -95,31 +92,31 @@ public class DCSweep {
     netlist.verifyCircuit();
     //    System.out.println("netlist " + netlist);
 
-    if (sweepDef1 == null) {
+    if (dcSweepConfig == null) {
       throw new IllegalArgumentException("No sweepDef found! Use addSweepDef() to add one!");
     }
 
     // 1. load variable to sweep, from sweepDef1
-    Component sweepableComponent1 = netlist.getComponent(sweepDef1.getComponentToSweepID());
+    Component sweepableComponent1 = netlist.getComponent(dcSweepConfig.getSweepID());
     SimulationResult dcSweepResult;
 
-    if (sweepDefOrthoganol == null) {
+    if (dcSweepConfigOrthoganol == null) {
       dcSweepResult = new SimulationResult(getSweepLabel(sweepableComponent1), observable,
-          getSingleDCSweepResult(sweepDef1, sweepableComponent1, observable));
+          getSingleDCSweepResult(dcSweepConfig, sweepableComponent1, observable));
     } else {
 
       Map<String, SimulationPlotData> combinedSimulationPlotDataMap = new LinkedHashMap<String, SimulationPlotData>();
 
-      Component sweepableComponent2 = netlist.getComponent(sweepDefOrthoganol.getComponentToSweepID());
+      Component sweepableComponent2 = netlist.getComponent(dcSweepConfigOrthoganol.getSweepID());
       String sweepLabel2 = getSweepLabel(sweepableComponent2);
-      for (double i = sweepDefOrthoganol.getStartValue(); i <= sweepDefOrthoganol.getEndValue(); i += sweepDefOrthoganol.getStepSize()) {
+      for (double i = dcSweepConfigOrthoganol.getStartValue(); i <= dcSweepConfigOrthoganol.getEndValue(); i += dcSweepConfigOrthoganol.getStepSize()) {
 
         // change component value in sweep 1 to i
-        netlist.getComponent(sweepDefOrthoganol.getComponentToSweepID()).setSweepValue(i);
+        netlist.getComponent(dcSweepConfigOrthoganol.getSweepID()).setSweepValue(i);
         String orthoganolValue = (sweepLabel2 + " = " + i);
         // System.out.println(orthoganolValue);
         SimulationResult singleSimulationResult = new SimulationResult(getSweepLabel(sweepableComponent1), observable,
-            getSingleDCSweepResult(sweepDef1, sweepableComponent1, observable));
+            getSingleDCSweepResult(dcSweepConfig, sweepableComponent1, observable));
         for (Entry<String, SimulationPlotData> entrySet : singleSimulationResult.getSimulationPlotDataMap().entrySet()) {
           //          String observableValueID = entrySet.getKey();
           //          System.out.println("observableValueID " + observableValueID);
@@ -141,7 +138,8 @@ public class DCSweep {
    * @param observable
    * @return
    */
-  private Map<String, SimulationPlotData> getSingleDCSweepResult(SweepDefinition sweepDefinition, Component sweepableComponent, String observable) {
+  private Map<String, SimulationPlotData> getSingleDCSweepResult(DCSweepConfig sweepDefinition, Component sweepableComponent,
+      String observable) {
 
     Map<String, SimulationPlotData> simulationDataMap = new LinkedHashMap<>();
     //    System.out.println("sweepableComponent " + sweepableComponent);

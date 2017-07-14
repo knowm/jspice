@@ -8,7 +8,7 @@ import org.knowm.jspice.simulate.SimulationConfig;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class SimulationConfigDCSweep extends SimulationConfig {
+public class DCSweepConfig extends SimulationConfig {
 
   @Valid
   @NotNull
@@ -38,7 +38,7 @@ public class SimulationConfigDCSweep extends SimulationConfig {
   @Min(0)
   private double stepSize;
 
-  public SimulationConfigDCSweep(@JsonProperty("sweep_id") String sweepID, @JsonProperty("observe_id") String observeID,
+  public DCSweepConfig(@JsonProperty("sweep_id") String sweepID, @JsonProperty("observe_id") String observeID,
       @JsonProperty("start_value") double startValue, @JsonProperty("end_value") double endValue, @JsonProperty("step_size") double stepSize) {
 
     this.sweepID = sweepID;

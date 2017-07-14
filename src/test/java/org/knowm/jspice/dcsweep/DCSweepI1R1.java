@@ -24,7 +24,7 @@ package org.knowm.jspice.dcsweep;
 import org.knowm.jspice.JSpice;
 import org.knowm.jspice.circuits.I1R1;
 import org.knowm.jspice.netlist.Netlist;
-import org.knowm.jspice.simulate.dcsweep.SimulationConfigDCSweep;
+import org.knowm.jspice.simulate.dcsweep.DCSweepConfig;
 
 /**
  * @author timmolter
@@ -35,7 +35,7 @@ public class DCSweepI1R1 {
 
     // run DC operating point
     Netlist netlist = new I1R1();
-    netlist.setSimulationConfig(new SimulationConfigDCSweep("a", "I(R1)", 0.0, 10.0, 1.0));
+    netlist.setSimulationConfig(new DCSweepConfig("a", "I(R1)", 0.0, 10.0, 1.0));
     JSpice.simulate(netlist);
 
     //    // run via NetlistBuilder

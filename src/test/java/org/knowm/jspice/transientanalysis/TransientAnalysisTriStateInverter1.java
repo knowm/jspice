@@ -25,7 +25,7 @@ import org.knowm.jspice.circuits.TriStateInverterCircuit;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
-import org.knowm.jspice.simulate.transientanalysis.SimulationConfigTransient;
+import org.knowm.jspice.simulate.transientanalysis.TransientConfig;
 import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
 import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 import org.knowm.jspice.simulate.transientanalysis.driver.Square;
@@ -48,7 +48,7 @@ public class TransientAnalysisTriStateInverter1 {
     double timeStep = .01;
 
     // TransientAnalysisDefinition
-    SimulationConfigTransient transientAnalysisDefinition = new SimulationConfigTransient(stopTime, timeStep, drivers);
+    TransientConfig transientAnalysisDefinition = new TransientConfig(stopTime, timeStep, drivers);
 
     // run TransientAnalysis
     TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);

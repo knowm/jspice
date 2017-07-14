@@ -9,7 +9,7 @@ import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class SimulationConfigTransient extends SimulationConfig {
+public class TransientConfig extends SimulationConfig {
 
   @Valid
   @NotNull
@@ -29,7 +29,7 @@ public class SimulationConfigTransient extends SimulationConfig {
   @Min(0)
   Driver[] drivers;
 
-  public SimulationConfigTransient(@JsonProperty("stop_time") double stopTime, @JsonProperty("time_step") double timeStep,
+  public TransientConfig(@JsonProperty("stop_time") double stopTime, @JsonProperty("time_step") double timeStep,
       @JsonProperty("drivers") Driver[] drivers) {
     this.stopTime = stopTime;
     this.timeStep = timeStep;

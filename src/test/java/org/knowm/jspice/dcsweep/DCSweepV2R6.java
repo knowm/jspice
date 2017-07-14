@@ -26,25 +26,22 @@ import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.dcsweep.DCSweep;
-import org.knowm.jspice.simulate.dcsweep.SweepDefinition;
+import org.knowm.jspice.simulate.dcsweep.DCSweepConfig;
 
-/**
- * @author timmolter
- */
 public class DCSweepV2R6 {
 
   public static void main(String[] args) {
 
     // Circuit
-    Netlist circuit = new V2R6();
+    Netlist netlist = new V2R6();
 
-    SweepDefinition sweepDef1 = new SweepDefinition("x", 0.0, 10.0, 1.0);
-    SweepDefinition sweepDef2 = new SweepDefinition("y", 0.0, 5.0, 1.0);
+    DCSweepConfig sweepDef1 = new DCSweepConfig("x", "V(3)", 0.0, 10.0, 1.0);
+    DCSweepConfig sweepDef2 = new DCSweepConfig("y", "V(3)", 0.0, 5.0, 1.0);
 
     // run DC sweep
-    DCSweep dcSweep = new DCSweep(circuit);
-    dcSweep.addSweepDef(sweepDef1);
-    dcSweep.addSweepDef(sweepDef2);
+    DCSweep dcSweep = new DCSweep(netlist);
+    dcSweep.addSweepConfig(sweepDef1);
+    dcSweep.addSweepConfig(sweepDef2);
     SimulationResult dcSweepResult = dcSweep.run("V(3)");
     System.out.println(dcSweepResult.toString());
 

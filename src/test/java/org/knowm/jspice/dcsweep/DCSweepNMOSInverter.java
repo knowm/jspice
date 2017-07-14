@@ -21,34 +21,17 @@
  */
 package org.knowm.jspice.dcsweep;
 
+import org.knowm.jspice.JSpice;
 import org.knowm.jspice.circuits.NMOSInverter;
 import org.knowm.jspice.netlist.Netlist;
-import org.knowm.jspice.simulate.SimulationPlotter;
-import org.knowm.jspice.simulate.SimulationResult;
-import org.knowm.jspice.simulate.dcsweep.DCSweep;
-import org.knowm.jspice.simulate.dcsweep.SweepDefinition;
+import org.knowm.jspice.simulate.dcsweep.DCSweepConfig;
 
-/**
- * @author timmolter
- */
 public class DCSweepNMOSInverter {
 
   public static void main(String[] args) {
 
-    // Circuit
-    Netlist circuit = new NMOSInverter();
-
-    // SweepDef
-    SweepDefinition sweepDef1 = new SweepDefinition("Vin", 0, 5.0, .10);
-
-    // run DC sweep
-    DCSweep dcSweep = new DCSweep(circuit);
-    dcSweep.addSweepDef(sweepDef1);
-    SimulationResult dcSweepResult = dcSweep.run("V(out)");
-    System.out.println(dcSweepResult.toString());
-
-    // plot
-    SimulationPlotter.plot(dcSweepResult, new String[]{"V(out)"});
-    SimulationPlotter.plotAll(dcSweepResult);
+    Netlist netlist = new NMOSInverter();
+    netlist.setSimulationConfig(new DCSweepConfig("Vin", "V(out)", 0, 5.0, .10));
+    JSpice.simulate(netlist);
   }
 }
