@@ -1,6 +1,9 @@
 package org.knowm.jspice;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationConfig;
@@ -25,6 +28,7 @@ import io.dropwizard.validation.BaseValidator;
 public class JSpice {
 
   private static boolean isFromCommandline = false;
+  private static String fileName = "";
 
   public static void main(String[] args) throws IOException, ConfigurationException {
 
@@ -33,6 +37,7 @@ public class JSpice {
       System.exit(0);
     }
     isFromCommandline = true;
+    fileName = args[0];
     simulate(args[0]);
 
   }
@@ -93,7 +98,13 @@ public class JSpice {
       SimulationResult simulationResult = transientAnalysis.run();
 
       if (isFromCommandline) {
+        String xyceString = simulationResult.toXyceString();
         System.out.println(simulationResult.toXyceString());
+        try (PrintStream out = new PrintStream(new FileOutputStream(fileName + ".out"))) {
+          out.print(xyceString);
+        } catch (FileNotFoundException e) {
+          e.printStackTrace();
+        }
       } else {
 
         System.out.println(simulationResult.toString());

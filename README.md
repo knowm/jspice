@@ -539,6 +539,8 @@ public class TransientAnalysisV1MMSSMem {
 
 ##### Code
 
+Option #1: `NetlistBuilder`
+
 ```java
 public class TransientAnalysisRSMem {
 
@@ -563,6 +565,84 @@ public class TransientAnalysisRSMem {
 ##### Result
 
 ![RS Memristor Transient Response](documentation/Trans_MMSS.png)  
+
+Before the simulation, a JSpice netlist, in YAML format, is printed out with `System.out.println("builder.getYAML() " + builder.getYAML());`:
+
+```yaml
+components:
+- type: dc_voltage
+  nodes: VDD,0
+  id: Vdd
+  voltage: 1.0
+- type: rs_mem
+  nodes: VDD,0
+  id: M1
+  schottky_forward_alpha: 0.0
+  schottky_forward_beta: 0.0
+  schottky_reverse_alpha: 0.0
+  schottky_reverse_beta: 0.0
+  phi: 1.0
+sim:
+  type: trans
+  stop_time: 0.001
+  time_step: 1.0E-5
+  drivers:
+  - type: sine
+    id: Vdd
+    dc_offset: 0.0
+    phase: 0.0
+    amplitude: 1.2
+    frequency: 2000.0
+```
+
+Option #2: run via Yml file
+
+```java
+public class TransientAnalysisRSMem {
+
+  public static void main(String[] args) throws IOException, ConfigurationException {
+
+    SimulationResult simulationResult = JSpice.simulate("RSMem.yml");
+    SimulationPlotter.plot(simulationResult, "I(M1)");
+  }
+}
+```
+
+Option #2: run via jar
+
+```
+java -jar jspice.jar RSMem.yml
+```
+
+If run via the command line like this the output will be a file in the same folder as the netlist file. For this example `RSMem.yml.out`:
+
+```
+Index   Time        I(Vdd)      V(VDD)      I(M1)       
+0   0.000010        -1.5039988203475277E-8  0.1503998802771651  1.5039988203475277E-8   
+1   0.000020        -2.984278680852828E-8   0.2984278645978257  2.984278680852828E-8    
+2   0.000030        -2.1832594377210504E-6  0.4417494632216135  2.1832594377210504E-6   
+3   0.000040        -1.3887502330681323E-5  0.5781044089220584  1.3887502330681323E-5   
+4   0.000050        -3.953072280230764E-5   0.7053423027509678  3.953072280230764E-5    
+5   0.000060        -8.134638705717506E-5   0.8214565271144263  8.134638705717506E-5    
+6   0.000070        -1.3916736454876424E-4  0.9246158913309469  1.3916736454876424E-4   
+7   0.000080        -2.1056329856917368E-4  1.0131935106024181  2.1056329856917368E-4   
+8   0.000090        -2.9129636353457367E-4  1.0857924629592235  2.9129636353457367E-4   
+9   0.000100        -3.7597536463967974E-4  1.141267819554184   3.7597536463967974E-4   
+10  0.000110        -4.5876949071941496E-4  1.1787447008744263  4.5876949071941496E-4   
+11  0.000120        -5.340592453694597E-4   1.197632074113926   5.340592453694597E-4    
+12  0.000130        -5.96941540362891E-4    1.197632074113926   5.96941540362891E-4 
+13  0.000140        -6.435530672037997E-4   1.1787447008744265  6.435530672037997E-4    
+14  0.000150        -6.712173193979965E-4   1.1412678195541843  6.712173193979965E-4    
+15  0.000160        -6.784481117009685E-4   1.0857924629592233  6.784481117009685E-4    
+16  0.000170        -6.648544422832975E-4   1.0131935106024181  6.648544422832975E-4    
+...
+94  0.000950        1.274925739669714E-4    -0.7053423027509681 -1.274925739669714E-4   
+95  0.000960        9.869419059355023E-5    -0.5781044089220596 -9.869419059355023E-5   
+96  0.000970        7.218894070585214E-5    -0.4417494632216137 -7.218894070585214E-5   
+97  0.000980        4.7345964936124135E-5   -0.2984278645978267 -4.7345964936124135E-5  
+98  0.000990        2.35071921650594E-5 -0.15039988027716694    -2.35071921650594E-5    
+End of JSpice Simulation
+```
 
 
 ## Continuous Integration
