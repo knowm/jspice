@@ -87,7 +87,6 @@
 			<artifactId>dropwizard-configuration</artifactId>
 			<version>${dropwizard.version}</version>
 		</dependency>
-
 		<!-- test -->
 		<dependency>
 			<groupId>junit</groupId>

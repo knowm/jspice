@@ -24,9 +24,6 @@ package org.knowm.jspice.simulate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author timmolter
- */
 public final class SimulationPlotData {
 
   private final List<Number> xData;

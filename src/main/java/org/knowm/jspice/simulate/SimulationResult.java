@@ -21,6 +21,7 @@
  */
 package org.knowm.jspice.simulate;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -81,4 +82,37 @@ public class SimulationResult {
     }
     return sb.toString();
   }
+
+  public String toXyceString() {
+
+    int count = 0;
+    StringBuilder sb = new StringBuilder();
+
+    String returnString = System.getProperty("line.separator");
+    sb.append("Index");
+    sb.append("\t");
+    sb.append("Time");
+    sb.append("\t\t");
+    for (Entry<String, SimulationPlotData> entrySet : simulationDataMap.entrySet()) {
+      sb.append(entrySet.getKey());
+      sb.append("\t\t");
+    }
+    sb.append(returnString);
+
+    List<Number> xData = simulationDataMap.values().iterator().next().getxData();
+    do {
+      sb.append(count);
+      sb.append("\t");
+      sb.append(xData.get(count));
+      sb.append("\t\t");
+      for (Entry<String, SimulationPlotData> entrySet : simulationDataMap.entrySet()) {
+        sb.append(entrySet.getValue().getyData().get(count));
+        sb.append("\t");
+      }
+      sb.append(returnString);
+    } while (++count < xData.size());
+    sb.append("End of JSpice Simulation");
+    return sb.toString();
+  }
+
 }

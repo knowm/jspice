@@ -502,11 +502,11 @@ public class TransientAnalysisTransmissionGate {
 
 ![Pass Gate Transient Response](documentation/Trans_Pass_Gate.png)  
 
-## Memristor Simulation
+## M-MSS Memristor Simulation
 
 ### Simple Hysteresis Curves
 
-#### Ag-Chalcogenide from Boise State University Driven by Square Wave
+#### M-MSS Memristor Model Driven by Square Wave
 
 ##### Code
 
@@ -529,6 +529,40 @@ public class TransientAnalysisV1MMSSMem {
 ##### Result
 
 ![M-MSS Memristor Transient Response](documentation/Trans_MMSS.png)  
+
+
+## RS(Really Simple) Memristor Simulation
+
+### Current vs. Time
+
+#### RS Memristor Model Driven by Square Wave
+
+##### Code
+
+```java
+public class TransientAnalysisRSMem {
+
+  private final static double schottkeyAlpha = 0; // N/A
+  private final static double schottkeyBeta = 0; // N/A
+  private final static double phi = 1;
+
+  public static void main(String[] args) throws IOException, ConfigurationException {
+
+    // run via NetlistBuilder
+    NetlistBuilder builder = new NetlistBuilder().addNetlistDCVoltage("Vdd", 1.0, "VDD", "0")
+        .addNetlistRSMemristor("M1", schottkeyAlpha, schottkeyBeta, schottkeyAlpha, schottkeyBeta, phi, "VDD", "0")
+        .addTransientSimulationConfig(1.0E-3, 1E-5, new Sine("Vdd", 0.0, 0, 1.2, 2000.0));
+    Netlist netlist = builder.build();
+    System.out.println("builder.getYAML() " + builder.getYAML());
+    SimulationResult simulationResult = JSpice.simulate(netlist);
+    SimulationPlotter.plot(simulationResult, "I(M1)");
+  }
+}
+```
+
+##### Result
+
+![RS Memristor Transient Response](documentation/Trans_MMSS.png)  
 
 
 ## Continuous Integration

@@ -24,13 +24,15 @@ import io.dropwizard.validation.BaseValidator;
 
 public class JSpice {
 
+  private static boolean isFromCommandline = false;
+
   public static void main(String[] args) throws IOException, ConfigurationException {
 
     if (args.length == 0) {
       System.out.println("Proper Usage is: java -jar jspice <filename>");
       System.exit(0);
     }
-
+    isFromCommandline = true;
     simulate(args[0]);
 
   }
@@ -44,10 +46,7 @@ public class JSpice {
 
     Netlist netlist = yamlConfigurationFactory.build(provider, fileName);
 
-    System.out.println("netList: \n" + netlist);
-
-    //    DCOperatingPointResult dcOpResult = new DCOperatingPoint(netlist).run();
-    //    System.out.println(dcOpResult.toString());
+    //    System.out.println("netList: \n" + netlist);
 
     // 3. Run it  
     return simulate(netlist);
@@ -61,7 +60,11 @@ public class JSpice {
     if (simulationConfig == null || simulationConfig instanceof DCOPConfig) {
 
       DCOperatingPointResult dcOpResult = new DCOperatingPoint(netlist).run();
-      System.out.println(dcOpResult.toString());
+      if (isFromCommandline) {
+
+      } else {
+        System.out.println(dcOpResult.toString());
+      }
       return null;
 
     } else if (simulationConfig instanceof DCSweepConfig) {
@@ -72,8 +75,12 @@ public class JSpice {
       DCSweep dcSweep = new DCSweep(netlist);
       dcSweep.addSweepConfig(dcSweepConfig);
       SimulationResult simulationResult = dcSweep.run(dcSweepConfig.getObserveID());
-      System.out.println(simulationResult.toString());
-      SimulationPlotter.plot(simulationResult, new String[]{dcSweepConfig.getObserveID()});
+      if (isFromCommandline) {
+
+      } else {
+        System.out.println(simulationResult.toString());
+        SimulationPlotter.plot(simulationResult, new String[]{dcSweepConfig.getObserveID()});
+      }
       return simulationResult;
     }
 
@@ -84,9 +91,16 @@ public class JSpice {
       // run TransientAnalysis
       TransientAnalysis transientAnalysis = new TransientAnalysis(netlist, simulationConfigTransient);
       SimulationResult simulationResult = transientAnalysis.run();
-      System.out.println(simulationResult.toString());
-      // plot
-      SimulationPlotter.plotAll(simulationResult);
+
+      if (isFromCommandline) {
+        System.out.println(simulationResult.toXyceString());
+      } else {
+
+        System.out.println(simulationResult.toString());
+
+        // plot
+        SimulationPlotter.plotAll(simulationResult);
+      }
       return simulationResult;
 
     } else {

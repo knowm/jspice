@@ -24,8 +24,11 @@ package org.knowm.jspice.transientanalysis;
 import java.io.IOException;
 
 import org.knowm.jspice.JSpice;
+import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistBuilder;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
+import org.knowm.jspice.simulate.transientanalysis.driver.Sine;
 
 import io.dropwizard.configuration.ConfigurationException;
 
@@ -43,18 +46,18 @@ public class TransientAnalysisRSMem {
     //    SimulationResult simulationResult = JSpice.simulate(netlist);
     //    SimulationPlotter.plot(simulationResult, "I(M1)");
 
-    //    // run via NetlistBuilder
-    //    NetlistBuilder builder = new NetlistBuilder().addNetlistDCVoltage("Vdd", 1.0, "VDD", "0")
-    //        .addNetlistRSMemristor("M1", schottkeyAlpha, schottkeyBeta, schottkeyAlpha, schottkeyBeta, phi, "VDD", "0")
-    //        .addTransientSimulationConfig(1.0E-3, 1E-5, new Sine("Vdd", 0.0, 0, 1.2, 2000.0));
-    //    Netlist netlist = builder.build();
-    //    System.out.println("builder.getYAML() " + builder.getYAML());
-    //    SimulationResult simulationResult = JSpice.simulate(netlist);
-    //    SimulationPlotter.plot(simulationResult, "I(M1)");
-
-    // run via Yml file
-    SimulationResult simulationResult = JSpice.simulate("RSMem.yml");
+    // run via NetlistBuilder
+    NetlistBuilder builder = new NetlistBuilder().addNetlistDCVoltage("Vdd", 1.0, "VDD", "0")
+        .addNetlistRSMemristor("M1", schottkeyAlpha, schottkeyBeta, schottkeyAlpha, schottkeyBeta, phi, "VDD", "0")
+        .addTransientSimulationConfig(1.0E-3, 1E-5, new Sine("Vdd", 0.0, 0, 1.2, 2000.0));
+    Netlist netlist = builder.build();
+    System.out.println("builder.getYAML() " + builder.getYAML());
+    SimulationResult simulationResult = JSpice.simulate(netlist);
     SimulationPlotter.plot(simulationResult, "I(M1)");
+
+    //    // run via Yml file
+    //    SimulationResult simulationResult = JSpice.simulate("RSMem.yml");
+    //    SimulationPlotter.plot(simulationResult, "I(M1)");
 
     // run via jar
     //     java -jar jspice.jar RSMem.yml
