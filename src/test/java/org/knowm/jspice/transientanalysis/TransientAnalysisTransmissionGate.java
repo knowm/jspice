@@ -21,12 +21,12 @@
  */
 package org.knowm.jspice.transientanalysis;
 
+import org.knowm.jspice.JSpice;
 import org.knowm.jspice.circuits.TransmissionGateCircuit;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.transientanalysis.TransientConfig;
-import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
 import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 import org.knowm.jspice.simulate.transientanalysis.driver.Sine;
 import org.knowm.jspice.simulate.transientanalysis.driver.Square;
@@ -35,24 +35,15 @@ public class TransientAnalysisTransmissionGate {
 
   public static void main(String[] args) {
 
-    // Circuit
-    Netlist circuit = new TransmissionGateCircuit();
+    Netlist netlist = new TransmissionGateCircuit();
 
     Driver in = new Sine("Vin", 0, 0, 1.0, 10.0);
     Driver clk = new Square("Vclk", 2.5, 0, 2.5, 1.0);
     Driver clkBar = new Square("VclkBar", 2.5, 0.5, 2.5, 1.0);
-    Driver[] drivers = new Driver[]{in, clk, clkBar};
-    double stopTime = 2;
-    double timeStep = .005;
 
-    // TransientAnalysisDefinition
-    TransientConfig transientAnalysisDefinition = new TransientConfig(stopTime, timeStep, drivers);
-
-    // run TransientAnalysis
-    TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
-    SimulationResult simulationResult = transientAnalysis.run();
-
-    // plot
-    SimulationPlotter.plotSeparate(simulationResult, new String[]{"V(out)", "V(in)", "V(CLK)", "V(CLKBAR)"});
+    TransientConfig transientConfig = new TransientConfig(2, .005, in, clk, clkBar);
+    netlist.setSimulationConfig(transientConfig);
+    SimulationResult simulationResult = JSpice.simulate(netlist);
+    SimulationPlotter.plotSeparate(simulationResult, "V(out)", "V(in)", "V(CLK)", "V(CLKBAR)");
   }
 }

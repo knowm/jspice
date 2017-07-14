@@ -30,9 +30,6 @@ import org.knowm.jspice.simulate.transientanalysis.TransientConfig;
 import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 import org.knowm.jspice.simulate.transientanalysis.driver.Sine;
 
-/**
- * @author timmolter
- */
 public class TransientAnalysisV1R1 {
 
   public static void main(String[] args) {
@@ -48,6 +45,5 @@ public class TransientAnalysisV1R1 {
     //    Netlist netlist = builder.build();
     //    System.out.println("builder.getYAML() " + builder.getYAML());
     //    JSpice.simulate(netlist);
-
   }
 }

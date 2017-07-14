@@ -127,7 +127,7 @@ public class SimulationPlotter {
    * @param simulationResult
    * @param valuesToPlot
    */
-  public static void plotSeparate(SimulationResult simulationResult, String[] valuesToPlot) {
+  public static void plotSeparate(SimulationResult simulationResult, String... valuesToPlot) {
 
     final int width = 600;
     final int height = 200;

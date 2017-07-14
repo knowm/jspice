@@ -21,43 +21,22 @@
  */
 package org.knowm.jspice.transientanalysis;
 
+import org.knowm.jspice.JSpice;
 import org.knowm.jspice.circuits.V1RSMem;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.transientanalysis.TransientConfig;
-import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
-import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 import org.knowm.jspice.simulate.transientanalysis.driver.Sine;
 
-/**
- * @author timmolter
- */
 public class TransientAnalysisRSMem {
 
   public static void main(String[] args) {
 
-    // Circuit
-    Netlist circuit = new V1RSMem();
-
-    Driver driver = new Sine("Vdd", 0.0, 0, 1.2, 2000.0);
-    Driver[] drivers = new Driver[]{driver};
-    double stopTime = 5.0E-3;
-    double timeStep = 1E-6;
-
-    // TransientAnalysisDefinition
-    TransientConfig transientAnalysisDefinition = new TransientConfig(stopTime, timeStep, drivers);
-
-    // run TransientAnalysis
-    TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
-    SimulationResult simulationResult = transientAnalysis.run();
-
-    // plot
-    // SimulationPlotter.plotAllSeparate(simulationResult);
-    SimulationPlotter.plotSeparate(simulationResult, new String[]{"V(VDD)", "I(M1)"});
-    SimulationPlotter.plotTransientInOutCurve("I/V Curve", simulationResult, new String[]{"V(VDD)", "I(M1)"});
-
-    // export data
-    // SimulationPlotter.printTransientInOut(simulationResult);
+    Netlist netlist = new V1RSMem();
+    TransientConfig transientConfig = new TransientConfig(5.0E-3, 1E-5, new Sine("Vdd", 0.0, 0, 1.2, 2000.0));
+    netlist.setSimulationConfig(transientConfig);
+    SimulationResult simulationResult = JSpice.simulate(netlist);
+    SimulationPlotter.plot(simulationResult, "I(M1)");
   }
 }

@@ -21,36 +21,22 @@
  */
 package org.knowm.jspice.transientanalysis;
 
+import org.knowm.jspice.JSpice;
 import org.knowm.jspice.circuits.V1MMSSMem;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.transientanalysis.TransientConfig;
-import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
-import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 import org.knowm.jspice.simulate.transientanalysis.driver.Sine;
 
 public class TransientAnalysisV1MMSSMem {
 
   public static void main(String[] args) {
 
-    // Circuit
-    Netlist circuit = new V1MMSSMem();
-
-    Driver driver = new Sine("Vdd", 0.0, 0, 0.5, 100.0);
-    Driver[] drivers = new Driver[]{driver};
-    double stopTime = .04;
-    double timeStep = .0001;
-
-    // TransientAnalysisDefinition
-    TransientConfig transientAnalysisDefinition = new TransientConfig(stopTime, timeStep, drivers);
-
-    // run TransientAnalysis
-    TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
-    SimulationResult simulationResult = transientAnalysis.run();
-
-    // plot
-    // SimulationPlotter.plotAllSeparate(simulationResult);
+    Netlist netlist = new V1MMSSMem();
+    TransientConfig transientConfig = new TransientConfig(.04, .0001, new Sine("Vdd", 0.0, 0, 0.5, 100.0));
+    netlist.setSimulationConfig(transientConfig);
+    SimulationResult simulationResult = JSpice.simulate(netlist);
     SimulationPlotter.plotSeparate(simulationResult, new String[]{"V(VDD)", "I(M1)"});
     SimulationPlotter.plotTransientInOutCurve("I/V Curve", simulationResult, new String[]{"V(VDD)", "I(M1)"});
 

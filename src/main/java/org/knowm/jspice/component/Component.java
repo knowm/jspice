@@ -30,9 +30,6 @@ import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * @author timmolter
- */
 public abstract class Component implements Sweepable {
 
   /**

@@ -21,41 +21,22 @@
  */
 package org.knowm.jspice.transientanalysis;
 
+import org.knowm.jspice.JSpice;
 import org.knowm.jspice.circuits.TriStateInverterCircuit;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.transientanalysis.TransientConfig;
-import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
-import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 import org.knowm.jspice.simulate.transientanalysis.driver.Sine;
 
-/**
- * @author timmolter
- */
 public class TransientAnalysisTriStateInverter0 {
 
   public static void main(String[] args) {
 
-    // Circuit
-    Netlist circuit = new TriStateInverterCircuit();
-
-    Driver in = new Sine("Vin", 2.5, 0, 2.5, 10000.0);
-    // Driver clk = new Square("Vclk", 2.5, 0, 2.5, 1.0);
-    // Driver clkBar = new Square("VclkBar", 2.5, 0.5, 2.5, 1.0);
-    // Driver[] drivers = new Driver[] { in, clk, clkBar };
-    Driver[] drivers = new Driver[]{in,};
-    double stopTime = .0002;
-    double timeStep = .000001;
-
-    // TransientAnalysisDefinition
-    TransientConfig transientAnalysisDefinition = new TransientConfig(stopTime, timeStep, drivers);
-
-    // run TransientAnalysis
-    TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
-    SimulationResult simulationResult = transientAnalysis.run();
-
-    // plot
-    SimulationPlotter.plot(simulationResult, new String[]{"V(out)"});
+    Netlist netlist = new TriStateInverterCircuit();
+    TransientConfig transientConfig = new TransientConfig(.0002, .000001, new Sine("Vin", 2.6, 0, 2.5, 10_000.0));
+    netlist.setSimulationConfig(transientConfig);
+    SimulationResult simulationResult = JSpice.simulate(netlist);
+    SimulationPlotter.plot(simulationResult, "V(out)");
   }
 }

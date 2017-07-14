@@ -21,35 +21,22 @@
  */
 package org.knowm.jspice.transientanalysis;
 
+import org.knowm.jspice.JSpice;
 import org.knowm.jspice.circuits.HalfWaveRectifier;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.transientanalysis.TransientConfig;
-import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
-import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 import org.knowm.jspice.simulate.transientanalysis.driver.Sine;
 
 public class TransientAnalysisHalfWaveRectifier {
 
   public static void main(String[] args) {
 
-    // Circuit
-    Netlist circuit = new HalfWaveRectifier();
-
-    Driver driver = new Sine("Vsrc", 0, 0, 12, 60.0);
-    Driver[] drivers = new Driver[]{driver};
-    double stopTime = .0833333333;
-    double timeStep = .0002;
-
-    // TransientAnalysisDefinition
-    TransientConfig transientAnalysisDefinition = new TransientConfig(stopTime, timeStep, drivers);
-
-    // run TransientAnalysis
-    TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
-    SimulationResult simulationResult = transientAnalysis.run();
-
-    // plot
-    SimulationPlotter.plot(simulationResult, new String[]{"V(in)", "V(out)"});
+    Netlist netlist = new HalfWaveRectifier();
+    TransientConfig transientConfig = new TransientConfig(.0833333333, .0002, new Sine("Vsrc", 0, 0, 12, 60.0));
+    netlist.setSimulationConfig(transientConfig);
+    SimulationResult simulationResult = JSpice.simulate(netlist);
+    SimulationPlotter.plot(simulationResult, "V(in)", "V(out)");
   }
 }

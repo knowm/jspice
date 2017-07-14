@@ -51,8 +51,6 @@ A computerized circuit solver like SPICE doesn't start by writing nodal equation
 
 Like SPICE since version 3f5, JSpice uses MNA for Nodal Analysis, and it uses LUDecomposition to solve the systems of linear equations to determine the nodal values. For more information about MNA and MNA Stamps see the following links:
 
-1. <http://www.analog-electronics.eu/analog-electronics/modified-nodal-analysis/modified-nodal-analysis.xhtml>
-1. <http://www.thedigitalmachine.net/article.spice_part1.html>
 1. <http://users.ecs.soton.ac.uk/mz/CctSim/contents.htm>
 1. <http://www.ece.iisc.ernet.in/~dipanjan/E8_262/E8262-CAD_4+5.pdf>
 1. <http://qucs.sourceforge.net/tech/technical.html>
@@ -403,8 +401,6 @@ Step 2. Use the result to develop a linear companion memristor well-suited for N
 Long story short, given the time step size (`h`) and the voltage across the capacitor at a certain time point, the capacitor is replaced in the circuit with the following linear companion memristor consisting of a Resistor and a current source. JSpice then carries out it's nodal analysis as before.
 
 ![Capacitor Model ([source](http://www.ecircuitcenter.com/SpiceTopics/Transient%20Analysis/Transient%20Analysis.htm))](documentation/Capacitor_Model.png)  
-
-![Inductor Model ([source](http://www.ecircuitcenter.com/SpiceTopics/Transient%20Analysis/Transient%20Analysis.htm))](documentation/Capacitor_Model.png)  
 
 ### Drivers
 

@@ -77,9 +77,7 @@ public class Inductor extends ReactiveElement {
     Set<String> set = new HashSet<String>(3);
     set.add(nodes[0]);
     set.add(nodes[1]);
-    if (timeStep != null) {
-      set.add(getId());
-    }
+    set.add(getId());
 
     return set;
   }
@@ -93,15 +91,15 @@ public class Inductor extends ReactiveElement {
     for (int i = 0; i < columnQuantities.length; i++) {
       if (columnQuantities[i].equals(nodes[0]) || columnQuantities[i].equals(nodes[1])) {
         columnQuantities[i] = "V(" + columnQuantities[i] + ")";
-      }
-      else if (columnQuantities[i].equals(getId())) {
+      } else if (columnQuantities[i].equals(getId())) {
         columnQuantities[i] = "I(" + columnQuantities[i] + ")";
       }
     }
   }
 
   @Override
-  public void stampG(double[][] G, Netlist netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes, Double timeStep) {
+  public void stampG(double[][] G, Netlist netList, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap,
+      String[] nodes, Double timeStep) {
 
     double r_eq = 0.0;
     if (timeStep != null) {
@@ -138,7 +136,8 @@ public class Inductor extends ReactiveElement {
   }
 
   @Override
-  public void stampRHS(double[] RHS, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes, Double timeStep) {
+  public void stampRHS(double[] RHS, DCOperatingPointResult dcOperatingPointResult, Map<String, Integer> nodeID2ColumnIdxMap, String[] nodes,
+      Double timeStep) {
 
     double v_eq = 0.0;
     if (timeStep != null) {

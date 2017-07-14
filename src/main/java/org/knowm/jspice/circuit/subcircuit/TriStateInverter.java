@@ -42,7 +42,7 @@ public class TriStateInverter extends SubCircuit {
     addNetListComponent(new NetlistNMOS(deviceId + "_" + "N1", Vthreshold + .01, clk, out, uniqueNodeIdB)); // G, D, S
     addNetListComponent(new NetlistNMOS(deviceId + "_" + "N2", Vthreshold, in, uniqueNodeIdB, gnd)); // G, D, S
 
-    addNetListComponent(new NetlistCapacitor("C0", 1E-16, uniqueNodeIdA, gnd));
-    addNetListComponent(new NetlistCapacitor("C1", 1E-16, uniqueNodeIdB, gnd));
+    addNetListComponent(new NetlistCapacitor(deviceId + "C0", 1E-16, uniqueNodeIdA, gnd));
+    addNetListComponent(new NetlistCapacitor(deviceId + "C1", 1E-16, uniqueNodeIdB, gnd));
   }
 }

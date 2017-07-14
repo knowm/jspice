@@ -30,7 +30,7 @@ public class TransientConfig extends SimulationConfig {
   Driver[] drivers;
 
   public TransientConfig(@JsonProperty("stop_time") double stopTime, @JsonProperty("time_step") double timeStep,
-      @JsonProperty("drivers") Driver[] drivers) {
+      @JsonProperty("drivers") Driver... drivers) {
     this.stopTime = stopTime;
     this.timeStep = timeStep;
     this.drivers = drivers;

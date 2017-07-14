@@ -21,38 +21,22 @@
  */
 package org.knowm.jspice.transientanalysis;
 
+import org.knowm.jspice.JSpice;
 import org.knowm.jspice.circuits.V1R8C8;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.transientanalysis.TransientConfig;
-import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
-import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 import org.knowm.jspice.simulate.transientanalysis.driver.Square;
 
-/**
- * @author timmolter
- */
 public class TransientAnalysisV1R8C8 {
 
   public static void main(String[] args) {
 
-    // Circuit
-    Netlist circuit = new V1R8C8();
-
-    Driver driver = new Square("V1", 5, 0, 5, 1000.0);
-    Driver[] drivers = new Driver[]{driver};
-    double stopTime = .00098;
-    double timeStep = .00001;
-
-    // TransientAnalysisDefinition
-    TransientConfig transientAnalysisDefinition = new TransientConfig(stopTime, timeStep, drivers);
-
-    // run TransientAnalysis
-    TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
-    SimulationResult simulationResult = transientAnalysis.run();
-
-    // plot
-    SimulationPlotter.plot(simulationResult, new String[]{"V(9)"});
+    Netlist netlist = new V1R8C8();
+    TransientConfig transientConfig = new TransientConfig(.00098, .00001, new Square("V1", 5, 0, 5, 1000.0));
+    netlist.setSimulationConfig(transientConfig);
+    SimulationResult simulationResult = JSpice.simulate(netlist);
+    SimulationPlotter.plot(simulationResult, "V(9)");
   }
 }
