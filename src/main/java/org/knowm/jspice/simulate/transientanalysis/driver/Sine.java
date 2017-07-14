@@ -21,6 +21,8 @@
  */
 package org.knowm.jspice.simulate.transientanalysis.driver;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * @author timmolter
  */
@@ -29,15 +31,16 @@ public class Sine extends Driver {
   /**
    * Constructor
    *
-   * @param name
+   * @param id
    * @param dcOffset
    * @param phase
    * @param amplitude
    * @param frequency
    */
-  public Sine(String name, double dcOffset, double phase, double amplitude, double frequency) {
+  public Sine(@JsonProperty("id") String id, @JsonProperty("dc_offset") double dcOffset, @JsonProperty("phase") double phase,
+      @JsonProperty("amplitude") double amplitude, @JsonProperty("frequency") double frequency) {
 
-    super(name, dcOffset, phase, amplitude, frequency);
+    super(id, dcOffset, phase, amplitude, frequency);
   }
 
   @Override

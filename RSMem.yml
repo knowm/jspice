@@ -1,0 +1,24 @@
+components:
+- type: dc_voltage
+  nodes: VDD,0
+  id: Vdd
+  voltage: 1.0
+- type: rs_mem
+  nodes: VDD,0
+  id: M1
+  schottky_forward_alpha: 0.0
+  schottky_forward_beta: 0.0
+  schottky_reverse_alpha: 0.0
+  schottky_reverse_beta: 0.0
+  phi: 1.0
+sim:
+  type: trans
+  stop_time: 0.001
+  time_step: 1.0E-5
+  drivers:
+  - type: sine
+    id: Vdd
+    dc_offset: 0.0
+    phase: 0.0
+    amplitude: 1.2
+    frequency: 2000.0

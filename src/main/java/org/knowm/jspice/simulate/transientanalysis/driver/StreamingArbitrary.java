@@ -21,10 +21,10 @@
  */
 package org.knowm.jspice.simulate.transientanalysis.driver;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * This highly-specialized driver produces an arbitrary waveform in sync with a bit stream.
- *
- * @author timmolter
  */
 public class StreamingArbitrary extends Driver {
 
@@ -42,7 +42,9 @@ public class StreamingArbitrary extends Driver {
    * @param activePhases
    * @param bitStream
    */
-  public StreamingArbitrary(String matchingSourceId, double dcOffset, double phase, double amplitude, double frequency, double[] activePhases, String[] bitStream) {
+  public StreamingArbitrary(@JsonProperty("id") String matchingSourceId, @JsonProperty("dc_offset") double dcOffset,
+      @JsonProperty("phase") double phase, @JsonProperty("amplitude") double amplitude, @JsonProperty("frequency") double frequency,
+      @JsonProperty("active") double[] activePhases, @JsonProperty("bitstream") String[] bitStream) {
 
     super(matchingSourceId, dcOffset, phase, amplitude, frequency);
     this.activePhases = activePhases;
@@ -72,8 +74,7 @@ public class StreamingArbitrary extends Driver {
     }
     if (isActive) {
       return dcOffset + amplitude;
-    }
-    else {
+    } else {
       return 0.0;
     }
   }

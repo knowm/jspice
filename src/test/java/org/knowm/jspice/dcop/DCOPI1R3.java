@@ -22,14 +22,17 @@
 package org.knowm.jspice.dcop;
 
 import org.knowm.jspice.JSpice;
-import org.knowm.jspice.circuits.I1R3;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistBuilder;
 
 public class DCOPI1R3 {
 
   public static void main(String[] args) {
 
-    Netlist netlist = new I1R3();
+    // run via NetlistBuilder
+    NetlistBuilder builder = new NetlistBuilder().addNetlistDCCurrent("a", 1.0, "0", "1").addNetlistResistor("R1", 10, "1", "0")
+        .addNetlistResistor("R2", 1000, "1", "2").addNetlistResistor("R3", 1000, "2", "0");
+    Netlist netlist = builder.build();
     JSpice.simulate(netlist);
   }
 }

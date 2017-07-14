@@ -42,6 +42,14 @@ public class NetlistBuilder {
     return this;
   }
 
+  public NetlistBuilder addNetlistRSMemristor(String id, double schottkyForwardAlpha, double schottkyForwardBeta, double schottkyReverseAlpha,
+      double schottkyReverseBeta, double phi, String... nodes) {
+
+    netlistComponents
+        .add(new NetlistRSMemristor(id, schottkyForwardAlpha, schottkyForwardBeta, schottkyReverseAlpha, schottkyReverseBeta, phi, nodes));
+    return this;
+  }
+
   public NetlistBuilder addDCOPSimulationConfig() {
 
     this.simulationConfig = new DCOPConfig();
@@ -54,7 +62,7 @@ public class NetlistBuilder {
     return this;
   }
 
-  public NetlistBuilder addTransientSimulationConfig(double stopTime, double timeStep, Driver[] drivers) {
+  public NetlistBuilder addTransientSimulationConfig(double stopTime, double timeStep, Driver... drivers) {
 
     this.simulationConfig = new TransientConfig(stopTime, timeStep, drivers);
     return this;

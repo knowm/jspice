@@ -21,9 +21,8 @@
  */
 package org.knowm.jspice.simulate.transientanalysis.driver;
 
-/**
- * @author timmolter
- */
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Pulse extends Driver {
 
   private final double dutyCycle;
@@ -31,16 +30,17 @@ public class Pulse extends Driver {
   /**
    * Constructor
    *
-   * @param name
+   * @param id
    * @param dcOffset
    * @param phase
    * @param amplitude
    * @param frequency
    * @param dutyCycle between 0 and 1
    */
-  public Pulse(String name, double dcOffset, double phase, double amplitude, double frequency, double dutyCycle) {
+  public Pulse(@JsonProperty("id") String id, @JsonProperty("dc_offset") double dcOffset, @JsonProperty("phase") double phase,
+      @JsonProperty("amplitude") double amplitude, @JsonProperty("frequency") double frequency, @JsonProperty("duty") double dutyCycle) {
 
-    super(name, dcOffset, phase, amplitude, frequency);
+    super(id, dcOffset, phase, amplitude, frequency);
     this.dutyCycle = dutyCycle;
   }
 
@@ -69,6 +69,7 @@ public class Pulse extends Driver {
   @Override
   public String toString() {
 
-    return "Pulse [dutyCycle=" + dutyCycle + ", id=" + id + ", dcOffset=" + dcOffset + ", phase=" + phase + ", amplitude=" + amplitude + ", frequency=" + frequency + "]";
+    return "Pulse [dutyCycle=" + dutyCycle + ", id=" + id + ", dcOffset=" + dcOffset + ", phase=" + phase + ", amplitude=" + amplitude
+        + ", frequency=" + frequency + "]";
   }
 }

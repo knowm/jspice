@@ -12,11 +12,6 @@ JSpice was originally written at a time before any mainstream SPICE applications
 
 JSpice is however still useful for rapid prototyping and serves as the simulation engine for [mem-sim](https://github.com/knowm/mem-sim). JSpice may interest you if you are interested in learning the mechanics of modified nodal analysis and your favorite programming langauge is Java. 
 
-## Running
-
-    java -jar jspice.jar test.yml
-
-
 ## Flow Chart of JSpice
 
 Following is a simplified block diagram of the main JSpice program flow. 
@@ -78,33 +73,22 @@ The costs of the automatic circuit equation formulation:
 
 ##### Code
 
+Here, the `NetlistBuilder` pattern is demonstrated.
+
 ```java
 public class DCOPI1R3 {
 
   public static void main(String[] args) {
 
-    Netlist circuit = new I1R3();
-
-    // run DC operating point
-    DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
-    System.out.println(dcOpResult.toString());
+    // run via NetlistBuilder
+    NetlistBuilder builder = new NetlistBuilder().addNetlistDCCurrent("a", 1.0, "0", "1").addNetlistResistor("R1", 10, "1", "0")
+        .addNetlistResistor("R2", 1000, "1", "2").addNetlistResistor("R3", 1000, "2", "0");
+    Netlist netlist = builder.build();
+    JSpice.simulate(netlist);
   }
 }
 ```
 
-```java
-public class I1R3 extends Netlist {
-
-  public I1R3() {
-
-    // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    addNetListComponent(new NetlistDCCurrent("a", 1.0, "0", "1"));
-    addNetListComponent(new NetlistResistor("R1", 10, "1", "0"));
-    addNetListComponent(new NetlistResistor("R2", 1000, "1", "2"));
-    addNetListComponent(new NetlistResistor("R3", 1000, "2", "0"));
-  }
-}
-```
 
 ##### Result
 
@@ -126,6 +110,19 @@ I(a) = 1.0
 ![I1V1R6 Circuit Diagram](documentation/i1v1r6.png)  
 
 ##### Code
+
+Here, the `Netlist` is created as a stand-alone class, ideal for circuit reuse.
+
+```java
+public class DCOPI1V1R6 {
+
+  public static void main(String[] args) {
+
+    Netlist netlist = new I1V1R6();
+    JSpice.simulate(netlist);
+  }
+}
+```
 
 ```java
 public class I1V1R6 extends Netlist {
@@ -192,24 +189,9 @@ public class DCSweepV1R4 {
 
   public static void main(String[] args) {
 
-    // Circuit
-    Netlist circuit = new V1R4();
-
-    // SweepDef
-    String componentToSweepID = "R1";
-    double startValue = 100.0;
-    double endValue = 10000.0;
-    double stepSize = 100;
-    SweepDefinition sweepDef = new SweepDefinition(componentToSweepID, startValue, endValue, stepSize);
-
-    // run DC sweep
-    DCSweep dcSweep = new DCSweep(circuit);
-    dcSweep.addSweepDef(sweepDef);
-    SimulationResult dcSweepResult = dcSweep.run("V(3)");
-    System.out.println(dcSweepResult.toString());
-
-    // plot
-    SimulationPlotter.plot(dcSweepResult, new String[]{"V(3)"});
+    Netlist netlist = new V1R4();
+    netlist.setSimulationConfig(new DCSweepConfig("R1", "I(3)", 100.0, 10000, 100));
+    JSpice.simulate(netlist);
   }
 }
 ```
@@ -237,24 +219,9 @@ public class DCSweepV1D1 {
 
   public static void main(String[] args) {
 
-    // Circuit
-    Netlist circuit = new V1D1();
-
-    // SweepDef
-    String componentToSweepID = "Va";
-    double startValue = 0.5;
-    double endValue = 0.95;
-    double stepSize = 0.005;
-    SweepDefinition sweepDef = new SweepDefinition(componentToSweepID, startValue, endValue, stepSize);
-
-    // run DC sweep
-    DCSweep dcSweep = new DCSweep(circuit);
-    dcSweep.addSweepDef(sweepDef);
-    SimulationResult dcSweepResult = dcSweep.run("I(D1)");
-    System.out.println(dcSweepResult.toString());
-
-    // plot
-    SimulationPlotter.plot(dcSweepResult, new String[]{"I(D1)"});
+    Netlist netlist = new V1D1();
+    netlist.setSimulationConfig(new DCSweepConfig("Va", "I(D1)", 0.5, .95, .005));
+    JSpice.simulate(netlist);
   }
 }
 ```
@@ -279,21 +246,21 @@ public class DCSweepV2NMOS1 {
   public static void main(String[] args) {
 
     // Circuit
-    Netlist circuit = new V2NMOS1();
+    Netlist netlist = new V2NMOS1();
 
     // SweepDef
-    SweepDefinition sweepDef1 = new SweepDefinition("Vdd", 0.0, 10.0, 0.1);
-    SweepDefinition sweepDef2 = new SweepDefinition("Vg", 0.0, 5.0, 1.0);
+    DCSweepConfig sweepDef1 = new DCSweepConfig("Vdd", "I(NMOS1)", 0.0, 10.0, 0.1);
+    DCSweepConfig sweepDef2 = new DCSweepConfig("Vg", "I(NMOS1)", 0.0, 5.0, 1.0);
 
     // run DC sweep
-    DCSweep dcSweep = new DCSweep(circuit);
-    dcSweep.addSweepDef(sweepDef1);
-    dcSweep.addSweepDef(sweepDef2);
+    DCSweep dcSweep = new DCSweep(netlist);
+    dcSweep.addSweepConfig(sweepDef1);
+    dcSweep.addSweepConfig(sweepDef2);
     SimulationResult dcSweepResult = dcSweep.run("I(NMOS1)");
-    System.out.println(dcSweepResult.toString());
 
     // plot
     SimulationPlotter.plotAll(dcSweepResult);
+
   }
 }
 ```
@@ -316,16 +283,16 @@ public class DCSweepV2PMOS1 {
   public static void main(String[] args) {
 
     // Circuit
-    Netlist circuit = new V2PMOS1();
+    Netlist netlist = new V2PMOS1();
 
     // SweepDef
-    SweepDefinition sweepDef1 = new SweepDefinition("Vg", -5.0, 0.0, 1.0);
-    SweepDefinition sweepDef2 = new SweepDefinition("Vdd", -10.0, 0.0, 0.1);
+    DCSweepConfig sweepDef1 = new DCSweepConfig("Vg", "I(PMOS1)", -5.0, 0.0, 1.0);
+    DCSweepConfig sweepDef2 = new DCSweepConfig("Vdd", "I(PMOS1)", -10.0, 0.0, 0.1);
 
     // run DC sweep
-    DCSweep dcSweep = new DCSweep(circuit);
-    dcSweep.addSweepDef(sweepDef2);
-    dcSweep.addSweepDef(sweepDef1);
+    DCSweep dcSweep = new DCSweep(netlist);
+    dcSweep.addSweepConfig(sweepDef2);
+    dcSweep.addSweepConfig(sweepDef1);
     SimulationResult dcSweepResult = dcSweep.run("I(PMOS1)");
     System.out.println(dcSweepResult.toString());
 
@@ -349,20 +316,9 @@ public class DCSweepCMOSInverter {
 
   public static void main(String[] args) {
 
-    // Circuit
-    Netlist circuit = new CMOSInverterCircuit();
-
-    // SweepDef
-    SweepDefinition sweepDef1 = new SweepDefinition("Vin", 0, 5, .10);
-
-    // run DC sweep
-    DCSweep dcSweep = new DCSweep(circuit);
-    dcSweep.addSweepDef(sweepDef1);
-    SimulationResult dcSweepResult = dcSweep.run("V(out)");
-    // System.out.println(dcSweepResult.toString());
-
-    // plot
-    SimulationPlotter.plotAll(dcSweepResult);
+    Netlist netlist = new CMOSInverterCircuit();
+    netlist.setSimulationConfig(new DCSweepConfig("Vin", "V(out)", 0, 5, .10));
+    JSpice.simulate(netlist);
   }
 }
 ```
@@ -374,7 +330,6 @@ public class DCSweepCMOSInverter {
 ![CMOS Inverter (Vth=1.5V) Sweep Result](documentation/DCSweepCMOSInverter_Vt15.png) 
 
 ![CMOS Inverter Transfer Curve](documentation/InverterRegions.png) 
-
  
 
 ## Transient Analysis
@@ -456,23 +411,10 @@ public class TransientAnalysisCMOSInverter {
 
   public static void main(String[] args) {
 
-    // Circuit
     Netlist netlist = new CMOSInverterCircuit();
-
-    Driver driver = new Triangle("Vin", 2.5, 0, 2.5, 1.0);
-    Driver[] drivers = new Driver[]{driver};
-    double stopTime = 2;
-    double timeStep = .05;
-
-    // TransientAnalysisDefinition
-    SimulationConfigTransient simulationConfigTransient = new SimulationConfigTransient(stopTime, timeStep, drivers);
-
-    // run TransientAnalysis
-    TransientAnalysis transientAnalysis = new TransientAnalysis(netlist, simulationConfigTransient);
-    SimulationResult simulationResult = transientAnalysis.run();
-    System.out.println("simulationResult " + simulationResult);
-
-    // plot
+    TransientConfig transientConfig = new TransientConfig(2, .05, new Triangle("Vin", 2.5, 0, 2.5, 1.0));
+    netlist.setSimulationConfig(transientConfig);
+    SimulationResult simulationResult = JSpice.simulate(netlist);
     SimulationPlotter.plot(simulationResult, "V(in)", "V(out)");
   }
 }
@@ -494,22 +436,10 @@ public class TransientAnalysisV1R1C1 {
 
   public static void main(String[] args) {
 
-    // Circuit
-    Netlist circuit = new V1R1C1();
-
-    Driver driver = new Square("V1", 2.5, 0, 2.5, 1.0);
-    Driver[] drivers = new Driver[]{driver};
-    double stopTime = 2;
-    double timeStep = .01;
-
-    // TransientAnalysisDefinition
-    SimulationConfigTransient transientAnalysisDefinition = new SimulationConfigTransient(stopTime, timeStep, drivers);
-
-    // run TransientAnalysis
-    TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
-    SimulationResult simulationResult = transientAnalysis.run();
-
-    // plot
+    Netlist netlist = new V1R1C1();
+    TransientConfig transientConfig = new TransientConfig(2, .01, new Square("V1", 2.5, 0, 2.5, 1.0));
+    netlist.setSimulationConfig(transientConfig);
+    SimulationResult simulationResult = JSpice.simulate(netlist);
     SimulationPlotter.plot(simulationResult, new String[]{"V(1)", "V(2)"});
   }
 }
@@ -530,23 +460,11 @@ public class TransientAnalysisHalfWaveRectifier {
 
   public static void main(String[] args) {
 
-    // Circuit
-    Netlist circuit = new HalfWaveRectifier();
-
-    Driver driver = new Sine("Vsrc", 0, 0, 12, 60.0);
-    Driver[] drivers = new Driver[]{driver};
-    double stopTime = .0833333333;
-    double timeStep = .0002;
-
-    // TransientAnalysisDefinition
-    SimulationConfigTransient transientAnalysisDefinition = new SimulationConfigTransient(stopTime, timeStep, drivers);
-
-    // run TransientAnalysis
-    TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
-    SimulationResult simulationResult = transientAnalysis.run();
-
-    // plot
-    SimulationPlotter.plot(simulationResult, new String[]{"V(in)", "V(out)"});
+    Netlist netlist = new HalfWaveRectifier();
+    TransientConfig transientConfig = new TransientConfig(.0833333333, .0002, new Sine("Vsrc", 0, 0, 12, 60.0));
+    netlist.setSimulationConfig(transientConfig);
+    SimulationResult simulationResult = JSpice.simulate(netlist);
+    SimulationPlotter.plot(simulationResult, "V(in)", "V(out)");
   }
 }
 ```
@@ -566,25 +484,16 @@ public class TransientAnalysisTransmissionGate {
 
   public static void main(String[] args) {
 
-    // Circuit
-    Netlist circuit = new TransmissionGateCircuit();
+    Netlist netlist = new TransmissionGateCircuit();
 
     Driver in = new Sine("Vin", 0, 0, 1.0, 10.0);
     Driver clk = new Square("Vclk", 2.5, 0, 2.5, 1.0);
     Driver clkBar = new Square("VclkBar", 2.5, 0.5, 2.5, 1.0);
-    Driver[] drivers = new Driver[]{in, clk, clkBar};
-    double stopTime = 2;
-    double timeStep = .005;
 
-    // TransientAnalysisDefinition
-    SimulationConfigTransient transientAnalysisDefinition = new SimulationConfigTransient(stopTime, timeStep, drivers);
-
-    // run TransientAnalysis
-    TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
-    SimulationResult simulationResult = transientAnalysis.run();
-
-    // plot
-    SimulationPlotter.plotSeparate(simulationResult, new String[]{"V(out)", "V(in)", "V(CLK)", "V(CLKBAR)"});
+    TransientConfig transientConfig = new TransientConfig(2, .005, in, clk, clkBar);
+    netlist.setSimulationConfig(transientConfig);
+    SimulationResult simulationResult = JSpice.simulate(netlist);
+    SimulationPlotter.plotSeparate(simulationResult, "V(out)", "V(in)", "V(CLK)", "V(CLKBAR)");
   }
 }
 ```
@@ -606,23 +515,10 @@ public class TransientAnalysisV1MMSSMem {
 
   public static void main(String[] args) {
 
-    // Circuit
-    Netlist circuit = new V1MMSSMem();
-
-    Driver driver = new Sine("Vdd", 0.0, 0, 0.5, 100.0);
-    Driver[] drivers = new Driver[]{driver};
-    double stopTime = .04;
-    double timeStep = .0001;
-
-    // TransientAnalysisDefinition
-    SimulationConfigTransient transientAnalysisDefinition = new SimulationConfigTransient(stopTime, timeStep, drivers);
-
-    // run TransientAnalysis
-    TransientAnalysis transientAnalysis = new TransientAnalysis(circuit, transientAnalysisDefinition);
-    SimulationResult simulationResult = transientAnalysis.run();
-
-    // plot
-    // SimulationPlotter.plotAllSeparate(simulationResult);
+    Netlist netlist = new V1MMSSMem();
+    TransientConfig transientConfig = new TransientConfig(.04, .0001, new Sine("Vdd", 0.0, 0, 0.5, 100.0));
+    netlist.setSimulationConfig(transientConfig);
+    SimulationResult simulationResult = JSpice.simulate(netlist);
     SimulationPlotter.plotSeparate(simulationResult, new String[]{"V(VDD)", "I(M1)"});
     SimulationPlotter.plotTransientInOutCurve("I/V Curve", simulationResult, new String[]{"V(VDD)", "I(M1)"});
 
@@ -655,3 +551,7 @@ JSpice is built with Maven, which also handles dependency management.
     mvn license:check
     mvn license:format
     mvn license:remove
+
+## TODO
+
+1. Implement for new API: initial conditions, arbitrary sources, DC Sweep orthogonal config

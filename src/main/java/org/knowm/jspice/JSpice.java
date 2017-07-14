@@ -35,7 +35,7 @@ public class JSpice {
 
   }
 
-  public static void simulate(String fileName) throws IOException, ConfigurationException {
+  public static SimulationResult simulate(String fileName) throws IOException, ConfigurationException {
 
     ConfigurationFactory<Netlist> yamlConfigurationFactory = new YamlConfigurationFactory<Netlist>(Netlist.class, BaseValidator.newValidator(),
         Jackson.newObjectMapper(), "");
@@ -50,7 +50,7 @@ public class JSpice {
     //    System.out.println(dcOpResult.toString());
 
     // 3. Run it  
-    simulate(netlist);
+    return simulate(netlist);
 
   }
 

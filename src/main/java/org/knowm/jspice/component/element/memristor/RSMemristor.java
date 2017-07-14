@@ -43,7 +43,8 @@ public class RSMemristor extends Memristor {
 
   private double g = Gmin;
 
-  public RSMemristor(String id, double schottkyForwardAlpha, double schottkyForwardBeta, double schottkyReverseAlpha, double schottkyReverseBeta, double phi) {
+  public RSMemristor(String id, double schottkyForwardAlpha, double schottkyForwardBeta, double schottkyReverseAlpha, double schottkyReverseBeta,
+      double phi) {
 
     super(id);
     this.schottkyForwardAlpha = schottkyForwardAlpha;
@@ -67,8 +68,7 @@ public class RSMemristor extends Memristor {
 
     if (voltage > 0) {
       this.g += alpha * Vt(voltage) * dt * (Gmax - g);
-    }
-    else {
+    } else {
       this.g += alpha * Vt(voltage) * dt * (Gmin - g);
     }
   }
@@ -81,33 +81,31 @@ public class RSMemristor extends Memristor {
 
   public double getSchottkyCurrent(double voltage) {
 
-    return schottkyReverseAlpha * (-1 * Math.exp(-1 * schottkyReverseBeta * voltage)) + schottkyForwardAlpha * (Math.exp(schottkyForwardBeta * voltage));
+    return schottkyReverseAlpha * (-1 * Math.exp(-1 * schottkyReverseBeta * voltage))
+        + schottkyForwardAlpha * (Math.exp(schottkyForwardBeta * voltage));
   }
 
   private double Vt(double v) {
 
     if (v > Va) {
       return (v - Va);
-    }
-    else if (v < -Vb) {
+    } else if (v < -Vb) {
       return -(v + Vb);
-    }
-    else {
+    } else {
       return 0;
     }
   }
 
   @Override
-  public void setSweepValue(double value) {
+  public void setSweepValue(double g) {
 
-    // TODO Auto-generated method stub
+    this.g = g;
 
   }
 
   @Override
   public double getSweepableValue() {
 
-    // TODO Auto-generated method stub
-    return 0;
+    return g;
   }
 }

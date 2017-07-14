@@ -26,7 +26,6 @@ public class TransientConfig extends SimulationConfig {
   @Valid
   @NotNull
   @JsonProperty("drivers")
-  @Min(0)
   Driver[] drivers;
 
   public TransientConfig(@JsonProperty("stop_time") double stopTime, @JsonProperty("time_step") double timeStep,

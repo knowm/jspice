@@ -21,9 +21,8 @@
  */
 package org.knowm.jspice.simulate.transientanalysis.driver;
 
-/**
- * @author timmolter
- */
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Arbitrary extends Driver {
 
   private final double[] activePhases;
@@ -38,7 +37,8 @@ public class Arbitrary extends Driver {
    * @param frequency
    * @param activePhases
    */
-  public Arbitrary(String matchingSourceId, double dcOffset, double phase, double amplitude, double frequency, double[] activePhases) {
+  public Arbitrary(@JsonProperty("id") String matchingSourceId, @JsonProperty("dc_offset") double dcOffset, @JsonProperty("phase") double phase,
+      @JsonProperty("amplitude") double amplitude, @JsonProperty("frequency") double frequency, @JsonProperty("active") double[] activePhases) {
 
     super(matchingSourceId, dcOffset, phase, amplitude, frequency);
     this.activePhases = activePhases;
@@ -60,8 +60,7 @@ public class Arbitrary extends Driver {
     if (isActive) {
 
       return dcOffset + amplitude;
-    }
-    else {
+    } else {
       return 0.0;
     }
   }

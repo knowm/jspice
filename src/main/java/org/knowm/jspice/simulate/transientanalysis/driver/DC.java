@@ -21,9 +21,8 @@
  */
 package org.knowm.jspice.simulate.transientanalysis.driver;
 
-/**
- * @author timmolter
- */
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class DC extends Driver {
 
   /**
@@ -32,7 +31,7 @@ public class DC extends Driver {
    * @param id
    * @param dcOffset
    */
-  public DC(String id, double dcOffset) {
+  public DC(@JsonProperty("id") String id, @JsonProperty("dc_offset") double dcOffset) {
 
     super(id, dcOffset, 0.0, 0.0, 0.0);
   }
