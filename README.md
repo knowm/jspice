@@ -669,3 +669,4 @@ JSpice is built with Maven, which also handles dependency management.
 ## TODO
 
 1. Implement for new API: initial conditions, arbitrary sources, DC Sweep orthogonal config
+1. DC Op and DC Sweep file output like for transient analysis
