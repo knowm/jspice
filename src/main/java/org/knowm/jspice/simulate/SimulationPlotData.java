@@ -34,8 +34,8 @@ public final class SimulationPlotData {
    */
   public SimulationPlotData() {
 
-    this.xData = new ArrayList<Number>();
-    this.yData = new ArrayList<Number>();
+    this.xData = new ArrayList<>();
+    this.yData = new ArrayList<>();
   }
 
   public List<Number> getxData() {

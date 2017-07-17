@@ -84,8 +84,7 @@ public class JoglekarMemristor extends Memristor {
       if (w <= 0) {
         direction = 1;
       }
-    }
-    else {
+    } else {
       if (w >= D) {
         direction = -1;
       }

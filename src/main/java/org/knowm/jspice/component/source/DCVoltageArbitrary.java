@@ -37,7 +37,6 @@ public abstract class DCVoltageArbitrary extends DCVoltage implements NonlinearC
    * Constructor
    *
    * @param id
-   * @param dcVoltage
    */
   public DCVoltageArbitrary(String id) {
 

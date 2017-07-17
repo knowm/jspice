@@ -29,8 +29,8 @@ import org.knowm.jspice.component.Component;
 import org.knowm.jspice.component.NonlinearComponent;
 import org.knowm.jspice.component.element.linear.Resistor;
 import org.knowm.jspice.component.source.DCCurrent;
-import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.netlist.InitialVoltageDropCalculator;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.netlist.NetlistComponent;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 
@@ -40,7 +40,7 @@ import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 public abstract class MOSFET extends Component implements NonlinearComponent {
 
   public enum Mode {
-    CUTOFF, TRIODE, SATURATION;
+    CUTOFF, TRIODE, SATURATION
   }
 
   protected double Vthresh;
@@ -281,7 +281,7 @@ public abstract class MOSFET extends Component implements NonlinearComponent {
     // no contribution
 
     // resistor
-    Set<String> set = new HashSet<String>(2);
+    Set<String> set = new HashSet<>(2);
     set.add(nodes[0]);
     set.add(nodes[1]);
 
@@ -325,10 +325,10 @@ public abstract class MOSFET extends Component implements NonlinearComponent {
     if (this instanceof NMOS) {
       Resistor resistance = new Resistor((getId() + "_Ro"), getRo(VgsGuess, VdsGuess));
       //      System.out.println("NMOS Res.= " + resistance);
-      req = new NetlistComponent(resistance, new String[]{nodes[1], nodes[2]});
+      req = new NetlistComponent(resistance, nodes[1], nodes[2]);
     } else {
       Resistor resistance = new Resistor((getId() + "_Ro"), getRo(-1.0 * VgsGuess, -1.0 * VdsGuess));
-      req = new NetlistComponent(resistance, new String[]{nodes[2], nodes[1]});
+      req = new NetlistComponent(resistance, nodes[2], nodes[1]);
       //      System.out.println("PMOS Res.= " + resistance);
     }
 
@@ -348,10 +348,10 @@ public abstract class MOSFET extends Component implements NonlinearComponent {
     NetlistComponent GmVgs;
     if (this instanceof NMOS) {
       DCCurrent dcCurrent = new DCCurrent((getId() + "_GmVgs"), getGmVgsCurrent(VgsGuess, VdsGuess));
-      GmVgs = new NetlistComponent(dcCurrent, new String[]{nodes[1], nodes[2]});
+      GmVgs = new NetlistComponent(dcCurrent, nodes[1], nodes[2]);
     } else {
       DCCurrent dcCurrent = new DCCurrent((getId() + "_GmVgs"), getGmVgsCurrent(-1.0 * VgsGuess, -1.0 * VdsGuess));
-      GmVgs = new NetlistComponent(dcCurrent, new String[]{nodes[2], nodes[1]});
+      GmVgs = new NetlistComponent(dcCurrent, nodes[2], nodes[1]);
     }
     GmVgs.stampRHS(RHS, dcOperatingPointResult, nodeID2ColumnIdxMap, timeStep);
 
@@ -359,10 +359,10 @@ public abstract class MOSFET extends Component implements NonlinearComponent {
     NetlistComponent Ideq;
     if (this instanceof NMOS) {
       DCCurrent dcCurrent = new DCCurrent((getId() + "_Id,eq"), getEquivalentCurrent(VgsGuess, VdsGuess));
-      Ideq = new NetlistComponent(dcCurrent, new String[]{nodes[1], nodes[2]});
+      Ideq = new NetlistComponent(dcCurrent, nodes[1], nodes[2]);
     } else {
       DCCurrent dcCurrent = new DCCurrent((getId() + "_Id,eq"), getEquivalentCurrent(-1.0 * VgsGuess, -1.0 * VdsGuess));
-      Ideq = new NetlistComponent(dcCurrent, new String[]{nodes[2], nodes[1]});
+      Ideq = new NetlistComponent(dcCurrent, nodes[2], nodes[1]);
       //      System.out.println(dcCurrent.toString());
     }
     Ideq.stampRHS(RHS, dcOperatingPointResult, nodeID2ColumnIdxMap, timeStep);

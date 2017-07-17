@@ -68,7 +68,7 @@ public class VCVS extends Source {
   @Override
   public Set<String> getGMatrixColumnIDs(String[] nodes, Double timeStep) {
 
-    Set<String> set = new HashSet<String>(3);
+    Set<String> set = new HashSet<>(3);
     set.add(getId());
     set.add(nodes[0]);
     set.add(nodes[1]);
@@ -82,8 +82,7 @@ public class VCVS extends Source {
     for (int i = 0; i < columnQuantities.length; i++) {
       if (columnQuantities[i].equals(nodes[0]) || columnQuantities[i].equals(nodes[1])) {
         columnQuantities[i] = "V(" + columnQuantities[i] + ")";
-      }
-      else if (columnQuantities[i].equals(getId())) {
+      } else if (columnQuantities[i].equals(getId())) {
         columnQuantities[i] = "I(" + columnQuantities[i] + ")";
       }
     }

@@ -38,9 +38,7 @@ public class SimulationPlotter {
   /**
    * Plot the Simulation results on one plot
    *
-   * @param title
    * @param simulationResult
-   * @param plotInputSignals
    */
   public static void plotAll(SimulationResult simulationResult) {
 
@@ -60,13 +58,12 @@ public class SimulationPlotter {
     }
     //    chart.setYAxisTitle(Arrays.toString(yLabelsSet.toArray()));
 
-    new SwingWrapper<XYChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 
   /**
    * Plot the Simulation results on one plot
    *
-   * @param title
    * @param simulationResult
    * @param valuesToPlot
    */
@@ -77,16 +74,16 @@ public class SimulationPlotter {
     chart.setXAxisTitle(simulationResult.getxDataLabel());
     chart.setYAxisTitle(simulationResult.getyDataLabel());
 
-    for (int i = 0; i < valuesToPlot.length; i++) {
+    for (String valueToPlot : valuesToPlot) {
 
-      SimulationPlotData simulationData = simulationResult.getSimulationPlotDataMap().get(valuesToPlot[i]);
+      SimulationPlotData simulationData = simulationResult.getSimulationPlotDataMap().get(valueToPlot);
 
       if (simulationData == null) {
         throw new IllegalArgumentException(
-            valuesToPlot[i] + " is not a valid node value! Please choose from these values: " + simulationResult.getSimulationPlotDataMap().keySet());
+            valueToPlot + " is not a valid node value! Please choose from these values: " + simulationResult.getSimulationPlotDataMap().keySet());
       }
 
-      chart.addSeries(valuesToPlot[i], simulationData.getxData(), simulationData.getyData());
+      chart.addSeries(valueToPlot, simulationData.getxData(), simulationData.getyData());
     }
 
     new SwingWrapper<>(chart).displayChart();
@@ -102,7 +99,7 @@ public class SimulationPlotter {
     final int width = 600;
     final int height = 200;
 
-    List<XYChart> charts = new ArrayList<XYChart>();
+    List<XYChart> charts = new ArrayList<>();
 
     int rows = 0;
 
@@ -119,11 +116,10 @@ public class SimulationPlotter {
       rows++;
     }
 
-    new SwingWrapper<XYChart>(charts, rows, 1).displayChartMatrix();
+    new SwingWrapper<>(charts, rows, 1).displayChartMatrix();
   }
 
   /**
-   * @param title
    * @param simulationResult
    * @param valuesToPlot
    */
@@ -132,31 +128,31 @@ public class SimulationPlotter {
     final int width = 600;
     final int height = 200;
 
-    List<XYChart> charts = new ArrayList<XYChart>();
+    List<XYChart> charts = new ArrayList<>();
 
     int rows = 0;
 
     // Create Chart
-    for (int i = 0; i < valuesToPlot.length; i++) {
+    for (String valueToPlot : valuesToPlot) {
 
-      SimulationPlotData simulationData = simulationResult.getSimulationPlotDataMap().get(valuesToPlot[i]);
+      SimulationPlotData simulationData = simulationResult.getSimulationPlotDataMap().get(valueToPlot);
 
       if (simulationData == null) {
         throw new IllegalArgumentException(
-            valuesToPlot[i] + " is not a valid node value! Please choose from these values: " + simulationResult.getSimulationPlotDataMap().keySet());
+            valueToPlot + " is not a valid node value! Please choose from these values: " + simulationResult.getSimulationPlotDataMap().keySet());
       }
 
       XYChart chart = new XYChart(width, height);
       chart.setXAxisTitle(simulationResult.getxDataLabel());
-      chart.setYAxisTitle(valuesToPlot[i]);
-      XYSeries series = chart.addSeries(valuesToPlot[i], simulationData.getxData(), simulationData.getyData());
+      chart.setYAxisTitle(valueToPlot);
+      XYSeries series = chart.addSeries(valueToPlot, simulationData.getxData(), simulationData.getyData());
       series.setMarker(SeriesMarkers.NONE);
       chart.getStyler().setLegendVisible(false);
       charts.add(chart);
       rows++;
     }
 
-    new SwingWrapper<XYChart>(charts, rows, 1).displayChartMatrix();
+    new SwingWrapper<>(charts, rows, 1).displayChartMatrix();
   }
 
   /**
@@ -188,6 +184,6 @@ public class SimulationPlotter {
     series.setMarker(SeriesMarkers.NONE);
 
     chart.getStyler().setLegendVisible(false);
-    new SwingWrapper<XYChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 }

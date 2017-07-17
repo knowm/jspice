@@ -63,7 +63,7 @@ public class MMSSMemristor extends Memristor {
    * Constructor
    */
   public MMSSMemristor(String id, double rInit, double rOn, double rOff, double tau, double vOn, double vOff, double phi, double schottkyForwardAlpha, double schottkyForwardBeta,
-                       double schottkyReverseAlpha, double schottkyReverseBeta) {
+      double schottkyReverseAlpha, double schottkyReverseBeta) {
 
     super(id);
 
@@ -93,7 +93,7 @@ public class MMSSMemristor extends Memristor {
    * update device conductance
    *
    * @param voltage - the instantaneous voltage
-   * @param dt      - how much time passed since the last update
+   * @param dt - how much time passed since the last update
    */
   @Override
   public void dG(double voltage, double dt) {
@@ -114,8 +114,7 @@ public class MMSSMemristor extends Memristor {
     x += (n0ff2on - nOn2Off);
     if (x > 1) {
       x = 1;
-    }
-    else if (x < 0) {
+    } else if (x < 0) {
       x = 0;
     }
 //        System.out.println(x);
@@ -124,7 +123,7 @@ public class MMSSMemristor extends Memristor {
   /**
    * Equation 21. The probability that the MSS will transition from the Off state to the On state
    *
-   * @param v  - the voltage across the device
+   * @param v - the voltage across the device
    * @param dt
    * @return
    */

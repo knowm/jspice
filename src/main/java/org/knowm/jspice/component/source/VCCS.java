@@ -68,7 +68,7 @@ public class VCCS extends Source {
   @Override
   public Set<String> getGMatrixColumnIDs(String[] nodes, Double timeStep) {
 
-    Set<String> set = new HashSet<String>(3);
+    Set<String> set = new HashSet<>(3);
     set.add(nodes[0]);
     set.add(nodes[1]);
 

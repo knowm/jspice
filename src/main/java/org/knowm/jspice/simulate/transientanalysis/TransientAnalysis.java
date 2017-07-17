@@ -69,7 +69,7 @@ public class TransientAnalysis {
 
   private Map<String, SimulationPlotData> getSingleTransientAnalyisResult() {
 
-    Map<String, SimulationPlotData> timeSeriesDataMap = new LinkedHashMap<String, SimulationPlotData>();
+    Map<String, SimulationPlotData> timeSeriesDataMap = new LinkedHashMap<>();
 
     BigDecimal firstPoint = BigDecimal.ZERO;
     BigDecimal timeStep = BigDecimal.valueOf(transientAnalysisDefinition.getTimeStep());
@@ -131,7 +131,6 @@ public class TransientAnalysis {
         }
       } catch (NodalAnalysisConvergenceException e) {
         System.out.println("skipping value at t= " + t + " because of failure to converge!");
-        continue;
       }
     }
 
@@ -141,8 +140,6 @@ public class TransientAnalysis {
 
   /**
    * sanity checks a SweepDefinition
-   *
-   * @param sweepDefinition
    */
   private void verify(TransientConfig transientAnalysisDefinition) {
 

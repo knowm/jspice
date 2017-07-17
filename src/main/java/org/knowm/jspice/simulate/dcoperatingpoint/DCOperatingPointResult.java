@@ -72,7 +72,7 @@ public final class DCOperatingPointResult {
     // System.out.println(Arrays.toString(unknownQuantities));
     this.RHS = RHS;
 
-    nodeLabels2Value = new TreeMap<String, Double>();
+    nodeLabels2Value = new TreeMap<>();
     for (int j = 0; j < unknownQuantities.length; j++) {
       nodeLabels2Value.put(unknownQuantityNames[j], unknownQuantities[j]);
     }
@@ -126,7 +126,7 @@ public final class DCOperatingPointResult {
       } else if (deviceLabels2Value.get(nodeOrDeviceLabel) != null) {
         return deviceLabels2Value.get(nodeOrDeviceLabel);
       } else {
-        Set<String> possibleValues = new HashSet<String>();
+        Set<String> possibleValues = new HashSet<>();
         possibleValues.addAll(nodeLabels2Value.keySet());
         possibleValues.addAll(deviceLabels2Value.keySet());
         throw new RuntimeException("Node or device with label: " + nodeOrDeviceLabel + " contains no value! Possible choices are: " + possibleValues);
@@ -191,7 +191,7 @@ public final class DCOperatingPointResult {
 
     //    System.out.println("HERE");
 
-    deviceLabels2Value = new TreeMap<String, Double>();
+    deviceLabels2Value = new TreeMap<>();
 
     // DC Current Sources
     for (NetlistComponent netListComponent : netlist.getNetListDCCurrentSources()) {

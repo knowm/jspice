@@ -144,7 +144,6 @@ public class MSSMemristor extends Memristor {
   /**
    * Equation 21. The probability that the MSS will transition from the Off state to the On state
    *
-   * @param voltage - the voltage across the device
    * @param dt
    * @return
    */

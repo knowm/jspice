@@ -56,18 +56,18 @@ public class CircuitMatrixSolver {
    */
   public static Map<String, Integer> getNodeID2ColumnIdxMap(Netlist netlist, Double timeStep) {
 
-    Map<String, Integer> nodeID2ColumnIdxMap = new TreeMap<String, Integer>(); // return value
+    Map<String, Integer> nodeID2ColumnIdxMap = new TreeMap<>(); // return value
 
     // A Set so duplicates are not added
-    Set<String> nodeNameSet = new HashSet<String>();
+    Set<String> nodeNameSet = new HashSet<>();
 
     for (NetlistComponent netlistComponent : netlist.getNetlistComponents()) {
       nodeNameSet.addAll(netlistComponent.getGMatrixColumnIDs(timeStep));
     }
 
     // sort the node names, and assign ascending ints to them
-    List<String> nodeNameList = new ArrayList<String>(nodeNameSet);
-    nodeNameList = new ArrayList<String>(nodeNameSet);
+    List<String> nodeNameList = new ArrayList<>(nodeNameSet);
+    nodeNameList = new ArrayList<>(nodeNameSet);
     Collections.sort(nodeNameList);
     int idx = 0;
     for (String nodeName : nodeNameList) {
@@ -201,8 +201,6 @@ public class CircuitMatrixSolver {
             }
           }
           a++;
-        } else {
-          continue;
         }
       }
       return G2;

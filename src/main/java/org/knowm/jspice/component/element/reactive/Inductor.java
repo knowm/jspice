@@ -74,7 +74,7 @@ public class Inductor extends ReactiveElement {
     // no contribution
 
     // resistor
-    Set<String> set = new HashSet<String>(3);
+    Set<String> set = new HashSet<>(3);
     set.add(nodes[0]);
     set.add(nodes[1]);
     set.add(getId());

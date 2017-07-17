@@ -108,9 +108,7 @@ public class JSpice {
         SimulationPlotter.plot(simulationResult, new String[]{dcSweepConfig.getObserveID()});
       }
       return simulationResult;
-    }
-
-    else if (simulationConfig instanceof TransientConfig) {
+    } else if (simulationConfig instanceof TransientConfig) {
 
       TransientConfig simulationConfigTransient = (TransientConfig) simulationConfig;
 

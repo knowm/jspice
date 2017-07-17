@@ -33,9 +33,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({@Type(value = Pulse.class, name = "pulse"), @Type(value = Arbitrary.class, name = "arbitrary"), @Type(value = DC.class, name = "dc"),
-    @Type(value = Sawtooth.class, name = "sawtooth"), @Type(value = Square.class, name = "square"),
-    @Type(value = StreamingArbitrary.class, name = "streaming_arbitrary"), @Type(value = Triangle.class, name = "triangle"),
-    @Type(value = Sine.class, name = "sine")})
+                  @Type(value = Sawtooth.class, name = "sawtooth"), @Type(value = Square.class, name = "square"),
+                  @Type(value = StreamingArbitrary.class, name = "streaming_arbitrary"), @Type(value = Triangle.class, name = "triangle"),
+                  @Type(value = Sine.class, name = "sine")})
 public abstract class Driver {
 
   @Valid

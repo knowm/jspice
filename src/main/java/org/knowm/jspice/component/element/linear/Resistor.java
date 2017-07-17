@@ -90,7 +90,7 @@ public class Resistor extends LinearElement {
   @Override
   public Set<String> getGMatrixColumnIDs(String[] nodes, Double timeStep) {
 
-    Set<String> set = new HashSet<String>(2);
+    Set<String> set = new HashSet<>(2);
     set.add(nodes[0]);
     set.add(nodes[1]);
 

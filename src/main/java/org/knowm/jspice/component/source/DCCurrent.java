@@ -79,7 +79,7 @@ public class DCCurrent extends Source {
   public Set<String> getGMatrixColumnIDs(String[] nodes, Double timeStep) {
 
     // Do nothing
-    return Collections.<String> emptySet();
+    return Collections.emptySet();
   }
 
   @Override

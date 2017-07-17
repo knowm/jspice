@@ -69,7 +69,7 @@ public class Capacitor extends ReactiveElement {
   public Set<String> getGMatrixColumnIDs(String[] nodes, Double timeStep) {
 
     // DCVoltage
-    Set<String> set = new HashSet<String>(3);
+    Set<String> set = new HashSet<>(3);
     set.add(nodes[0]);
     set.add(nodes[1]);
     if (timeStep != null) { // transient

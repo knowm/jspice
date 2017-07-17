@@ -474,7 +474,7 @@ public class Netlist {
     }
 
     // make sure all nodes have at minimum two components connected to it
-    Map<String, Integer> nodeId2CountMap = new HashMap<String, Integer>();
+    Map<String, Integer> nodeId2CountMap = new HashMap<>();
     for (NetlistComponent netListComponent : getNetlistComponents()) {
       // System.out.println(netListComponent.getComponent().getID() + ": " + netListComponent.getNodeA() + "-" + netListComponent.getNodeB());
 
@@ -516,7 +516,6 @@ public class Netlist {
         // if one current source shares exactly one nodes with another, they are in series
         if (dcCurrentSource1.equals(dcCurrentSource2)) {
           // System.out.println("equals");
-          continue;
         } else {
           // System.out.println("comparing");
           String node1A = dcCurrentSource1.getNodesAsArray()[0];
@@ -546,7 +545,6 @@ public class Netlist {
         // if one current source shares exactly one nodes with another, they are in series
         if (dcVoltageSource1.equals(dcVoltageSource2)) {
           // System.out.println("equals");
-          continue;
         } else {
           // System.out.println("comparing");
           String node1A = dcVoltageSource1.getNodesAsArray()[0];
@@ -608,7 +606,7 @@ public class Netlist {
 
   /**
    * This is called by the YML deserializer
-   * 
+   *
    * @param netlistComponents
    */
   public void setNetlistComponents(List<NetlistComponent> netlistComponents) {

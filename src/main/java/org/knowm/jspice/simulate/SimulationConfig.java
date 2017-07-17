@@ -33,7 +33,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({@Type(value = DCOPConfig.class, name = "dcop"), @Type(value = DCSweepConfig.class, name = "sweep"),
-    @Type(value = TransientConfig.class, name = "trans")})
+                  @Type(value = TransientConfig.class, name = "trans")})
 public abstract class SimulationConfig {
 
 }

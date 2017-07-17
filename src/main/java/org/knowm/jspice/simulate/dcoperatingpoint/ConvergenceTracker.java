@@ -91,9 +91,7 @@ public class ConvergenceTracker {
       }
       // System.out.println("---");
       return false;
-    }
-
-    else {
+    } else {
       boolean converged = true;
       int idx = 0;
       for (Entry<String, Double> entry : nodeLabels2Value.entrySet()) {

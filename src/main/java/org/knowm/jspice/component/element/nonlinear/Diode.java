@@ -112,7 +112,7 @@ public class Diode extends Component implements NonlinearComponent {
     // no contribution
 
     // resistor
-    Set<String> set = new HashSet<String>(2);
+    Set<String> set = new HashSet<>(2);
     set.add(nodes[0]);
     set.add(nodes[1]);
 

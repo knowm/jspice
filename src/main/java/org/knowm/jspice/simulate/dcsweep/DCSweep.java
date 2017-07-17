@@ -105,7 +105,7 @@ public class DCSweep {
           getSingleDCSweepResult(dcSweepConfig, sweepableComponent1, observable));
     } else {
 
-      Map<String, SimulationPlotData> combinedSimulationPlotDataMap = new LinkedHashMap<String, SimulationPlotData>();
+      Map<String, SimulationPlotData> combinedSimulationPlotDataMap = new LinkedHashMap<>();
 
       Component sweepableComponent2 = netlist.getComponent(dcSweepConfigOrthoganol.getSweepID());
       String sweepLabel2 = getSweepLabel(sweepableComponent2);
@@ -172,7 +172,6 @@ public class DCSweep {
 
       } catch (NodalAnalysisConvergenceException e) {
         System.out.println("skipping value " + i + " because of failure to converge!");
-        continue;
       }
     }
 

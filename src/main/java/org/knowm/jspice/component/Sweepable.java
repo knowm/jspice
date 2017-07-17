@@ -28,8 +28,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 public interface Sweepable {
 
-  public void setSweepValue(double value);
+  void setSweepValue(double value);
 
   @JsonIgnore
-  public double getSweepableValue();
+  double getSweepableValue();
 }
