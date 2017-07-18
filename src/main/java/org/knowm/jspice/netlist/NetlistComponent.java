@@ -31,6 +31,7 @@ import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.StringUtils;
 import org.knowm.jspice.component.Component;
 import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
+import org.knowm.konfig.Konfigurable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -50,7 +51,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
                   @Type(value = NetlistMSSMemristor.class, name = "mss_mem"), @Type(value = NetlistMMSSMemristor.class, name = "mmss_mem"),
                   @Type(value = NetlistJoglekarMemristor.class, name = "jog_mem")})
 @JsonPropertyOrder({"nodes"})
-public class NetlistComponent {
+public class NetlistComponent  implements Konfigurable {
 
   @JsonIgnore
   private Component component;

@@ -54,8 +54,8 @@ public class TestTriangleDriver extends TestDrivers {
     double stopTime = 2;
     double timeStep = .01;
 
-    List<Number> xData = new ArrayList<Number>();
-    List<Number> yData = new ArrayList<Number>();
+    List<Number> xData = new ArrayList<>();
+    List<Number> yData = new ArrayList<>();
 
     double firstPoint = 0.0;
     for (double i = firstPoint; i <= stopTime + timeStep; i = i + timeStep) {

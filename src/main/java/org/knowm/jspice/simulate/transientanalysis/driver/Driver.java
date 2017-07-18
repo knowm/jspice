@@ -24,6 +24,8 @@ package org.knowm.jspice.simulate.transientanalysis.driver;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.knowm.konfig.Konfigurable;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -36,7 +38,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
                   @Type(value = Sawtooth.class, name = "sawtooth"), @Type(value = Square.class, name = "square"),
                   @Type(value = StreamingArbitrary.class, name = "streaming_arbitrary"), @Type(value = Triangle.class, name = "triangle"),
                   @Type(value = Sine.class, name = "sine")})
-public abstract class Driver {
+public abstract class Driver implements Konfigurable {
 
   @Valid
   @NotNull

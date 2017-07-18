@@ -72,6 +72,13 @@
 	</repositories>
 
 	<dependencies>
+
+        <dependency>
+            <groupId>org.knowm.konfig</groupId>
+            <artifactId>konfig</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+
 		<dependency>
 			<groupId>org.knowm.xchart</groupId>
 			<artifactId>xchart</artifactId>
@@ -82,11 +89,7 @@
 			<artifactId>commons-math3</artifactId>
 			<version>3.6.1</version>
 		</dependency>
-		<dependency>
-			<groupId>io.dropwizard</groupId>
-			<artifactId>dropwizard-configuration</artifactId>
-			<version>${dropwizard.version}</version>
-		</dependency>
+
 		<!-- test -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -188,6 +191,25 @@
 					</execution>
 				</executions>
 			</plugin>
+                <plugin>
+                    <groupId>org.knowm.konfig</groupId>
+                    <artifactId>konfig-dox</artifactId>
+                    <version>0.0.1-SNAPSHOT</version>
+                    <executions>
+                        <execution>
+                            <id>konfig-dox-plugin</id>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <packages>
+                            <package>org.knowm.jspice.netlist</package>
+                            <package>org.knowm.jspice.simulate</package>
+                        </packages>
+                    </configuration>
+                </plugin>
 		</plugins>
 	</build>
 
@@ -195,6 +217,5 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<jackson.version>2.8.9</jackson.version>
-		<dropwizard.version>1.1.2</dropwizard.version>
 	</properties>
 </project>

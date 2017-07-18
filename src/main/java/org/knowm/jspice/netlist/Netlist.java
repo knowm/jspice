@@ -38,24 +38,33 @@ import org.knowm.jspice.component.element.memristor.Memristor;
 import org.knowm.jspice.component.element.nonlinear.MOSFET;
 import org.knowm.jspice.component.element.reactive.ReactiveElement;
 import org.knowm.jspice.simulate.SimulationConfig;
+import org.knowm.jspice.simulate.dcoperatingpoint.DCOPConfig;
+import org.knowm.konfig.Konfigurable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Netlist {
+/**
+ *  A Netlist contains all the netlist components and a simulaton config to run a single simulation. If `sim` is null, the default simulation (DC
+ *  Operation) is run.
+ */
+public class Netlist implements Konfigurable {
 
   /**
-   * Component List
+   * Netlist Components
    */
   @Valid
   @NotNull
   @JsonProperty("components")
   protected List<NetlistComponent> netlistComponents = new ArrayList<>();
 
+  /**
+   * Simulation Configuration
+   */
   @Valid
   @Nullable
   @JsonProperty("sim")
-  SimulationConfig simulationConfig;
+  SimulationConfig simulationConfig=new DCOPConfig();
 
   /**
    * componentId, Component
