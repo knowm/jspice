@@ -146,7 +146,7 @@ public class JSpice {
         } catch (FileNotFoundException e) {
           e.printStackTrace();
         }
-        SimulationPlotter.plotTransientInOutCurve("I/V Curve", simulationResult, "V(Vmr)", "I(MR1)");
+        //        SimulationPlotter.plotTransientInOutCurve("I/V Curve", simulationResult, "V(Vmr)", "I(MR1)");
 
       } else {
 
