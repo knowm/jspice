@@ -39,6 +39,6 @@ public class TransientAnalysisV1JoglekarMem1 {
     netlist.setSimulationConfig(transientConfig);
     SimulationResult simulationResult = JSpice.simulate(netlist);
     SimulationPlotter.plotSeparate(simulationResult, new String[]{"V(VDD)", "I(M1)"});
-    SimulationPlotter.plotTransientInOutCurve("I/V Curve", simulationResult, new String[]{"V(VDD)", "I(M1)"});
+    SimulationPlotter.plotTransientInOutCurve("I/V Curve", simulationResult, "V(VDD)", "I(M1)");
   }
 }

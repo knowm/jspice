@@ -73,11 +73,11 @@
 
 	<dependencies>
 
-        <dependency>
-            <groupId>org.knowm.konfig</groupId>
-            <artifactId>konfig</artifactId>
-            <version>0.0.1</version>
-        </dependency>
+		<dependency>
+			<groupId>org.knowm.konfig</groupId>
+			<artifactId>konfig</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.knowm.xchart</groupId>
@@ -88,6 +88,11 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-math3</artifactId>
 			<version>3.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.7.25</version>
 		</dependency>
 
 		<!-- test -->
@@ -101,7 +106,16 @@
 			<groupId>org.hamcrest</groupId>
 			<artifactId>hamcrest-library</artifactId>
 			<version>1.3</version>
+			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>3.8.0</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -191,25 +205,25 @@
 					</execution>
 				</executions>
 			</plugin>
-                <plugin>
-                    <groupId>org.knowm.konfig</groupId>
-                    <artifactId>konfig-dox</artifactId>
-                    <version>0.0.1</version>
-                    <executions>
-                        <execution>
-                            <id>konfig-dox-plugin</id>
-                            <goals>
-                                <goal>generate</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <packages>
-                            <package>org.knowm.jspice.netlist</package>
-                            <package>org.knowm.jspice.simulate</package>
-                        </packages>
-                    </configuration>
-                </plugin>
+			<plugin>
+				<groupId>org.knowm.konfig</groupId>
+				<artifactId>konfig-dox</artifactId>
+				<version>0.0.1</version>
+				<executions>
+					<execution>
+						<id>konfig-dox-plugin</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<packages>
+						<package>org.knowm.jspice.netlist</package>
+						<package>org.knowm.jspice.simulate</package>
+					</packages>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

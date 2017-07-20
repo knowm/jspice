@@ -92,10 +92,10 @@ public class SimulationResult {
     sb.append("Index");
     sb.append("\t");
     sb.append("Time");
-    sb.append("\t\t");
+    sb.append("\t");
     for (Entry<String, SimulationPlotData> entrySet : simulationDataMap.entrySet()) {
       sb.append(entrySet.getKey());
-      sb.append("\t\t");
+      sb.append("\t");
     }
     sb.append(returnString);
 
@@ -104,7 +104,7 @@ public class SimulationResult {
       sb.append(count);
       sb.append("\t");
       sb.append(xData.get(count));
-      sb.append("\t\t");
+      sb.append("\t");
       for (Entry<String, SimulationPlotData> entrySet : simulationDataMap.entrySet()) {
         sb.append(entrySet.getValue().getyData().get(count));
         sb.append("\t");

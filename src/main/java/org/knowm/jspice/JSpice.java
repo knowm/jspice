@@ -25,8 +25,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.NetlistBuilder;
 import org.knowm.jspice.simulate.SimulationConfig;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
@@ -65,16 +69,34 @@ public class JSpice {
 
   public static SimulationResult simulate(String fileName) throws IOException, ConfigurationException {
 
-    ConfigurationFactory<Netlist> yamlConfigurationFactory = new YamlConfigurationFactory<Netlist>(Netlist.class, BaseValidator.newValidator(),
-        Jackson.newObjectMapper(), "");
+    Netlist netlist = null;
+    if (fileName.endsWith(".cir")) {
 
-    ConfigurationSourceProvider provider = new FileConfigurationSourceProvider();
+      List<String> netlistLines = new ArrayList<>();
 
-    Netlist netlist = yamlConfigurationFactory.build(provider, fileName);
+      // create netlist from traditional SPICE netlist file.
+      ConfigurationSourceProvider provider = new FileConfigurationSourceProvider();
+      try (Scanner scanner = new Scanner(provider.open(fileName))) {
+        while (scanner.hasNext()) {
+          netlistLines.add(scanner.nextLine());
+        }
+      }
 
-    //    System.out.println("netList: \n" + netlist);
+      netlist = NetlistBuilder.buildFromSPICENetlist(netlistLines);
+
+    } else {
+
+      ConfigurationFactory<Netlist> yamlConfigurationFactory = new YamlConfigurationFactory<Netlist>(Netlist.class, BaseValidator.newValidator(),
+          Jackson.newObjectMapper(), "");
+
+      ConfigurationSourceProvider provider = new FileConfigurationSourceProvider();
+
+      netlist = yamlConfigurationFactory.build(provider, fileName);
+
+    }
 
     // 3. Run it  
+    //    System.out.println("netList: \n" + netlist);
     return simulate(netlist);
 
   }
@@ -124,6 +146,8 @@ public class JSpice {
         } catch (FileNotFoundException e) {
           e.printStackTrace();
         }
+        SimulationPlotter.plotTransientInOutCurve("I/V Curve", simulationResult, "V(Vmr)", "I(MR1)");
+
       } else {
 
         System.out.println(simulationResult.toString());

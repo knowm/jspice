@@ -161,7 +161,7 @@ public class SimulationPlotter {
    * @param title
    * @param simulationResult
    */
-  public static void plotTransientInOutCurve(String title, SimulationResult simulationResult, String[] valuesToPlot) {
+  public static void plotTransientInOutCurve(String title, SimulationResult simulationResult, String... valuesToPlot) {
 
     // Create Chart
     XYChart chart = new XYChart(600, 400);
