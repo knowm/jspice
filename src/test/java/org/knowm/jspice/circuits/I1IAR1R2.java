@@ -21,30 +21,19 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.component.source.DCCurrentArbitrary;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.netlist.NetlistDCCurrent;
 import org.knowm.jspice.netlist.NetlistDCCurrentArbitrary;
 import org.knowm.jspice.netlist.NetlistResistor;
-import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 
 public class I1IAR1R2 extends Netlist {
 
   public I1IAR1R2() {
 
-    DCCurrentArbitrary dcCurrentSourceY = new DCCurrentArbitrary("y") {
-
-      @Override
-      public double getArbitraryCurrent(DCOperatingPointResult dcOperatingPointResult) {
-
-        return dcOperatingPointResult.getValue("I(x)") * dcOperatingPointResult.getValue("I(x)");
-      }
-    };
-
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
     addNetListComponent(new NetlistDCCurrent("x", 2.0, "1", "0"));
     addNetListComponent(new NetlistResistor("R1", 1, "1", "0"));
-    addNetListComponent(new NetlistDCCurrentArbitrary(dcCurrentSourceY, "2", "0"));
+    addNetListComponent(new NetlistDCCurrentArbitrary("y", "I(x)*I(x)", "2", "0"));
     addNetListComponent(new NetlistResistor("R2", 1, "2", "0"));
   }
 }

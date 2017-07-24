@@ -28,10 +28,12 @@ import static org.hamcrest.Matchers.closeTo;
 
 import org.junit.Test;
 import org.knowm.jspice.circuits.CMOSInverterCircuit;
+import org.knowm.jspice.circuits.I1IAR1R2;
 import org.knowm.jspice.circuits.I1R1;
 import org.knowm.jspice.circuits.I1R3;
 import org.knowm.jspice.circuits.I1R4;
 import org.knowm.jspice.circuits.I1V1R6;
+import org.knowm.jspice.circuits.I1VAR1R2;
 import org.knowm.jspice.circuits.I2R4;
 import org.knowm.jspice.circuits.I2R6;
 import org.knowm.jspice.circuits.NMOSInverter;
@@ -241,5 +243,27 @@ public class TestDCOPCircuits {
     //    System.out.println(Arrays.toString(dcOpResult.getV()));
 
     assertThat(dcOpResult.getValue("V(out)"), is(closeTo(0, .01)));
+  }
+
+  @Test
+  public void testI1IAR1R2() {
+
+    Netlist circuit = new I1IAR1R2();
+    DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
+    //    System.out.println(dcOpResult.toString());
+    //    System.out.println(Arrays.toString(dcOpResult.getV()));
+
+    assertThat(dcOpResult.getValue("V(2)"), is(closeTo(-4, .01)));
+  }
+
+  @Test
+  public void testI1VAR1R2() {
+
+    Netlist circuit = new I1VAR1R2();
+    DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
+    //    System.out.println(dcOpResult.toString());
+    //    System.out.println(Arrays.toString(dcOpResult.getV()));
+
+    assertThat(dcOpResult.getValue("V(2)"), is(closeTo(4, .01)));
   }
 }

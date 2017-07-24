@@ -29,18 +29,19 @@ import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 /**
  * @author timmolter
  */
-public abstract class DCCurrentArbitrary extends DCCurrent implements NonlinearComponent {
+public class DCCurrentArbitrary extends DCCurrent implements NonlinearComponent {
 
-  public abstract double getArbitraryCurrent(DCOperatingPointResult dcOperatingPointResult);
+  private final String expression;
 
   /**
    * Constructor
    *
    * @param id
    */
-  public DCCurrentArbitrary(String id) {
+  public DCCurrentArbitrary(String id, String expression) {
 
     super(id, 0.0);
+    this.expression = expression;
   }
 
   @Override
@@ -59,7 +60,7 @@ public abstract class DCCurrentArbitrary extends DCCurrent implements NonlinearC
 
     double value = 0.01;
     if (dcOperatingPointResult != null) {
-      value = getArbitraryCurrent(dcOperatingPointResult);
+      value = ArbitraryUtils.getArbitraryValue(dcOperatingPointResult);
     }
     // System.out.println("value: " + value);
     stamp[0] = -1 * value;
@@ -70,4 +71,5 @@ public abstract class DCCurrentArbitrary extends DCCurrent implements NonlinearC
 
     setSweepValue(value);
   }
+
 }

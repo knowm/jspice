@@ -22,13 +22,11 @@
 package org.knowm.jspice.circuits;
 
 import org.knowm.jspice.component.element.reactive.Capacitor;
-import org.knowm.jspice.component.source.DCCurrentArbitrary;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.netlist.NetlistCapacitor;
 import org.knowm.jspice.netlist.NetlistDCCurrentArbitrary;
 import org.knowm.jspice.netlist.NetlistDCVoltage;
 import org.knowm.jspice.netlist.NetlistResistor;
-import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 
 /**
  * @author timmolter
@@ -38,21 +36,13 @@ public class Integrator2 extends Netlist {
   public Integrator2() {
 
     // State variable X
-    DCCurrentArbitrary Gx = new DCCurrentArbitrary("Gx") {
-
-      @Override
-      public double getArbitraryCurrent(DCOperatingPointResult dcOperatingPointResult) {
-
-        return dcOperatingPointResult.getValue("V(1)");
-      }
-    };
     Capacitor capacitorX = new Capacitor("Cx", 1);
     capacitorX.setInitialCondition(.4);
 
     addNetListComponent(new NetlistDCVoltage("V1", 1.0, "1", "0"));
     addNetListComponent(new NetlistResistor("R1", 1, "1", "0"));
 
-    addNetListComponent(new NetlistDCCurrentArbitrary(Gx, "0", "x"));
+    addNetListComponent(new NetlistDCCurrentArbitrary("Gx", "V(1)", "0", "x"));
     addNetListComponent(new NetlistCapacitor("Cx", 1, "x", "0"));
     addNetListComponent(new NetlistResistor("Rx", 1_000_000_000, "x", "0"));
   }

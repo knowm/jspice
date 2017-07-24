@@ -23,11 +23,20 @@ package org.knowm.jspice.netlist;
 
 import org.knowm.jspice.component.source.DCCurrentArbitrary;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class NetlistDCCurrentArbitrary extends NetlistComponent {
 
-  public NetlistDCCurrentArbitrary(DCCurrentArbitrary dcCurrentArbitrary, String... nodes) {
+  public NetlistDCCurrentArbitrary(String id, String expression, String... nodes) {
 
-    super(dcCurrentArbitrary, nodes);
+    super(new DCCurrentArbitrary(id, expression), nodes);
+  }
+
+  @JsonCreator
+  public NetlistDCCurrentArbitrary(@JsonProperty("id") String id, @JsonProperty("expression") String expression, @JsonProperty("nodes") String nodes) {
+
+    super(new DCCurrentArbitrary(id, expression), nodes);
   }
 
 }

@@ -51,7 +51,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
                   @Type(value = NetlistMSSMemristor.class, name = "mss_mem"), @Type(value = NetlistMMSSMemristor.class, name = "mmss_mem"),
                   @Type(value = NetlistJoglekarMemristor.class, name = "jog_mem")})
 @JsonPropertyOrder({"nodes"})
-public class NetlistComponent  implements Konfigurable {
+public class NetlistComponent implements Konfigurable {
 
   @JsonIgnore
   private Component component;

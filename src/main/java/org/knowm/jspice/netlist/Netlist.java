@@ -45,8 +45,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- *  A Netlist contains all the netlist components and a simulaton config to run a single simulation. If `sim` is null, the default simulation (DC
- *  Operation) is run.
+ * A Netlist contains all the netlist components and a simulaton config to run a single simulation. If `sim` is null, the default simulation (DC
+ * Operation) is run.
  */
 public class Netlist implements Konfigurable {
 
@@ -64,7 +64,7 @@ public class Netlist implements Konfigurable {
   @Valid
   @Nullable
   @JsonProperty("sim")
-  SimulationConfig simulationConfig=new DCOPConfig();
+  SimulationConfig simulationConfig = new DCOPConfig();
 
   /**
    * componentId, Component
@@ -217,21 +217,24 @@ public class Netlist implements Konfigurable {
 
     // add to DCVoltage list
     else if (netListComponent instanceof NetlistDCVoltage) {
-      if (netListComponent instanceof NetlistDCVoltageArbitrary) {
-        netListDCVoltageArbitrarys.add(netListComponent);
-      } else {
 
-        netListDCVoltageSources.add(netListComponent);
-      }
+      netListDCVoltageSources.add(netListComponent);
+    }
+
+    // add to  NetlistDCVoltageArbitrarys list
+    else if (netListComponent instanceof NetlistDCVoltageArbitrary) {
+      netListDCVoltageArbitrarys.add(netListComponent);
     }
 
     // add to DCCurrent list
     else if (netListComponent instanceof NetlistDCCurrent) {
-      if (netListComponent instanceof NetlistDCCurrentArbitrary) {
-        netListDCCurrentArbitrarys.add(netListComponent);
-      } else {
-        netListDCCurrentSources.add(netListComponent);
-      }
+
+      netListDCCurrentSources.add(netListComponent);
+    }
+
+    // add to  DCCurrentArbitrar list
+    else if (netListComponent instanceof NetlistDCCurrentArbitrary) {
+      netListDCCurrentArbitrarys.add(netListComponent);
     }
 
     // add to Diode list

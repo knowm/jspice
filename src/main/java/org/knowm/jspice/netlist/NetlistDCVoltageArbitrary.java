@@ -21,13 +21,22 @@
  */
 package org.knowm.jspice.netlist;
 
+import org.knowm.jspice.component.source.DCCurrentArbitrary;
 import org.knowm.jspice.component.source.DCVoltageArbitrary;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class NetlistDCVoltageArbitrary extends NetlistComponent {
 
-  public NetlistDCVoltageArbitrary(DCVoltageArbitrary dcVoltageArbitrary, String... nodes) {
+  public NetlistDCVoltageArbitrary(String id, String expression, String... nodes) {
 
-    super(dcVoltageArbitrary, nodes);
+    super(new DCVoltageArbitrary(id, expression), nodes);
   }
 
+  @JsonCreator
+  public NetlistDCVoltageArbitrary(@JsonProperty("id") String id, @JsonProperty("expression") String expression, @JsonProperty("nodes") String nodes) {
+
+    super(new DCCurrentArbitrary(id, expression), nodes);
+  }
 }

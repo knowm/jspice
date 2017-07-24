@@ -1,7 +1,7 @@
 <html>
 <head>
-  <title>Konfig Documentation</title>
-  <style>
+    <title>Konfig Documentation</title>
+    <style>
   
   /*
 * Skeleton V2.0.4
@@ -154,1371 +154,1582 @@ form {
 
 
   
-  </style>
+
+    </style>
 </head>
 <body>
 
-            <h2>org.knowm.jspice.netlist.Netlist</h2>
-        <p>A Netlist contains all the netlist components and a simulaton config to run a single simulation. If `sim` is null, the default simulation (DC
- Operation) is run.</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>netlistComponents</td>
-                    <td>new ArrayList<>()</td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>Netlist Components</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>simulationConfig</td>
-                    <td>new DCOPConfig()</td>
-                    <td></td>
-                    <td></td>
-                    <td>false</td>
-                    <td>Simulation Configuration</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.netlist.NetlistCapacitor</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>capacitance</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.netlist.NetlistComponent</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.netlist.NetlistDCCurrent</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>current</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.netlist.NetlistDCCurrentArbitrary</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.netlist.NetlistDCVoltage</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>voltage</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.netlist.NetlistDCVoltageArbitrary</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.netlist.NetlistDiode</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>saturationCurrent</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.netlist.NetlistInductor</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>inductance</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.netlist.NetlistJoglekarMemristor</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>Rinit</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>Ron</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>Roff</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>D</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>uv</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>p</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.netlist.NetlistMemristor</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.netlist.NetlistMMSSMemristor</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>rInit</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>rOn</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>rOff</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>tau</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>vOn</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>vOff</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>phi</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>schottkyForwardAlpha</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>schottkyForwardBeta</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>schottkyReverseAlpha</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>schottkyReverseBeta</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.netlist.NetlistMSSMemristor</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>rInit</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>rOn</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>rOff</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>n</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>tau</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>vOn</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>vOff</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>phi</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>schottkyForwardAlpha</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>schottkyForwardBeta</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>schottkyReverseAlpha</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>schottkyReverseBeta</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.netlist.NetlistNMOS</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>threshold</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.netlist.NetlistPMOS</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>threshold</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.netlist.NetlistResistor</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>resistance</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.netlist.NetlistRSMemristor</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>schottkyForwardAlpha</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>schottkyForwardBeta</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>schottkyReverseAlpha</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>schottkyReverseBeta</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>phi</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.netlist.NetlistVCCS</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>transconductance</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.netlist.NetlistVCVS</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>gain</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.simulate.dcoperatingpoint.DCOPConfig</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-        </table>
-        <h2>org.knowm.jspice.simulate.dcsweep.DCSweepConfig</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>sweepID</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>observeID</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>startValue</td>
-                    <td></td>
-                    <td>0</td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>endValue</td>
-                    <td></td>
-                    <td>0</td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>stepSize</td>
-                    <td></td>
-                    <td>0</td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.simulate.transientanalysis.driver.Arbitrary</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>dcOffset</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>phase</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>amplitude</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>frequency</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.simulate.transientanalysis.driver.DC</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>dcOffset</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>phase</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>amplitude</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>frequency</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.simulate.transientanalysis.driver.Pulse</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>dcOffset</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>phase</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>amplitude</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>frequency</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.simulate.transientanalysis.driver.Sawtooth</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>dcOffset</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>phase</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>amplitude</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>frequency</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.simulate.transientanalysis.driver.Sine</h2>
-        <p></p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>dcOffset</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>phase</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>amplitude</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>frequency</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.simulate.transientanalysis.driver.Square</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>dcOffset</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>phase</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>amplitude</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>frequency</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.simulate.transientanalysis.driver.StreamingArbitrary</h2>
-        <p>This highly-specialized driver produces an arbitrary waveform in sync with a bit stream.</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>dcOffset</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>phase</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>amplitude</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>frequency</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.simulate.transientanalysis.driver.Triangle</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>id</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>dcOffset</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>phase</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>amplitude</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>frequency</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
-        <h2>org.knowm.jspice.simulate.transientanalysis.TransientConfig</h2>
-        <p>TODO - missing class JavaDoc!</p>
-        <table>
-            <thead>
-                <tr><th>Name</th><th>Default Value</th><th>Min Value</th><th>Max Value</th><th>Is Required</th><th>Description</th></tr>
-            </thead>
-            
-            <tbody>
-                <tr>
-                    <td>stopTime</td>
-                    <td></td>
-                    <td>0</td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>timeStep</td>
-                    <td></td>
-                    <td>0</td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td>drivers</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>true</td>
-                    <td>TODO - missing property JavaDoc!</td>
-                </tr>
-            </tbody>
-        </table>
+<h2>org.knowm.jspice.netlist.Netlist</h2>
+<p>A Netlist contains all the netlist components and a simulaton config to run a single simulation. If `sim` is null, the default simulation (DC
+    Operation) is run.</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>netlistComponents</td>
+        <td>new ArrayList<>()</td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>Netlist Components</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>simulationConfig</td>
+        <td>new DCOPConfig()</td>
+        <td></td>
+        <td></td>
+        <td>false</td>
+        <td>Simulation Configuration</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.netlist.NetlistCapacitor</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>capacitance</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.netlist.NetlistComponent</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.netlist.NetlistDCCurrent</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>current</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.netlist.NetlistDCCurrentArbitrary</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.netlist.NetlistDCVoltage</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>voltage</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.netlist.NetlistDCVoltageArbitrary</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.netlist.NetlistDiode</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>saturationCurrent</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.netlist.NetlistInductor</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>inductance</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.netlist.NetlistJoglekarMemristor</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>Rinit</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>Ron</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>Roff</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>D</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>uv</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>p</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.netlist.NetlistMemristor</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.netlist.NetlistMMSSMemristor</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>rInit</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>rOn</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>rOff</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>tau</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>vOn</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>vOff</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>phi</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>schottkyForwardAlpha</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>schottkyForwardBeta</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>schottkyReverseAlpha</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>schottkyReverseBeta</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.netlist.NetlistMSSMemristor</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>rInit</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>rOn</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>rOff</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>n</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>tau</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>vOn</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>vOff</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>phi</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>schottkyForwardAlpha</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>schottkyForwardBeta</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>schottkyReverseAlpha</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>schottkyReverseBeta</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.netlist.NetlistNMOS</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>threshold</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.netlist.NetlistPMOS</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>threshold</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.netlist.NetlistResistor</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>resistance</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.netlist.NetlistRSMemristor</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>schottkyForwardAlpha</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>schottkyForwardBeta</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>schottkyReverseAlpha</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>schottkyReverseBeta</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>phi</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.netlist.NetlistVCCS</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>transconductance</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.netlist.NetlistVCVS</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>gain</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.simulate.dcoperatingpoint.DCOPConfig</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+</table>
+<h2>org.knowm.jspice.simulate.dcsweep.DCSweepConfig</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>sweepID</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>observeID</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>startValue</td>
+        <td></td>
+        <td>0</td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>endValue</td>
+        <td></td>
+        <td>0</td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>stepSize</td>
+        <td></td>
+        <td>0</td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.simulate.transientanalysis.driver.Arbitrary</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>dcOffset</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>phase</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>amplitude</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>frequency</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.simulate.transientanalysis.driver.DC</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>dcOffset</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>phase</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>amplitude</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>frequency</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.simulate.transientanalysis.driver.Pulse</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>dcOffset</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>phase</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>amplitude</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>frequency</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.simulate.transientanalysis.driver.Sawtooth</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>dcOffset</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>phase</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>amplitude</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>frequency</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.simulate.transientanalysis.driver.Sine</h2>
+<p></p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>dcOffset</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>phase</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>amplitude</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>frequency</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.simulate.transientanalysis.driver.Square</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>dcOffset</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>phase</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>amplitude</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>frequency</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.simulate.transientanalysis.driver.StreamingArbitrary</h2>
+<p>This highly-specialized driver produces an arbitrary waveform in sync with a bit stream.</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>dcOffset</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>phase</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>amplitude</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>frequency</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.simulate.transientanalysis.driver.Triangle</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>id</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>dcOffset</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>phase</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>amplitude</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>frequency</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
+<h2>org.knowm.jspice.simulate.transientanalysis.TransientConfig</h2>
+<p>TODO - missing class JavaDoc!</p>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Default Value</th>
+        <th>Min Value</th>
+        <th>Max Value</th>
+        <th>Is Required</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>stopTime</td>
+        <td></td>
+        <td>0</td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>timeStep</td>
+        <td></td>
+        <td>0</td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+        <td>drivers</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>true</td>
+        <td>TODO - missing property JavaDoc!</td>
+    </tr>
+    </tbody>
+</table>
 
 </body>
 </html> 

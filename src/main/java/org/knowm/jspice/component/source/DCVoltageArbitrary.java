@@ -29,18 +29,19 @@ import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 /**
  * @author timmolter
  */
-public abstract class DCVoltageArbitrary extends DCVoltage implements NonlinearComponent {
+public class DCVoltageArbitrary extends DCVoltage implements NonlinearComponent {
 
-  public abstract double getArbitraryVoltage(DCOperatingPointResult dcOperatingPointResult);
+  private final String expression;
 
   /**
    * Constructor
    *
    * @param id
    */
-  public DCVoltageArbitrary(String id) {
+  public DCVoltageArbitrary(String id, String expression) {
 
     super(id, 0);
+    this.expression = expression;
   }
 
   @Override
@@ -60,7 +61,7 @@ public abstract class DCVoltageArbitrary extends DCVoltage implements NonlinearC
 
     double value = 1.0;
     if (dcOperatingPointResult != null) {
-      value = getArbitraryVoltage(dcOperatingPointResult);
+      value = ArbitraryUtils.getArbitraryValue(dcOperatingPointResult);
     }
     stamp[2] = value;
 
@@ -74,4 +75,5 @@ public abstract class DCVoltageArbitrary extends DCVoltage implements NonlinearC
 
     setSweepValue(value);
   }
+
 }

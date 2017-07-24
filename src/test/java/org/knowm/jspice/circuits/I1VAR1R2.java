@@ -21,30 +21,19 @@
  */
 package org.knowm.jspice.circuits;
 
-import org.knowm.jspice.component.source.DCVoltageArbitrary;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.netlist.NetlistDCCurrent;
 import org.knowm.jspice.netlist.NetlistDCVoltageArbitrary;
 import org.knowm.jspice.netlist.NetlistResistor;
-import org.knowm.jspice.simulate.dcoperatingpoint.DCOperatingPointResult;
 
 public class I1VAR1R2 extends Netlist {
 
   public I1VAR1R2() {
 
-    DCVoltageArbitrary dcVoltageSourceArbitrary = new DCVoltageArbitrary("y") {
-
-      @Override
-      public double getArbitraryVoltage(DCOperatingPointResult dcOperatingPointResult) {
-
-        return dcOperatingPointResult.getValue("V(1)") * dcOperatingPointResult.getValue("V(1)");
-      }
-    };
-
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
     addNetListComponent(new NetlistDCCurrent("x", 2.0, "1", "0"));
     addNetListComponent(new NetlistResistor("R1", 1, "1", "0"));
-    addNetListComponent(new NetlistDCVoltageArbitrary(dcVoltageSourceArbitrary, "2", "0"));
+    addNetListComponent(new NetlistDCVoltageArbitrary("y", "V(1)*V(1)", "2", "0"));
     addNetListComponent(new NetlistResistor("R2", 1, "2", "0"));
   }
 }
