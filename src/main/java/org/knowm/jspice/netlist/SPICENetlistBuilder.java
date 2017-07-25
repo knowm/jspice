@@ -21,7 +21,9 @@
  */
 package org.knowm.jspice.netlist;
 
+import java.io.Closeable;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,34 +35,118 @@ import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 import org.knowm.jspice.simulate.transientanalysis.driver.Sine;
 
 import io.dropwizard.configuration.ConfigurationSourceProvider;
-import io.dropwizard.configuration.FileConfigurationSourceProvider;
 
 public class SPICENetlistBuilder {
 
-
-
-  public static Netlist buildFromSPICENetlist(String fileName) throws IOException {
+  private static List<String> getPreProcessedLines(String fileName, ConfigurationSourceProvider configurationSourceProvider) throws IOException {
 
     List<String> netlistLines = new ArrayList<>();
 
     // create netlist from traditional SPICE netlist file.
-    ConfigurationSourceProvider provider = new FileConfigurationSourceProvider();
-    try (Scanner scanner = new Scanner(provider.open(fileName))) {
+    try (PeekableScanner scanner = new PeekableScanner(configurationSourceProvider.open(fileName))) {
+
+      String multilineModelDef = null;
+
       while (scanner.hasNext()) {
-        netlistLines.add(scanner.nextLine());
+
+        System.out.println("multilineModelDef = " + multilineModelDef);
+
+        String nextLine = scanner.nextLine().trim();
+        System.out.println("nextLine = " + nextLine);
+
+        if (nextLine.startsWith(".END") || nextLine.startsWith(".end")) {
+          break;
+        }
+
+        if (nextLine.startsWith("*")) {
+          continue;
+        }
+
+        if (nextLine.length() < 1) {
+          continue;
+        }
+
+        // TODO implement print
+        if (nextLine.startsWith(".PRINT") || nextLine.startsWith(".print")) {
+          continue;
+        }
+
+        // multi-line model def start
+        if (nextLine.startsWith(".model") && scanner.peek().startsWith("+")) {
+          multilineModelDef = nextLine;
+          continue;
+        }
+
+        // multi-line model def add
+        if (multilineModelDef != null && scanner.peek().startsWith("+")) {
+          multilineModelDef = multilineModelDef + nextLine.replace("+", " ");
+          continue;
+        }
+
+        // multi-line model def end
+        if (multilineModelDef != null && nextLine.endsWith(")")) {
+          System.out.println("HERE");
+          multilineModelDef = multilineModelDef + nextLine.replace("+", " ");
+          String modelString = multilineModelDef;
+          netlistLines.add(modelString);
+          multilineModelDef = null;
+          continue;
+        }
+
+        netlistLines.add(nextLine);
+
       }
     }
+    return netlistLines;
+  }
 
+  private static class PeekableScanner implements Closeable {
+
+    private Scanner scanner;
+    private String nextLine;
+
+    public PeekableScanner(InputStream source) {
+
+      scanner = new Scanner(source);
+      nextLine = (scanner.hasNext() ? scanner.nextLine().trim() : null);
+    }
+
+    public boolean hasNext() {
+      return (nextLine != null);
+    }
+
+    public String nextLine() {
+      String current = nextLine;
+      nextLine = (scanner.hasNext() ? scanner.nextLine().trim() : null);
+      return current;
+    }
+
+    public String peek() {
+      return nextLine;
+    }
+
+    @Override
+    public void close() throws IOException {
+      scanner.close();
+    }
+  }
+
+  public static Netlist buildFromSPICENetlist(String fileName, ConfigurationSourceProvider configurationSourceProvider) throws IOException {
+
+    List<String> netlistLines = getPreProcessedLines(fileName, configurationSourceProvider);
+
+    // Temporary Lists/Maps
     NetlistBuilder netlistBuilder = new NetlistBuilder();
     List<Driver> drivers = new ArrayList<>();
     Map<String, Double> paramsMap = new HashMap<>();
     Map<String, String> memristorsMap = new HashMap<>();
     Map<String, Map<String, String>> memristorsModelsMap = new HashMap<>();
 
+    // For each line...
     for (int i = 0; i < netlistLines.size(); i++) {
 
       String line = netlistLines.get(i);
-      //      System.out.println("line " + line);
+      System.out.println("line: " + line);
 
       if (line.startsWith(".PARAM") || line.startsWith(".param")) {
 

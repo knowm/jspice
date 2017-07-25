@@ -25,9 +25,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.netlist.SPICENetlistBuilder;
@@ -71,12 +68,10 @@ public class JSpice {
 
     Netlist netlist = null;
 
-
     // SPICE Netlist, must end in `.cir`
     if (fileName.endsWith(".cir")) {
 
-
-      netlist = SPICENetlistBuilder.buildFromSPICENetlist(fileName);
+      netlist = SPICENetlistBuilder.buildFromSPICENetlist(fileName, new FileConfigurationSourceProvider());
 
       // YAML file
     } else {

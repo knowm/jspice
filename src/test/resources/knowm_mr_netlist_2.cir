@@ -1,0 +1,13 @@
+* Qucs 0.0.19  /Users/marendall/.qucs/Ymemristor_prj/knowm_mr_test.sch
+.PARAM Rinit = 500
+VPr1 _net0 Vmr DC 0
+
+V1 _net0 0 DC 0 SIN(0 500M 10 0 0) AC 500M
+YMEMRISTOR MR1 Vmr  0 MRM5
+.model MRM5 memristor ( level=5
++ Roff=1500 Ron=500 Voff=0.27
++ Von=0.27 Tau=0.0001 )
+
+.tran 0.0049505 0.5 0 
+.PRINT  tran format=raw file=knowm_mr_test_tran.txt I(VPr1) v(Vmr) 
+.END
