@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.knowm.jspice.netlist.Netlist;
-import org.knowm.jspice.netlist.NetlistBuilder;
+import org.knowm.jspice.netlist.SPICENetlistBuilder;
 import org.knowm.jspice.simulate.SimulationConfig;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
@@ -70,20 +70,15 @@ public class JSpice {
   public static SimulationResult simulate(String fileName) throws IOException, ConfigurationException {
 
     Netlist netlist = null;
+
+
+    // SPICE Netlist, must end in `.cir`
     if (fileName.endsWith(".cir")) {
 
-      List<String> netlistLines = new ArrayList<>();
 
-      // create netlist from traditional SPICE netlist file.
-      ConfigurationSourceProvider provider = new FileConfigurationSourceProvider();
-      try (Scanner scanner = new Scanner(provider.open(fileName))) {
-        while (scanner.hasNext()) {
-          netlistLines.add(scanner.nextLine());
-        }
-      }
+      netlist = SPICENetlistBuilder.buildFromSPICENetlist(fileName);
 
-      netlist = NetlistBuilder.buildFromSPICENetlist(netlistLines);
-
+      // YAML file
     } else {
 
       ConfigurationFactory<Netlist> yamlConfigurationFactory = new YamlConfigurationFactory<Netlist>(Netlist.class, BaseValidator.newValidator(),
@@ -92,7 +87,6 @@ public class JSpice {
       ConfigurationSourceProvider provider = new FileConfigurationSourceProvider();
 
       netlist = yamlConfigurationFactory.build(provider, fileName);
-
     }
 
     // 3. Run it  

@@ -24,35 +24,19 @@ package org.knowm.jspice;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 import org.junit.Test;
 import org.knowm.jspice.component.element.memristor.MMSSMemristor;
 import org.knowm.jspice.netlist.Netlist;
-import org.knowm.jspice.netlist.NetlistBuilder;
+import org.knowm.jspice.netlist.SPICENetlistBuilder;
 import org.knowm.jspice.simulate.transientanalysis.TransientConfig;
-
-import io.dropwizard.configuration.ConfigurationSourceProvider;
-import io.dropwizard.configuration.ResourceConfigurationSourceProvider;
 
 public class TestNetlistBuilder {
 
   @Test
   public void test1() throws IOException {
 
-    List<String> netlistLines = new ArrayList<>();
-
-    // create netlist from traditional SPICE netlist file.
-    ConfigurationSourceProvider provider = new ResourceConfigurationSourceProvider();
-    try (Scanner scanner = new Scanner(provider.open("knowm_mr_netlist.cir"))) {
-      while (scanner.hasNext()) {
-        netlistLines.add(scanner.nextLine());
-      }
-    }
-
-    Netlist netlist = NetlistBuilder.buildFromSPICENetlist(netlistLines);
+    Netlist netlist = SPICENetlistBuilder.buildFromSPICENetlist("knowm_mr_netlist.cir");
 
     System.out.println("netlist " + netlist);
 
