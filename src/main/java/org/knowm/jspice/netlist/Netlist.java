@@ -409,6 +409,10 @@ public class Netlist implements Konfigurable {
     sb.append(isInitialConditions);
     sb.append(returnString);
 
+
+
+    sb.append(simulationConfig.toString());
+
     return sb.toString();
   }
 

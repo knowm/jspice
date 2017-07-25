@@ -644,6 +644,18 @@ Index   Time        I(Vdd)      V(VDD)      I(M1)
 End of JSpice Simulation
 ```
 
+## SPICE Netlists
+
+JSPICE has limited support for SPICE netlists
+
+### Caveats
+
+| Component | Notes |
+|---|---|
+| V Sine | `tdelay` and `damp factor` ignored |
+| V Pulse | `trise`, `tfall` and `tdelay` ignored |
+| .STEP | ignored |
+| .PRINT | ignored |
 
 ## Continuous Integration
 

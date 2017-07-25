@@ -51,6 +51,18 @@ public class NetlistBuilder {
     return this;
   }
 
+  public NetlistBuilder addNetlistCapacitor(String id, double capacitance, String... nodes) {
+
+    netlistComponents.add(new NetlistCapacitor(id, capacitance, nodes));
+    return this;
+  }
+
+  public NetlistBuilder addNetlistInductor(String id, double inductance, String... nodes) {
+
+    netlistComponents.add(new NetlistCapacitor(id, inductance, nodes));
+    return this;
+  }
+
   public NetlistBuilder addNetlistDCCurrent(String id, double current, String... nodes) {
 
     netlistComponents.add(new NetlistDCCurrent(id, current, nodes));

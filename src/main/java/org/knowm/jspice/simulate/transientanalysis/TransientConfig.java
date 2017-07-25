@@ -21,6 +21,8 @@
  */
 package org.knowm.jspice.simulate.transientanalysis;
 
+import java.util.Arrays;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -68,4 +70,12 @@ public class TransientConfig extends SimulationConfig {
     return drivers;
   }
 
+  @Override
+  public String toString() {
+    return "TransientConfig{" +
+        "stopTime=" + stopTime +
+        ", timeStep=" + timeStep +
+        ", drivers=" + Arrays.toString(drivers) +
+        "} ";
+  }
 }
