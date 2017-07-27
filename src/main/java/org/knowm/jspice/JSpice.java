@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 import org.knowm.jspice.netlist.Netlist;
-import org.knowm.jspice.netlist.SPICENetlistBuilder;
+import org.knowm.jspice.netlist.spice.SPICENetlistBuilder;
 import org.knowm.jspice.simulate.SimulationConfig;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
