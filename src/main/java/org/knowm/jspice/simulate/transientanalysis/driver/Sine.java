@@ -21,6 +21,8 @@
  */
 package org.knowm.jspice.simulate.transientanalysis.driver;
 
+import java.math.BigDecimal;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -37,15 +39,18 @@ public class Sine extends Driver {
    * @param amplitude
    * @param frequency
    */
-  public Sine(@JsonProperty("id") String id, @JsonProperty("dc_offset") double dcOffset, @JsonProperty("phase") double phase,
-      @JsonProperty("amplitude") double amplitude, @JsonProperty("frequency") double frequency) {
+  public Sine(@JsonProperty("id") String id,
+      @JsonProperty("dc_offset") double dcOffset,
+      @JsonProperty("phase") String phase,
+      @JsonProperty("amplitude") double amplitude,
+      @JsonProperty("frequency") String frequency) {
 
     super(id, dcOffset, phase, amplitude, frequency);
   }
 
   @Override
-  public double getSignal(double time) {
+  public double getSignal(BigDecimal time) {
 
-    return amplitude * Math.sin(2 * Math.PI * frequency * time - phase) + dcOffset;
+    return amplitude * Math.sin(twopi.multiply(frequencyBD) .multiply(time).subtract( phaseBD).doubleValue()) + dcOffset;
   }
 }

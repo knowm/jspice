@@ -24,7 +24,6 @@ package org.knowm.jspice.simulate.transientanalysis;
 import java.util.Arrays;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.knowm.jspice.simulate.SimulationConfig;
@@ -37,32 +36,30 @@ public class TransientConfig extends SimulationConfig {
   @Valid
   @NotNull
   @JsonProperty("stop_time")
-  @Min(0)
-  double stopTime;
+  String stopTime;
 
   @Valid
   @NotNull
   @JsonProperty("time_step")
-  @Min(0)
-  double timeStep;
+  String timeStep;
 
   @Valid
   @NotNull
   @JsonProperty("drivers")
   Driver[] drivers;
 
-  public TransientConfig(@JsonProperty("stop_time") double stopTime, @JsonProperty("time_step") double timeStep,
+  public TransientConfig(@JsonProperty("stop_time") String stopTime, @JsonProperty("time_step") String timeStep,
       @JsonProperty("drivers") Driver... drivers) {
     this.stopTime = stopTime;
     this.timeStep = timeStep;
     this.drivers = drivers;
   }
 
-  public double getStopTime() {
+  public String getStopTime() {
     return stopTime;
   }
 
-  public double getTimeStep() {
+  public String getTimeStep() {
     return timeStep;
   }
 

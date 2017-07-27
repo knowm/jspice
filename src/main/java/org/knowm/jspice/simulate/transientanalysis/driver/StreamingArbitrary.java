@@ -21,6 +21,8 @@
  */
 package org.knowm.jspice.simulate.transientanalysis.driver;
 
+import java.math.BigDecimal;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -28,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class StreamingArbitrary extends Driver {
 
-  private final double[] activePhases;
+  private final String[] activePhases;
   private final String[] bitStream;
 
   /**
@@ -42,9 +44,13 @@ public class StreamingArbitrary extends Driver {
    * @param activePhases
    * @param bitStream
    */
-  public StreamingArbitrary(@JsonProperty("id") String matchingSourceId, @JsonProperty("dc_offset") double dcOffset,
-      @JsonProperty("phase") double phase, @JsonProperty("amplitude") double amplitude, @JsonProperty("frequency") double frequency,
-      @JsonProperty("active") double[] activePhases, @JsonProperty("bitstream") String[] bitStream) {
+  public StreamingArbitrary(@JsonProperty("id") String matchingSourceId,
+      @JsonProperty("dc_offset") double dcOffset,
+      @JsonProperty("phase") String phase,
+      @JsonProperty("amplitude") double amplitude,
+      @JsonProperty("frequency") String frequency,
+      @JsonProperty("active") String[] activePhases,
+      @JsonProperty("bitstream") String[] bitStream) {
 
     super(matchingSourceId, dcOffset, phase, amplitude, frequency);
     this.activePhases = activePhases;
@@ -52,12 +58,11 @@ public class StreamingArbitrary extends Driver {
   }
 
   @Override
-  public double getSignal(double time) {
+  public double getSignal(BigDecimal time) {
 
-    double T = 1 / frequency;
-    double remainderTime = (time + phase) % T;
+    BigDecimal remainderTime = (time.add(phaseBD)).remainder(T);
 
-    int periodCounter = (int) (time / T) % bitStream.length;
+    int periodCounter = (time.divide(T)).remainder(new BigDecimal(bitStream.length)).intValue();
     // System.out.println(periodCounter);
 
     if (bitStream[periodCounter].equals("0")) {
@@ -66,9 +71,9 @@ public class StreamingArbitrary extends Driver {
 
     boolean isActive = false;
     for (int i = 0; i < activePhases.length; i = i + 2) {
-      double start = activePhases[i];
-      double end = activePhases[i + 1];
-      if (remainderTime >= T * start && remainderTime < T * end) {
+      BigDecimal start = new BigDecimal(activePhases[i]);
+      BigDecimal end = new BigDecimal(activePhases[i + 1]);
+      if (remainderTime.compareTo(T .multiply( start)) >= 0 && remainderTime.compareTo(T .multiply( end)) < 0) {
         isActive = true;
       }
     }

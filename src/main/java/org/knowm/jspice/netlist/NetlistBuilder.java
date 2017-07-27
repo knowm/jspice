@@ -103,7 +103,7 @@ public class NetlistBuilder {
     return this;
   }
 
-  public NetlistBuilder addTransientSimulationConfig(double stopTime, double timeStep, Driver... drivers) {
+  public NetlistBuilder addTransientSimulationConfig(String stopTime, String timeStep, Driver... drivers) {
 
     this.simulationConfig = new TransientConfig(stopTime, timeStep, drivers);
     return this;

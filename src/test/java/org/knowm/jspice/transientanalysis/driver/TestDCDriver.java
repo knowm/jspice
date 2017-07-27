@@ -26,6 +26,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,27 +53,27 @@ public class TestDCDriver extends TestDrivers {
 
     Driver driver = new DC("Vdc", 2.5);
 
-    double stopTime = 2;
-    double timeStep = .01;
+    BigDecimal stopTime = new BigDecimal("2");
+    BigDecimal timeStep = new BigDecimal(".01");
 
-    List<Number> xData = new ArrayList<Number>();
-    List<Number> yData = new ArrayList<Number>();
+    List<Number> xData = new ArrayList<>();
+    List<Number> yData = new ArrayList<>();
 
-    double firstPoint = 0.0;
-    for (double i = firstPoint; i <= stopTime + timeStep; i = i + timeStep) {
+    BigDecimal firstPoint = BigDecimal.ZERO;
+    for (BigDecimal t = firstPoint; t.compareTo(stopTime) < 0; t = t.add(timeStep)) {
       if (counter == point2Verify) {
-        y = driver.getSignal(i);
+        y = driver.getSignal(t);
       }
       counter++;
-      xData.add(i);
-      yData.add(driver.getSignal(i));
+      xData.add(t);
+      yData.add(driver.getSignal(t));
     }
 
     // System.out.println(xData);
     // System.out.println(yData);
     // System.out.println(y);
 
-    assertThat(xData.size(), is(equalTo(201)));
+    assertThat(xData.size(), is(equalTo(200)));
     assertThat(y, is(closeTo(2.5, .01)));
 
     //    plotData("V(in)", xData, yData);

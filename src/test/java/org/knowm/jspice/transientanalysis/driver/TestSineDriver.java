@@ -26,6 +26,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,30 +51,29 @@ public class TestSineDriver extends TestDrivers {
   @Test
   public void test() {
 
-    Driver sine = new Sine("Sine", 5, Math.PI / 4, 10, 2);
-    double stopTime = 2;
-    double timeStep = .01;
+    Driver sine = new Sine("Sine", 5, String.valueOf(Math.PI / 4), 10, "2");
+    BigDecimal stopTime = new BigDecimal("2");
+    BigDecimal timeStep = new BigDecimal(".01");
 
-    List<Number> xData = new ArrayList<Number>();
-    List<Number> yData = new ArrayList<Number>();
+    List<Number> xData = new ArrayList<>();
+    List<Number> yData = new ArrayList<>();
 
-    double firstPoint = 0.0;
-
-    for (double i = firstPoint; i <= stopTime + timeStep; i = i + timeStep) {
+    BigDecimal firstPoint = BigDecimal.ZERO;
+    for (BigDecimal t = firstPoint; t.compareTo(stopTime) < 0; t = t.add(timeStep)) {
       if (counter == point2Verify) {
-        y = sine.getSignal(i);
+        y = sine.getSignal(t);
       }
       counter++;
-      xData.add(i);
-      yData.add(sine.getSignal(i));
+      xData.add(t);
+      yData.add(sine.getSignal(t));
     }
 
     // System.out.println(xData);
     // System.out.println(yData);
 
-    assertThat(xData.size(), is(equalTo(201)));
+    assertThat(xData.size(), is(equalTo(200)));
     assertThat(y, is(closeTo(1.02, .01)));
 
-    //    plotData("V(in)", xData, yData);
+//        plotData("V(in)", xData, yData);
   }
 }

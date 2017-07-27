@@ -19,25 +19,25 @@
  * If you have any questions regarding our licensing policy, please
  * contact us at `contact@knowm.org`.
  */
-package org.knowm.jspice.circuits;
+package org.knowm.jspice.memristor;
 
+import org.knowm.jspice.JSpice;
 import org.knowm.jspice.netlist.Netlist;
-import org.knowm.jspice.netlist.NetlistDCVoltage;
-import org.knowm.jspice.netlist.NetlistJoglekarMemristor;
+import org.knowm.jspice.simulate.SimulationPlotter;
+import org.knowm.jspice.simulate.SimulationResult;
+import org.knowm.jspice.simulate.transientanalysis.TransientConfig;
+import org.knowm.jspice.simulate.transientanalysis.driver.Sine;
 
-public class V1JoglekarMemristor1 extends Netlist {
+public class TransientAnalysisV1MMSSMem1 {
 
-  private final double Rinit = 11_000;
-  private final double Ron = 100;
-  private final double Roff = 16_000;
-  private final double D = 10e-9;
-  private final double uv = 10e-15;
-  private final double p = 1;
+  public static void main(String[] args) {
 
-  public V1JoglekarMemristor1() {
+    Netlist netlist = new V1MMSSMemristor1();
+    TransientConfig transientConfig = new TransientConfig(".04", ".0001", new Sine("Vdd", 0.0, "0", 0.5, "100.0"));
+    netlist.setSimulationConfig(transientConfig);
+    SimulationResult simulationResult = JSpice.simulate(netlist);
+    SimulationPlotter.plotSeparate(simulationResult,"V(VDD)", "I(M1)");
+    SimulationPlotter.plotTransientInOutCurve("I/V Curve", simulationResult, "V(VDD)", "I(M1)");
 
-    // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
-    addNetListComponent(new NetlistDCVoltage("Vdd", 1.0, "VDD", "0"));
-    addNetListComponent(new NetlistJoglekarMemristor("M1", Rinit, Ron, Roff, D, uv, p, "VDD", "0"));
   }
 }

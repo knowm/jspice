@@ -37,7 +37,7 @@ public class TransientAnalysisIntegrator {
   public static void main(String[] args) {
 
     Netlist netlist = new Integrator();
-    TransientConfig transientConfig = new TransientConfig(2, .05, new Sine("V1", 0, 0, 1.0, 1.0));
+    TransientConfig transientConfig = new TransientConfig("2", ".05", new Sine("V1", 0, "0", 1.0, "1.0"));
     netlist.setSimulationConfig(transientConfig);
     SimulationResult simulationResult = JSpice.simulate(netlist);
     SimulationPlotter.plot(simulationResult, "V(1)", "V(x)", "I(Gx)");

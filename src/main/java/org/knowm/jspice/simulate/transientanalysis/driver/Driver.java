@@ -21,9 +21,13 @@
  */
 package org.knowm.jspice.simulate.transientanalysis.driver;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.knowm.jspice.netlist.spice.SPICEUtils;
 import org.knowm.konfig.Konfigurable;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -34,9 +38,13 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
-@JsonSubTypes({@Type(value = Pulse.class, name = "pulse"), @Type(value = Arbitrary.class, name = "arbitrary"), @Type(value = DC.class, name = "dc"),
-                  @Type(value = Sawtooth.class, name = "sawtooth"), @Type(value = Square.class, name = "square"),
-                  @Type(value = StreamingArbitrary.class, name = "streaming_arbitrary"), @Type(value = Triangle.class, name = "triangle"),
+@JsonSubTypes({@Type(value = Pulse.class, name = "pulse"),
+                  @Type(value = Arbitrary.class, name = "arbitrary"),
+                  @Type(value = DC.class, name = "dc"),
+                  @Type(value = Sawtooth.class, name = "sawtooth"),
+                  @Type(value = Square.class, name = "square"),
+                  @Type(value = StreamingArbitrary.class, name = "streaming_arbitrary"),
+                  @Type(value = Triangle.class, name = "triangle"),
                   @Type(value = Sine.class, name = "sine")})
 public abstract class Driver implements Konfigurable {
 
@@ -53,7 +61,8 @@ public abstract class Driver implements Konfigurable {
   @Valid
   @NotNull
   @JsonProperty("phase")
-  protected final double phase;
+  protected final String phase;
+  protected final BigDecimal phaseBD;
 
   @Valid
   @NotNull
@@ -63,7 +72,17 @@ public abstract class Driver implements Konfigurable {
   @Valid
   @NotNull
   @JsonProperty("frequency")
-  protected final double frequency;
+  protected final String frequency;
+  protected final BigDecimal frequencyBD;
+
+  /**
+   * Helpful Constants
+   */
+  protected final BigDecimal point5 = new BigDecimal("0.5");
+  protected final BigDecimal point25 = new BigDecimal("0.25");
+  protected final BigDecimal point75 = new BigDecimal("0.75");
+  protected final BigDecimal twopi = new BigDecimal(Math.PI).multiply(new BigDecimal("2"));
+  protected final BigDecimal T;
 
   /**
    * Constructor
@@ -74,14 +93,24 @@ public abstract class Driver implements Konfigurable {
    * @param amplitude
    * @param frequency
    */
-  public Driver(@JsonProperty("id") String id, @JsonProperty("dc_offset") double dcOffset, @JsonProperty("phase") double phase,
-      @JsonProperty("amplitude") double amplitude, @JsonProperty("frequency") double frequency) {
+  public Driver(@JsonProperty("id") String id,
+      @JsonProperty("dc_offset") double dcOffset,
+      @JsonProperty("phase") String phase,
+      @JsonProperty("amplitude") double amplitude,
+      @JsonProperty("frequency") String frequency) {
 
     this.id = id;
     this.dcOffset = dcOffset;
     this.phase = phase;
+    this.phaseBD = SPICEUtils.bigDecimalFromString(phase, "0");
     this.amplitude = amplitude;
     this.frequency = frequency;
+    this.frequencyBD = SPICEUtils.bigDecimalFromString(frequency, "0");
+    if (!frequencyBD.equals(BigDecimal.ZERO)) {
+      this.T = BigDecimal.ONE.divide(frequencyBD, MathContext.DECIMAL128);
+    } else {
+      this.T = BigDecimal.ZERO;
+    }
   }
 
   public String getId() {
@@ -94,9 +123,13 @@ public abstract class Driver implements Konfigurable {
     return dcOffset;
   }
 
-  public double getPhase() {
+  public String getPhase() {
 
     return phase;
+  }
+
+  public BigDecimal getPhaseBD() {
+    return phaseBD;
   }
 
   public double getAmplitude() {
@@ -104,10 +137,14 @@ public abstract class Driver implements Konfigurable {
     return amplitude;
   }
 
-  public double getFrequency() {
+  public String getFrequency() {
 
     return frequency;
   }
 
-  public abstract double getSignal(double time);
+  public BigDecimal getFrequencyBD() {
+    return frequencyBD;
+  }
+
+  public abstract double getSignal(BigDecimal time);
 }

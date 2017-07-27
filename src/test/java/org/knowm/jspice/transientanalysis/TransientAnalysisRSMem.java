@@ -37,7 +37,7 @@ public class TransientAnalysisRSMem {
 
   public static void main(String[] args) throws IOException, ConfigurationException {
 
-    //    Netlist netlist = new V1RSMem();
+    //    Netlist netlist = new V1RSMemristor1();
     //    TransientConfig transientConfig = new TransientConfig(5.0E-3, 1E-5, new Sine("Vdd", 0.0, 0, 1.2, 2000.0));
     //    netlist.setSimulationConfig(transientConfig);
     //    SimulationResult simulationResult = JSpice.simulate(netlist);

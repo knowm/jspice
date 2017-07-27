@@ -22,7 +22,7 @@
 package org.knowm.jspice.dcsweep;
 
 import org.knowm.jspice.JSpice;
-import org.knowm.jspice.circuits.V1MSSMemV2;
+import org.knowm.jspice.memristor.V1MSSMemristor1;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.dcsweep.DCSweepConfig;
 
@@ -30,7 +30,7 @@ public class DCSweepV1Mem1 {
 
   public static void main(String[] args) {
 
-    Netlist netlist = new V1MSSMemV2();
+    Netlist netlist = new V1MSSMemristor1();
     netlist.setSimulationConfig(new DCSweepConfig("Vdd", "I(M1)", 0.0, 1.0, .05));
     JSpice.simulate(netlist);
   }

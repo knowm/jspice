@@ -21,11 +21,14 @@
  */
 package org.knowm.jspice.simulate.transientanalysis.driver;
 
+import java.math.BigDecimal;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Pulse extends Driver {
 
-  private final double dutyCycle;
+  private final String dutyCycle;
+  private final BigDecimal dutyCycleBD;
 
   /**
    * Constructor
@@ -37,21 +40,25 @@ public class Pulse extends Driver {
    * @param frequency
    * @param dutyCycle between 0 and 1
    */
-  public Pulse(@JsonProperty("id") String id, @JsonProperty("dc_offset") double dcOffset, @JsonProperty("phase") double phase,
-      @JsonProperty("amplitude") double amplitude, @JsonProperty("frequency") double frequency, @JsonProperty("duty") double dutyCycle) {
+  public Pulse(@JsonProperty("id") String id,
+      @JsonProperty("dc_offset") double dcOffset,
+      @JsonProperty("phase") String phase,
+      @JsonProperty("amplitude") double amplitude,
+      @JsonProperty("frequency") String frequency,
+      @JsonProperty("duty") String dutyCycle) {
 
     super(id, dcOffset, phase, amplitude, frequency);
     this.dutyCycle = dutyCycle;
+    this.dutyCycleBD = new BigDecimal(dutyCycle);
   }
 
   @Override
-  public double getSignal(double time) {
+  public double getSignal(BigDecimal time) {
 
-    double T = 1 / frequency;
-    double remainderTime = (time + phase) % T * 0.5 / dutyCycle;
+    BigDecimal remainderTime = (time.add(phaseBD)).remainder(T).multiply(point5).divide(dutyCycleBD);
 
     // up phase
-    if (0 <= remainderTime && remainderTime * T < .50 / frequency * T) {
+    if (BigDecimal.ZERO.compareTo(remainderTime) <= 0 && remainderTime.multiply(T).compareTo(point5.divide(frequencyBD).multiply(T)) < 0) {
       return amplitude + dcOffset;
     }
 
@@ -61,9 +68,14 @@ public class Pulse extends Driver {
     }
   }
 
-  public double getDutyCycle() {
+  public String getDutyCycle() {
 
     return dutyCycle;
+  }
+
+  public BigDecimal getDutyCycleBD() {
+
+    return dutyCycleBD;
   }
 
   @Override

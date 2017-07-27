@@ -19,18 +19,22 @@
  * If you have any questions regarding our licensing policy, please
  * contact us at `contact@knowm.org`.
  */
-package org.knowm.jspice.circuit.subcircuit;
+package org.knowm.jspice.memristor;
 
-import org.knowm.jspice.component.element.memristor.Memristor;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.netlist.NetlistDCVoltage;
-import org.knowm.jspice.netlist.NetlistMemristor;
+import org.knowm.jspice.netlist.NetlistRSMemristor;
 
-public class MemristorCircuitV1M1 extends Netlist {
+public class V1RSMemristor1 extends Netlist {
 
-  public MemristorCircuitV1M1(Memristor memristor) {
+  private final static double schottkeyAlpha = 0; // N/A
+  private final static double schottkeyBeta = 0; // N/A
+  private final static double phi = 1;
 
-    addNetListComponent(new NetlistDCVoltage("Vdd", 1.0, "1", "0"));
-    addNetListComponent(new NetlistMemristor(memristor, "1", "0"));
+  public V1RSMemristor1() {
+
+    // build netlist, the nodes can be named anything except for ground whose node ..................
+    addNetListComponent(new NetlistDCVoltage("Vdd", 1.0, "VDD", "0"));
+    addNetListComponent(new NetlistRSMemristor("M1", schottkeyAlpha, schottkeyBeta, schottkeyAlpha, schottkeyBeta, phi, "VDD", "0"));
   }
 }

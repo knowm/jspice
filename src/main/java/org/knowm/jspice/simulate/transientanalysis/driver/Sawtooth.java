@@ -21,6 +21,8 @@
  */
 package org.knowm.jspice.simulate.transientanalysis.driver;
 
+import java.math.BigDecimal;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Sawtooth extends Driver {
@@ -34,26 +36,28 @@ public class Sawtooth extends Driver {
    * @param amplitude
    * @param frequency
    */
-  public Sawtooth(@JsonProperty("id") String id, @JsonProperty("dc_offset") double dcOffset, @JsonProperty("phase") double phase,
-      @JsonProperty("amplitude") double amplitude, @JsonProperty("frequency") double frequency) {
+  public Sawtooth(@JsonProperty("id") String id,
+      @JsonProperty("dc_offset") double dcOffset,
+      @JsonProperty("phase") String phase,
+      @JsonProperty("amplitude") double amplitude,
+      @JsonProperty("frequency") String frequency) {
 
     super(id, dcOffset, phase, amplitude, frequency);
   }
 
   @Override
-  public double getSignal(double time) {
+  public double getSignal(BigDecimal time) {
 
-    double T = 1 / frequency;
-    double remainderTime = (time + phase) % T;
+    BigDecimal remainderTime = (time.add(phaseBD)).remainder(T);
 
     // up phase
-    if (0 <= (remainderTime) && (remainderTime) * T < .50 / frequency * T) {
-      return 2 * frequency * amplitude * (remainderTime) + dcOffset;
+    if (BigDecimal.ZERO.compareTo(remainderTime) <= 0 && remainderTime.multiply(T).compareTo(point5.divide(frequencyBD).multiply(T)) < 0) {
+      return 2 * frequencyBD.doubleValue() * amplitude * (remainderTime.doubleValue()) + dcOffset;
     }
 
     // up phase
     else {
-      return 2 * frequency * amplitude * (remainderTime) - 2 * amplitude + dcOffset;
+      return 2 * frequencyBD.doubleValue() * amplitude * (remainderTime.doubleValue()) - 2 * amplitude + dcOffset;
     }
   }
 }

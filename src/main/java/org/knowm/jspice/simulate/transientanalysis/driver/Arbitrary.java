@@ -21,11 +21,13 @@
  */
 package org.knowm.jspice.simulate.transientanalysis.driver;
 
+import java.math.BigDecimal;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Arbitrary extends Driver {
 
-  private final double[] activePhases;
+  private final String[] activePhases;
 
   /**
    * Constructor
@@ -37,28 +39,30 @@ public class Arbitrary extends Driver {
    * @param frequency
    * @param activePhases
    */
-  public Arbitrary(@JsonProperty("id") String matchingSourceId, @JsonProperty("dc_offset") double dcOffset, @JsonProperty("phase") double phase,
-      @JsonProperty("amplitude") double amplitude, @JsonProperty("frequency") double frequency, @JsonProperty("active") double[] activePhases) {
+  public Arbitrary(@JsonProperty("id") String matchingSourceId,
+      @JsonProperty("dc_offset") double dcOffset,
+      @JsonProperty("phase") String phase,
+      @JsonProperty("amplitude") double amplitude,
+      @JsonProperty("frequency") String frequency,
+      @JsonProperty("active") String[] activePhases) {
 
     super(matchingSourceId, dcOffset, phase, amplitude, frequency);
     this.activePhases = activePhases;
   }
 
   @Override
-  public double getSignal(double time) {
+  public double getSignal(BigDecimal time) {
 
-    double T = 1 / frequency;
-    double remainderTime = (time + phase) % T;
+    BigDecimal remainderTime = (time.add(phaseBD)).remainder(T);
     boolean isActive = false;
     for (int i = 0; i < activePhases.length; i = i + 2) {
-      double start = activePhases[i];
-      double end = activePhases[i + 1];
-      if (remainderTime >= T * start && remainderTime < T * end) {
+      BigDecimal start = new BigDecimal(activePhases[i]);
+      BigDecimal end = new BigDecimal(activePhases[i + 1]);
+      if (remainderTime.compareTo(T .multiply(start)) >= 0 && remainderTime.compareTo(T .multiply(end)) < 0 ) {
         isActive = true;
       }
     }
     if (isActive) {
-
       return dcOffset + amplitude;
     } else {
       return 0.0;

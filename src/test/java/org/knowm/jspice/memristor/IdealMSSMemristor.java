@@ -19,7 +19,7 @@
  * If you have any questions regarding our licensing policy, please
  * contact us at `contact@knowm.org`.
  */
-package org.knowm.jspice.transientanalysis;
+package org.knowm.jspice.memristor;
 
 import org.knowm.jspice.component.element.memristor.MSSMemristor;
 

@@ -19,26 +19,23 @@
  * If you have any questions regarding our licensing policy, please
  * contact us at `contact@knowm.org`.
  */
-package org.knowm.jspice.transientanalysis;
+package org.knowm.jspice.memristor;
 
 import org.knowm.jspice.JSpice;
-import org.knowm.jspice.circuits.V1MMSSMem;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.transientanalysis.TransientConfig;
 import org.knowm.jspice.simulate.transientanalysis.driver.Sine;
 
-public class TransientAnalysisV1MMSSMem {
+public class TransientAnalysisV1MSSMem1 {
 
   public static void main(String[] args) {
 
-    Netlist netlist = new V1MMSSMem();
-    TransientConfig transientConfig = new TransientConfig(.04, .0001, new Sine("Vdd", 0.0, 0, 0.5, 100.0));
+    Netlist netlist = new V1MSSMemristor1();
+    TransientConfig transientConfig = new TransientConfig(".04", ".00001", new Sine("Vdd", 0.0, "0", 0.5, "100.0"));
     netlist.setSimulationConfig(transientConfig);
     SimulationResult simulationResult = JSpice.simulate(netlist);
-    SimulationPlotter.plotSeparate(simulationResult, new String[]{"V(VDD)", "I(M1)"});
-    SimulationPlotter.plotTransientInOutCurve("I/V Curve", simulationResult, new String[]{"V(VDD)", "I(M1)"});
-
+    SimulationPlotter.plotTransientInOutCurve("I/V Curve", simulationResult, "V(VDD)", "I(M1)");
   }
 }

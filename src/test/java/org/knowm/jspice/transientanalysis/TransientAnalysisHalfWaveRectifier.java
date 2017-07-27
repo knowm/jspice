@@ -34,7 +34,7 @@ public class TransientAnalysisHalfWaveRectifier {
   public static void main(String[] args) {
 
     Netlist netlist = new HalfWaveRectifier();
-    TransientConfig transientConfig = new TransientConfig(.0833333333, .0002, new Sine("Vsrc", 0, 0, 12, 60.0));
+    TransientConfig transientConfig = new TransientConfig(".0833333333", ".0002", new Sine("Vsrc", 0, "0", 12, "60.0"));
     netlist.setSimulationConfig(transientConfig);
     SimulationResult simulationResult = JSpice.simulate(netlist);
     SimulationPlotter.plot(simulationResult, "V(in)", "V(out)");

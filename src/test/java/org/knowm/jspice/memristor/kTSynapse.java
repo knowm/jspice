@@ -19,13 +19,13 @@
  * If you have any questions regarding our licensing policy, please
  * contact us at `contact@knowm.org`.
  */
-package org.knowm.jspice.circuits;
+package org.knowm.jspice.memristor;
 
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.netlist.NetlistDCVoltage;
 import org.knowm.jspice.netlist.NetlistMSSMemristor;
 
-public class V1MSSMemV2 extends Netlist {
+public class kTSynapse extends Netlist {
 
   /**
    * characteristic time scale of the device
@@ -46,15 +46,16 @@ public class V1MSSMemV2 extends Netlist {
   private static final double V_OFF = .27;
   private static final double V_ON = .27;
 
-  private final static double schottkeyAlpha = 0; // N/A
-  private final static double schottkeyBeta = 0; // N/A
+  private final static double sa = 0; // N/A
+  private final static double sb = 0; // N/A
   private final static double phi = 1;
 
-  public V1MSSMemV2() {
+  public kTSynapse() {
 
     // build netlist, the nodes can be named anything except for ground whose node ..................
-    addNetListComponent(new NetlistDCVoltage("Vdd", 1.0, "VDD", "0"));
-    addNetListComponent(new NetlistMSSMemristor("M1", R_INIT, R_ON, R_OFF, N, TAU, V_ON, V_OFF, phi, schottkeyAlpha, schottkeyBeta, schottkeyAlpha,
-        schottkeyBeta, "VDD", "0"));
+    addNetListComponent(new NetlistDCVoltage("VA", 1.0, "A", "0"));
+    addNetListComponent(new NetlistDCVoltage("VB", -1.0, "B", "0"));
+    addNetListComponent(new NetlistMSSMemristor("MA", R_INIT, R_ON, R_OFF, N, TAU, V_ON, V_OFF, phi, sa, sb, sa, sb, "A", "y"));
+    addNetListComponent(new NetlistMSSMemristor("MB", 1000, R_ON, R_OFF, N, TAU, V_ON, V_OFF, phi, sa, sb, sa, sb, "y", "B"));
   }
 }

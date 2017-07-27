@@ -72,8 +72,8 @@ public class TransientAnalysis {
     Map<String, SimulationPlotData> timeSeriesDataMap = new LinkedHashMap<>();
 
     BigDecimal firstPoint = BigDecimal.ZERO;
-    BigDecimal timeStep = BigDecimal.valueOf(transientAnalysisDefinition.getTimeStep());
-    BigDecimal stopTime = BigDecimal.valueOf(transientAnalysisDefinition.getStopTime());
+    BigDecimal timeStep = new BigDecimal(transientAnalysisDefinition.getTimeStep());
+    BigDecimal stopTime = new BigDecimal(transientAnalysisDefinition.getStopTime());
 
     DCOperatingPointResult dCOperatingPointResult = null;
 
@@ -84,9 +84,10 @@ public class TransientAnalysis {
       for (int i = 0; i < transientAnalysisDefinition.getDrivers().length; i++) {
 
         Driver driver = transientAnalysisDefinition.getDrivers()[i];
-        double signal = driver.getSignal(t.doubleValue());
-        //        System.out.println(t);
-        //        System.out.println(signal);
+        double signal = driver.getSignal(t);
+        System.out.println(t);
+        System.out.println(signal);
+        System.out.println("---");
 
         Component sweepableComponent = netlist.getComponent(transientAnalysisDefinition.getDrivers()[i].getId());
         //        System.out.println("sweepableComponent " + sweepableComponent);
@@ -114,7 +115,8 @@ public class TransientAnalysis {
         netlist.setInitialConditions(false);
 
         // solve DC operating point
-        dCOperatingPointResult = new DCOperatingPoint(dCOperatingPointResult, netlist, transientAnalysisDefinition.getTimeStep()).run();
+        dCOperatingPointResult = new DCOperatingPoint(dCOperatingPointResult, netlist, new BigDecimal(transientAnalysisDefinition.getTimeStep()).doubleValue())
+            .run();
         //        System.out.println(dCOperatingPointResult.toString());
 
         // add all node voltage values

@@ -22,6 +22,8 @@
 package org.knowm.jspice.netlist.spice;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -52,7 +54,7 @@ public class SPICENetlistBuilder {
     for (int i = 0; i < netlistLines.size(); i++) {
 
       String line = netlistLines.get(i);
-      System.out.println("line: " + line);
+//      System.out.println("line: " + line);
 
       if (line.startsWith(".INCLUDE") || line.startsWith(".include")) {
 
@@ -64,7 +66,7 @@ public class SPICENetlistBuilder {
         for (int j = 0; j < subCircuitNetlistLines.size(); j++) {
 
           String subCircuitNetlistLine = subCircuitNetlistLines.get(j);
-          System.out.println("subCircuitNetlistLine: " + subCircuitNetlistLine);
+//          System.out.println("subCircuitNetlistLine: " + subCircuitNetlistLine);
 
           if (subCircuitNetlistLine.startsWith(".SUBCKT") || subCircuitNetlistLine.startsWith(".subckt")) {
 
@@ -107,7 +109,7 @@ public class SPICENetlistBuilder {
     for (int i = 0; i < netlistLines.size(); i++) {
 
       String line = netlistLines.get(i);
-      System.out.println("line: " + line);
+//      System.out.println("line: " + line);
 
       if (line.startsWith("X") || line.startsWith("x")) {
 
@@ -125,7 +127,7 @@ public class SPICENetlistBuilder {
           String newSubcktLine = subcktLine;
           String[] subcktTokens = newSubcktLine.split("\\s+");
           String componentID = subcktTokens[1];
-          newSubcktLine=   newSubcktLine.replace(componentID, componentID + "_" + id); // append the id
+          newSubcktLine = newSubcktLine.replace(componentID, componentID + "_" + id); // append the id
           for (Entry<String, Integer> stringIntegerEntry : nodeIndexMap.entrySet()) {
 
             newSubcktLine.replaceAll(stringIntegerEntry.getKey(), tokens[stringIntegerEntry.getValue() + 1]);
@@ -160,7 +162,7 @@ public class SPICENetlistBuilder {
         String paramString = line.substring(6);
         paramString = paramString.replaceAll("\\s+", "");
         String[] paramSplit = paramString.split("=");
-        paramsMap.put(paramSplit[0], SPICEUtils.fromString(paramSplit[1], 0));
+        paramsMap.put(paramSplit[0], SPICEUtils.doubleFromString(paramSplit[1], 0));
 
       } else if (line.startsWith("R") || line.startsWith("r")) {
 
@@ -170,7 +172,7 @@ public class SPICENetlistBuilder {
         String nodeA = tokens[1];
         String nodeB = tokens[2];
 
-        double resistance = SPICEUtils.fromString(tokens[3]);
+        double resistance = SPICEUtils.doubleFromString(tokens[3]);
         netlistBuilder.addNetlistResistor(id, resistance, nodeA, nodeB);
 
       } else if (line.startsWith("C") || line.startsWith("c")) {
@@ -181,7 +183,7 @@ public class SPICENetlistBuilder {
         String nodeA = tokens[1];
         String nodeB = tokens[2];
 
-        double capactiance = SPICEUtils.fromString(tokens[3]);
+        double capactiance = SPICEUtils.doubleFromString(tokens[3]);
         netlistBuilder.addNetlistCapacitor(id, capactiance, nodeA, nodeB);
 
       } else if (line.startsWith("L") || line.startsWith("l")) {
@@ -192,7 +194,7 @@ public class SPICENetlistBuilder {
         String nodeA = tokens[1];
         String nodeB = tokens[2];
 
-        double inductance = SPICEUtils.fromString(tokens[3]);
+        double inductance = SPICEUtils.doubleFromString(tokens[3]);
         netlistBuilder.addNetlistInductor(id, inductance, nodeA, nodeB);
 
       } else if (line.startsWith("V") || line.startsWith("v")) {
@@ -206,7 +208,7 @@ public class SPICENetlistBuilder {
         // DC
         int dcStartIndex = line.indexOf("DC");
         tokens = line.substring(dcStartIndex).split("\\s+");
-        double dc = SPICEUtils.fromString(tokens[1], 0);
+        double dc = SPICEUtils.doubleFromString(tokens[1], 0);
         netlistBuilder.addNetlistDCVoltage(id, dc, nodeA, nodeB);
 
         // Sin
@@ -220,7 +222,7 @@ public class SPICENetlistBuilder {
           String amplitude = SPICEUtils.ifExists(tokens, 1);
           String freq = SPICEUtils.ifExists(tokens, 2);
           String phase = SPICEUtils.ifExists(tokens, 5);
-          drivers.add(new Sine(id, SPICEUtils.fromString(v0, 0), SPICEUtils.fromString(phase, 0), SPICEUtils.fromString(amplitude, 0), SPICEUtils.fromString(freq, 0)));
+          drivers.add(new Sine(id, SPICEUtils.doubleFromString(v0, 0), phase, SPICEUtils.doubleFromString(amplitude, 0), freq));
         }
 
         // Pulse
@@ -243,18 +245,18 @@ public class SPICENetlistBuilder {
 
           // conversion from SPICE to JSPICE driver
 
-          double v1 = SPICEUtils.fromString(v1AsString, 0);
-          double v2 = SPICEUtils.fromString(v2AsString, 0);
-          double width = SPICEUtils.fromString(widthAsString, 0);
-          double period = SPICEUtils.fromString(periodAsString, 0);
+          double v1 = SPICEUtils.doubleFromString(v1AsString, 0);
+          double v2 = SPICEUtils.doubleFromString(v2AsString, 0);
+          BigDecimal width = SPICEUtils.bigDecimalFromString(widthAsString, "0");
+          BigDecimal period = SPICEUtils.bigDecimalFromString(periodAsString, "0");
 
           double dcOffset = (v1 + v2) / 2;
           double amplitude = Math.abs(v1 - v2) / 2;
-          double frequency = 1 / period;
-          double dutyCycle = width / period;
-          double phase = v2 > v1 ? 0 : period / 2;
+          BigDecimal frequency = BigDecimal.ONE.divide(period, MathContext.DECIMAL128);
+          BigDecimal dutyCycle = width.divide(period,  MathContext.DECIMAL128);
+          BigDecimal phase = v2 > v1 ? BigDecimal.ZERO : period.divide(new BigDecimal("2"),  MathContext.DECIMAL128);
 
-          drivers.add(new Pulse(id, dcOffset, phase, amplitude, frequency, dutyCycle));
+          drivers.add(new Pulse(id, dcOffset, phase.toString(), amplitude, frequency.toString(), dutyCycle.toString()));
         }
 
       } else if (line.startsWith(".TRAN") || line.startsWith(".tran")) {
@@ -263,8 +265,7 @@ public class SPICENetlistBuilder {
         String[] tokens = line.split("\\s+");
         String stepSize = tokens[1];
         String endTime = tokens[2];
-        netlistBuilder.addTransientSimulationConfig(SPICEUtils.fromString(endTime), SPICEUtils.fromString(stepSize), drivers.toArray(new
-            Driver[drivers.size()]));
+        netlistBuilder.addTransientSimulationConfig(endTime, stepSize, drivers.toArray(new Driver[drivers.size()]));
 
       } else if (line.startsWith("YMEMRISTOR") || line.startsWith("ymemristor")) {
 
@@ -317,16 +318,16 @@ public class SPICENetlistBuilder {
       //      System.out.println("modelLine " + modelLine);
 
       netlistBuilder.addNetlistMMSSMemristor(memristorID, paramsMap.get("Rinit"),
-          SPICEUtils.fromString(modelMap.get("Ron")),
-          SPICEUtils.fromString(modelMap.get("Roff")),
-          SPICEUtils.fromString(modelMap.get("Tau")),
-          SPICEUtils.fromString(modelMap.get("Von")),
-          SPICEUtils.fromString(modelMap.get("Voff")),
-          SPICEUtils.fromString(modelMap.get("Phi"), 1),
-          SPICEUtils.fromString(modelMap.get("Sfa"), 0),
-          SPICEUtils.fromString(modelMap.get("Sfb"), 0),
-          SPICEUtils.fromString(modelMap.get("Sra"), 0),
-          SPICEUtils.fromString(modelMap.get("Srb"), 0), nodeA, nodeB);
+          SPICEUtils.doubleFromString(modelMap.get("Ron")),
+          SPICEUtils.doubleFromString(modelMap.get("Roff")),
+          SPICEUtils.doubleFromString(modelMap.get("Tau")),
+          SPICEUtils.doubleFromString(modelMap.get("Von")),
+          SPICEUtils.doubleFromString(modelMap.get("Voff")),
+          SPICEUtils.doubleFromString(modelMap.get("Phi"), 1),
+          SPICEUtils.doubleFromString(modelMap.get("Sfa"), 0),
+          SPICEUtils.doubleFromString(modelMap.get("Sfb"), 0),
+          SPICEUtils.doubleFromString(modelMap.get("Sra"), 0),
+          SPICEUtils.doubleFromString(modelMap.get("Srb"), 0), nodeA, nodeB);
     }
 
     return netlistBuilder.build();

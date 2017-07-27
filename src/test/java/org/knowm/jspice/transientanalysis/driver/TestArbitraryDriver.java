@@ -26,6 +26,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,28 +51,28 @@ public class TestArbitraryDriver extends TestDrivers {
   @Test
   public void testArbitrary() {
 
-    Driver driver = new Arbitrary("Arbitrary", 0, 0, 1, 1.0, new double[]{.1, .2, .5, .6});
-    double stopTime = 2;
-    double timeStep = .01;
+    Driver driver = new Arbitrary("Arbitrary", 0, "0", 1, "1.0", new String[]{".1", ".2", ".5", ".6"});
+    BigDecimal stopTime = new BigDecimal("2");
+    BigDecimal timeStep = new BigDecimal(".01");
 
-    List<Number> xData = new ArrayList<Number>();
-    List<Number> yData = new ArrayList<Number>();
+    List<Number> xData = new ArrayList<>();
+    List<Number> yData = new ArrayList<>();
 
-    double firstPoint = 0.0;
+    BigDecimal firstPoint = BigDecimal.ZERO;
 
-    for (double i = firstPoint; i <= stopTime + timeStep; i = i + timeStep) {
+    for (BigDecimal t = firstPoint; t.compareTo(stopTime) < 0; t = t.add(timeStep)) {
       if (counter == point2Verify) {
-        y = driver.getSignal(i);
+        y = driver.getSignal(t);
       }
       counter++;
-      xData.add(i);
-      yData.add(driver.getSignal(i));
+      xData.add(t);
+      yData.add(driver.getSignal(t));
     }
 
     // System.out.println(xData);
     // System.out.println(yData);
 
-    assertThat(xData.size(), is(equalTo(201)));
+    assertThat(xData.size(), is(equalTo(200)));
     assertThat(y, is(closeTo(0.0, .01)));
 
     //    plotData("V(in)", xData, yData);

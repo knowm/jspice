@@ -37,11 +37,11 @@ public class TransientAnalysisTransmissionGate {
 
     Netlist netlist = new TransmissionGateCircuit();
 
-    Driver in = new Sine("Vin", 0, 0, 1.0, 10.0);
-    Driver clk = new Square("Vclk", 2.5, 0, 2.5, 1.0);
-    Driver clkBar = new Square("VclkBar", 2.5, 0.5, 2.5, 1.0);
+    Driver in = new Sine("Vin", 0, "0", 1.0, "10.0");
+    Driver clk = new Square("Vclk", 2.5, "0", 2.5, "1.0");
+    Driver clkBar = new Square("VclkBar", 2.5, "0.5", 2.5, "1.0");
 
-    TransientConfig transientConfig = new TransientConfig(2, .005, in, clk, clkBar);
+    TransientConfig transientConfig = new TransientConfig("2", ".005", in, clk, clkBar);
     netlist.setSimulationConfig(transientConfig);
     SimulationResult simulationResult = JSpice.simulate(netlist);
     SimulationPlotter.plotSeparate(simulationResult, "V(out)", "V(in)", "V(CLK)", "V(CLKBAR)");

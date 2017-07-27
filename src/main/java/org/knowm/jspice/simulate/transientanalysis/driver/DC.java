@@ -21,6 +21,8 @@
  */
 package org.knowm.jspice.simulate.transientanalysis.driver;
 
+import java.math.BigDecimal;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class DC extends Driver {
@@ -33,11 +35,11 @@ public class DC extends Driver {
    */
   public DC(@JsonProperty("id") String id, @JsonProperty("dc_offset") double dcOffset) {
 
-    super(id, dcOffset, 0.0, 0.0, 0.0);
+    super(id, dcOffset, "0", 0.0, "0");
   }
 
   @Override
-  public double getSignal(double time) {
+  public double getSignal(BigDecimal time) {
 
     return dcOffset;
   }

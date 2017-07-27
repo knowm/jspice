@@ -19,17 +19,25 @@
  * If you have any questions regarding our licensing policy, please
  * contact us at `contact@knowm.org`.
  */
-package org.knowm.jspice.dcop;
+package org.knowm.jspice.memristor;
 
 import org.knowm.jspice.JSpice;
-import org.knowm.jspice.circuits.V1MSSMemV2;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.simulate.SimulationPlotter;
+import org.knowm.jspice.simulate.SimulationResult;
+import org.knowm.jspice.simulate.transientanalysis.TransientConfig;
+import org.knowm.jspice.simulate.transientanalysis.driver.Sine;
 
-public class DCOPV1Mem1 {
+public class TransientAnalysisV1JoglekarMem1 {
 
   public static void main(String[] args) {
 
-    Netlist netlist = new V1MSSMemV2();
-    JSpice.simulate(netlist);
+    // Circuit
+    Netlist netlist = new V1JoglekarMemristor1();
+    TransientConfig transientConfig = new TransientConfig(".03", "3E-5", new Sine("Vdd", 0.0, "0", .4, "10.0"));
+    netlist.setSimulationConfig(transientConfig);
+    SimulationResult simulationResult = JSpice.simulate(netlist);
+    SimulationPlotter.plotSeparate(simulationResult, "V(VDD)", "I(M1)");
+    SimulationPlotter.plotTransientInOutCurve("I/V Curve", simulationResult, "V(VDD)", "I(M1)");
   }
 }

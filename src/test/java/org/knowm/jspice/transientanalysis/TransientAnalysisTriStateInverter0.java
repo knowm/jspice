@@ -34,7 +34,7 @@ public class TransientAnalysisTriStateInverter0 {
   public static void main(String[] args) {
 
     Netlist netlist = new TriStateInverterCircuit();
-    TransientConfig transientConfig = new TransientConfig(.0002, .000001, new Sine("Vin", 2.6, 0, 2.5, 10_000.0));
+    TransientConfig transientConfig = new TransientConfig(".0002", ".000001", new Sine("Vin", 2.6, "0", 2.5, "10000"));
     netlist.setSimulationConfig(transientConfig);
     SimulationResult simulationResult = JSpice.simulate(netlist);
     SimulationPlotter.plot(simulationResult, "V(out)");

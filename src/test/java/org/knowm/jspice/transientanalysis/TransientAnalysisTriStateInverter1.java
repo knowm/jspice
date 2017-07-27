@@ -34,12 +34,12 @@ public class TransientAnalysisTriStateInverter1 {
 
   public static void main(String[] args) {
 
-    Driver in = new Square("Vin", 2.5, 0, 2.5, 2.0);
-    Driver clk = new Square("Vclk", 2.5, 0, 2.5, 1.0);
-    Driver clkBar = new Square("VclkBar", 2.5, 0.5, 2.5, 1.0);
+    Driver in = new Square("Vin", 2.5, "0", 2.5, "2.0");
+    Driver clk = new Square("Vclk", 2.5, "0", 2.5, "1.0");
+    Driver clkBar = new Square("VclkBar", 2.5, "0.5", 2.5, "1.0");
 
     Netlist netlist = new TriStateInverterCircuit();
-    TransientConfig transientConfig = new TransientConfig(2, .01, in, clk, clkBar);
+    TransientConfig transientConfig = new TransientConfig("2", ".01", in, clk, clkBar);
     netlist.setSimulationConfig(transientConfig);
     SimulationResult simulationResult = JSpice.simulate(netlist);
     SimulationPlotter.plot(simulationResult, "V(out)");

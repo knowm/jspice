@@ -35,7 +35,7 @@ public class TransientAnalysisV1R1 {
   public static void main(String[] args) {
 
     Netlist netlist = new V1R1();
-    netlist.setSimulationConfig(new TransientConfig(2, .01, new Driver[]{new Sine("V1", 2.5, 0, 2.5, 1.0)}));
+    netlist.setSimulationConfig(new TransientConfig("2", ".01", new Driver[]{new Sine("V1", 2.5, "0", 2.5, "1.0")}));
     SimulationResult simulationResult = JSpice.simulate(netlist);
     SimulationPlotter.plot(simulationResult, "I(R1)");
 

@@ -44,6 +44,6 @@ public class TestDrivers {
     chart.setYAxisTitle(name);
     chart.addSeries(name, xData, yData);
 
-    new SwingWrapper<XYChart>(chart).displayChart();
+    new SwingWrapper<>(chart).displayChart();
   }
 }

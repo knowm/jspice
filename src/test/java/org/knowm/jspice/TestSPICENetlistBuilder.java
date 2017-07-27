@@ -48,10 +48,10 @@ public class TestSPICENetlistBuilder {
     // transient
     assertThat(netlist.getSimulationConfig()).isInstanceOf(TransientConfig.class);
     TransientConfig config = (TransientConfig) netlist.getSimulationConfig();
-    assertThat(config.getStopTime()).isEqualTo(0.5);
-    assertThat(config.getTimeStep()).isEqualTo(0.0049505);
+    assertThat(config.getStopTime()).isEqualTo("0.5");
+    assertThat(config.getTimeStep()).isEqualTo("0.0049505");
     assertThat(config.getDrivers()[0].getAmplitude()).isEqualTo(0.5);
-    assertThat(config.getDrivers()[0].getFrequency()).isEqualTo(10);
+    assertThat(config.getDrivers()[0].getFrequency()).isEqualTo("10");
 
     // memristor
     assertThat(netlist.getNetListMemristors()).hasSize(1);
@@ -72,10 +72,10 @@ public class TestSPICENetlistBuilder {
     // transient
     assertThat(netlist.getSimulationConfig()).isInstanceOf(TransientConfig.class);
     TransientConfig config = (TransientConfig) netlist.getSimulationConfig();
-    assertThat(config.getStopTime()).isEqualTo(0.5);
-    assertThat(config.getTimeStep()).isEqualTo(0.0049505);
+    assertThat(config.getStopTime()).isEqualTo("0.5");
+    assertThat(config.getTimeStep()).isEqualTo("0.0049505");
     assertThat(config.getDrivers()[0].getAmplitude()).isEqualTo(0.5);
-    assertThat(config.getDrivers()[0].getFrequency()).isEqualTo(10);
+    assertThat(config.getDrivers()[0].getFrequency()).isEqualTo("10");
 
     // memristor
     assertThat(netlist.getNetListMemristors()).hasSize(1);
@@ -99,8 +99,8 @@ public class TestSPICENetlistBuilder {
     // transient
     assertThat(netlist.getSimulationConfig()).isInstanceOf(TransientConfig.class);
     TransientConfig config = (TransientConfig) netlist.getSimulationConfig();
-    assertThat(config.getStopTime()).isEqualTo(50e-6);
-    assertThat(config.getTimeStep()).isEqualTo(1e-6);
+    assertThat(config.getStopTime()).isEqualTo("50us");
+    assertThat(config.getTimeStep()).isEqualTo("1us");
     assertThat(config.getDrivers()[0].getAmplitude()).isEqualTo(1);
     assertThat(config.getDrivers()[0].getDcOffset()).isEqualTo(1);
 
@@ -126,8 +126,8 @@ public class TestSPICENetlistBuilder {
     // transient
     assertThat(netlist.getSimulationConfig()).isInstanceOf(TransientConfig.class);
     TransientConfig config = (TransientConfig) netlist.getSimulationConfig();
-    assertThat(config.getStopTime()).isEqualTo(.15);
-    assertThat(config.getTimeStep()).isEqualTo(0.00148515);
+    assertThat(config.getStopTime()).isEqualTo("0.15");
+    assertThat(config.getTimeStep()).isEqualTo("0.00148515");
     assertThat(config.getDrivers()[0].getAmplitude()).isEqualTo(.5);
     assertThat(config.getDrivers()[0].getDcOffset()).isEqualTo(.5);
 

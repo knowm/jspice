@@ -36,7 +36,7 @@ public class TransientAnalysisBusKeeper {
     // Circuit
     Netlist netlist = new BusKeeper();
 
-    TransientConfig transientConfig = new TransientConfig(2, .01, new Triangle("Vin", 2.5, 0, 2.5, 1.0));
+    TransientConfig transientConfig = new TransientConfig("2", ".01", new Triangle("Vin", 2.5, "0", 2.5, "1.0"));
     netlist.setSimulationConfig(transientConfig);
     SimulationResult simulationResult = JSpice.simulate(netlist);
     SimulationPlotter.plot(simulationResult, "V(in)", "V(out)");

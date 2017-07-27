@@ -19,20 +19,13 @@
  * If you have any questions regarding our licensing policy, please
  * contact us at `contact@knowm.org`.
  */
-package org.knowm.jspice.circuits;
+package org.knowm.jspice.memristor;
 
-import org.knowm.jspice.component.Component;
-import org.knowm.jspice.component.element.memristor.MMSSMemristor;
-import org.knowm.jspice.component.source.DCVoltage;
-import org.knowm.jspice.component.source.Source;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.netlist.NetlistDCVoltage;
-import org.knowm.jspice.netlist.NetlistMMSSMemristor;
+import org.knowm.jspice.netlist.NetlistMSSMemristor;
 
-/**
- * @author timmolter
- */
-public class V1MMSSMem extends Netlist {
+public class V1MSSMemristor1 extends Netlist {
 
   /**
    * characteristic time scale of the device
@@ -42,6 +35,7 @@ public class V1MMSSMem extends Netlist {
   /**
    * the number of MSS's
    */
+  private static final double N = 10;
   private static final double R_OFF = 1500;
   private static final double R_ON = 500;
   private static final double R_INIT = 1500;
@@ -56,20 +50,11 @@ public class V1MMSSMem extends Netlist {
   private final static double schottkeyBeta = 0; // N/A
   private final static double phi = 1;
 
-  /**
-   * Constructor
-   */
-  public V1MMSSMem() {
-
-    // define voltage source
-    Source dcVoltageSource = new DCVoltage("Vdd", 1.0);
-
-    // define memristors
-    Component m1 = new MMSSMemristor("M1", R_INIT, R_ON, R_OFF, TAU, V_ON, V_OFF, phi, schottkeyAlpha, schottkeyBeta, schottkeyAlpha, schottkeyBeta);
+  public V1MSSMemristor1() {
 
     // build netlist, the nodes can be named anything except for ground whose node ..................
     addNetListComponent(new NetlistDCVoltage("Vdd", 1.0, "VDD", "0"));
-    addNetListComponent(new NetlistMMSSMemristor("M1", R_INIT, R_ON, R_OFF, TAU, V_ON, V_OFF, phi, schottkeyAlpha, schottkeyBeta, schottkeyAlpha,
+    addNetListComponent(new NetlistMSSMemristor("M1", R_INIT, R_ON, R_OFF, N, TAU, V_ON, V_OFF, phi, schottkeyAlpha, schottkeyBeta, schottkeyAlpha,
         schottkeyBeta, "VDD", "0"));
   }
 }

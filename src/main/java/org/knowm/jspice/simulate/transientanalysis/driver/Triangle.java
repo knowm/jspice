@@ -21,6 +21,8 @@
  */
 package org.knowm.jspice.simulate.transientanalysis.driver;
 
+import java.math.BigDecimal;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Triangle extends Driver {
@@ -34,31 +36,37 @@ public class Triangle extends Driver {
    * @param amplitude
    * @param frequency
    */
-  public Triangle(@JsonProperty("id") String id, @JsonProperty("dc_offset") double dcOffset, @JsonProperty("phase") double phase,
-      @JsonProperty("amplitude") double amplitude, @JsonProperty("frequency") double frequency) {
+  public Triangle(@JsonProperty("id") String id,
+      @JsonProperty("dc_offset") double dcOffset,
+      @JsonProperty("phase") String phase,
+      @JsonProperty("amplitude") double amplitude,
+      @JsonProperty("frequency") String frequency) {
 
     super(id, dcOffset, phase, amplitude, frequency);
   }
 
   @Override
-  public double getSignal(double time) {
+  public double getSignal(BigDecimal time) {
 
-    double T = 1 / frequency;
-    double remainderTime = (time + phase) % T;
+    BigDecimal remainderTime = (time.add(phaseBD)).remainder(T);
 
     // up phase
-    if (0 <= (remainderTime) && (remainderTime) * T < .25 / frequency * T) {
-      return 4 * frequency * amplitude * (remainderTime) + dcOffset;
+    if (BigDecimal.ZERO.compareTo(remainderTime) <= 0 && remainderTime.multiply(T).compareTo(point25.divide(frequencyBD).multiply(T)) < 0) {
+      return 4 * frequencyBD.doubleValue() * amplitude * (remainderTime.doubleValue()) + dcOffset;
     }
 
     // up phase
-    else if (.75 / frequency * T <= (remainderTime) * T && (remainderTime) * T < 1.0 / frequency * T) {
-      return 4 * frequency * amplitude * (remainderTime) - 4 * amplitude + dcOffset;
+    else if (point75.divide(frequencyBD).multiply(T).compareTo(remainderTime.multiply(T)) <= 0 && remainderTime.multiply(T).compareTo(BigDecimal
+        .ONE.divide(frequencyBD).multiply(T)) < 0)
+    {
+
+//    else if (.75 / frequency * T <= (remainderTime) * T && (remainderTime) * T < 1.0 / frequency * T) {
+      return 4 * frequencyBD.doubleValue() * amplitude * (remainderTime.doubleValue()) - 4 * amplitude + dcOffset;
     }
 
     // down phase
-    else {
-      return -4 * frequency * amplitude * (remainderTime) + 2 * amplitude + dcOffset;
+    else{
+      return -4 * frequencyBD.doubleValue() * amplitude * (remainderTime.doubleValue()) + 2 * amplitude + dcOffset;
     }
   }
 }

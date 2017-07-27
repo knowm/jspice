@@ -34,7 +34,7 @@ public class TransientAnalysisCMOSInverter {
   public static void main(String[] args) {
 
     Netlist netlist = new CMOSInverterCircuit();
-    TransientConfig transientConfig = new TransientConfig(2, .05, new Triangle("Vin", 2.5, 0, 2.5, 1.0));
+    TransientConfig transientConfig = new TransientConfig("2", ".05", new Triangle("Vin", 2.5, "0", 2.5, "1.0"));
     netlist.setSimulationConfig(transientConfig);
     SimulationResult simulationResult = JSpice.simulate(netlist);
     SimulationPlotter.plot(simulationResult, "V(in)", "V(out)");
