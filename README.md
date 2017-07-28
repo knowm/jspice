@@ -656,6 +656,44 @@ JSPICE has limited support for SPICE netlists
 | V Pulse | `trise`, `tfall` and `tdelay` ignored |
 | .STEP | ignored |
 | .PRINT | ignored |
+| .trans | `step value` and `final time` only |
+
+### Example
+
+
+```java
+JSpice.simulate("FFXX-kTSynapse-netlist.cir");
+```
+
+```
+.INCLUDE "2-1_kTSynapse.sub"
+
+.PARAM Rinit = 1000
+
+
+VA A 0 DC 0 PULSE(0 .5 0 0 0 5u 10u) AC 0
+VB B 0 DC 0 PULSE(0 -.5 0 0 0 5u 10u) AC 0
+
+XX1 A B y kTSynapse2-1
+
+.model MRM5 memristor ( level=5
++ Roff=1500 Ron=500
++ Voff=0.27 Von=0.27
++ Tau=0.0001 )
+
+.tran 500ns 1000us 1e-09
+
+.PRINT  tran format=raw file=AHaH2-1_pulse_test_tran.txt I(VPr1) v(Vin) v(Vmr) v(Vout)
+.END
+```
+
+```
+.subckt kTSynapse2-1 A B y
+YMEMRISTOR MR1 A y MRM5
+YMEMRISTOR MR2 y B MRM5
+.ends kTSynapse2-1
+```
+
 
 ## Continuous Integration
 

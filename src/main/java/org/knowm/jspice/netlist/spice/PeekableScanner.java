@@ -15,7 +15,7 @@ import java.util.Scanner;
 
   public PeekableScanner(InputStream source) {
 
-    System.out.println("source = " + source);
+//    System.out.println("source = " + source);
     scanner = new Scanner(source);
     nextLine = (scanner.hasNext() ? scanner.nextLine().trim() : null);
   }

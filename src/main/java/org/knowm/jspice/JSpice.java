@@ -85,7 +85,7 @@ public class JSpice {
     }
 
     // 3. Run it  
-    //    System.out.println("netList: \n" + netlist);
+        System.out.println("netList: \n" + netlist);
     return simulate(netlist);
 
   }
@@ -119,6 +119,7 @@ public class JSpice {
         SimulationPlotter.plot(simulationResult, new String[]{dcSweepConfig.getObserveID()});
       }
       return simulationResult;
+
     } else if (simulationConfig instanceof TransientConfig) {
 
       TransientConfig simulationConfigTransient = (TransientConfig) simulationConfig;
@@ -143,6 +144,8 @@ public class JSpice {
 
         // plot
         SimulationPlotter.plotAll(simulationResult);
+        SimulationPlotter.plot(simulationResult, "V(y)");
+        SimulationPlotter.plot(simulationResult, "R(MR2_X1)", "R(MR1_X1)");
       }
       return simulationResult;
 

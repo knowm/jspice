@@ -155,7 +155,7 @@ public class SPICENetlistBuilder {
     for (int i = 0; i < linesWithSubckts.size(); i++) {
 
       String line = linesWithSubckts.get(i);
-      System.out.println("line: " + line);
+//      System.out.println("line: " + line);
 
       if (line.startsWith(".PARAM") || line.startsWith(".param")) {
 

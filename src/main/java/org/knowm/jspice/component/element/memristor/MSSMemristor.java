@@ -193,7 +193,7 @@ public class MSSMemristor extends Memristor {
   public double getConductance() {
 
     double G = (x / rOn + (1 - x) / rOff);
-    // System.out.println("R= " + 1 / G);
+//     System.out.println("R= " + 1 / G);
     return G;
   }
 

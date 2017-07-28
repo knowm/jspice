@@ -295,6 +295,7 @@ public final class DCOperatingPointResult {
       double voltageDiff = voltageA - voltageB;
       double current = memristor.getCurrent(voltageDiff);
       deviceLabels2Value.put("I(" + memristor.getId() + ")", current);
+      deviceLabels2Value.put("R(" + memristor.getId() + ")", memristor.getResistance());
     }
 
     // VCCSs

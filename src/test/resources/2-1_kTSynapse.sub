@@ -1,0 +1,5 @@
+.subckt kTSynapse2-1 A B y
+YMEMRISTOR MR1 A y MRM5
+YMEMRISTOR MR2 y B MRM5
+.ends kTSynapse2-1
+

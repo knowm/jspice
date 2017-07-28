@@ -21,6 +21,8 @@
  */
 package org.knowm.jspice.memristor;
 
+import java.io.IOException;
+
 import org.knowm.jspice.JSpice;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
@@ -28,20 +30,36 @@ import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.transientanalysis.TransientConfig;
 import org.knowm.jspice.simulate.transientanalysis.driver.Square;
 
+import io.dropwizard.configuration.ConfigurationException;
+
 public class kTSynapse_FFXX {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException, ConfigurationException {
+
+//    go1();
+    go2();
+  }
+
+  private static void go1() {
 
     Netlist netlist = new kTSynapse();
 
-    String frequency = "1megHz";
-    TransientConfig transientConfig = new TransientConfig("5us", "50ns",
-        new Square("VA", 0.5, "0", 0.5, frequency),
-        new Square("VB", -0.5, ".5us", 0.5, frequency));
+    String frequency = "100kHz";
+    TransientConfig transientConfig = new TransientConfig("1000us", "500ns",
+        new Square("VA", 0.25, "0", 0.25, frequency),
+        new Square("VB", -0.25, "0", -0.25, frequency));
     netlist.setSimulationConfig(transientConfig);
     SimulationResult simulationResult = JSpice.simulate(netlist);
 //    SimulationPlotter.plotAll(simulationResult);
-    SimulationPlotter.plot(simulationResult, "V(A)", "V(B)", "V(y)");
+//    SimulationPlotter.plot(simulationResult, "V(A)", "V(B)", "V(y)");
+    SimulationPlotter.plot(simulationResult, "V(y)");
+    SimulationPlotter.plot(simulationResult, "R(MA)", "R(MB)");
 
   }
+
+  private static void go2() throws IOException, ConfigurationException {
+
+    JSpice.simulate("FFXX-kTSynapse-netlist.cir");
+  }
+
 }

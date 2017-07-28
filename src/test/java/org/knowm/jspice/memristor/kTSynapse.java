@@ -35,7 +35,7 @@ public class kTSynapse extends Netlist {
   /**
    * the number of MSS's
    */
-  private static final double N = 10;
+  private static final double N = 1000;
   private static final double R_OFF = 1500;
   private static final double R_ON = 500;
   private static final double R_INIT = 1500;
