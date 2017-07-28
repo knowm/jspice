@@ -4,13 +4,11 @@ import java.math.BigDecimal;
 
 public class SPICEUtils {
 
-
-
-  private SPICEUtils(){
+  private SPICEUtils() {
 
   }
 
-   static String ifExists(String[] array, int index) {
+  static String ifExists(String[] array, int index) {
 
     if (array.length > index) {
       return array[index];
@@ -20,7 +18,7 @@ public class SPICEUtils {
 
   }
 
-   static double doubleFromString(String value) {
+  static double doubleFromString(String value) {
 
     // take care of units
 
@@ -72,7 +70,7 @@ public class SPICEUtils {
     }
   }
 
-   static double doubleFromString(String value, double defaultValue) {
+  static double doubleFromString(String value, double defaultValue) {
 
     if (value == null) {
       return defaultValue;
@@ -81,7 +79,7 @@ public class SPICEUtils {
     return doubleFromString(value);
   }
 
- public static BigDecimal bigDecimalFromString(String value) {
+  public static BigDecimal bigDecimalFromString(String value) {
 
     // take care of units
 
@@ -90,6 +88,12 @@ public class SPICEUtils {
       value = value.replace("ohm", "");
     } else if (value.endsWith("OHM")) {
       value = value.replace("OHM", "");
+    } else if (value.endsWith("Hz")) {
+      value = value.replace("Hz", "");
+    } else if (value.endsWith("HZ")) {
+      value = value.replace("HZ", "");
+    } else if (value.endsWith("hz")) {
+      value = value.replace("hz", "");
     } else if (value.endsWith("s")) {
       value = value.replace("s", "");
     } else if (value.endsWith("S")) {
@@ -111,27 +115,28 @@ public class SPICEUtils {
     //    T	E+12	tera
 
     if (value.endsWith("F") || value.endsWith("f")) {
-      return new BigDecimal(value.trim().substring(0, value.length() - 1)) .divide(new BigDecimal( "1000000000000000"));
+      return new BigDecimal(value.trim().substring(0, value.length() - 1)).divide(new BigDecimal("1000000000000000"));
     } else if (value.endsWith("P") || value.endsWith("p")) {
-      return new BigDecimal(value.trim().substring(0, value.length() - 1)) .divide(new BigDecimal( "1000000000000"));
+      return new BigDecimal(value.trim().substring(0, value.length() - 1)).divide(new BigDecimal("1000000000000"));
     } else if (value.endsWith("N") || value.endsWith("n")) {
-      return new BigDecimal(value.trim().substring(0, value.length() - 1))  .divide(new BigDecimal( "1000000000"));
+      return new BigDecimal(value.trim().substring(0, value.length() - 1)).divide(new BigDecimal("1000000000"));
     } else if (value.endsWith("U") || value.endsWith("u")) {
-      return new BigDecimal(value.trim().substring(0, value.length() - 1)) .divide(new BigDecimal( "1000000"));
+      return new BigDecimal(value.trim().substring(0, value.length() - 1)).divide(new BigDecimal("1000000"));
     } else if (value.endsWith("M") || value.endsWith("m")) {
-      return new BigDecimal(value.trim().substring(0, value.length() - 1)) .divide(new BigDecimal( "1000"));
+      return new BigDecimal(value.trim().substring(0, value.length() - 1)).divide(new BigDecimal("1000"));
     } else if (value.endsWith("K") || value.endsWith("k")) {
-      return new BigDecimal(value.trim().substring(0, value.length() - 1)).multiply(new BigDecimal( "1000"));
+      return new BigDecimal(value.trim().substring(0, value.length() - 1)).multiply(new BigDecimal("1000"));
     } else if (value.endsWith("MEG") || value.endsWith("meg")) {
-      return new BigDecimal(value.trim().substring(0, value.length() - 3)) .multiply(new BigDecimal( "1000000"));
+      return new BigDecimal(value.trim().substring(0, value.length() - 3)).multiply(new BigDecimal("1000000"));
     } else if (value.endsWith("G") || value.endsWith("g")) {
-      return new BigDecimal(value.trim().substring(0, value.length() - 1)) .multiply(new BigDecimal( "1000000000"));
+      return new BigDecimal(value.trim().substring(0, value.length() - 1)).multiply(new BigDecimal("1000000000"));
     } else if (value.endsWith("T") || value.endsWith("t")) {
-      return new BigDecimal(value.trim().substring(0, value.length() - 1)) .multiply(new BigDecimal( "1000000000000"));
+      return new BigDecimal(value.trim().substring(0, value.length() - 1)).multiply(new BigDecimal("1000000000000"));
     } else {
-      return new BigDecimal(value.replaceAll("_","").trim());
+      return new BigDecimal(value.replaceAll("_", "").trim());
     }
   }
+
   public static BigDecimal bigDecimalFromString(String value, String defaultValue) {
 
     if (value == null) {

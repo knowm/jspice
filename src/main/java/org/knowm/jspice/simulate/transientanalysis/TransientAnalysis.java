@@ -27,6 +27,7 @@ import java.util.Map;
 
 import org.knowm.jspice.component.Component;
 import org.knowm.jspice.netlist.Netlist;
+import org.knowm.jspice.netlist.spice.SPICEUtils;
 import org.knowm.jspice.simulate.SimulationPlotData;
 import org.knowm.jspice.simulate.SimulationPreCheck;
 import org.knowm.jspice.simulate.SimulationResult;
@@ -72,8 +73,8 @@ public class TransientAnalysis {
     Map<String, SimulationPlotData> timeSeriesDataMap = new LinkedHashMap<>();
 
     BigDecimal firstPoint = BigDecimal.ZERO;
-    BigDecimal timeStep = new BigDecimal(transientAnalysisDefinition.getTimeStep());
-    BigDecimal stopTime = new BigDecimal(transientAnalysisDefinition.getStopTime());
+    BigDecimal timeStep = SPICEUtils.bigDecimalFromString(transientAnalysisDefinition.getTimeStep());
+    BigDecimal stopTime = SPICEUtils.bigDecimalFromString(transientAnalysisDefinition.getStopTime());
 
     DCOperatingPointResult dCOperatingPointResult = null;
 
@@ -85,9 +86,9 @@ public class TransientAnalysis {
 
         Driver driver = transientAnalysisDefinition.getDrivers()[i];
         double signal = driver.getSignal(t);
-        System.out.println(t);
-        System.out.println(signal);
-        System.out.println("---");
+//        System.out.println(t);
+//        System.out.println(signal);
+//        System.out.println("---");
 
         Component sweepableComponent = netlist.getComponent(transientAnalysisDefinition.getDrivers()[i].getId());
         //        System.out.println("sweepableComponent " + sweepableComponent);
@@ -115,7 +116,7 @@ public class TransientAnalysis {
         netlist.setInitialConditions(false);
 
         // solve DC operating point
-        dCOperatingPointResult = new DCOperatingPoint(dCOperatingPointResult, netlist, new BigDecimal(transientAnalysisDefinition.getTimeStep()).doubleValue())
+        dCOperatingPointResult = new DCOperatingPoint(dCOperatingPointResult, netlist, SPICEUtils.bigDecimalFromString(transientAnalysisDefinition.getTimeStep()).doubleValue())
             .run();
         //        System.out.println(dCOperatingPointResult.toString());
 

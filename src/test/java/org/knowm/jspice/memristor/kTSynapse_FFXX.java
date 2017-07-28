@@ -34,10 +34,10 @@ public class kTSynapse_FFXX {
 
     Netlist netlist = new kTSynapse();
 
-    String frequency = "1_000_000";
-    TransientConfig transientConfig = new TransientConfig(".000005", ".00000005",
+    String frequency = "1megHz";
+    TransientConfig transientConfig = new TransientConfig("5us", "50ns",
         new Square("VA", 0.5, "0", 0.5, frequency),
-        new Square("VB", -0.5, ".0000005", 0.5, frequency));
+        new Square("VB", -0.5, ".5us", 0.5, frequency));
     netlist.setSimulationConfig(transientConfig);
     SimulationResult simulationResult = JSpice.simulate(netlist);
 //    SimulationPlotter.plotAll(simulationResult);
