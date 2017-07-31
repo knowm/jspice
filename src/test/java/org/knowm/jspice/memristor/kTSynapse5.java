@@ -24,8 +24,12 @@ package org.knowm.jspice.memristor;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.netlist.NetlistDCVoltage;
 import org.knowm.jspice.netlist.NetlistMSSMemristor;
+import org.knowm.jspice.netlist.NetlistResistor;
 
-public class kTSynapse extends Netlist {
+/**
+ * Node A floating
+ */
+public class kTSynapse5 extends Netlist {
 
   /**
    * characteristic time scale of the device
@@ -38,7 +42,6 @@ public class kTSynapse extends Netlist {
   private static final double N = 1000;
   private static final double R_OFF = 1500;
   private static final double R_ON = 500;
-  private static final double R_INIT = 1500;
 
   /**
    * barrier potentials
@@ -50,12 +53,13 @@ public class kTSynapse extends Netlist {
   private final static double sb = 0; // N/A
   private final static double phi = 1;
 
-  public kTSynapse() {
+  public kTSynapse5() {
 
     // build netlist, the nodes can be named anything except for ground whose node ..................
+    addNetListComponent(new NetlistResistor("RA", 100_000_000, "B", "0"));
+    addNetListComponent(new NetlistDCVoltage("Vy", 0, "y", "0"));
     addNetListComponent(new NetlistDCVoltage("VA", 0, "A", "0"));
-    addNetListComponent(new NetlistDCVoltage("VB", 0, "B", "0"));
-    addNetListComponent(new NetlistMSSMemristor("MA", R_INIT, R_ON, R_OFF, N, TAU, V_ON, V_OFF, phi, sa, sb, sa, sb, "A", "y"));
+    addNetListComponent(new NetlistMSSMemristor("MA", 800, R_ON, R_OFF, N, TAU, V_ON, V_OFF, phi, sa, sb, sa, sb, "A", "y"));
     addNetListComponent(new NetlistMSSMemristor("MB", 1000, R_ON, R_OFF, N, TAU, V_ON, V_OFF, phi, sa, sb, sa, sb, "y", "B"));
   }
 }

@@ -646,7 +646,8 @@ End of JSpice Simulation
 
 ## SPICE Netlists
 
-JSPICE has limited support for SPICE netlists
+JSPICE has limited support for SPICE netlists. if you run `JSpice.simulate` and pass it a file name ending in `.cir` it will interpret it as a SPICE
+netlist.
 
 ### Caveats
 

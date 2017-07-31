@@ -142,10 +142,10 @@ public class JSpice {
 
         System.out.println(simulationResult.toString());
 
-        // plot
-        SimulationPlotter.plotAll(simulationResult);
-        SimulationPlotter.plot(simulationResult, "V(y)");
-        SimulationPlotter.plot(simulationResult, "R(MR2_X1)", "R(MR1_X1)");
+//        // plot
+//        SimulationPlotter.plotAll(simulationResult);
+//        SimulationPlotter.plot(simulationResult, "V(y)");
+//        SimulationPlotter.plot(simulationResult, "R(MR2_X1)", "R(MR1_X1)");
       }
       return simulationResult;
 

@@ -33,46 +33,24 @@ import org.knowm.jspice.simulate.transientanalysis.driver.Square;
 
 import io.dropwizard.configuration.ConfigurationException;
 
-public class kTSynapse_FFXX {
+public class kTSynapse_RHXX {
 
   public static void main(String[] args) throws IOException, ConfigurationException {
 
-//    go1();
-//    go2();
+    go2();
 //    go3();
-    go4();
-//    goSPICE();
   }
 
   /**
-   * Va and Vb driven
-   */
-  private static void go1() {
-
-    Netlist netlist = new kTSynapse();
-
-    String frequency = "100kHz";
-    TransientConfig transientConfig = new TransientConfig("1000us", "500ns",
-        new Square("VA", 0.25, "0", 0.25, frequency),
-        new Square("VB", -0.25, "0", -0.25, frequency));
-    netlist.setSimulationConfig(transientConfig);
-    SimulationResult simulationResult = JSpice.simulate(netlist);
-    SimulationPlotter.plot(simulationResult, "V(y)");
-    SimulationPlotter.plot(simulationResult, "R(MA)", "R(MB)");
-
-  }
-
-  /**
-   * V=0 DC B node
+   * floating A node, y node = 0V
    */
   private static void go2() {
 
-    Netlist netlist = new kTSynapse();
+    Netlist netlist = new kTSynapse3();
 
     String frequency = "100kHz";
     TransientConfig transientConfig = new TransientConfig("1000us", "500ns",
-        new Square("VA", 0.5, "0", 0.5, frequency),
-        new DC("VB", 0));
+        new Square("VB", 0.5, "0", 0.5, frequency), new DC("Vy", 0));
     netlist.setSimulationConfig(transientConfig);
     SimulationResult simulationResult = JSpice.simulate(netlist);
     SimulationPlotter.plot(simulationResult, "V(y)");
@@ -89,39 +67,13 @@ public class kTSynapse_FFXX {
 
     String frequency = "100kHz";
     TransientConfig transientConfig = new TransientConfig("1000us", "500ns",
-        new Square("VA", 0.5, "0", 0.5, frequency)
+        new Square("VA", -0.5, "0", -0.5, frequency), new Square("Vy", -0.5, "0", -0.5, frequency)
     );
     netlist.setSimulationConfig(transientConfig);
     SimulationResult simulationResult = JSpice.simulate(netlist);
     SimulationPlotter.plot(simulationResult, "V(y)");
     SimulationPlotter.plot(simulationResult, "R(MA)", "R(MB)");
 
-  }
-
-  /**
-   * Va and Vb driven with low voltage (FFLV)
-   */
-  private static void go4() {
-
-    Netlist netlist = new kTSynapse();
-
-    String frequency = "100kHz";
-    TransientConfig transientConfig = new TransientConfig("1000us", "500ns",
-        new Square("VA", 0.05, "0", 0.05, frequency),
-        new Square("VB", -0.05, "0", -0.05, frequency));
-    netlist.setSimulationConfig(transientConfig);
-    SimulationResult simulationResult = JSpice.simulate(netlist);
-    SimulationPlotter.plot(simulationResult, "V(y)");
-    SimulationPlotter.plot(simulationResult, "R(MA)", "R(MB)");
-
-  }
-
-  /**
-   * Va and Vb driven (SPICE file)
-   */
-  private static void goSPICE() throws IOException, ConfigurationException {
-
-    JSpice.simulate("FFXX-kTSynapse-netlist.cir");
   }
 
 }
