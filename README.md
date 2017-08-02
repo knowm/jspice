@@ -564,7 +564,7 @@ public class TransientAnalysisRSMem {
 
 ##### Result
 
-![RS Memristor Transient Response](documentation/Trans_MMSS.png)  
+![RS Memristor Transient Response](documentation/Trans_RSMem.png)
 
 Before the simulation, a JSpice netlist, in YAML format, is printed out with `System.out.println("builder.getYAML() " + builder.getYAML());`:
 

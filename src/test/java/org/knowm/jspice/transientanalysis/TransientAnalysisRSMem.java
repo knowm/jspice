@@ -24,8 +24,12 @@ package org.knowm.jspice.transientanalysis;
 import java.io.IOException;
 
 import org.knowm.jspice.JSpice;
+import org.knowm.jspice.memristor.V1RSMemristor1;
+import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
 import org.knowm.jspice.simulate.SimulationResult;
+import org.knowm.jspice.simulate.transientanalysis.TransientConfig;
+import org.knowm.jspice.simulate.transientanalysis.driver.Sine;
 
 import io.dropwizard.configuration.ConfigurationException;
 
@@ -37,11 +41,11 @@ public class TransientAnalysisRSMem {
 
   public static void main(String[] args) throws IOException, ConfigurationException {
 
-    //    Netlist netlist = new V1RSMemristor1();
-    //    TransientConfig transientConfig = new TransientConfig(5.0E-3, 1E-5, new Sine("Vdd", 0.0, 0, 1.2, 2000.0));
-    //    netlist.setSimulationConfig(transientConfig);
-    //    SimulationResult simulationResult = JSpice.simulate(netlist);
-    //    SimulationPlotter.plot(simulationResult, "I(M1)");
+        Netlist netlist = new V1RSMemristor1();
+        TransientConfig transientConfig = new TransientConfig("5.0E-3", "1E-5", new Sine("Vdd", 0.0, "0", 1.2, "2000.0"));
+        netlist.setSimulationConfig(transientConfig);
+        SimulationResult simulationResult = JSpice.simulate(netlist);
+        SimulationPlotter.plot(simulationResult, "I(M1)");
 
     // run via NetlistBuilder
     //    NetlistBuilder builder = new NetlistBuilder().addNetlistDCVoltage("Vdd", 1.0, "VDD", "0")
@@ -53,8 +57,8 @@ public class TransientAnalysisRSMem {
     //    SimulationPlotter.plot(simulationResult, "I(M1)");
 
     //    // run via Yml file
-    SimulationResult simulationResult = JSpice.simulate("RSMem.yml");
-    SimulationPlotter.plot(simulationResult, "I(M1)");
+//    SimulationResult simulationResult = JSpice.simulate("RSMem.yml");
+//    SimulationPlotter.plot(simulationResult, "I(M1)");
 
     // run via jar
     //     java -jar jspice.jar RSMem.yml
