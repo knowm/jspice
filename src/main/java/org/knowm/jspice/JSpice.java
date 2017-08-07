@@ -115,7 +115,7 @@ public class JSpice {
       if (isFromCommandline) {
 
       } else {
-        System.out.println(simulationResult.toString());
+//        System.out.println(simulationResult.toString());
         SimulationPlotter.plot(simulationResult, new String[]{dcSweepConfig.getObserveID()});
       }
       return simulationResult;
@@ -140,7 +140,7 @@ public class JSpice {
 
       } else {
 
-        System.out.println(simulationResult.toString());
+//        System.out.println(simulationResult.toString());
 
 //        // plot
 //        SimulationPlotter.plotAll(simulationResult);
