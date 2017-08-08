@@ -29,7 +29,7 @@ import java.util.Map.Entry;
  */
 public class ConvergenceTracker {
 
-  private static final int MAX_NUM_ITERATIONS = 1000;
+  private static final int MAX_NUM_ITERATIONS = 10000;
 
   /**
    * relative tolerance
