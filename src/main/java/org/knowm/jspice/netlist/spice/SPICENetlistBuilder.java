@@ -317,7 +317,8 @@ public class SPICENetlistBuilder {
       Map<String, String> modelMap = memristorsModelsMap.get(modelID);
       //      System.out.println("modelLine " + modelLine);
 
-      netlistBuilder.addNetlistMMSSMemristor(memristorID, paramsMap.get("Rinit"),
+      netlistBuilder.addNetlistMMSSMemristor(memristorID,
+          SPICEUtils.doubleFromString(modelMap.get("Rinit")),
           SPICEUtils.doubleFromString(modelMap.get("Ron")),
           SPICEUtils.doubleFromString(modelMap.get("Roff")),
           SPICEUtils.doubleFromString(modelMap.get("Tau")),
@@ -335,7 +336,7 @@ public class SPICENetlistBuilder {
 
   public static List<String> getPreProcessedLines(String fileName, ConfigurationSourceProvider configurationSourceProvider) throws IOException {
 
-//    System.out.println("fileName = " + fileName);
+    System.out.println("fileName = " + fileName);
 
     List<String> netlistLines = new ArrayList<>();
 
