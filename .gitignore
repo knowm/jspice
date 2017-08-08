@@ -8,3 +8,5 @@ bin/
 .idea/
 *.iml
 dependency-reduced-pom.xml
+*.out
+*.cir
