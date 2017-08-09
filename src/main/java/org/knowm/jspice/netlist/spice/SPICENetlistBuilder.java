@@ -249,14 +249,17 @@ public class SPICENetlistBuilder {
           double v2 = SPICEUtils.doubleFromString(v2AsString, 0);
           BigDecimal width = SPICEUtils.bigDecimalFromString(widthAsString, "0");
           BigDecimal period = SPICEUtils.bigDecimalFromString(periodAsString, "0");
-
+          
           double dcOffset = (v1 + v2) / 2;
           double amplitude = Math.abs(v1 - v2) / 2;
+          
+          
           BigDecimal frequency = BigDecimal.ONE.divide(period, MathContext.DECIMAL128);
           BigDecimal dutyCycle = width.divide(period,  MathContext.DECIMAL128);
           BigDecimal phase = v2 > v1 ? BigDecimal.ZERO : period.divide(new BigDecimal("2"),  MathContext.DECIMAL128);
 
           drivers.add(new Pulse(id, dcOffset, phase.toString(), amplitude, frequency.toString(), dutyCycle.toString()));
+         
         }
 
       } else if (line.startsWith(".TRAN") || line.startsWith(".tran")) {
@@ -317,7 +320,8 @@ public class SPICENetlistBuilder {
       Map<String, String> modelMap = memristorsModelsMap.get(modelID);
       //      System.out.println("modelLine " + modelLine);
 
-      netlistBuilder.addNetlistMMSSMemristor(memristorID, paramsMap.get("Rinit"),
+      netlistBuilder.addNetlistMMSSMemristor(memristorID,
+          SPICEUtils.doubleFromString(modelMap.get("Rinit")),
           SPICEUtils.doubleFromString(modelMap.get("Ron")),
           SPICEUtils.doubleFromString(modelMap.get("Roff")),
           SPICEUtils.doubleFromString(modelMap.get("Tau")),

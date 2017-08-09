@@ -22,6 +22,7 @@
 package org.knowm.jspice.simulate.transientanalysis.driver;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -58,7 +59,8 @@ public class Pulse extends Driver {
     BigDecimal remainderTime = (time.add(phaseBD)).remainder(T).multiply(point5).divide(dutyCycleBD);
 
     // up phase
-    if (BigDecimal.ZERO.compareTo(remainderTime) <= 0 && remainderTime.multiply(T).compareTo(point5.divide(frequencyBD).multiply(T)) < 0) {
+    if (BigDecimal.ZERO.compareTo(remainderTime) <= 0 && remainderTime.multiply(T).compareTo(point5.divide(frequencyBD, 5, RoundingMode.HALF_UP).multiply(T)) < 0) {
+    //  if (BigDecimal.ZERO.compareTo(remainderTime) <= 0 && remainderTime.multiply(T).compareTo(point5.divide(frequencyBD).multiply(T)) < 0) {
       return amplitude + dcOffset;
     }
 

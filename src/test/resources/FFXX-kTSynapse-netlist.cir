@@ -1,15 +1,12 @@
 .INCLUDE "2-1_kTSynapse.sub"
 
-.PARAM Rinit = 1000
-
-
 VA A 0 DC 0 PULSE(0 .5 0 0 0 5u 10u) AC 0
 VB B 0 DC 0 PULSE(0 -.5 0 0 0 5u 10u) AC 0
 
 XX1 A B y kTSynapse2-1
 
 .model MRM5 memristor ( level=5
-+ Roff=1500 Ron=500
++ Rinit=1000 Roff=1500 Ron=500
 + Voff=0.27 Von=0.27
 + Tau=0.0001 )
 

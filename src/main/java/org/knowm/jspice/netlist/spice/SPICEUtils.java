@@ -79,6 +79,12 @@ public class SPICEUtils {
     return doubleFromString(value);
   }
 
+  static String doubleToString(double doubleValue) {
+
+      return String.valueOf(doubleValue);
+     
+  }
+
   public static BigDecimal bigDecimalFromString(String value) {
 
     // take care of units
