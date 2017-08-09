@@ -7,7 +7,7 @@ V1 Vin 0 DC 0 PULSE( 2  0 0N 1N 1N 5e-06 1.0002e-05)  AC 0
 .model MRM5 memristor ( level=5 Rinit=1500
 + Roff=1500 Ron=500 Voff=0.27 Von=0.27
 + Tau=0.0001 Phi=1.0
-+ Sfa=0.0 Sfb=0.0 Sra=0.0 Srb=0.0 )
++ Sfa=0.0 Sfb=0.0 Sra=0.0 Srb=0.0  Rinit=500 )
 
 .STEP V1:V2 LIST 0.25 0.5 0.75 1.0
 .tran 1us 50us

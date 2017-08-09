@@ -1,0 +1,14 @@
+
+
+VA A 0 DC 0 PULSE(0 -.5 0 0 0 1 2) AC 0
+
+YMEMRISTOR MA A 0 MA
+
+.model MA memristor ( level=5
++ Roff=5000 Ron=500
++ Voff=0.27 Von=0.27
++ Tau=0.0001 Rinit=${R_A} )
+
+.tran 2us 10us
+
+.END

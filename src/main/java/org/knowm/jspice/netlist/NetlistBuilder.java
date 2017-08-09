@@ -91,6 +91,15 @@ public class NetlistBuilder {
     return this;
   }
 
+  public NetlistBuilder addNetlistMSSMemristor(String id, double rInit, double rOn, double rOff, double n, double tau, double vOn, double vOff, double
+      phi,
+      double schottkyForwardAlpha, double schottkyForwardBeta, double schottkyReverseAlpha, double schottkyReverseBeta, String... nodes) {
+
+    netlistComponents.add(new NetlistMSSMemristor(id, rInit, rOn, rOff, n, tau, vOn, vOff, phi, schottkyForwardAlpha, schottkyForwardBeta,
+        schottkyReverseAlpha, schottkyReverseBeta, nodes));
+    return this;
+  }
+
   public NetlistBuilder addDCOPSimulationConfig() {
 
     this.simulationConfig = new DCOPConfig();

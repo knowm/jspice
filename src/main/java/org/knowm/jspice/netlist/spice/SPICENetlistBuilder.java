@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,10 +42,10 @@ public class SPICENetlistBuilder {
 
   public static Netlist buildFromSPICENetlist(String fileName, ConfigurationSourceProvider configurationSourceProvider) throws IOException {
 
-    System.out.println("...............Preprocessing the Netlist.................");
+//    System.out.println("...............Preprocessing the Netlist.................");
     List<String> netlistLines = getPreProcessedLines(fileName, configurationSourceProvider);
 
-    System.out.println("...............Looking for .Includes.................");
+//    System.out.println("...............Looking for .Includes.................");
 
     // check if there is an .INCLUDE directive
     Map<String, SPICESubckt> subcircuitMap = new HashMap<>();
@@ -98,10 +97,10 @@ public class SPICENetlistBuilder {
       }
     }
 
-    System.out.println("subcircuitMap = " + Arrays.toString(subcircuitMap.entrySet().toArray()));
+//    System.out.println("subcircuitMap = " + Arrays.toString(subcircuitMap.entrySet().toArray()));
 
     // replace subckts with mapped components to List
-    System.out.println("...............Adding subckts to netlist.................");
+//    System.out.println("...............Adding subckts to netlist.................");
 
     List<String> linesWithSubckts = new ArrayList<>();
 
@@ -142,7 +141,7 @@ public class SPICENetlistBuilder {
 
     }
 
-    System.out.println("...............Parsing the Netlist.................");
+//    System.out.println("...............Parsing the Netlist.................");
 
     // Temporary Lists/Maps
     NetlistBuilder netlistBuilder = new NetlistBuilder();

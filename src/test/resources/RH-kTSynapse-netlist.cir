@@ -1,0 +1,14 @@
+
+
+VY y 0 DC 0 PULSE(0 -.5 0 0 0 1 2) AC 0
+
+YMEMRISTOR MB y 0 MB
+
+.model MB memristor ( level=5
++ Roff=5000 Ron=500
++ Voff=0.27 Von=0.27
++ Tau=0.0001 Rinit=${R_B} )
+
+.tran 2us 10us
+
+.END

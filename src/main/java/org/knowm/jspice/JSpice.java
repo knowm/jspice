@@ -43,6 +43,7 @@ import io.dropwizard.configuration.ConfigurationException;
 import io.dropwizard.configuration.ConfigurationFactory;
 import io.dropwizard.configuration.ConfigurationSourceProvider;
 import io.dropwizard.configuration.FileConfigurationSourceProvider;
+import io.dropwizard.configuration.ResourceConfigurationSourceProvider;
 import io.dropwizard.configuration.YamlConfigurationFactory;
 import io.dropwizard.jackson.Jackson;
 import io.dropwizard.validation.BaseValidator;
@@ -71,7 +72,12 @@ public class JSpice {
     // SPICE Netlist, must end in `.cir`
     if (fileName.endsWith(".cir")) {
 
-      netlist = SPICENetlistBuilder.buildFromSPICENetlist(fileName, new FileConfigurationSourceProvider());
+      try {
+        netlist = SPICENetlistBuilder.buildFromSPICENetlist(fileName, new FileConfigurationSourceProvider());
+      } catch (FileNotFoundException e) {
+        // could not load from file, try from resources (for testing purposes usually)
+        netlist = SPICENetlistBuilder.buildFromSPICENetlist(fileName, new ResourceConfigurationSourceProvider());
+      }
 
       // YAML file
     } else {
@@ -85,7 +91,7 @@ public class JSpice {
     }
 
     // 3. Run it  
-        System.out.println("netList: \n" + netlist);
+//    System.out.println("netList: \n" + netlist);
     return simulate(netlist);
 
   }
@@ -115,7 +121,7 @@ public class JSpice {
       if (isFromCommandline) {
 
       } else {
-        System.out.println(simulationResult.toString());
+//        System.out.println(simulationResult.toString());
         SimulationPlotter.plot(simulationResult, new String[]{dcSweepConfig.getObserveID()});
       }
       return simulationResult;
@@ -140,7 +146,7 @@ public class JSpice {
 
       } else {
 
-        System.out.println(simulationResult.toString());
+//        System.out.println(simulationResult.toString());
 
 //        // plot
 //        SimulationPlotter.plotAll(simulationResult);
