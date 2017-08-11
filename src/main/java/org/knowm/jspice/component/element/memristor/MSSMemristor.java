@@ -79,8 +79,8 @@ public class MSSMemristor extends Memristor {
     super(id);
 
     this.rInit = rInit;
-    if (rInit > rOff || rInit < rOn) {
-      throw new IllegalArgumentException("Memristance must be between rOn and rOff, inclusive!!!");
+    if (rInit - .00000001 > rOff || rInit + .0000001 < rOn) { // considering double imprecision errors
+      throw new IllegalArgumentException("Memristance must be between rOn and rOff, inclusive!!! rInit= " + rInit);
     }
 
     // init the device in a certain state
@@ -193,7 +193,7 @@ public class MSSMemristor extends Memristor {
   public double getConductance() {
 
     double G = (x / rOn + (1 - x) / rOff);
-//     System.out.println("R= " + 1 / G);
+    //     System.out.println("R= " + 1 / G);
     return G;
   }
 
