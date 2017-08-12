@@ -15,7 +15,6 @@ public class SPICEUtils {
     } else {
       return null;
     }
-
   }
 
   static double doubleFromString(String value) {

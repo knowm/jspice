@@ -1,7 +1,5 @@
 .INCLUDE "2-1_kTSynapse.sub"
 
-
-
 VA A 0 DC 0 PULSE(0 .5 0 0 0 5u 10u) AC 0
 VB B 0 DC 0 PULSE(0 -.5 0 0 0 5u 10u) AC 0
 

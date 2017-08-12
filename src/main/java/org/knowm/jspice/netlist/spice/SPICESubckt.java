@@ -7,7 +7,7 @@ import java.util.List;
 class SPICESubckt {
 
   private String id;
-  private List<String> nodes = new ArrayList();
+  private List<String> nodes = new ArrayList<>();
   private List<String> lines = new ArrayList<>();
 
   public void setId(String id) {
@@ -36,11 +36,7 @@ class SPICESubckt {
 
   @Override
   public String toString() {
-    return "SPICESubckt{" +
-        "id='" + id + '\'' +
-        ", nodes=" + Arrays.toString(nodes.toArray()) +
-        ", lines=" + Arrays.toString(lines.toArray()) +
-        '}';
+    return "SPICESubckt{" + "id='" + id + '\'' + ", nodes=" + Arrays.toString(nodes.toArray()) + ", lines=" + Arrays.toString(lines.toArray()) + '}';
   }
 
 }

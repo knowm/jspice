@@ -129,7 +129,7 @@ public class SPICENetlistBuilder {
           newSubcktLine = newSubcktLine.replace(componentID, componentID + "_" + id); // append the id
           for (Entry<String, Integer> stringIntegerEntry : nodeIndexMap.entrySet()) {
 
-            newSubcktLine.replaceAll(stringIntegerEntry.getKey(), tokens[stringIntegerEntry.getValue() + 1]);
+            newSubcktLine = newSubcktLine.replaceAll(stringIntegerEntry.getKey(), tokens[stringIntegerEntry.getValue() + 1]);
           }
 
           linesWithSubckts.add(newSubcktLine);
