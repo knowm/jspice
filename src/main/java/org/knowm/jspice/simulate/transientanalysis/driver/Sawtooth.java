@@ -22,6 +22,7 @@
 package org.knowm.jspice.simulate.transientanalysis.driver;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -36,11 +37,8 @@ public class Sawtooth extends Driver {
    * @param amplitude
    * @param frequency
    */
-  public Sawtooth(@JsonProperty("id") String id,
-      @JsonProperty("dc_offset") double dcOffset,
-      @JsonProperty("phase") String phase,
-      @JsonProperty("amplitude") double amplitude,
-      @JsonProperty("frequency") String frequency) {
+  public Sawtooth(@JsonProperty("id") String id, @JsonProperty("dc_offset") double dcOffset, @JsonProperty("phase") String phase,
+      @JsonProperty("amplitude") double amplitude, @JsonProperty("frequency") String frequency) {
 
     super(id, dcOffset, phase, amplitude, frequency);
   }
@@ -51,7 +49,8 @@ public class Sawtooth extends Driver {
     BigDecimal remainderTime = (time.add(phaseBD)).remainder(T);
 
     // up phase
-    if (BigDecimal.ZERO.compareTo(remainderTime) <= 0 && remainderTime.multiply(T).compareTo(point5.divide(frequencyBD).multiply(T)) < 0) {
+    if (BigDecimal.ZERO.compareTo(remainderTime) <= 0
+        && remainderTime.multiply(T).compareTo(point5.divide(frequencyBD, MathContext.DECIMAL128).multiply(T)) < 0) {
       return 2 * frequencyBD.doubleValue() * amplitude * (remainderTime.doubleValue()) + dcOffset;
     }
 

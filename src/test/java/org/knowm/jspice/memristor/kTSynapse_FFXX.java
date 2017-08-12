@@ -37,11 +37,11 @@ public class kTSynapse_FFXX {
 
   public static void main(String[] args) throws IOException, ConfigurationException {
 
-//    go1();
-//    go2();
-//    go3();
-    go4();
-//    goSPICE();
+    //    go1();
+    //    go2();
+    //    go3();
+    //    go4();
+    goSPICE();
   }
 
   /**
@@ -52,8 +52,7 @@ public class kTSynapse_FFXX {
     Netlist netlist = new kTSynapse();
 
     String frequency = "100kHz";
-    TransientConfig transientConfig = new TransientConfig("1000us", "500ns",
-        new Square("VA", 0.25, "0", 0.25, frequency),
+    TransientConfig transientConfig = new TransientConfig("1000us", "500ns", new Square("VA", 0.25, "0", 0.25, frequency),
         new Square("VB", -0.25, "0", -0.25, frequency));
     netlist.setSimulationConfig(transientConfig);
     SimulationResult simulationResult = JSpice.simulate(netlist);
@@ -70,9 +69,7 @@ public class kTSynapse_FFXX {
     Netlist netlist = new kTSynapse();
 
     String frequency = "100kHz";
-    TransientConfig transientConfig = new TransientConfig("1000us", "500ns",
-        new Square("VA", 0.5, "0", 0.5, frequency),
-        new DC("VB", 0));
+    TransientConfig transientConfig = new TransientConfig("1000us", "500ns", new Square("VA", 0.5, "0", 0.5, frequency), new DC("VB", 0));
     netlist.setSimulationConfig(transientConfig);
     SimulationResult simulationResult = JSpice.simulate(netlist);
     SimulationPlotter.plot(simulationResult, "V(y)");
@@ -88,9 +85,7 @@ public class kTSynapse_FFXX {
     Netlist netlist = new kTSynapse2();
 
     String frequency = "100kHz";
-    TransientConfig transientConfig = new TransientConfig("1000us", "500ns",
-        new Square("VA", 0.5, "0", 0.5, frequency)
-    );
+    TransientConfig transientConfig = new TransientConfig("1000us", "500ns", new Square("VA", 0.5, "0", 0.5, frequency));
     netlist.setSimulationConfig(transientConfig);
     SimulationResult simulationResult = JSpice.simulate(netlist);
     SimulationPlotter.plot(simulationResult, "V(y)");
@@ -106,8 +101,7 @@ public class kTSynapse_FFXX {
     Netlist netlist = new kTSynapse();
 
     String frequency = "100kHz";
-    TransientConfig transientConfig = new TransientConfig("1000us", "500ns",
-        new Square("VA", 0.05, "0", 0.05, frequency),
+    TransientConfig transientConfig = new TransientConfig("1000us", "500ns", new Square("VA", 0.05, "0", 0.05, frequency),
         new Square("VB", -0.05, "0", -0.05, frequency));
     netlist.setSimulationConfig(transientConfig);
     SimulationResult simulationResult = JSpice.simulate(netlist);

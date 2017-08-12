@@ -42,10 +42,10 @@ public class SPICENetlistBuilder {
 
   public static Netlist buildFromSPICENetlist(String fileName, ConfigurationSourceProvider configurationSourceProvider) throws IOException {
 
-//    System.out.println("...............Preprocessing the Netlist.................");
+    //    System.out.println("...............Preprocessing the Netlist.................");
     List<String> netlistLines = getPreProcessedLines(fileName, configurationSourceProvider);
 
-//    System.out.println("...............Looking for .Includes.................");
+    //    System.out.println("...............Looking for .Includes.................");
 
     // check if there is an .INCLUDE directive
     Map<String, SPICESubckt> subcircuitMap = new HashMap<>();
@@ -53,7 +53,7 @@ public class SPICENetlistBuilder {
     for (int i = 0; i < netlistLines.size(); i++) {
 
       String line = netlistLines.get(i);
-//      System.out.println("line: " + line);
+      //      System.out.println("line: " + line);
 
       if (line.startsWith(".INCLUDE") || line.startsWith(".include")) {
 
@@ -65,7 +65,7 @@ public class SPICENetlistBuilder {
         for (int j = 0; j < subCircuitNetlistLines.size(); j++) {
 
           String subCircuitNetlistLine = subCircuitNetlistLines.get(j);
-//          System.out.println("subCircuitNetlistLine: " + subCircuitNetlistLine);
+          //          System.out.println("subCircuitNetlistLine: " + subCircuitNetlistLine);
 
           if (subCircuitNetlistLine.startsWith(".SUBCKT") || subCircuitNetlistLine.startsWith(".subckt")) {
 
@@ -97,10 +97,10 @@ public class SPICENetlistBuilder {
       }
     }
 
-//    System.out.println("subcircuitMap = " + Arrays.toString(subcircuitMap.entrySet().toArray()));
+    //    System.out.println("subcircuitMap = " + Arrays.toString(subcircuitMap.entrySet().toArray()));
 
     // replace subckts with mapped components to List
-//    System.out.println("...............Adding subckts to netlist.................");
+    //    System.out.println("...............Adding subckts to netlist.................");
 
     List<String> linesWithSubckts = new ArrayList<>();
 
@@ -108,7 +108,7 @@ public class SPICENetlistBuilder {
     for (int i = 0; i < netlistLines.size(); i++) {
 
       String line = netlistLines.get(i);
-//      System.out.println("line: " + line);
+      //      System.out.println("line: " + line);
 
       if (line.startsWith("X") || line.startsWith("x")) {
 
@@ -141,7 +141,7 @@ public class SPICENetlistBuilder {
 
     }
 
-//    System.out.println("...............Parsing the Netlist.................");
+    //    System.out.println("...............Parsing the Netlist.................");
 
     // Temporary Lists/Maps
     NetlistBuilder netlistBuilder = new NetlistBuilder();
@@ -154,7 +154,7 @@ public class SPICENetlistBuilder {
     for (int i = 0; i < linesWithSubckts.size(); i++) {
 
       String line = linesWithSubckts.get(i);
-//      System.out.println("line: " + line);
+      //      System.out.println("line: " + line);
 
       if (line.startsWith(".PARAM") || line.startsWith(".param")) {
 
@@ -228,7 +228,7 @@ public class SPICENetlistBuilder {
         int pulseStartIndex = line.indexOf("PULSE");
         if (pulseStartIndex >= 0) {
           String pulseDef = line.substring(pulseStartIndex + 6, line.indexOf(")")).trim();
-//          System.out.println("pulseDef = " + pulseDef);
+          //          System.out.println("pulseDef = " + pulseDef);
 
           // PULSE( {v1} {v2} {tdelay} {trise} {tfall} {width} {period} )
           tokens = pulseDef.split("\\s+");
@@ -237,10 +237,10 @@ public class SPICENetlistBuilder {
           String widthAsString = SPICEUtils.ifExists(tokens, 5);
           String periodAsString = SPICEUtils.ifExists(tokens, 6);
 
-//          System.out.println("v1AsString = " + v1AsString);
-//          System.out.println("v2AsString = " + v2AsString);
-//          System.out.println("widthAsString = " + widthAsString);
-//          System.out.println("periodAsString = " + periodAsString);
+          //          System.out.println("v1AsString = " + v1AsString);
+          //          System.out.println("v2AsString = " + v2AsString);
+          //          System.out.println("widthAsString = " + widthAsString);
+          //          System.out.println("periodAsString = " + periodAsString);
 
           // conversion from SPICE to JSPICE driver
 
@@ -252,8 +252,8 @@ public class SPICENetlistBuilder {
           double dcOffset = (v1 + v2) / 2;
           double amplitude = Math.abs(v1 - v2) / 2;
           BigDecimal frequency = BigDecimal.ONE.divide(period, MathContext.DECIMAL128);
-          BigDecimal dutyCycle = width.divide(period,  MathContext.DECIMAL128);
-          BigDecimal phase = v2 > v1 ? BigDecimal.ZERO : period.divide(new BigDecimal("2"),  MathContext.DECIMAL128);
+          BigDecimal dutyCycle = width.divide(period, MathContext.DECIMAL128);
+          BigDecimal phase = v2 > v1 ? BigDecimal.ZERO : period.divide(new BigDecimal("2"), MathContext.DECIMAL128);
 
           drivers.add(new Pulse(id, dcOffset, phase.toString(), amplitude, frequency.toString(), dutyCycle.toString()));
         }
@@ -279,7 +279,7 @@ public class SPICENetlistBuilder {
         String[] tokens = line.split("\\s+");
 
         String modelID = tokens[1];
-        String modelLine = line.substring(line.indexOf("(") + 1, line.indexOf(")") - 1).trim();
+        String modelLine = line.substring(line.indexOf("(") + 1, line.indexOf(")")).trim();
         String[] modelTokens = modelLine.split("\\s+");
 
         Map<String, String> modelMap = new HashMap<>();
@@ -316,18 +316,12 @@ public class SPICENetlistBuilder {
       Map<String, String> modelMap = memristorsModelsMap.get(modelID);
       //      System.out.println("modelLine " + modelLine);
 
-      netlistBuilder.addNetlistMMSSMemristor(memristorID,
-          SPICEUtils.doubleFromString(modelMap.get("Rinit")),
-          SPICEUtils.doubleFromString(modelMap.get("Ron")),
-          SPICEUtils.doubleFromString(modelMap.get("Roff")),
-          SPICEUtils.doubleFromString(modelMap.get("Tau")),
-          SPICEUtils.doubleFromString(modelMap.get("Von")),
-          SPICEUtils.doubleFromString(modelMap.get("Voff")),
-          SPICEUtils.doubleFromString(modelMap.get("Phi"), 1),
-          SPICEUtils.doubleFromString(modelMap.get("Sfa"), 0),
-          SPICEUtils.doubleFromString(modelMap.get("Sfb"), 0),
-          SPICEUtils.doubleFromString(modelMap.get("Sra"), 0),
-          SPICEUtils.doubleFromString(modelMap.get("Srb"), 0), nodeA, nodeB);
+      netlistBuilder.addNetlistMMSSMemristor(memristorID, SPICEUtils.doubleFromString(modelMap.get("Rinit")),
+          SPICEUtils.doubleFromString(modelMap.get("Ron")), SPICEUtils.doubleFromString(modelMap.get("Roff")),
+          SPICEUtils.doubleFromString(modelMap.get("Tau")), SPICEUtils.doubleFromString(modelMap.get("Von")),
+          SPICEUtils.doubleFromString(modelMap.get("Voff")), SPICEUtils.doubleFromString(modelMap.get("Phi"), 1),
+          SPICEUtils.doubleFromString(modelMap.get("Sfa"), 0), SPICEUtils.doubleFromString(modelMap.get("Sfb"), 0),
+          SPICEUtils.doubleFromString(modelMap.get("Sra"), 0), SPICEUtils.doubleFromString(modelMap.get("Srb"), 0), nodeA, nodeB);
     }
 
     return netlistBuilder.build();
@@ -335,7 +329,7 @@ public class SPICENetlistBuilder {
 
   public static List<String> getPreProcessedLines(String fileName, ConfigurationSourceProvider configurationSourceProvider) throws IOException {
 
-//    System.out.println("fileName = " + fileName);
+    //    System.out.println("fileName = " + fileName);
 
     List<String> netlistLines = new ArrayList<>();
 
@@ -346,10 +340,10 @@ public class SPICENetlistBuilder {
 
       while (scanner.hasNext()) {
 
-//        System.out.println("multilineModelDef = " + multilineModelDef);
+        //        System.out.println("multilineModelDef = " + multilineModelDef);
 
         String nextLine = scanner.nextLine().trim();
-//        System.out.println("nextLine = " + nextLine);
+        //        System.out.println("nextLine = " + nextLine);
 
         if (nextLine.startsWith("*")) {
           continue;

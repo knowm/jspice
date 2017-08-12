@@ -22,6 +22,7 @@
 package org.knowm.jspice.simulate.transientanalysis.driver;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -40,12 +41,8 @@ public class Pulse extends Driver {
    * @param frequency
    * @param dutyCycle between 0 and 1
    */
-  public Pulse(@JsonProperty("id") String id,
-      @JsonProperty("dc_offset") double dcOffset,
-      @JsonProperty("phase") String phase,
-      @JsonProperty("amplitude") double amplitude,
-      @JsonProperty("frequency") String frequency,
-      @JsonProperty("duty") String dutyCycle) {
+  public Pulse(@JsonProperty("id") String id, @JsonProperty("dc_offset") double dcOffset, @JsonProperty("phase") String phase,
+      @JsonProperty("amplitude") double amplitude, @JsonProperty("frequency") String frequency, @JsonProperty("duty") String dutyCycle) {
 
     super(id, dcOffset, phase, amplitude, frequency);
     this.dutyCycle = dutyCycle;
@@ -58,7 +55,8 @@ public class Pulse extends Driver {
     BigDecimal remainderTime = (time.add(phaseBD)).remainder(T).multiply(point5).divide(dutyCycleBD);
 
     // up phase
-    if (BigDecimal.ZERO.compareTo(remainderTime) <= 0 && remainderTime.multiply(T).compareTo(point5.divide(frequencyBD).multiply(T)) < 0) {
+    if (BigDecimal.ZERO.compareTo(remainderTime) <= 0
+        && remainderTime.multiply(T).compareTo(point5.divide(frequencyBD, MathContext.DECIMAL128).multiply(T)) < 0) {
       return amplitude + dcOffset;
     }
 
