@@ -698,7 +698,7 @@ YMEMRISTOR MR2 y B MRM5
 
 ## Continuous Integration
 
-[![Build Status](https://travis-ci.org/knowm/jspice.png?branch=develop)](https://travis-ci.org/knowm/jspice.png)  
+[![Build Status](https://travis-ci.org/knowm/jspice.png?branch=master)](https://travis-ci.org/knowm/jspice.png)
 [Build History](https://travis-ci.org/knowm/jspice/builds)
 
 ## Building
