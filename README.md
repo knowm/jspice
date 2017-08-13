@@ -709,7 +709,7 @@ JSpice is built with Maven, which also handles dependency management.
 
     cd path/to/project
     mvn clean package  
-    mvn javadoc:aggregate  
+    mvn javadoc:javadoc
 
 ### maven-license-plugin
 

@@ -79,7 +79,7 @@ public class MSSMemristor extends Memristor {
     super(id);
 
     this.rInit = rInit;
-    if (rInit - .00000001 > rOff || rInit + .0000001 < rOn) { // considering double imprecision errors
+    if (rInit - .0001 > rOff || rInit + .0001 < rOn) { // considering double imprecision errors
       throw new IllegalArgumentException("Memristance must be between rOn and rOff, inclusive!!! rInit= " + rInit);
     }
 
