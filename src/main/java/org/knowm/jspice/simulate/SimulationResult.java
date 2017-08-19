@@ -24,26 +24,29 @@ package org.knowm.jspice.simulate;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Date;
+import java.util.Calendar;
+import org.knowm.jspice.netlist.spice.SPICENetlistBuilder;
 
 public class SimulationResult {
 
   private final String xDataLabel;
   private final String yDataLabel;
   private final Map<String, SimulationPlotData> simulationDataMap;
-
+  
   /**
    * Constructor
    *
    * @param xDataLabel
    * @param yDataLabel
    * @param simulationDataMap
-   */
-  public SimulationResult(String xDataLabel, String yDataLabel, Map<String, SimulationPlotData> simulationDataMap) {
+   */  public SimulationResult(String xDataLabel, String yDataLabel, Map<String, SimulationPlotData> simulationDataMap) {
 
     this.xDataLabel = xDataLabel;
     this.yDataLabel = yDataLabel;
     this.simulationDataMap = simulationDataMap;
   }
+
 
   public String getxDataLabel() {
 
@@ -115,4 +118,89 @@ public class SimulationResult {
     return sb.toString();
   }
 
+  public String toXyceRawString() {
+    
+    int count = 0;
+    StringBuilder sb = new StringBuilder();
+    Date today = Calendar.getInstance().getTime();
+
+    List<Number> xData = simulationDataMap.values().iterator().next().getxData();
+        
+    String returnString = System.getProperty("line.separator");
+    String sourceFilename = SPICENetlistBuilder.getSourceFile();
+    List<String> simOuts = SPICENetlistBuilder.getSimulatedOutputs();
+    
+    // System.out.println("Sim ouputs : " + simOuts);
+       
+    sb.append("Title: " + "Qucs 0.0.19 " + sourceFilename );
+    sb.append(returnString);
+
+    sb.append("Date: " + today.toString());
+    sb.append(returnString);
+    sb.append("Plotname: Transient Analysis");
+    sb.append(returnString);
+    sb.append("Flags: real");
+    sb.append(returnString);
+    sb.append("No. Variables: ");
+    sb.append(simOuts.size()+1);
+    sb.append(returnString);
+    sb.append("No. Points: ");
+    sb.append(xData.size());
+    sb.append(returnString);
+    sb.append("Variables:");
+    sb.append(returnString);
+    
+    // plot data labels    
+    sb.append("\t0\tTime\ttime");
+    sb.append(returnString);
+    count = 1;
+    // if label matches label specified on .PRINT line then append
+    // get simulation plot data from current simulation and compare to .PRINT specified vars
+    for (Entry<String, SimulationPlotData> entrySet : simulationDataMap.entrySet()) {
+      // 0  Time     time
+      // 1   I(VPR1) current
+      // 2   V(VIN)  voltage
+      // ...
+      String label = entrySet.getKey();
+      if (simOuts.parallelStream().anyMatch(label::contains)) {
+        sb.append("\t");
+        sb.append(count);
+        sb.append("\t");
+        sb.append(label);
+        sb.append("\t");
+        // data type
+        if (label.startsWith("I")) {
+          sb.append("current");
+        } else if (label.startsWith("V")) {
+          sb.append("voltage");
+        } else if (label.startsWith("R")) {
+          sb.append("resistance");
+        }
+        count++;
+        sb.append(returnString);
+      }
+    }
+    sb.append("Values:");
+    sb.append(returnString);
+    // write first time datum followed by Y-data values
+    count = 0;
+    do {
+      sb.append(count);
+      sb.append("\t");
+      sb.append(xData.get(count));
+      sb.append(returnString);
+      for (Entry<String, SimulationPlotData> entrySet : simulationDataMap.entrySet()) {
+        String label = entrySet.getKey();
+        if(simOuts.parallelStream().anyMatch(label::contains)) {
+          sb.append("\t");
+          sb.append(entrySet.getValue().getyData().get(count));
+          sb.append(returnString);
+        } 
+      }
+    sb.append(returnString);
+      
+    } while (++count < xData.size());
+    //sb.append("End of JSpice Simulation");
+    return sb.toString();
+  }
 }

@@ -62,23 +62,25 @@ public class JSpice {
     isFromCommandline = true;
     fileName = args[0];
     simulate(args[0]);
-
+ 
   }
 
   public static SimulationResult simulate(String fileName) throws IOException, ConfigurationException {
 
     Netlist netlist = null;
-
+    
     // SPICE Netlist, must end in `.cir`
     if (fileName.endsWith(".cir")) {
-
+      
+      System.out.println("...............Executing netList.... " + fileName);
+      
       try {
         netlist = SPICENetlistBuilder.buildFromSPICENetlist(fileName, new FileConfigurationSourceProvider());
       } catch (FileNotFoundException e) {
         // could not load from file, try from resources (for testing purposes usually)
         netlist = SPICENetlistBuilder.buildFromSPICENetlist(fileName, new ResourceConfigurationSourceProvider());
       }
-
+      
       // YAML file
     } else {
 
@@ -91,9 +93,8 @@ public class JSpice {
     }
 
     // 3. Run it  
-//    System.out.println("netList: \n" + netlist);
+  //  System.out.println("netList: \n" + netlist);
     return simulate(netlist);
-
   }
 
   public static SimulationResult simulate(Netlist netlist) {
@@ -128,20 +129,35 @@ public class JSpice {
 
     } else if (simulationConfig instanceof TransientConfig) {
 
-      TransientConfig simulationConfigTransient = (TransientConfig) simulationConfig;
+        TransientConfig simulationConfigTransient = (TransientConfig) simulationConfig;
 
-      // run TransientAnalysis
-      TransientAnalysis transientAnalysis = new TransientAnalysis(netlist, simulationConfigTransient);
-      SimulationResult simulationResult = transientAnalysis.run();
+        // run TransientAnalysis
+        TransientAnalysis transientAnalysis = new TransientAnalysis(netlist, simulationConfigTransient);
+        SimulationResult simulationResult = transientAnalysis.run();
 
-      if (isFromCommandline) {
-        String xyceString = simulationResult.toXyceString();
-        System.out.println(simulationResult.toXyceString());
-        try (PrintStream out = new PrintStream(new FileOutputStream(fileName + ".out"))) {
-          out.print(xyceString);
-        } catch (FileNotFoundException e) {
-          e.printStackTrace();
-        }
+        if (isFromCommandline) {
+          String resFilename = SPICENetlistBuilder.getResultsFile();
+          System.out.println("...............Writing simulation results to.........." + resFilename);
+        /**  
+          // output as Xyce STD
+          String xyceString = simulationResult.toXyceString();
+          System.out.println(xyceString = simulationResult.toXyceString());
+          //try (PrintStream out = new PrintStream(new FileOutputStream(fileName + ".out"))) {
+          try (PrintStream out = new PrintStream(new FileOutputStream(resFilename + ".prn"))) {
+              out.print(xyceString);
+          } catch (FileNotFoundException e) {
+            e.printStackTrace();
+          }
+        */  
+          // output as SPICE Raw
+          String xyceRawString = simulationResult.toXyceRawString();
+        //  System.out.println(xyceRawString = simulationResult.toXyceRawString());
+          try (PrintStream out = new PrintStream(new FileOutputStream(resFilename))) {
+            out.print(xyceRawString);
+          } catch (FileNotFoundException e) {
+            e.printStackTrace();
+          }
+          
         //        SimulationPlotter.plotTransientInOutCurve("I/V Curve", simulationResult, "V(Vmr)", "I(MR1)");
 
       } else {
@@ -158,7 +174,6 @@ public class JSpice {
     } else {
       return null;
     }
-
   }
-
 }
+  

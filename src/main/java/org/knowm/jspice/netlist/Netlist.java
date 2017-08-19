@@ -492,7 +492,7 @@ public class Netlist implements Konfigurable {
     // make sure all nodes have at minimum two components connected to it
     Map<String, Integer> nodeId2CountMap = new HashMap<>();
     for (NetlistComponent netListComponent : getNetlistComponents()) {
-      // System.out.println(netListComponent.getComponent().getID() + ": " + netListComponent.getNodeA() + "-" + netListComponent.getNodeB());
+       // System.out.println(netListComponent.getComponent().getID() + ": " + netListComponent.getNodeA() + "-" + netListComponent.getNodeB());
 
       for (int i = 0; i < netListComponent.getNodesAsArray().length; i++) {
         String nodeID = netListComponent.getNodesAsArray()[i];

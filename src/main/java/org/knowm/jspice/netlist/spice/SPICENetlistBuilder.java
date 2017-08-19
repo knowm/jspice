@@ -40,12 +40,51 @@ import io.dropwizard.configuration.ConfigurationSourceProvider;
 
 public class SPICENetlistBuilder {
 
+  private static String resultsFile = "";
+  private static String sourceFile = "";
+  private static List<String> simOutputs;
+
+  public static String getResultsFile() {
+    
+    return resultsFile;
+  }
+     
+  public static void putResultsFile(String results) {
+    
+    resultsFile = results;
+  }
+  public static String getSourceFile() {
+    
+    return sourceFile;
+  }
+    
+  public static void putSourceFile(String source) {
+    
+    sourceFile = source;
+  }
+
+  public static List<String> getSimulatedOutputs() {
+    
+    return simOutputs;
+  }
+
+  public static void putSimulatedOutputs(List<String> outputs) {
+    
+    simOutputs = outputs;
+  }
+    
+  
   public static Netlist buildFromSPICENetlist(String fileName, ConfigurationSourceProvider configurationSourceProvider) throws IOException {
 
-//    System.out.println("...............Preprocessing the Netlist.................");
+    String sourceFilename = fileName.replaceAll(".cir", ".sch");
+    putSourceFile (sourceFilename);
+    System.out.println("...............Source of netList.... " + sourceFile);
+    
+    System.out.println("...............Preprocessing the Netlist.................");
     List<String> netlistLines = getPreProcessedLines(fileName, configurationSourceProvider);
-
-//    System.out.println("...............Looking for .Includes.................");
+    
+      
+    System.out.println("...............Looking for .Includes.................");
 
     // check if there is an .INCLUDE directive
     Map<String, SPICESubckt> subcircuitMap = new HashMap<>();
@@ -53,7 +92,7 @@ public class SPICENetlistBuilder {
     for (int i = 0; i < netlistLines.size(); i++) {
 
       String line = netlistLines.get(i);
-//      System.out.println("line: " + line);
+      System.out.println("line: " + line);
 
       if (line.startsWith(".INCLUDE") || line.startsWith(".include")) {
 
@@ -65,7 +104,7 @@ public class SPICENetlistBuilder {
         for (int j = 0; j < subCircuitNetlistLines.size(); j++) {
 
           String subCircuitNetlistLine = subCircuitNetlistLines.get(j);
-//          System.out.println("subCircuitNetlistLine: " + subCircuitNetlistLine);
+          System.out.println("subCircuitNetlistLine: " + subCircuitNetlistLine);
 
           if (subCircuitNetlistLine.startsWith(".SUBCKT") || subCircuitNetlistLine.startsWith(".subckt")) {
 
@@ -94,13 +133,13 @@ public class SPICENetlistBuilder {
           }
 
         }
-      }
+      } 
     }
 
 //    System.out.println("subcircuitMap = " + Arrays.toString(subcircuitMap.entrySet().toArray()));
 
     // replace subckts with mapped components to List
-//    System.out.println("...............Adding subckts to netlist.................");
+    System.out.println("...............Adding subckts to netlist.................");
 
     List<String> linesWithSubckts = new ArrayList<>();
 
@@ -141,7 +180,7 @@ public class SPICENetlistBuilder {
 
     }
 
-//    System.out.println("...............Parsing the Netlist.................");
+    System.out.println("...............Parsing the Netlist.................");
 
     // Temporary Lists/Maps
     NetlistBuilder netlistBuilder = new NetlistBuilder();
@@ -149,7 +188,8 @@ public class SPICENetlistBuilder {
     Map<String, Double> paramsMap = new HashMap<>();
     Map<String, String> memristorsMap = new HashMap<>();
     Map<String, Map<String, String>> memristorsModelsMap = new HashMap<>();
-
+    
+    
     // For each line...
     for (int i = 0; i < linesWithSubckts.size(); i++) {
 
@@ -298,6 +338,8 @@ public class SPICENetlistBuilder {
         throw new IllegalArgumentException("Not yet Implemented!!!  >M");
       } else if (line.startsWith(".INCLUDE") || line.startsWith(".include")) {
         // valid, but skip as it's handeled above
+      } else if (line.startsWith(".PRINT") || line.startsWith(".print")) {
+        // valid, but skip as it's handeled above
       } else if (line.startsWith(".END") || line.startsWith(".end")) {
         // valid, but skip as it's handeled above
       } else {
@@ -317,7 +359,7 @@ public class SPICENetlistBuilder {
       String modelID = tokens[4];
 
       Map<String, String> modelMap = memristorsModelsMap.get(modelID);
-      //      System.out.println("modelLine " + modelLine);
+      //        System.out.println("modelLine " + modelLine);
 
       netlistBuilder.addNetlistMMSSMemristor(memristorID,
           SPICEUtils.doubleFromString(modelMap.get("Rinit")),
@@ -338,10 +380,11 @@ public class SPICENetlistBuilder {
 
   public static List<String> getPreProcessedLines(String fileName, ConfigurationSourceProvider configurationSourceProvider) throws IOException {
 
-//    System.out.println("fileName = " + fileName);
-
+    // System.out.println("fileName = " + fileName);
+    
     List<String> netlistLines = new ArrayList<>();
-
+    Map<String, String> printItemMap = new HashMap<>();
+    
     // create netlist from traditional SPICE netlist file.
     try (PeekableScanner scanner = new PeekableScanner(configurationSourceProvider.open(fileName))) {
 
@@ -364,12 +407,69 @@ public class SPICENetlistBuilder {
           continue;
         }
 
-        // TODO implement print
         if (nextLine.startsWith(".PRINT") || nextLine.startsWith(".print")) {
-          continue;
-        }
+          
+          System.out.println("...............Pre-Processing .Print.................");
+          
+          String[] printTokens = nextLine.split("\\s+");
+          String printVar;
 
-        // multi-line model def start
+          for (String printItem : printTokens) {
+            if (printItem.startsWith("Format") || printItem.startsWith("format")) {
+              String[] keyValue = printItem.split("=");
+              printItemMap.put(keyValue[0],keyValue[1]);
+            //  System.out.println("resFormat = " + keyValue[1]); 
+            }
+            if (printItem.startsWith("File") || printItem.startsWith("file")) {
+              String[] keyValue = printItem.split("=");
+              printItemMap.put(keyValue[0],keyValue[1]);
+              String resFilename = keyValue[1];
+              
+              String resPath = fileName.replaceAll("spice4qucs.tran.cir", resFilename);
+              putResultsFile(resPath);
+            }
+            if (printItem.startsWith("I") || printItem.startsWith("i")) {
+              //  convert i to uppercase I
+              printVar = printItem.substring(0, 1).toUpperCase() + printItem.substring(1);
+             // System.out.println("Var = " + printVar + " Var type = current");
+              printItemMap.put(printVar,"");
+            }
+              
+            if (printItem.startsWith("V") || printItem.startsWith("v")) {
+              //  convert v to uppercase V
+              printVar = printItem.substring(0, 1).toUpperCase() + printItem.substring(1);
+             // System.out.println("Var = " + printVar + " Var type = current");
+              printItemMap.put(printVar,"");
+            }
+             
+            if (printItem.startsWith("R") || printItem.startsWith("r")) {
+              // need to convert r to uppercase R
+              printVar = printItem.substring(0, 1).toUpperCase() + printItem.substring(1);
+            // System.out.println("Var = " + printVar + " Var type = current");
+              printItemMap.put(printVar,"");
+              }
+            }
+          
+          // TODO - implement simulation output vars if processing JSpice Script
+          List<String> simVars = new ArrayList();
+          
+          for (String printVars : printItemMap.keySet() ) {
+            //System.out.println("printItems " + printItemMap.get(printVar));
+            //}
+              if (printVars.startsWith("I") || 
+                printVars.startsWith("V") || 
+                printVars.startsWith("R")) {
+
+                  simVars.add(printVars);  
+                //  System.out.println("printVars : " + printVars);
+              }
+            //}
+            putSimulatedOutputs(simVars);
+          }
+          List<String> outputVars = getSimulatedOutputs();
+          System.out.println("Output Variables : " + outputVars);
+        }
+         // multi-line model def start
         if (nextLine.startsWith(".model") && scanner.peek().startsWith("+")) {
           multilineModelDef = nextLine;
           continue;
