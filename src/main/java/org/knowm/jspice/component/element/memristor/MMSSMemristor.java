@@ -22,8 +22,8 @@
 package org.knowm.jspice.component.element.memristor;
 
 /**
- * This class represents a memristor that is based on Alex's "collection of meta-stable switches" memristor model. Extenders of this class are just one particular device with a set of
- * real-value model parameters.
+ * This class represents a memristor that is based on Alex's "collection of meta-stable switches" memristor model. Extenders of this class are just
+ * one particular device with a set of real-value model parameters.
  *
  * @author timmolter
  */
@@ -62,20 +62,20 @@ public class MMSSMemristor extends Memristor {
   /**
    * Constructor
    */
-  public MMSSMemristor(String id, double rInit, double rOn, double rOff, double tau, double vOn, double vOff, double phi, double schottkyForwardAlpha, double schottkyForwardBeta,
-      double schottkyReverseAlpha, double schottkyReverseBeta) {
+  public MMSSMemristor(String id, double rInit, double rOn, double rOff, double tau, double vOn, double vOff, double phi, double schottkyForwardAlpha,
+      double schottkyForwardBeta, double schottkyReverseAlpha, double schottkyReverseBeta) {
 
     super(id);
 
     if (rInit > rOff || rInit < rOn) {
-      throw new IllegalArgumentException("Memristance must be between rOn and rOff, inclusive!!!");
+      throw new IllegalArgumentException("Memristance must be between rOn and rOff, inclusive!!! rInit = " + rInit);
     }
 
     // init the device in a certain state
     // x = memristance; // percent of switches ON
 
     x = (rOn * (rInit - rOff)) / (rInit * (rOn - rOff));
-//        System.out.println(x);
+    //        System.out.println(x);
 
     this.tau = tau;
     this.rOn = rOn;
@@ -102,9 +102,9 @@ public class MMSSMemristor extends Memristor {
     double pOff2on = p0ff2on(voltage, dt);
     double pOn2Off = pOn2Off(voltage, dt);
 
-//        System.out.println("voltage = " + voltage);
-//        System.out.println("pOff2on = " + pOff2on);
-//        System.out.println("pOn2Off = " + pOn2Off);
+    //        System.out.println("voltage = " + voltage);
+    //        System.out.println("pOff2on = " + pOff2on);
+    //        System.out.println("pOn2Off = " + pOn2Off);
 
     // mean
     double n0ff2on = (1 - x) * pOff2on;
@@ -117,7 +117,7 @@ public class MMSSMemristor extends Memristor {
     } else if (x < 0) {
       x = 0;
     }
-//        System.out.println(x);
+    //        System.out.println(x);
   }
 
   /**
@@ -161,7 +161,7 @@ public class MMSSMemristor extends Memristor {
   public double getConductance() {
 
     double G = (x / rOn + (1 - x) / rOff);
-//        System.out.println("R= " + 1 / G);
+    //        System.out.println("R= " + 1 / G);
     return G;
   }
 
@@ -183,12 +183,14 @@ public class MMSSMemristor extends Memristor {
 
   public double getSchottkyCurrent(double voltage) {
 
-    return schottkyReverseAlpha * (-1 * Math.exp(-1 * schottkyReverseBeta * voltage)) + schottkyForwardAlpha * (Math.exp(schottkyForwardBeta * voltage));
+    return schottkyReverseAlpha * (-1 * Math.exp(-1 * schottkyReverseBeta * voltage))
+        + schottkyForwardAlpha * (Math.exp(schottkyForwardBeta * voltage));
   }
 
   public double getSchottkyCurrentWithPhi(double voltage) {
 
-    double schottkeyCurrent = (1 - phi) * (schottkyReverseAlpha * (-1 * Math.exp(-1 * schottkyReverseBeta * voltage)) + schottkyForwardAlpha * (Math.exp(schottkyForwardBeta * voltage)));
+    double schottkeyCurrent = (1 - phi) * (schottkyReverseAlpha * (-1 * Math.exp(-1 * schottkyReverseBeta * voltage))
+        + schottkyForwardAlpha * (Math.exp(schottkyForwardBeta * voltage)));
     return schottkeyCurrent;
     // return (1 - phi) * (schottkyReverseAlpha * (-1 * Math.exp(-1 * schottkyReverseBeta * voltage)) + schottkyForwardAlpha * (Math.exp(schottkyForwardBeta * voltage)));
   }

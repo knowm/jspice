@@ -93,7 +93,8 @@ public class JSpice {
     }
 
     // 3. Run it  
-  //  System.out.println("netList: \n" + netlist);
+    //    System.out.println("netList: \n" + netlist);
+
     return simulate(netlist);
   }
 
@@ -122,7 +123,7 @@ public class JSpice {
       if (isFromCommandline) {
 
       } else {
-//        System.out.println(simulationResult.toString());
+        //        System.out.println(simulationResult.toString());
         SimulationPlotter.plot(simulationResult, new String[]{dcSweepConfig.getObserveID()});
       }
       return simulationResult;
@@ -162,12 +163,12 @@ public class JSpice {
 
       } else {
 
-//        System.out.println(simulationResult.toString());
+        //        System.out.println(simulationResult.toString());
 
-//        // plot
-//        SimulationPlotter.plotAll(simulationResult);
-//        SimulationPlotter.plot(simulationResult, "V(y)");
-//        SimulationPlotter.plot(simulationResult, "R(MR2_X1)", "R(MR1_X1)");
+        //        // plot
+        //        SimulationPlotter.plotAll(simulationResult);
+        //        SimulationPlotter.plot(simulationResult, "V(y)");
+        //        SimulationPlotter.plot(simulationResult, "R(MR2_X1)", "R(MR1_X1)");
       }
       return simulationResult;
 

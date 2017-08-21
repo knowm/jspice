@@ -8,7 +8,7 @@ XX1 A B y kTSynapse2-1
 .model MRM5 memristor ( level=5
 + Rinit=1000 Roff=1500 Ron=500
 + Voff=0.27 Von=0.27
-+ Tau=0.0001 )
++ Tau=0.0001 Rinit=1000 )
 
 .tran 500ns 1000us 1e-09
 

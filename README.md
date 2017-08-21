@@ -646,7 +646,7 @@ End of JSpice Simulation
 
 ## SPICE Netlists
 
-JSPICE has limited support for SPICE netlists. if you run `JSpice.simulate` and pass it a file name ending in `.cir` it will interpret it as a SPICE
+JSPICE now has limited support for SPICE netlists. If you run `JSpice.simulate` and pass it a file name ending in `.cir` it will interpret it as a SPICE
 netlist.
 
 ### Caveats
@@ -659,18 +659,11 @@ netlist.
 | .PRINT | ignored |
 | .trans | `step value` and `final time` only |
 
-### Example
+### Example of running the `FF` Instruction with `.subckt` Support
 
-
-```java
-JSpice.simulate("FFXX-kTSynapse-netlist.cir");
-```
-
+#### `FFXX-kTSynapse-netlist.cir`
 ```
 .INCLUDE "2-1_kTSynapse.sub"
-
-.PARAM Rinit = 1000
-
 
 VA A 0 DC 0 PULSE(0 .5 0 0 0 5u 10u) AC 0
 VB B 0 DC 0 PULSE(0 -.5 0 0 0 5u 10u) AC 0
@@ -680,14 +673,15 @@ XX1 A B y kTSynapse2-1
 .model MRM5 memristor ( level=5
 + Roff=1500 Ron=500
 + Voff=0.27 Von=0.27
-+ Tau=0.0001 )
++ Tau=0.0001 Rinit=1000 )
 
 .tran 500ns 1000us 1e-09
 
-.PRINT  tran format=raw file=AHaH2-1_pulse_test_tran.txt I(VPr1) v(Vin) v(Vmr) v(Vout)
+.PRINT  tran format=raw file=AHaH2-1_pulse_test_tran.txt I(VPr1) v(Vin) v(Vmr) v(Vout) 
 .END
 ```
 
+#### `2-1_kTSynapse.sub`
 ```
 .subckt kTSynapse2-1 A B y
 YMEMRISTOR MR1 A y MRM5
@@ -695,10 +689,21 @@ YMEMRISTOR MR2 y B MRM5
 .ends kTSynapse2-1
 ```
 
+## Run
+
+```java
+JSpice.simulate("FFXX-kTSynapse-netlist.cir");
+```
+
+or
+
+```
+java -jar jspice.jar FFXX-kTSynapse-netlist.cir
+```
 
 ## Continuous Integration
 
-[![Build Status](https://travis-ci.org/knowm/jspice.png?branch=develop)](https://travis-ci.org/knowm/jspice.png)  
+[![Build Status](https://travis-ci.org/knowm/jspice.png?branch=master)](https://travis-ci.org/knowm/jspice.png)
 [Build History](https://travis-ci.org/knowm/jspice/builds)
 
 ## Building
@@ -709,7 +714,7 @@ JSpice is built with Maven, which also handles dependency management.
 
     cd path/to/project
     mvn clean package  
-    mvn javadoc:aggregate  
+    mvn javadoc:javadoc
 
 ### maven-license-plugin
 

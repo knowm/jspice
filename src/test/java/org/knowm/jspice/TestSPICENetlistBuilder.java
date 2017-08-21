@@ -40,7 +40,7 @@ public class TestSPICENetlistBuilder {
 
     Netlist netlist = SPICENetlistBuilder.buildFromSPICENetlist("knowm_mem1_sine.cir", new ResourceConfigurationSourceProvider());
 
-//    System.out.println("netlist " + netlist);
+    //    System.out.println("netlist " + netlist);
 
     // DC voltage sources
     assertThat(netlist.getNetListDCVoltageSources()).hasSize(2);
@@ -64,7 +64,7 @@ public class TestSPICENetlistBuilder {
 
     Netlist netlist = SPICENetlistBuilder.buildFromSPICENetlist("knowm_mem1_sine_model.cir", new ResourceConfigurationSourceProvider());
 
-//    System.out.println("netlist " + netlist);
+    //    System.out.println("netlist " + netlist);
 
     // DC voltage sources
     assertThat(netlist.getNetListDCVoltageSources()).hasSize(2);
@@ -135,17 +135,19 @@ public class TestSPICENetlistBuilder {
     assertThat(netlist.getNetListMemristors()).hasSize(2);
     MMSSMemristor memristor = (MMSSMemristor) netlist.getNetListMemristors().get(0).getComponent();
     assertThat(memristor.getTau()).isEqualTo(0.0001);
+
+    JSpice.simulate(netlist);
   }
 
-//  @Test
-//  public void testResourceConfigurationSourceProvider() throws IOException {
-//
-//    ConfigurationSourceProvider provider = new ResourceConfigurationSourceProvider();
-////    provider .open("ahah2-1_pulse_netlist.cir");
-////    provider.open("Knowm_AHaH_Nodes.txt");
-//
-//    SPICENetlistBuilder.getPreProcessedLines("ahah2-1_pulse_netlist.cir",provider );
-//    SPICENetlistBuilder.getPreProcessedLines("Knowm_AHaH_Nodes.txt", provider);
-//
-//  }
+  //  @Test
+  //  public void testResourceConfigurationSourceProvider() throws IOException {
+  //
+  //    ConfigurationSourceProvider provider = new ResourceConfigurationSourceProvider();
+  ////    provider .open("ahah2-1_pulse_netlist.cir");
+  ////    provider.open("Knowm_AHaH_Nodes.txt");
+  //
+  //    SPICENetlistBuilder.getPreProcessedLines("ahah2-1_pulse_netlist.cir",provider );
+  //    SPICENetlistBuilder.getPreProcessedLines("Knowm_AHaH_Nodes.txt", provider);
+  //
+  //  }
 }

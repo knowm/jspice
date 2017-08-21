@@ -8,7 +8,7 @@ XX1  Vmr 0 Vout AHAH2-1
 .model MRM5 memristor ( level=5
 + Rinit=1500 Roff=1500 Ron=500
 + Voff=0.27 Von=0.27
-+ Tau=0.0001 Rinit=500 )
++ Tau=0.0001 Rinit=1000 )
 .tran 0.00148515 0.15 1e-09 
 .PRINT  tran format=raw file=AHaH2-1_pulse_test_tran.txt I(VPr1) v(Vin) v(Vmr) v(Vout) 
 .END
