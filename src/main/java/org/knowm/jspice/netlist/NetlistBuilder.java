@@ -45,6 +45,10 @@ public class NetlistBuilder {
 
   SimulationConfig simulationConfig;
 
+  String sourceFile;
+  String resultsFile;
+  String resultsFormat;
+
   public NetlistBuilder addNetlistResistor(String id, double resistance, String... nodes) {
 
     netlistComponents.add(new NetlistResistor(id, resistance, nodes));
@@ -115,6 +119,21 @@ public class NetlistBuilder {
   public NetlistBuilder addTransientSimulationConfig(String stopTime, String timeStep, Driver... drivers) {
 
     this.simulationConfig = new TransientConfig(stopTime, timeStep, drivers);
+    return this;
+  }
+
+  public NetlistBuilder setSourceFile(String sourceFile) {
+    this.sourceFile = sourceFile;
+    return this;
+  }
+
+  public NetlistBuilder setResultsFile(String resultsFile) {
+    this.resultsFile = resultsFile;
+    return this;
+  }
+
+  public NetlistBuilder setResultsFormat(String resultsFormat) {
+    this.resultsFormat = resultsFormat;
     return this;
   }
 

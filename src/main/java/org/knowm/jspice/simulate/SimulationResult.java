@@ -21,12 +21,11 @@
  */
 package org.knowm.jspice.simulate;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Date;
-import java.util.Calendar;
-import org.knowm.jspice.netlist.spice.SPICENetlistBuilder;
 
 public class SimulationResult {
 
@@ -117,7 +116,7 @@ public class SimulationResult {
     sb.append("End of JSpice Simulation");
     return sb.toString();
   }
-  public String toXyceRawString() {
+  public String toXyceRawString(String sourceFile) {
     
     int count = 0;
     StringBuilder sb = new StringBuilder();
@@ -126,9 +125,8 @@ public class SimulationResult {
     List<Number> xData = simulationDataMap.values().iterator().next().getxData();
         
     String returnString = System.getProperty("line.separator");
-    String sourceFilename = SPICENetlistBuilder.getSourceFile();
-       
-    sb.append("Title: " + sourceFilename);
+
+    sb.append("Title: " + sourceFile);
     sb.append(returnString);
 
     sb.append("Date: " + today.toString());

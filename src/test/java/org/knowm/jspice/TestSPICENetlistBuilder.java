@@ -110,7 +110,7 @@ public class TestSPICENetlistBuilder {
     assertThat(memristor.getTau()).isEqualTo(0.0001);
 
     //Print
-//    assertThat(netlist.getSimulationConfig()).isInstanceOf(TransientConfig.class);
+   assertThat(netlist.getResultsFormat()).isEqualTo("raw");;
 
   }
 

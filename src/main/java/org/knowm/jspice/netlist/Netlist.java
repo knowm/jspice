@@ -150,6 +150,10 @@ public class Netlist implements Konfigurable {
   @JsonIgnore
   private boolean isInitialConditions = false;
 
+  private String sourceFile;
+  private String resultsFile;
+  private String resultsFormat;
+
   /**
    * no-args Constructor - need this!
    */
@@ -164,10 +168,13 @@ public class Netlist implements Konfigurable {
    */
   public Netlist(NetlistBuilder netlistBuilder) {
 
-    this.simulationConfig = netlistBuilder.simulationConfig;
     for (NetlistComponent netlistComponent : netlistBuilder.netlistComponents) {
       addNetListComponent(netlistComponent);
     }
+    this.simulationConfig = netlistBuilder.simulationConfig;
+    this.sourceFile = netlistBuilder.sourceFile;
+    this.resultsFile = netlistBuilder.resultsFile;
+    this.resultsFormat = netlistBuilder.resultsFormat;
   }
 
   /**
@@ -409,8 +416,6 @@ public class Netlist implements Konfigurable {
     sb.append(isInitialConditions);
     sb.append(returnString);
 
-
-
     sb.append(simulationConfig.toString());
 
     return sb.toString();
@@ -492,7 +497,7 @@ public class Netlist implements Konfigurable {
     // make sure all nodes have at minimum two components connected to it
     Map<String, Integer> nodeId2CountMap = new HashMap<>();
     for (NetlistComponent netListComponent : getNetlistComponents()) {
-       // System.out.println(netListComponent.getComponent().getID() + ": " + netListComponent.getNodeA() + "-" + netListComponent.getNodeB());
+      // System.out.println(netListComponent.getComponent().getID() + ": " + netListComponent.getNodeA() + "-" + netListComponent.getNodeB());
 
       for (int i = 0; i < netListComponent.getNodesAsArray().length; i++) {
         String nodeID = netListComponent.getNodesAsArray()[i];
@@ -632,4 +637,27 @@ public class Netlist implements Konfigurable {
     }
   }
 
+  public String getSourceFile() {
+    return sourceFile;
+  }
+
+  public void setSourceFile(String sourceFile) {
+    this.sourceFile = sourceFile;
+  }
+
+  public String getResultsFile() {
+    return resultsFile;
+  }
+
+  public void setResultsFile(String resultsFile) {
+    this.resultsFile = resultsFile;
+  }
+
+  public String getResultsFormat() {
+    return resultsFormat;
+  }
+
+  public void setResultsFormat(String resultsFormat) {
+    this.resultsFormat = resultsFormat;
+  }
 }

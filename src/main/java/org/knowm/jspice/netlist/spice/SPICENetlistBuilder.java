@@ -40,93 +40,22 @@ import io.dropwizard.configuration.ConfigurationSourceProvider;
 
 public class SPICENetlistBuilder {
 
-  private static String sourceFile = "";
-  private static String resultsFile = "";
-  private static String resultsFormat = "";
-
-  public static String getSourceFile() {
-    
-    return sourceFile;
-  }
-    
-  public static void putSourceFile(String source) {
-    
-    sourceFile = source;
-  }
-
-  public static String getResultsFile() {
-    
-    return resultsFile;
-  }
-     
-  public static void putResultsFile(String results) {
-    
-    resultsFile = results;
-  }
-
-  public static String getResultsFormat() {
-    
-    return resultsFormat;
-  }
-
-  public static void putResultsFormat (String format) {
-    
-    resultsFormat = format;
-  }
-    
-  
   public static Netlist buildFromSPICENetlist(String fileName, ConfigurationSourceProvider configurationSourceProvider) throws IOException {
 
     System.out.println("...............Preprocessing the Netlist.................");
     List<String> netlistLines = getPreProcessedLines(fileName, configurationSourceProvider);
-    
+
     Map<String, SPICESubckt> subcircuitMap = new HashMap<>();
     Map<String, String> printItemMap = new HashMap<>();
-    
-    
+
     // For each line...
     for (int i = 0; i < netlistLines.size(); i++) {
 
       String line = netlistLines.get(i);
 
-      if (line.startsWith("*") && i == 0 ) {
-        // first line of the netilst is comment which is title of output raw file  
-          String sourceFile = line;
-        
-          System.out.println("...............Source of netList.... " + sourceFile);
-          putSourceFile (sourceFile);
-      }
-      if (line.startsWith(".PRINT") || line.startsWith(".print")) {
-        
-      //    System.out.println("...............Processing .PRINT statement");
-          
-          String[] printTokens = line.split("\\s+");
-          
-          for (String printItem : printTokens) {
-            if (printItem.startsWith("Format") || printItem.startsWith("format")) {
-              String[] keyValue = printItem.split("=");
-              printItemMap.put(keyValue[0],keyValue[1]);
-  
-              String resFormat = keyValue[1];
-              System.out.println("resFormat: " + resFormat);
-  
-              putResultsFormat(resFormat);
-            }
-            if (printItem.startsWith("File") || printItem.startsWith("file")) {
-              String[] keyValue = printItem.split("=");
-              printItemMap.put(keyValue[0],keyValue[1]);
-                
-              String resFilename = keyValue[1];
-                  
-              System.out.println("resFilename: " + resFilename); 
-              putResultsFile(resFilename);
-            }
-          }
-        }
-
       // check if there is an .INCLUDE directive
       //    System.out.println("...............Looking for .Includes.................");
-      
+
       if (line.startsWith(".INCLUDE") || line.startsWith(".include")) {
 
         String[] paramSplit = line.split("\\s+");
@@ -165,7 +94,7 @@ public class SPICENetlistBuilder {
             spiceSubckt.addLine(subCircuitNetlistLine);
           }
         }
-      } 
+      }
     }
     //    System.out.println("subcircuitMap = " + Arrays.toString(subcircuitMap.entrySet().toArray()));
 
@@ -209,7 +138,7 @@ public class SPICENetlistBuilder {
       } else {
         linesWithSubckts.add(line);
       }
-    }  
+    }
     System.out.println("...............Parsing the Netlist.................");
 
     // Temporary Lists/Maps
@@ -218,14 +147,48 @@ public class SPICENetlistBuilder {
     Map<String, Double> paramsMap = new HashMap<>();
     Map<String, String> memristorsMap = new HashMap<>();
     Map<String, Map<String, String>> memristorsModelsMap = new HashMap<>();
-    
-    
+
     // For each line...
     for (int i = 0; i < linesWithSubckts.size(); i++) {
 
       String line = linesWithSubckts.get(i);
+
+      if (line.startsWith("*") && i == 0) {
+        // first line of the netilst is comment which is title of output raw file
+        String sourceFile = line;
+
+        System.out.println("...............Source of netList.... " + sourceFile);
+        netlistBuilder.setSourceFile(sourceFile);
+      } else if (line.startsWith(".PRINT") || line.startsWith(".print")) {
+
+        //    System.out.println("...............Processing .PRINT statement");
+
+        String[] printTokens = line.split("\\s+");
+
+        for (String printItem : printTokens) {
+          if (printItem.startsWith("Format") || printItem.startsWith("format")) {
+            String[] keyValue = printItem.split("=");
+            printItemMap.put(keyValue[0], keyValue[1]);
+
+            String resFormat = keyValue[1];
+            System.out.println("resFormat: " + resFormat);
+
+            netlistBuilder.setResultsFormat(resFormat);
+          }
+          if (printItem.startsWith("File") || printItem.startsWith("file")) {
+            String[] keyValue = printItem.split("=");
+            printItemMap.put(keyValue[0], keyValue[1]);
+
+            String resFilename = keyValue[1];
+
+            System.out.println("resFilename: " + resFilename);
+            netlistBuilder.setResultsFile(resFilename);
+          }
+        }
+      }
+
       //      System.out.println("line: " + line);
-      if (line.startsWith(".PARAM") || line.startsWith(".param")) {
+      else if (line.startsWith(".PARAM") || line.startsWith(".param")) {
 
         String paramString = line.substring(6);
         paramString = paramString.replaceAll("\\s+", "");
@@ -292,7 +255,7 @@ public class SPICENetlistBuilder {
           String phase = SPICEUtils.ifExists(tokens, 5);
           drivers.add(new Sine(id, SPICEUtils.doubleFromString(v0, 0), phase, SPICEUtils.doubleFromString(amplitude, 0), freq));
         }
-        
+
         // Pulse
         int pulseStartIndex = line.indexOf("PULSE");
         if (pulseStartIndex >= 0) {
@@ -317,11 +280,10 @@ public class SPICENetlistBuilder {
           double v2 = SPICEUtils.doubleFromString(v2AsString, 0);
           BigDecimal width = SPICEUtils.bigDecimalFromString(widthAsString, "0");
           BigDecimal period = SPICEUtils.bigDecimalFromString(periodAsString, "0");
-          
+
           double dcOffset = (v1 + v2) / 2;
           double amplitude = Math.abs(v1 - v2) / 2;
-          
-          
+
           BigDecimal frequency = BigDecimal.ONE.divide(period, MathContext.DECIMAL128);
           BigDecimal dutyCycle = width.divide(period, MathContext.DECIMAL128);
           BigDecimal phase = v2 > v1 ? BigDecimal.ZERO : period.divide(new BigDecimal("2"), MathContext.DECIMAL128);
@@ -407,7 +369,7 @@ public class SPICENetlistBuilder {
     //    System.out.println("fileName = " + fileName);
 
     List<String> netlistLines = new ArrayList<>();
-    
+
     // create netlist from traditional SPICE netlist file.
     try (PeekableScanner scanner = new PeekableScanner(configurationSourceProvider.open(fileName))) {
 
@@ -420,14 +382,13 @@ public class SPICENetlistBuilder {
         String nextLine = scanner.nextLine().trim();
         //        System.out.println("nextLine = " + nextLine);
 
-        
         if (nextLine.startsWith(".STEP") || nextLine.startsWith(".step")) {
           continue;
-        } 
+        }
         if (nextLine.length() < 1) {
           continue;
-        } 
-        
+        }
+
         // multi-line model def start
         if (nextLine.startsWith(".model") && scanner.peek().startsWith("+")) {
           multilineModelDef = nextLine;
