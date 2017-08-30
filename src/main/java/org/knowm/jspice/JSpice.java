@@ -56,7 +56,7 @@ public class JSpice {
   public static void main(String[] args) throws IOException, ConfigurationException {
 
     if (args.length == 0) {
-      System.out.println("Proper Usage is: java -jar jspice filename>");
+      System.out.println("Proper Usage is: java -jar jspice <filename>");
       System.exit(0);
     }
     isFromCommandline = true;
