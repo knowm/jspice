@@ -108,12 +108,16 @@ public class TestSPICENetlistBuilder {
     assertThat(netlist.getNetListMemristors()).hasSize(1);
     MMSSMemristor memristor = (MMSSMemristor) netlist.getNetListMemristors().get(0).getComponent();
     assertThat(memristor.getTau()).isEqualTo(0.0001);
+
+    //Print
+//    assertThat(netlist.getSimulationConfig()).isInstanceOf(TransientConfig.class);
+
   }
 
   @Test
   public void test4() throws IOException {
 
-    Netlist netlist = SPICENetlistBuilder.buildFromSPICENetlist("ahah_synapse_pulse_netlist.cir", new ResourceConfigurationSourceProvider());
+    Netlist netlist = SPICENetlistBuilder.buildFromSPICENetlist("ahah2-1_pulse_netlist.cir", new ResourceConfigurationSourceProvider());
 
     System.out.println("netlist " + netlist);
 
@@ -139,15 +143,5 @@ public class TestSPICENetlistBuilder {
     JSpice.simulate(netlist);
   }
 
-  //  @Test
-  //  public void testResourceConfigurationSourceProvider() throws IOException {
-  //
-  //    ConfigurationSourceProvider provider = new ResourceConfigurationSourceProvider();
-  ////    provider .open("ahah2-1_pulse_netlist.cir");
-  ////    provider.open("Knowm_AHaH_Nodes.txt");
-  //
-  //    SPICENetlistBuilder.getPreProcessedLines("ahah2-1_pulse_netlist.cir",provider );
-  //    SPICENetlistBuilder.getPreProcessedLines("Knowm_AHaH_Nodes.txt", provider);
-  //
-  //  }
+
 }
