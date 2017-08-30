@@ -1,0 +1,14 @@
+* Qucs 0.0.19  /Users/marendall/.qucs/AHaH_kT-Synapse_prj/AHaH2-1_pulse_test.sch
+.INCLUDE "Knowm_AHaH_Nodes.txt"
+VPr1 Vin Vmr DC 0
+
+V1 Vin 0 DC 0 PULSE(0 1 0.01 1N 1N 0.09 9e+07) AC 0
+R1 0 Vout  50
+XX1  Vmr 0 Vout AHAH2-1
+.model MRM5 memristor ( level=5
++ Roff=1500 Ron=500
++ Voff=0.27 Von=0.27
++ Tau=0.0001 Rinit=1000 )
+.tran 0.00148515 0.15 1e-09
+.PRINT  tran format=raw file=AHaH2-1_pulse_test_tran.txt I(VPr1) v(Vin) v(Vmr) v(Vout)
+.END
