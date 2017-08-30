@@ -74,7 +74,7 @@ public final class DCOperatingPoint {
 
     // long start = System.currentTimeMillis();
 
-    netlist.verifyCircuit();
+     netlist.verifyCircuit();
     //    System.out.println("netlist " + netlist);
 
     DCOperatingPointResult dcOperatingPointResult = previousDcOperatingPointResult;

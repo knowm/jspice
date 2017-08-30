@@ -113,7 +113,7 @@ public class TestSPICENetlistBuilder {
   @Test
   public void test4() throws IOException {
 
-    Netlist netlist = SPICENetlistBuilder.buildFromSPICENetlist("ahah2-1_pulse_netlist.cir", new ResourceConfigurationSourceProvider());
+    Netlist netlist = SPICENetlistBuilder.buildFromSPICENetlist("ahah_synapse_pulse_netlist.cir", new ResourceConfigurationSourceProvider());
 
     System.out.println("netlist " + netlist);
 
