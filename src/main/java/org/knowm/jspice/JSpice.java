@@ -51,12 +51,12 @@ import io.dropwizard.validation.BaseValidator;
 public class JSpice {
 
   private static boolean isFromCommandline = false;
+  private static String outFormat = "";
   private static String fileName = "";
-
   public static void main(String[] args) throws IOException, ConfigurationException {
 
     if (args.length == 0) {
-      System.out.println("Proper Usage is: java -jar jspice <filename>");
+      System.out.println("Proper Usage is: java -jar jspice filename>");
       System.exit(0);
     }
     isFromCommandline = true;
@@ -137,30 +137,39 @@ public class JSpice {
         SimulationResult simulationResult = transientAnalysis.run();
 
         if (isFromCommandline) {
-          String resFilename = SPICENetlistBuilder.getResultsFile();
-          System.out.println("...............Writing simulation results to.........." + resFilename);
-        /**  
-          // output as Xyce STD
-          String xyceString = simulationResult.toXyceString();
-          System.out.println(xyceString = simulationResult.toXyceString());
-          //try (PrintStream out = new PrintStream(new FileOutputStream(fileName + ".out"))) {
-          try (PrintStream out = new PrintStream(new FileOutputStream(resFilename + ".prn"))) {
-              out.print(xyceString);
-          } catch (FileNotFoundException e) {
-            e.printStackTrace();
-          }
-        */  
-          // output as SPICE Raw
-          String xyceRawString = simulationResult.toXyceRawString();
-        //  System.out.println(xyceRawString = simulationResult.toXyceRawString());
-          try (PrintStream out = new PrintStream(new FileOutputStream(resFilename))) {
-            out.print(xyceRawString);
-          } catch (FileNotFoundException e) {
-            e.printStackTrace();
-          }
-          
-        //        SimulationPlotter.plotTransientInOutCurve("I/V Curve", simulationResult, "V(Vmr)", "I(MR1)");
 
+          String format = SPICENetlistBuilder.getResultsFormat();
+          System.out.println("Results format: " + format);
+
+          // check the requested format of the results file
+          if ( format.startsWith("RAW") || format.startsWith("raw")) {
+
+            // Raw format found so get the results filename passed on the .PRINT line of the netlist  
+            String resFilename = SPICENetlistBuilder.getResultsFile();
+            
+            // output as SPICE Raw
+            System.out.println("...............Writing simulation results to.........." + resFilename);
+            String xyceRawString = simulationResult.toXyceRawString();
+            System.out.println(xyceRawString = simulationResult.toXyceRawString());
+            try (PrintStream out = new PrintStream(new FileOutputStream(resFilename))) {
+              out.print(xyceRawString);
+            } catch (FileNotFoundException e) {
+              e.printStackTrace();
+            }
+          } else {    
+            // output as Xyce STD
+            String xyceString = simulationResult.toXyceString();
+            System.out.println(xyceString = simulationResult.toXyceString());
+            try (PrintStream out = new PrintStream(new FileOutputStream(fileName + ".out"))) {
+              System.out.println("...............Writing simulation results to.........." + fileName + ".out");
+         
+            //try (PrintStream out = new PrintStream(new FileOutputStream(resFilename))) {
+              out.print(xyceString);
+            } catch (FileNotFoundException e) {
+              e.printStackTrace();
+            }
+          }  
+        //        SimulationPlotter.plotTransientInOutCurve("I/V Curve", simulationResult, "V(Vmr)", "I(MR1)");
       } else {
 
         //        System.out.println(simulationResult.toString());

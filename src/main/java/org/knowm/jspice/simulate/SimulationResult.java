@@ -117,7 +117,6 @@ public class SimulationResult {
     sb.append("End of JSpice Simulation");
     return sb.toString();
   }
-
   public String toXyceRawString() {
     
     int count = 0;
@@ -128,11 +127,8 @@ public class SimulationResult {
         
     String returnString = System.getProperty("line.separator");
     String sourceFilename = SPICENetlistBuilder.getSourceFile();
-    List<String> simOuts = SPICENetlistBuilder.getSimulatedOutputs();
-    
-    // System.out.println("Sim ouputs : " + simOuts);
        
-    sb.append("Title: " + "Qucs 0.0.19 " + sourceFilename );
+    sb.append("Title: " + sourceFilename);
     sb.append(returnString);
 
     sb.append("Date: " + today.toString());
@@ -142,7 +138,7 @@ public class SimulationResult {
     sb.append("Flags: real");
     sb.append(returnString);
     sb.append("No. Variables: ");
-    sb.append(simOuts.size()+1);
+    sb.append(simulationDataMap.values().size()+1);
     sb.append(returnString);
     sb.append("No. Points: ");
     sb.append(xData.size());
@@ -154,32 +150,30 @@ public class SimulationResult {
     sb.append("\t0\tTime\ttime");
     sb.append(returnString);
     count = 1;
-    // if label matches label specified on .PRINT line then append
-    // get simulation plot data from current simulation and compare to .PRINT specified vars
     for (Entry<String, SimulationPlotData> entrySet : simulationDataMap.entrySet()) {
       // 0  Time     time
       // 1   I(VPR1) current
       // 2   V(VIN)  voltage
       // ...
       String label = entrySet.getKey();
-      if (simOuts.parallelStream().anyMatch(label::contains)) {
-        sb.append("\t");
-        sb.append(count);
-        sb.append("\t");
-        sb.append(label);
-        sb.append("\t");
-        // data type
-        if (label.startsWith("I")) {
-          sb.append("current");
-        } else if (label.startsWith("V")) {
-          sb.append("voltage");
-        } else if (label.startsWith("R")) {
-          sb.append("resistance");
-        }
-        count++;
-        sb.append(returnString);
+     
+      sb.append("\t");
+      sb.append(count);
+      sb.append("\t");
+      sb.append(label);
+      sb.append("\t");
+      // data type
+      if (label.startsWith("I")) {
+        sb.append("current");
+      } else if (label.startsWith("V")) {
+        sb.append("voltage");
+      } else if (label.startsWith("R")) {
+        sb.append("resistance");
       }
+      count++;
+      sb.append(returnString);
     }
+    
     sb.append("Values:");
     sb.append(returnString);
     // write first time datum followed by Y-data values
@@ -191,16 +185,16 @@ public class SimulationResult {
       sb.append(returnString);
       for (Entry<String, SimulationPlotData> entrySet : simulationDataMap.entrySet()) {
         String label = entrySet.getKey();
-        if(simOuts.parallelStream().anyMatch(label::contains)) {
-          sb.append("\t");
-          sb.append(entrySet.getValue().getyData().get(count));
-          sb.append(returnString);
-        } 
-      }
+        sb.append("\t");
+        sb.append(entrySet.getValue().getyData().get(count));
+        sb.append(returnString);
+      } 
+     
     sb.append(returnString);
       
     } while (++count < xData.size());
     //sb.append("End of JSpice Simulation");
     return sb.toString();
   }
+  
 }
