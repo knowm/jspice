@@ -52,7 +52,7 @@ public class Pulse extends Driver {
   @Override
   public double getSignal(BigDecimal time) {
 
-    BigDecimal remainderTime = (time.add(phaseBD)).remainder(T).multiply(point5).divide(dutyCycleBD);
+    BigDecimal remainderTime = (time.add(phaseBD)).remainder(T).multiply(point5).divide(dutyCycleBD, MathContext.DECIMAL128);
 
     // up phase
     if (BigDecimal.ZERO.compareTo(remainderTime) <= 0
