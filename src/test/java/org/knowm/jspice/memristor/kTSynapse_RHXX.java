@@ -55,7 +55,6 @@ public class kTSynapse_RHXX {
     SimulationResult simulationResult = JSpice.simulate(netlist);
     SimulationPlotter.plot(simulationResult, "V(y)");
     SimulationPlotter.plot(simulationResult, "R(MA)", "R(MB)");
-
   }
 
   /**
@@ -73,7 +72,6 @@ public class kTSynapse_RHXX {
     SimulationResult simulationResult = JSpice.simulate(netlist);
     SimulationPlotter.plot(simulationResult, "V(y)");
     SimulationPlotter.plot(simulationResult, "R(MA)", "R(MB)");
-
   }
 
 }

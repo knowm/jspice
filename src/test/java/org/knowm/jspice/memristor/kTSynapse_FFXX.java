@@ -107,7 +107,6 @@ public class kTSynapse_FFXX {
     SimulationResult simulationResult = JSpice.simulate(netlist);
     SimulationPlotter.plot(simulationResult, "V(y)");
     SimulationPlotter.plot(simulationResult, "R(MA)", "R(MB)");
-
   }
 
   /**

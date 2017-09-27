@@ -42,7 +42,7 @@ public class SPICENetlistBuilder {
 
   public static Netlist buildFromSPICENetlist(String fileName, ConfigurationSourceProvider configurationSourceProvider) throws IOException {
 
-    System.out.println("...............Preprocessing the Netlist.................");
+//    System.out.println("...............Preprocessing the Netlist.................");
     List<String> netlistLines = getPreProcessedLines(fileName, configurationSourceProvider);
 
     Map<String, SPICESubckt> subcircuitMap = new HashMap<>();
@@ -139,7 +139,7 @@ public class SPICENetlistBuilder {
         linesWithSubckts.add(line);
       }
     }
-    System.out.println("...............Parsing the Netlist.................");
+//    System.out.println("...............Parsing the Netlist.................");
 
     // Temporary Lists/Maps
     NetlistBuilder netlistBuilder = new NetlistBuilder();
@@ -171,7 +171,7 @@ public class SPICENetlistBuilder {
             printItemMap.put(keyValue[0], keyValue[1]);
 
             String resFormat = keyValue[1];
-            System.out.println("resFormat: " + resFormat);
+//            System.out.println("resFormat: " + resFormat);
 
             netlistBuilder.setResultsFormat(resFormat);
           }
@@ -181,7 +181,7 @@ public class SPICENetlistBuilder {
 
             String resFilename = keyValue[1];
 
-            System.out.println("resFilename: " + resFilename);
+//            System.out.println("resFilename: " + resFilename);
             netlistBuilder.setResultsFile(resFilename);
           }
         }

@@ -73,7 +73,7 @@ public class JSpice {
     // SPICE Netlist, must end in `.cir`
     if (fileName.endsWith(".cir")) {
 
-      System.out.println("...............Executing netList.... " + fileName);
+//      System.out.println("...............Executing netList.... " + fileName);
 
       try {
         netlist = SPICENetlistBuilder.buildFromSPICENetlist(fileName, new FileConfigurationSourceProvider());
@@ -173,10 +173,11 @@ public class JSpice {
         //        SimulationPlotter.plotTransientInOutCurve("I/V Curve", simulationResult, "V(Vmr)", "I(MR1)");
       } else {
 
-        //        System.out.println(simulationResult.toString());
+        System.out.println(simulationResult.toString());
+//        System.out.println(simulationResult.toXyceString());
 
-        //        // plot
-        //        SimulationPlotter.plotAll(simulationResult);
+        // plot
+        SimulationPlotter.plotAll(simulationResult);
         //        SimulationPlotter.plot(simulationResult, "V(y)");
         //        SimulationPlotter.plot(simulationResult, "R(MR2_X1)", "R(MR1_X1)");
       }
