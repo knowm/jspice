@@ -21,10 +21,8 @@
  */
 package org.knowm.jspice.transientanalysis.driver;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.closeTo;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -72,8 +70,8 @@ public class TestTriangleDriver extends TestDrivers {
     // System.out.println(yData);
     // System.out.println(y);
 
-    assertThat(xData.size(), is(equalTo(200)));
-    assertThat(y, is(closeTo(2.599, .01)));
+    assertThat(xData.size()).isEqualTo(200);
+    assertThat(y).isCloseTo(2.599, within( .01));
 
     //    plotData("V(in)", xData, yData);
   }

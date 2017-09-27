@@ -21,10 +21,8 @@
  */
 package org.knowm.jspice.dcop;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.closeTo;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
 
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.ArrayRealVector;
@@ -49,7 +47,7 @@ public class TestLinearAlgebra {
     RealVector solution = solver.solve(constants);
 
     // System.out.println(Arrays.toString(solution.toArray()));
-    assertThat(solution.toArray()[0], is(equalTo(1000.0)));
+    assertThat(solution.toArray()[0]).isEqualTo(1000.0);
   }
 
   @Test
@@ -63,8 +61,8 @@ public class TestLinearAlgebra {
 
     // System.out.println(Arrays.toString(solution.toArray()));
 
-    assertThat(solution.toArray()[0], is(equalTo(1.0)));
-    assertThat(solution.toArray()[1], is(closeTo(-2.0, .001)));
-    assertThat(solution.toArray()[2], is(closeTo(-2.0, .001)));
+    assertThat(solution.toArray()[0]).isEqualTo(1.0);
+    assertThat(solution.toArray()[1]).isCloseTo(-2.0, within(.001));
+    assertThat(solution.toArray()[2]).isCloseTo(-2.0, within(.001));
   }
 }

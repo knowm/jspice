@@ -21,10 +21,8 @@
  */
 package org.knowm.jspice.dcop;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.closeTo;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
 
 import org.junit.Test;
 import org.knowm.jspice.circuits.CMOSInverterCircuit;
@@ -61,7 +59,7 @@ public class TestDCOPCircuits {
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
-    assertThat(dcOpResult.getV()[0], is(equalTo(1000.0)));
+    assertThat(dcOpResult.getV()[0]).isEqualTo(1000.0);
   }
 
   @Test
@@ -71,8 +69,8 @@ public class TestDCOPCircuits {
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
-    assertThat(dcOpResult.getV()[0], is(closeTo(9.95, .001)));
-    assertThat(dcOpResult.getV()[1], is(closeTo(4.975, .001)));
+    assertThat(dcOpResult.getV()[0]).isCloseTo(9.95, within(.001));
+    assertThat(dcOpResult.getV()[1]).isCloseTo(4.975, within(.001));
   }
 
   @Test
@@ -82,9 +80,9 @@ public class TestDCOPCircuits {
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
-    assertThat(dcOpResult.getV()[0], is(closeTo(195.23, .01)));
-    assertThat(dcOpResult.getV()[1], is(closeTo(95.23, .01)));
-    assertThat(dcOpResult.getV()[2], is(closeTo(47.61, .01)));
+    assertThat(dcOpResult.getV()[0]).isCloseTo(195.23, within(.01));
+    assertThat(dcOpResult.getV()[1]).isCloseTo(95.23, within(.01));
+    assertThat(dcOpResult.getV()[2]).isCloseTo(47.61, within(.01));
   }
 
   @Test
@@ -94,9 +92,9 @@ public class TestDCOPCircuits {
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
-    assertThat(dcOpResult.getV()[0], is(closeTo(292.85, .01)));
-    assertThat(dcOpResult.getV()[1], is(closeTo(142.85, .01)));
-    assertThat(dcOpResult.getV()[2], is(closeTo(71.42, .01)));
+    assertThat(dcOpResult.getV()[0]).isCloseTo(292.85, within(.01));
+    assertThat(dcOpResult.getV()[1]).isCloseTo(142.85, within(.01));
+    assertThat(dcOpResult.getV()[2]).isCloseTo(71.42, within(.01));
   }
 
   @Test
@@ -106,11 +104,11 @@ public class TestDCOPCircuits {
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
-    assertThat(dcOpResult.getV()[0], is(closeTo(2350, .01)));
-    assertThat(dcOpResult.getV()[1], is(closeTo(2250, .01)));
-    assertThat(dcOpResult.getV()[2], is(closeTo(750, .01)));
-    assertThat(dcOpResult.getV()[3], is(closeTo(12350, .01)));
-    assertThat(dcOpResult.getV()[4], is(closeTo(-50.0, .01)));
+    assertThat(dcOpResult.getV()[0]).isCloseTo(2350, within(.01));
+    assertThat(dcOpResult.getV()[1]).isCloseTo(2250, within(.01));
+    assertThat(dcOpResult.getV()[2]).isCloseTo(750, within(.01));
+    assertThat(dcOpResult.getV()[3]).isCloseTo(12350, within(.01));
+    assertThat(dcOpResult.getV()[4]).isCloseTo(-50.0, within(.01));
   }
 
   @Test
@@ -120,11 +118,11 @@ public class TestDCOPCircuits {
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
-    assertThat(dcOpResult.getV()[0], is(closeTo(13.25, .01)));
-    assertThat(dcOpResult.getV()[1], is(closeTo(11.25, .01)));
-    assertThat(dcOpResult.getV()[2], is(closeTo(3.75, .01)));
-    assertThat(dcOpResult.getV()[3], is(closeTo(213.25, .01)));
-    assertThat(dcOpResult.getV()[4], is(closeTo(1.25, .01)));
+    assertThat(dcOpResult.getV()[0]).isCloseTo(13.25, within(.01));
+    assertThat(dcOpResult.getV()[1]).isCloseTo(11.25, within(.01));
+    assertThat(dcOpResult.getV()[2]).isCloseTo(3.75, within(.01));
+    assertThat(dcOpResult.getV()[3]).isCloseTo(213.25, within(.01));
+    assertThat(dcOpResult.getV()[4]).isCloseTo(1.25, within(.01));
   }
 
   @Test
@@ -134,7 +132,7 @@ public class TestDCOPCircuits {
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
-    assertThat(dcOpResult.getV()[0], is(equalTo(10.0)));
+    assertThat(dcOpResult.getV()[0]).isEqualTo(10.0);
   }
 
   @Test
@@ -144,8 +142,8 @@ public class TestDCOPCircuits {
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
-    assertThat(dcOpResult.getV()[0], is(equalTo(10.0)));
-    assertThat(dcOpResult.getV()[1], is(equalTo(5.0)));
+    assertThat(dcOpResult.getV()[0]).isEqualTo(10.0);
+    assertThat(dcOpResult.getV()[1]).isEqualTo(5.0);
   }
 
   @Test
@@ -155,9 +153,9 @@ public class TestDCOPCircuits {
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
-    assertThat(dcOpResult.getV()[0], is(equalTo(10.0)));
-    assertThat(dcOpResult.getV()[1], is(closeTo(4.87, .01)));
-    assertThat(dcOpResult.getV()[2], is(closeTo(2.43, .01)));
+    assertThat(dcOpResult.getV()[0]).isEqualTo(10.0);
+    assertThat(dcOpResult.getV()[1]).isCloseTo(4.87, within(.01));
+    assertThat(dcOpResult.getV()[2]).isCloseTo(2.43, within(.01));
   }
 
   @Test
@@ -167,10 +165,10 @@ public class TestDCOPCircuits {
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
-    assertThat(dcOpResult.getV()[0], is(equalTo(15.0)));
-    assertThat(dcOpResult.getV()[1], is(closeTo(7.317, .01)));
-    assertThat(dcOpResult.getV()[2], is(closeTo(3.65, .01)));
-    assertThat(dcOpResult.getV()[3], is(equalTo(10.0)));
+    assertThat(dcOpResult.getV()[0]).isEqualTo(15.0);
+    assertThat(dcOpResult.getV()[1]).isCloseTo(7.317, within(.01));
+    assertThat(dcOpResult.getV()[2]).isCloseTo(3.65, within(.01));
+    assertThat(dcOpResult.getV()[3]).isEqualTo(10.0);
   }
 
   @Test
@@ -180,10 +178,10 @@ public class TestDCOPCircuits {
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
-    assertThat(dcOpResult.getV()[0], is(equalTo(15.0)));
-    assertThat(dcOpResult.getV()[1], is(closeTo(7.25, .01)));
-    assertThat(dcOpResult.getV()[2], is(closeTo(2.41, .01)));
-    assertThat(dcOpResult.getV()[3], is(equalTo(10.0)));
+    assertThat(dcOpResult.getV()[0]).isEqualTo(15.0);
+    assertThat(dcOpResult.getV()[1]).isCloseTo(7.25, within(.01));
+    assertThat(dcOpResult.getV()[2]).isCloseTo(2.41, within(.01));
+    assertThat(dcOpResult.getV()[3]).isEqualTo(10.0);
   }
 
   @Test
@@ -193,10 +191,10 @@ public class TestDCOPCircuits {
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     // System.out.println(dcOpResult.toString());
 
-    assertThat(dcOpResult.getV()[0], is(closeTo(4.78, .01)));
-    assertThat(dcOpResult.getV()[1], is(closeTo(4.73, .01)));
-    assertThat(dcOpResult.getV()[2], is(closeTo(1.57, .01)));
-    assertThat(dcOpResult.getV()[3], is(equalTo(10.0)));
+    assertThat(dcOpResult.getV()[0]).isCloseTo(4.78, within(.01));
+    assertThat(dcOpResult.getV()[1]).isCloseTo(4.73, within(.01));
+    assertThat(dcOpResult.getV()[2]).isCloseTo(1.57, within(.01));
+    assertThat(dcOpResult.getV()[3]).isEqualTo(10.0);
   }
 
   @Test
@@ -206,8 +204,8 @@ public class TestDCOPCircuits {
     DCOperatingPointResult dcOpResult = new DCOperatingPoint(circuit).run();
     //    System.out.println(dcOpResult.toString());
 
-    assertThat(dcOpResult.getValue("V(1)"), is(closeTo(0.95, .01)));
-    assertThat(dcOpResult.getValue("I(D1)"), is(closeTo(11.65, .1)));
+    assertThat(dcOpResult.getValue("V(1)")).isCloseTo(0.95, within(.01));
+    assertThat(dcOpResult.getValue("I(D1)")).isCloseTo(11.65, within(.1));
   }
 
   @Test
@@ -218,8 +216,8 @@ public class TestDCOPCircuits {
     // System.out.println(dcOpResult.toString());
     // System.out.println(Arrays.toString(dcOpResult.getV()));
 
-    assertThat(dcOpResult.getV()[0], is(closeTo(0, .01)));
-    assertThat(dcOpResult.getV()[1], is(closeTo(5.0, .1)));
+    assertThat(dcOpResult.getV()[0]).isCloseTo(0, within(.01));
+    assertThat(dcOpResult.getV()[1]).isCloseTo(5.0, within(.1));
   }
 
   @Test
@@ -230,8 +228,8 @@ public class TestDCOPCircuits {
     // System.out.println(dcOpResult.toString());
     // System.out.println(Arrays.toString(dcOpResult.getV()));
 
-    assertThat(dcOpResult.getV()[0], is(closeTo(0, .01)));
-    assertThat(dcOpResult.getV()[1], is(closeTo(5.0, .1)));
+    assertThat(dcOpResult.getV()[0]).isCloseTo(0, within(.01));
+    assertThat(dcOpResult.getV()[1]).isCloseTo(5.0, within(.1));
   }
 
   @Test
@@ -242,7 +240,7 @@ public class TestDCOPCircuits {
     //    System.out.println(dcOpResult.toString());
     //    System.out.println(Arrays.toString(dcOpResult.getV()));
 
-    assertThat(dcOpResult.getValue("V(out)"), is(closeTo(0, .01)));
+    assertThat(dcOpResult.getValue("V(out)")).isCloseTo(0, within(.01));
   }
 
   @Test
@@ -253,7 +251,7 @@ public class TestDCOPCircuits {
     //    System.out.println(dcOpResult.toString());
     //    System.out.println(Arrays.toString(dcOpResult.getV()));
 
-    assertThat(dcOpResult.getValue("V(2)"), is(closeTo(-4, .01)));
+    assertThat(dcOpResult.getValue("V(2)")).isCloseTo(-4, within(.01));
   }
 
   @Test
@@ -264,6 +262,6 @@ public class TestDCOPCircuits {
     //    System.out.println(dcOpResult.toString());
     //    System.out.println(Arrays.toString(dcOpResult.getV()));
 
-    assertThat(dcOpResult.getValue("V(2)"), is(closeTo(4, .01)));
+    assertThat(dcOpResult.getValue("V(2)")).isCloseTo(4, within(.01));
   }
 }

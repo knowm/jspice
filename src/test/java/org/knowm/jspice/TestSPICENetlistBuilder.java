@@ -22,6 +22,7 @@
 package org.knowm.jspice;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
 
 import java.io.IOException;
 
@@ -110,12 +111,41 @@ public class TestSPICENetlistBuilder {
     assertThat(memristor.getTau()).isEqualTo(0.0001);
 
     //Print
-   assertThat(netlist.getResultsFormat()).isEqualTo("raw");;
-
+    assertThat(netlist.getResultsFormat()).isEqualTo("raw");
   }
 
   @Test
   public void test4() throws IOException {
+
+    Netlist netlist = SPICENetlistBuilder.buildFromSPICENetlist("knowm_mem1R1_neg_pulse_netlist.cir", new ResourceConfigurationSourceProvider());
+
+    System.out.println("netlist " + netlist);
+
+    // DC voltage sources
+    assertThat(netlist.getNetListDCVoltageSources()).hasSize(2);
+
+    // Resistors
+    assertThat(netlist.getNetListResistors()).hasSize(1);
+
+    // transient
+    assertThat(netlist.getSimulationConfig()).isInstanceOf(TransientConfig.class);
+    TransientConfig config = (TransientConfig) netlist.getSimulationConfig();
+    assertThat(config.getStopTime()).isEqualTo("50us");
+    assertThat(config.getTimeStep()).isEqualTo("1us");
+    assertThat(config.getDrivers()[0].getAmplitude()).isEqualTo(.5);
+    assertThat(config.getDrivers()[0].getDcOffset()).isEqualTo(-.5);
+    assertThat(config.getDrivers()[0].getPhaseBD().doubleValue()).isCloseTo(0.00002, within(0.000000000000001));
+
+    assertThat(netlist.getNetListMemristors()).hasSize(1);
+    MMSSMemristor memristor = (MMSSMemristor) netlist.getNetListMemristors().get(0).getComponent();
+    assertThat(memristor.getTau()).isEqualTo(0.0001);
+
+    //Print
+    assertThat(netlist.getResultsFormat()).isEqualTo("raw");
+  }
+
+  @Test
+  public void test5() throws IOException {
 
     Netlist netlist = SPICENetlistBuilder.buildFromSPICENetlist("ahah2-1_pulse_netlist.cir", new ResourceConfigurationSourceProvider());
 
@@ -142,6 +172,5 @@ public class TestSPICENetlistBuilder {
 
     JSpice.simulate(netlist);
   }
-
 
 }

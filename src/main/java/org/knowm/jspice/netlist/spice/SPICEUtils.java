@@ -31,9 +31,13 @@ public class SPICEUtils {
     } else if (value.endsWith("S")) {
       value = value.replace("S", "");
     } else if (value.endsWith("f")) {
-      value = value.replace("s", "");
+      value = value.replace("f", "");
     } else if (value.endsWith("F")) {
-      value = value.replace("S", "");
+      value = value.replace("F", "");
+    }else if (value.endsWith("v")) {
+      value = value.replace("v", "");
+    } else if (value.endsWith("V")) {
+      value = value.replace("V", "");
     }
 
     //    F    E-15    femto
@@ -104,9 +108,13 @@ public class SPICEUtils {
     } else if (value.endsWith("S")) {
       value = value.replace("S", "");
     } else if (value.endsWith("f")) {
-      value = value.replace("s", "");
+      value = value.replace("f", "");
     } else if (value.endsWith("F")) {
-      value = value.replace("S", "");
+      value = value.replace("F", "");
+    } else if (value.endsWith("v")) {
+      value = value.replace("v", "");
+    } else if (value.endsWith("V")) {
+      value = value.replace("V", "");
     }
 
     //    F    E-15    femto
