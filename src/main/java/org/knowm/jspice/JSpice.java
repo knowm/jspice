@@ -177,7 +177,7 @@ public class JSpice {
 //        System.out.println(simulationResult.toXyceString());
 
         // plot
-        SimulationPlotter.plotAll(simulationResult);
+//        SimulationPlotter.plotAll(simulationResult);
         //        SimulationPlotter.plot(simulationResult, "V(y)");
         //        SimulationPlotter.plot(simulationResult, "R(MR2_X1)", "R(MR1_X1)");
       }
