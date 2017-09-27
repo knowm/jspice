@@ -32,9 +32,6 @@ import org.junit.Test;
 import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 import org.knowm.jspice.simulate.transientanalysis.driver.Triangle;
 
-/**
- * @author timmolter
- */
 public class TestTriangleDriver extends TestDrivers {
 
   /**

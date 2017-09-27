@@ -21,9 +21,7 @@
  */
 package org.knowm.jspice.dcop;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Map;
 
@@ -49,13 +47,13 @@ public class TestCircuitMatrixSolver {
     // System.out.println(entry.getValue());
     // }
 
-    assertThat(nodeID2ColumnIdxMap.get("0"), is(equalTo(0)));
-    assertThat(nodeID2ColumnIdxMap.get("1"), is(equalTo(1)));
-    assertThat(nodeID2ColumnIdxMap.get("2"), is(equalTo(2)));
-    assertThat(nodeID2ColumnIdxMap.get("3"), is(equalTo(3)));
-    assertThat(nodeID2ColumnIdxMap.get("4"), is(equalTo(4)));
-    assertThat(nodeID2ColumnIdxMap.get("5"), is(equalTo(5)));
-    assertThat(nodeID2ColumnIdxMap.get("x"), is(equalTo(6)));
+    assertThat(nodeID2ColumnIdxMap.get("0")).isEqualTo(0);
+    assertThat(nodeID2ColumnIdxMap.get("1")).isEqualTo(1);
+    assertThat(nodeID2ColumnIdxMap.get("2")).isEqualTo(2);
+    assertThat(nodeID2ColumnIdxMap.get("3")).isEqualTo(3);
+    assertThat(nodeID2ColumnIdxMap.get("4")).isEqualTo(4);
+    assertThat(nodeID2ColumnIdxMap.get("5")).isEqualTo(5);
+    assertThat(nodeID2ColumnIdxMap.get("x")).isEqualTo(6);
   }
 
   @Test
@@ -67,7 +65,7 @@ public class TestCircuitMatrixSolver {
     // for (int i = 0; i < unknownVariableNames.length; i++) {
     // System.out.println(unknownVariableNames[i]);
     // }
-    assertThat(unknownVariableNames.length, is(equalTo(6)));
+    assertThat(unknownVariableNames.length).isEqualTo(6);
   }
 
   @Test
@@ -79,8 +77,8 @@ public class TestCircuitMatrixSolver {
 
     // System.out.println( CircuitMatrixSolver.GtoString(G));
 
-    assertThat(G.length, is(equalTo(7)));
-    assertThat(G[0].length, is(equalTo(7)));
+    assertThat(G.length).isEqualTo(7);
+    assertThat(G[0].length).isEqualTo(7);
   }
 
   @Test
@@ -93,7 +91,7 @@ public class TestCircuitMatrixSolver {
     // for (int j = 0; j < I.length; j++) {
     // System.out.println(I[j]);
     // }
-    // assertThat(I.length, is(equalTo(7)));
+    // assertThat(I.length).isEqualTo(7)));
 
   }
 }

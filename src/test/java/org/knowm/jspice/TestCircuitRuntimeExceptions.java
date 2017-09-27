@@ -21,9 +21,7 @@
  */
 package org.knowm.jspice;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
@@ -52,7 +50,7 @@ public class TestCircuitRuntimeExceptions {
       netlist.verifyCircuit();
       fail("Expected exception");
     } catch (IllegalArgumentException e) {
-      assertThat(e.getMessage(), is(equalTo("Node \"0\" must be part of the netlist representing ground!")));
+      assertThat(e.getMessage()).isEqualTo("Node \"0\" must be part of the netlist representing ground!");
     }
   }
 
@@ -70,7 +68,7 @@ public class TestCircuitRuntimeExceptions {
       netlist.verifyCircuit();
       fail("Expected exception");
     } catch (IllegalArgumentException e) {
-      assertThat(e.getMessage(), is(equalTo("Must have at least 2 Connections for node 2!")));
+      assertThat(e.getMessage()).isEqualTo("Must have at least 2 Connections for node 2!");
     }
   }
 
@@ -86,7 +84,7 @@ public class TestCircuitRuntimeExceptions {
       netlist.verifyCircuit();
       fail("Expected exception");
     } catch (IllegalArgumentException e) {
-      assertThat(e.getMessage(), is(equalTo("Must have at least 2 NetListParts!")));
+      assertThat(e.getMessage()).isEqualTo("Must have at least 2 NetListParts!");
     }
   }
 
@@ -105,7 +103,7 @@ public class TestCircuitRuntimeExceptions {
       netlist.verifyCircuit();
       fail("Expected exception");
     } catch (IllegalArgumentException e) {
-      assertThat(e.getMessage(), is(equalTo("The component ID R1 is not unique!")));
+      assertThat(e.getMessage()).isEqualTo("The component ID R1 is not unique!");
     }
   }
 
@@ -120,7 +118,7 @@ public class TestCircuitRuntimeExceptions {
       netlist.verifyCircuit();
       fail("Expected exception");
     } catch (IllegalArgumentException e) {
-      assertThat(e.getMessage(), is(equalTo("A component cannot be connected to the same node twice!")));
+      assertThat(e.getMessage()).isEqualTo("A component cannot be connected to the same node twice!");
     }
   }
 
@@ -138,7 +136,7 @@ public class TestCircuitRuntimeExceptions {
       netlist.verifyCircuit();
       fail("Expected exception");
     } catch (IllegalArgumentException e) {
-      assertThat(e.getMessage(), is(equalTo("Current sources cannot be in series!")));
+      assertThat(e.getMessage()).isEqualTo("Current sources cannot be in series!");
     }
   }
 
@@ -156,7 +154,7 @@ public class TestCircuitRuntimeExceptions {
       netlist.verifyCircuit();
       fail("Expected exception");
     } catch (IllegalArgumentException e) {
-      assertThat(e.getMessage(), is(equalTo("Voltage sources cannot be in parallel!")));
+      assertThat(e.getMessage()).isEqualTo("Voltage sources cannot be in parallel!");
     }
   }
 }

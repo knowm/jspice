@@ -32,9 +32,6 @@ import org.junit.Test;
 import org.knowm.jspice.simulate.transientanalysis.driver.DC;
 import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 
-/**
- * @author timmolter
- */
 public class TestDCDriver extends TestDrivers {
 
   /**

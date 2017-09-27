@@ -26,9 +26,6 @@ import java.util.List;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 
-/**
- * @author timmolter
- */
 public class TestDrivers {
 
   int counter;
