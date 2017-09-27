@@ -22,7 +22,6 @@
 package org.knowm.jspice.simulate.transientanalysis.driver;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.math.MathContext;
 
 import javax.validation.Valid;
@@ -108,8 +107,8 @@ public abstract class Driver implements Konfigurable {
     this.frequency = frequency;
     this.frequencyBD = SPICEUtils.bigDecimalFromString(frequency, "0");
     if (!frequencyBD.equals(BigDecimal.ZERO)) {
-    //this.T = BigDecimal.ONE.divide(frequencyBD, MathContext.DECIMAL128);
-    this.T = BigDecimal.ONE.divide(frequencyBD, 5, RoundingMode.HALF_UP);
+      //this.T = BigDecimal.ONE.divide(frequencyBD, MathContext.DECIMAL128);
+      this.T = BigDecimal.ONE.divide(frequencyBD, MathContext.DECIMAL128);
     } else {
       this.T = BigDecimal.ZERO;
     }

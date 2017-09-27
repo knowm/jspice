@@ -172,5 +172,13 @@ public class TestSPICENetlistBuilder {
 
     JSpice.simulate(netlist);
   }
+  @Test
+  public void test6() throws IOException {
+
+    Netlist netlist = SPICENetlistBuilder.buildFromSPICENetlist("knowm_mem1R1_pulse_netlist_2us.cir", new ResourceConfigurationSourceProvider());
+
+
+    JSpice.simulate(netlist);
+  }
 
 }
