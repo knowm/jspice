@@ -722,6 +722,10 @@ JSpice is built with Maven, which also handles dependency management.
     mvn license:format
     mvn license:remove
 
+### Dependency Updates
+
+    mvn versions:display-dependency-updates
+
 ## TODO
 
 1. Implement for new API: initial conditions, DC Sweep orthogonal config
