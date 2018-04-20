@@ -23,6 +23,7 @@ package org.knowm.jspice.memristor;
 
 import java.io.IOException;
 
+import org.knowm.configuration.ConfigurationException;
 import org.knowm.jspice.JSpice;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.simulate.SimulationPlotter;
@@ -30,8 +31,6 @@ import org.knowm.jspice.simulate.SimulationResult;
 import org.knowm.jspice.simulate.transientanalysis.TransientConfig;
 import org.knowm.jspice.simulate.transientanalysis.driver.DC;
 import org.knowm.jspice.simulate.transientanalysis.driver.Square;
-
-import io.dropwizard.configuration.ConfigurationException;
 
 public class kTSynapse_FFXX {
 

@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.knowm.configuration.ConfigurationException;
 import org.knowm.jspice.JSpice;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.netlist.NetlistBuilder;
@@ -16,8 +17,6 @@ import org.knowm.jspice.simulate.transientanalysis.driver.DC;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
-
-import io.dropwizard.configuration.ConfigurationException;
 
 public class kTSynapse_FFRA {
 
@@ -76,7 +75,7 @@ public class kTSynapse_FFRA {
         netlist = getFFNetlist(R_A, R_B);
         simulationResult = JSpice.simulate(netlist);
       }
-//            System.out.println("simulationResult = " + simulationResult);
+      //            System.out.println("simulationResult = " + simulationResult);
       double[] VyRaRb;
       // 3. get Vy, R_A and R_B
       VyRaRb = getVyRaRb(simulationResult);
@@ -100,7 +99,7 @@ public class kTSynapse_FFRA {
         }
 
         R_B = getR(simulationResult, "R(MB)");
-//        System.out.println("RH");
+        //        System.out.println("RH");
       }
       // RL
       else {
@@ -114,7 +113,7 @@ public class kTSynapse_FFRA {
           simulationResult = JSpice.simulate(netlist);
         }
         R_A = getR(simulationResult, "R(MA)");
-//        System.out.println("RL");
+        //        System.out.println("RL");
       }
     }
 
@@ -131,12 +130,12 @@ public class kTSynapse_FFRA {
 
   private void readReplaceWrite(String cirTemplate, double R_A, double R_B) {
 
-//    System.out.println("cirTemplate = " + cirTemplate);
+    //    System.out.println("cirTemplate = " + cirTemplate);
     String out = getClass().getClassLoader().getResource(cirTemplate).getPath().replace(".cir", ".tmp.cir");
-//    System.out.println("out = " + out);
+    //    System.out.println("out = " + out);
     // read, replace, write from resources folder
     try (InputStreamReader isReader = new InputStreamReader(getClass().getClassLoader().getResourceAsStream(cirTemplate));
-         BufferedWriter bw = new BufferedWriter(new FileWriter(out))) {
+        BufferedWriter bw = new BufferedWriter(new FileWriter(out))) {
       String buf = null;
       BufferedReader rdr = new BufferedReader(isReader);
       while ((buf = rdr.readLine()) != null) {
@@ -159,9 +158,9 @@ public class kTSynapse_FFRA {
     double R_A = rAData.get(rAData.size() - 1).doubleValue();
     List<Number> rBData = simulationResult.getSimulationPlotDataMap().get("R(MB)").getyData();
     double R_B = rBData.get(rBData.size() - 1).doubleValue();
-//    System.out.println("Vy = " + Vy);
-//    System.out.println("R_A = " + R_A);
-//    System.out.println("R_B = " + R_B);
+    //    System.out.println("Vy = " + Vy);
+    //    System.out.println("R_A = " + R_A);
+    //    System.out.println("R_B = " + R_B);
     return new double[]{Vy, R_A, R_B};
   }
 
@@ -174,32 +173,23 @@ public class kTSynapse_FFRA {
 
   Netlist getFFNetlist(double R_A, double R_B) {
 
-    Netlist netlist = new NetlistBuilder()
-        .addNetlistMSSMemristor("MA", R_A, R_ON, R_OFF, N, TAU, V_ON, V_OFF, phi, sa, sb, sa, sb, "A", "y")
-        .addNetlistMSSMemristor("MB", R_B, R_ON, R_OFF, N, TAU, V_ON, V_OFF, phi, sa, sb, sa, sb, "y", "0")
-        .addNetlistDCVoltage("VA", 0, "A", "0")
-        .addTransientSimulationConfig(STOP_TIME, TIME_STEP, new DC("VA", 2 * Y_THRESH))
-        .build();
+    Netlist netlist = new NetlistBuilder().addNetlistMSSMemristor("MA", R_A, R_ON, R_OFF, N, TAU, V_ON, V_OFF, phi, sa, sb, sa, sb, "A", "y")
+        .addNetlistMSSMemristor("MB", R_B, R_ON, R_OFF, N, TAU, V_ON, V_OFF, phi, sa, sb, sa, sb, "y", "0").addNetlistDCVoltage("VA", 0, "A", "0")
+        .addTransientSimulationConfig(STOP_TIME, TIME_STEP, new DC("VA", 2 * Y_THRESH)).build();
     return netlist;
   }
 
   Netlist getRHNetlist(double R_A, double R_B) {
 
-    Netlist netlist = new NetlistBuilder()
-        .addNetlistMSSMemristor("MB", R_B, R_ON, R_OFF, N, TAU, V_ON, V_OFF, phi, sa, sb, sa, sb, "y", "0")
-        .addNetlistDCVoltage("VY", 0, "y", "0")
-        .addTransientSimulationConfig(STOP_TIME, TIME_STEP, new DC("VY", -Y_THRESH))
-        .build();
+    Netlist netlist = new NetlistBuilder().addNetlistMSSMemristor("MB", R_B, R_ON, R_OFF, N, TAU, V_ON, V_OFF, phi, sa, sb, sa, sb, "y", "0")
+        .addNetlistDCVoltage("VY", 0, "y", "0").addTransientSimulationConfig(STOP_TIME, TIME_STEP, new DC("VY", -Y_THRESH)).build();
     return netlist;
   }
 
   Netlist getRLNetlist(double R_A, double R_B) {
 
-    Netlist netlist = new NetlistBuilder()
-        .addNetlistMSSMemristor("MA", R_A, R_ON, R_OFF, N, TAU, V_ON, V_OFF, phi, sa, sb, sa, sb, "A", "0")
-        .addNetlistDCVoltage("VA", 0, "A", "0")
-        .addTransientSimulationConfig(STOP_TIME, TIME_STEP, new DC("VA", -Y_THRESH))
-        .build();
+    Netlist netlist = new NetlistBuilder().addNetlistMSSMemristor("MA", R_A, R_ON, R_OFF, N, TAU, V_ON, V_OFF, phi, sa, sb, sa, sb, "A", "0")
+        .addNetlistDCVoltage("VA", 0, "A", "0").addTransientSimulationConfig(STOP_TIME, TIME_STEP, new DC("VA", -Y_THRESH)).build();
     return netlist;
   }
 

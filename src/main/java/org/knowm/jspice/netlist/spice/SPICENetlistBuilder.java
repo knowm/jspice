@@ -30,19 +30,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.knowm.configuration.provider.ConfigurationSourceProvider;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.netlist.NetlistBuilder;
 import org.knowm.jspice.simulate.transientanalysis.driver.Driver;
 import org.knowm.jspice.simulate.transientanalysis.driver.Pulse;
 import org.knowm.jspice.simulate.transientanalysis.driver.Sine;
 
-import io.dropwizard.configuration.ConfigurationSourceProvider;
-
 public class SPICENetlistBuilder {
 
   public static Netlist buildFromSPICENetlist(String fileName, ConfigurationSourceProvider configurationSourceProvider) throws IOException {
 
-//    System.out.println("...............Preprocessing the Netlist.................");
+    //    System.out.println("...............Preprocessing the Netlist.................");
     List<String> netlistLines = getPreProcessedLines(fileName, configurationSourceProvider);
 
     Map<String, SPICESubckt> subcircuitMap = new HashMap<>();
@@ -139,7 +138,7 @@ public class SPICENetlistBuilder {
         linesWithSubckts.add(line);
       }
     }
-//    System.out.println("...............Parsing the Netlist.................");
+    //    System.out.println("...............Parsing the Netlist.................");
 
     // Temporary Lists/Maps
     NetlistBuilder netlistBuilder = new NetlistBuilder();
@@ -171,7 +170,7 @@ public class SPICENetlistBuilder {
             printItemMap.put(keyValue[0], keyValue[1]);
 
             String resFormat = keyValue[1];
-//            System.out.println("resFormat: " + resFormat);
+            //            System.out.println("resFormat: " + resFormat);
 
             netlistBuilder.setResultsFormat(resFormat);
           }
@@ -181,7 +180,7 @@ public class SPICENetlistBuilder {
 
             String resFilename = keyValue[1];
 
-//            System.out.println("resFilename: " + resFilename);
+            //            System.out.println("resFilename: " + resFilename);
             netlistBuilder.setResultsFile(resFilename);
           }
         }
@@ -269,10 +268,10 @@ public class SPICENetlistBuilder {
           String widthAsString = SPICEUtils.ifExists(tokens, 5);
           String periodAsString = SPICEUtils.ifExists(tokens, 6);
 
-//          System.out.println("v1AsString = " + v1AsString);
-//          System.out.println("v2AsString = " + v2AsString);
-//          System.out.println("widthAsString = " + widthAsString);
-//          System.out.println("periodAsString = " + periodAsString);
+          //          System.out.println("v1AsString = " + v1AsString);
+          //          System.out.println("v2AsString = " + v2AsString);
+          //          System.out.println("widthAsString = " + widthAsString);
+          //          System.out.println("periodAsString = " + periodAsString);
 
           // conversion from SPICE to JSPICE driver
 
@@ -280,16 +279,16 @@ public class SPICENetlistBuilder {
           double v2 = SPICEUtils.doubleFromString(v2AsString, 0);
           BigDecimal width = SPICEUtils.bigDecimalFromString(widthAsString, "0");
           BigDecimal period = SPICEUtils.bigDecimalFromString(periodAsString, "0");
-//          System.out.println("period = " + period);
+          //          System.out.println("period = " + period);
 
           double dcOffset = (v1 + v2) / 2;
           double amplitude = Math.abs(v1 - v2) / 2;
 
           BigDecimal frequency = BigDecimal.ONE.divide(period, MathContext.DECIMAL128);
-          BigDecimal dutyCycle = v2 > v1 ? width.divide(period, MathContext.DECIMAL128) : (period.subtract(width)).divide(period, MathContext
-              .DECIMAL128);
+          BigDecimal dutyCycle = v2 > v1 ? width.divide(period, MathContext.DECIMAL128)
+              : (period.subtract(width)).divide(period, MathContext.DECIMAL128);
           BigDecimal phase = v2 > v1 ? BigDecimal.ZERO : period.multiply(dutyCycle);
-//          BigDecimal phase = BigDecimal.ZERO;
+          //          BigDecimal phase = BigDecimal.ZERO;
 
           drivers.add(new Pulse(id, dcOffset, phase.toString(), amplitude, frequency.toString(), dutyCycle.toString()));
         }

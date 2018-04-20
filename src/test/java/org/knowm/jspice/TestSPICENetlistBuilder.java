@@ -27,12 +27,11 @@ import static org.assertj.core.api.Assertions.within;
 import java.io.IOException;
 
 import org.junit.Test;
+import org.knowm.configuration.provider.ResourceConfigurationSourceProvider;
 import org.knowm.jspice.component.element.memristor.MMSSMemristor;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.netlist.spice.SPICENetlistBuilder;
 import org.knowm.jspice.simulate.transientanalysis.TransientConfig;
-
-import io.dropwizard.configuration.ResourceConfigurationSourceProvider;
 
 public class TestSPICENetlistBuilder {
 
@@ -172,11 +171,11 @@ public class TestSPICENetlistBuilder {
 
     JSpice.simulate(netlist);
   }
+
   @Test
   public void test6() throws IOException {
 
     Netlist netlist = SPICENetlistBuilder.buildFromSPICENetlist("knowm_mem1R1_pulse_netlist_2us.cir", new ResourceConfigurationSourceProvider());
-
 
     JSpice.simulate(netlist);
   }
