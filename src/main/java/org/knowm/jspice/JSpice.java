@@ -172,7 +172,7 @@ public class JSpice {
         //        SimulationPlotter.plotTransientInOutCurve("I/V Curve", simulationResult, "V(Vmr)", "I(MR1)");
       } else {
 
-        System.out.println(simulationResult.toString());
+        //System.out.println(simulationResult.toString());
         //        System.out.println(simulationResult.toXyceString());
 
         // plot

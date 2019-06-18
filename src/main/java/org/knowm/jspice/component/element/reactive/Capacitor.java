@@ -47,6 +47,13 @@ public class Capacitor extends ReactiveElement {
     this.capacitance = capacitance;
   }
 
+  public Capacitor(String id, double capacitance, double initialCondition) {
+
+    super(id);
+    this.capacitance = capacitance;
+    setInitialCondition(initialCondition);
+  }
+
   @Override
   public void setSweepValue(double value) {
 

@@ -37,8 +37,12 @@ public class NetlistCapacitor extends NetlistComponent {
   double capacitance;
 
   public NetlistCapacitor(String id, double capacitance, String... nodes) {
-
     super(new Capacitor(id, capacitance), nodes);
+    this.capacitance = capacitance;
+  }
+
+  public NetlistCapacitor(String id, double capacitance, double initialCondition, String... nodes) {
+    super(new Capacitor(id, capacitance, initialCondition), nodes);
     this.capacitance = capacitance;
   }
 
