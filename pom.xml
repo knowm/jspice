@@ -6,13 +6,23 @@
     <version>0.0.2-SNAPSHOT</version>
     <name>JSpice</name>
     <description>A Java SPICE simulator for simulating electronic circuits</description>
-    <packaging>jar</packaging>
+    <url>https://github.com/knowm/jspice</url>
     <inceptionYear>2016</inceptionYear>
+    <packaging>jar</packaging>
 
     <organization>
         <name>Knowm Inc.</name>
         <url>http://knowm.org/open-source/</url>
     </organization>
+
+    <developers>
+        <developer>
+            <name>Tim Molter</name>
+        </developer>
+        <developer>
+            <name>Alex Nugent</name>
+        </developer>
+    </developers>
 
     <licenses>
         <license>
