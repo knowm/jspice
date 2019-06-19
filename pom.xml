@@ -76,13 +76,13 @@
         <dependency>
             <groupId>org.knowm.konfig</groupId>
             <artifactId>konfig</artifactId>
-            <version>0.0.1</version>
+            <version>0.0.3</version>
         </dependency>
 
         <dependency>
             <groupId>org.knowm.xchart</groupId>
             <artifactId>xchart</artifactId>
-            <version>3.5.1-SNAPSHOT</version>
+            <version>3.5.4</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -100,7 +100,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.7.25</version>
+            <version>1.7.26</version>
         </dependency>
 
         <!-- test -->
