@@ -24,20 +24,25 @@ package org.knowm.jspice.circuits;
 import org.knowm.jspice.component.element.reactive.Capacitor;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.netlist.NetlistCapacitor;
+import org.knowm.jspice.netlist.NetlistComponent;
 import org.knowm.jspice.netlist.NetlistDCVoltage;
 import org.knowm.jspice.netlist.NetlistResistor;
 
-public class V1R1C1 extends Netlist {
+public class V1R1C1R2 extends Netlist {
 
-  public V1R1C1() {
-
-    //    // define capacitor
-    //    Capacitor capacitor1 = new Capacitor("C1", 16E-8);
-    //    capacitor1.setInitialCondition(0);
+  public V1R1C1R2() {
 
     // build netlist, the nodes can be named anything except for ground whose node is always labeled "0"
+    //    addNetListComponent(new NetlistDCVoltage("V1", 0.0, "1", "0"));
+    //    addNetListComponent(new NetlistResistor("R1", 38700, "1", "2"));
+    //    addNetListComponent(new NetlistCapacitor("C1", 200E-12, "2", "0"));
+    //    addNetListComponent(new NetlistResistor("R2", 217000, "2", "0"));
+
     addNetListComponent(new NetlistDCVoltage("V1", 0.0, "1", "0"));
-    addNetListComponent(new NetlistResistor("R1", 160000, "1", "2"));
-    addNetListComponent(new NetlistCapacitor("C1", 16E-8, "2", "0"));
+    addNetListComponent(new NetlistResistor("R1", 9880, "1", "2"));
+    addNetListComponent(new NetlistCapacitor("C1", 130E-12, 0, "2", "0"));
+
+    addNetListComponent(new NetlistResistor("R2", 38700, "2", "0"));
+
   }
 }

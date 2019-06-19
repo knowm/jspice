@@ -23,9 +23,8 @@ package org.knowm.jspice.dcop;
 
 import java.io.IOException;
 
+import org.knowm.configuration.ConfigurationException;
 import org.knowm.jspice.JSpice;
-
-import io.dropwizard.configuration.ConfigurationException;
 
 /**
  * @author timmolter

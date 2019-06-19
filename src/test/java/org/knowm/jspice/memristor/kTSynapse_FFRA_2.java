@@ -10,14 +10,13 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.knowm.configuration.ConfigurationException;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.netlist.NetlistBuilder;
 import org.knowm.jspice.simulate.transientanalysis.driver.DC;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
-
-import io.dropwizard.configuration.ConfigurationException;
 
 public class kTSynapse_FFRA_2 {
 
@@ -91,7 +90,7 @@ public class kTSynapse_FFRA_2 {
         in = proc.getInputStream();
 
         R_B = getR(in, "R(MB)");
-//        System.out.println("RH");
+        //        System.out.println("RH");
       }
       // RL
       else {
@@ -102,7 +101,7 @@ public class kTSynapse_FFRA_2 {
         in = proc.getInputStream();
 
         R_A = getR(in, "R(MA)");
-//        System.out.println("RL");
+        //        System.out.println("RL");
       }
     }
 
@@ -119,12 +118,12 @@ public class kTSynapse_FFRA_2 {
 
   private void readReplaceWrite(String cirTemplate, double R_A, double R_B) {
 
-//    System.out.println("cirTemplate = " + cirTemplate);
+    //    System.out.println("cirTemplate = " + cirTemplate);
     String out = (cirTemplate).replace(".cir", ".tmp.cir");
-//    System.out.println("out = " + out);
+    //    System.out.println("out = " + out);
     // read, replace, write from resources folder
     try (InputStreamReader isReader = new InputStreamReader(new FileInputStream(cirTemplate));
-         BufferedWriter bw = new BufferedWriter(new FileWriter(out))) {
+        BufferedWriter bw = new BufferedWriter(new FileWriter(out))) {
 
       String header = null;
       String buf = null;
@@ -152,7 +151,7 @@ public class kTSynapse_FFRA_2 {
       BufferedReader rdr = new BufferedReader(isReader);
       while ((buf = rdr.readLine()) != null) {
         // Apply regex on buf
-//        System.out.println("buf = " + buf);
+        //        System.out.println("buf = " + buf);
         if (header == null) {
           header = buf;
         }
@@ -167,7 +166,7 @@ public class kTSynapse_FFRA_2 {
     }
 
     String[] headerTokens = header.split("\t");
-//    System.out.println("Arrays.toString(headerTokens) = " + Arrays.toString(headerTokens));
+    //    System.out.println("Arrays.toString(headerTokens) = " + Arrays.toString(headerTokens));
     //get target indices
     int VyIdx = 0;
     int RaIdx = 0;
@@ -199,7 +198,7 @@ public class kTSynapse_FFRA_2 {
       BufferedReader rdr = new BufferedReader(isReader);
       while ((buf = rdr.readLine()) != null) {
         // Apply regex on buf
-//        System.out.println("buf = " + buf);
+        //        System.out.println("buf = " + buf);
         if (header == null) {
           header = buf;
         }
@@ -214,11 +213,11 @@ public class kTSynapse_FFRA_2 {
     }
 
     String[] headerTokens = header.split("\t");
-//    System.out.println("Arrays.toString(headerTokens) = " + Arrays.toString(headerTokens));
+    //    System.out.println("Arrays.toString(headerTokens) = " + Arrays.toString(headerTokens));
     //get target indices
     int RIdx = 0;
     for (int i = 0; i < headerTokens.length; i++) {
-       if (headerTokens[i].equals(memristorKey)) {
+      if (headerTokens[i].equals(memristorKey)) {
         RIdx = i;
       }
     }
@@ -227,39 +226,30 @@ public class kTSynapse_FFRA_2 {
 
     return R;
 
-//    List<Number> rAData = simulationResult.getSimulationPlotDataMap().get(memristorKey).getyData();
-//    double r = rAData.get(rAData.size() - 1).doubleValue();
-//    return r;
+    //    List<Number> rAData = simulationResult.getSimulationPlotDataMap().get(memristorKey).getyData();
+    //    double r = rAData.get(rAData.size() - 1).doubleValue();
+    //    return r;
   }
 
   Netlist getFFNetlist(double R_A, double R_B) {
 
-    Netlist netlist = new NetlistBuilder()
-        .addNetlistMSSMemristor("MA", R_A, R_ON, R_OFF, N, TAU, V_ON, V_OFF, phi, sa, sb, sa, sb, "A", "y")
-        .addNetlistMSSMemristor("MB", R_B, R_ON, R_OFF, N, TAU, V_ON, V_OFF, phi, sa, sb, sa, sb, "y", "0")
-        .addNetlistDCVoltage("VA", 0, "A", "0")
-        .addTransientSimulationConfig(STOP_TIME, TIME_STEP, new DC("VA", 2 * Y_THRESH))
-        .build();
+    Netlist netlist = new NetlistBuilder().addNetlistMSSMemristor("MA", R_A, R_ON, R_OFF, N, TAU, V_ON, V_OFF, phi, sa, sb, sa, sb, "A", "y")
+        .addNetlistMSSMemristor("MB", R_B, R_ON, R_OFF, N, TAU, V_ON, V_OFF, phi, sa, sb, sa, sb, "y", "0").addNetlistDCVoltage("VA", 0, "A", "0")
+        .addTransientSimulationConfig(STOP_TIME, TIME_STEP, new DC("VA", 2 * Y_THRESH)).build();
     return netlist;
   }
 
   Netlist getRHNetlist(double R_A, double R_B) {
 
-    Netlist netlist = new NetlistBuilder()
-        .addNetlistMSSMemristor("MB", R_B, R_ON, R_OFF, N, TAU, V_ON, V_OFF, phi, sa, sb, sa, sb, "y", "0")
-        .addNetlistDCVoltage("VY", 0, "y", "0")
-        .addTransientSimulationConfig(STOP_TIME, TIME_STEP, new DC("VY", -Y_THRESH))
-        .build();
+    Netlist netlist = new NetlistBuilder().addNetlistMSSMemristor("MB", R_B, R_ON, R_OFF, N, TAU, V_ON, V_OFF, phi, sa, sb, sa, sb, "y", "0")
+        .addNetlistDCVoltage("VY", 0, "y", "0").addTransientSimulationConfig(STOP_TIME, TIME_STEP, new DC("VY", -Y_THRESH)).build();
     return netlist;
   }
 
   Netlist getRLNetlist(double R_A, double R_B) {
 
-    Netlist netlist = new NetlistBuilder()
-        .addNetlistMSSMemristor("MA", R_A, R_ON, R_OFF, N, TAU, V_ON, V_OFF, phi, sa, sb, sa, sb, "A", "0")
-        .addNetlistDCVoltage("VA", 0, "A", "0")
-        .addTransientSimulationConfig(STOP_TIME, TIME_STEP, new DC("VA", -Y_THRESH))
-        .build();
+    Netlist netlist = new NetlistBuilder().addNetlistMSSMemristor("MA", R_A, R_ON, R_OFF, N, TAU, V_ON, V_OFF, phi, sa, sb, sa, sb, "A", "0")
+        .addNetlistDCVoltage("VA", 0, "A", "0").addTransientSimulationConfig(STOP_TIME, TIME_STEP, new DC("VA", -Y_THRESH)).build();
     return netlist;
   }
 

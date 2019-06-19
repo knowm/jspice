@@ -26,6 +26,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
+import org.knowm.configuration.ConfigurationException;
+import org.knowm.configuration.ConfigurationFactory;
+import org.knowm.configuration.YamlConfigurationFactory;
+import org.knowm.configuration.provider.ConfigurationSourceProvider;
+import org.knowm.configuration.provider.FileConfigurationSourceProvider;
+import org.knowm.configuration.provider.ResourceConfigurationSourceProvider;
+import org.knowm.jackson.Jackson;
 import org.knowm.jspice.netlist.Netlist;
 import org.knowm.jspice.netlist.spice.SPICENetlistBuilder;
 import org.knowm.jspice.simulate.SimulationConfig;
@@ -38,15 +45,7 @@ import org.knowm.jspice.simulate.dcsweep.DCSweep;
 import org.knowm.jspice.simulate.dcsweep.DCSweepConfig;
 import org.knowm.jspice.simulate.transientanalysis.TransientAnalysis;
 import org.knowm.jspice.simulate.transientanalysis.TransientConfig;
-
-import io.dropwizard.configuration.ConfigurationException;
-import io.dropwizard.configuration.ConfigurationFactory;
-import io.dropwizard.configuration.ConfigurationSourceProvider;
-import io.dropwizard.configuration.FileConfigurationSourceProvider;
-import io.dropwizard.configuration.ResourceConfigurationSourceProvider;
-import io.dropwizard.configuration.YamlConfigurationFactory;
-import io.dropwizard.jackson.Jackson;
-import io.dropwizard.validation.BaseValidator;
+import org.knowm.validation.BaseValidator;
 
 public class JSpice {
 
@@ -73,7 +72,7 @@ public class JSpice {
     // SPICE Netlist, must end in `.cir`
     if (fileName.endsWith(".cir")) {
 
-//      System.out.println("...............Executing netList.... " + fileName);
+      //      System.out.println("...............Executing netList.... " + fileName);
 
       try {
         netlist = SPICENetlistBuilder.buildFromSPICENetlist(fileName, new FileConfigurationSourceProvider());
@@ -173,11 +172,11 @@ public class JSpice {
         //        SimulationPlotter.plotTransientInOutCurve("I/V Curve", simulationResult, "V(Vmr)", "I(MR1)");
       } else {
 
-        System.out.println(simulationResult.toString());
-//        System.out.println(simulationResult.toXyceString());
+        //System.out.println(simulationResult.toString());
+        //        System.out.println(simulationResult.toXyceString());
 
         // plot
-//        SimulationPlotter.plotAll(simulationResult);
+        //        SimulationPlotter.plotAll(simulationResult);
         //        SimulationPlotter.plot(simulationResult, "V(y)");
         //        SimulationPlotter.plot(simulationResult, "R(MR2_X1)", "R(MR1_X1)");
       }
@@ -188,4 +187,3 @@ public class JSpice {
     }
   }
 }
-  
