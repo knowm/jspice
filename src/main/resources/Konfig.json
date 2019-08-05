@@ -1,0 +1,905 @@
+[ {
+  "className" : "org.knowm.jspice.netlist.NetlistPMOS",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "threshold",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.netlist.NetlistResistor",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "resistance",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.netlist.NetlistDCCurrent",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "current",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.netlist.NetlistCapacitor",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "capacitance",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.netlist.NetlistVCCS",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "transconductance",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.netlist.NetlistMemristor",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.netlist.NetlistNMOS",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "threshold",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.netlist.Netlist",
+  "description" : "A Netlist contains all the netlist components and a simulaton config to run a single simulation. If `sim` is null, the default simulation (DC\nOperation) is run.",
+  "properties" : [ {
+    "propertyName" : "netlistComponents",
+    "description" : "Netlist Components",
+    "defaultValue" : "new ArrayList<>()",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "simulationConfig",
+    "description" : "Simulation Configuration",
+    "defaultValue" : "new DCOPConfig()",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : false
+  } ]
+}, {
+  "className" : "org.knowm.jspice.netlist.NetlistVCVS",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "gain",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.netlist.NetlistComponent",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.netlist.NetlistRSMemristor",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "schottkyForwardAlpha",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "schottkyForwardBeta",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "schottkyReverseAlpha",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "schottkyReverseBeta",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "phi",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.netlist.NetlistDCVoltage",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "voltage",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.netlist.NetlistDCCurrentArbitrary",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.netlist.NetlistJoglekarMemristor",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "Rinit",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "Ron",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "Roff",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "D",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "uv",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "p",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.netlist.NetlistDCVoltageArbitrary",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.netlist.NetlistInductor",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "inductance",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.netlist.NetlistDiode",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "saturationCurrent",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.netlist.NetlistMMSSMemristor",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "rInit",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "rOn",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "rOff",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "tau",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "vOn",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "vOff",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "phi",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "schottkyForwardAlpha",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "schottkyForwardBeta",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "schottkyReverseAlpha",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "schottkyReverseBeta",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.netlist.NetlistMSSMemristor",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "rInit",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "rOn",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "rOff",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "n",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "tau",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "vOn",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "vOff",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "phi",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "schottkyForwardAlpha",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "schottkyForwardBeta",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "schottkyReverseAlpha",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "schottkyReverseBeta",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.simulate.dcoperatingpoint.DCOPConfig",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ ]
+}, {
+  "className" : "org.knowm.jspice.simulate.dcsweep.DCSweepConfig",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "sweepID",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "observeID",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "startValue",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "0",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "endValue",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "0",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "stepSize",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "0",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.simulate.transientanalysis.driver.Triangle",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "dcOffset",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "phase",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "amplitude",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "frequency",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.simulate.transientanalysis.driver.Arbitrary",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "dcOffset",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "phase",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "amplitude",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "frequency",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.simulate.transientanalysis.driver.Sawtooth",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "dcOffset",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "phase",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "amplitude",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "frequency",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.simulate.transientanalysis.driver.Pulse",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "dcOffset",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "phase",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "amplitude",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "frequency",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.simulate.transientanalysis.driver.Sine",
+  "description" : "",
+  "properties" : [ {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "dcOffset",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "phase",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "amplitude",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "frequency",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.simulate.transientanalysis.driver.StreamingArbitrary",
+  "description" : "This highly-specialized driver produces an arbitrary waveform in sync with a bit stream.",
+  "properties" : [ {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "dcOffset",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "phase",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "amplitude",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "frequency",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.simulate.transientanalysis.driver.Square",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "dcOffset",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "phase",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "amplitude",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "frequency",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.simulate.transientanalysis.driver.DC",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "id",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "dcOffset",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "phase",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "amplitude",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "frequency",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+}, {
+  "className" : "org.knowm.jspice.simulate.transientanalysis.TransientConfig",
+  "description" : "TODO - missing class JavaDoc!",
+  "properties" : [ {
+    "propertyName" : "stopTime",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "timeStep",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  }, {
+    "propertyName" : "drivers",
+    "description" : "TODO - missing property JavaDoc!",
+    "defaultValue" : "",
+    "minValue" : "",
+    "maxValue" : "",
+    "required" : true
+  } ]
+} ]
