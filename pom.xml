@@ -122,6 +122,8 @@
 
     <build>
         <finalName>jspice</finalName>
+       
+       <pluginManagement>
         <plugins>
             <!-- Ensure compilation is done under Java 8 in all environments -->
             <plugin>
@@ -227,6 +229,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        </pluginManagement>
     </build>
 
     <properties>
