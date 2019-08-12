@@ -212,7 +212,7 @@
             <plugin>
                 <groupId>org.knowm.konfig</groupId>
                 <artifactId>konfig-dox</artifactId>
-                <version>0.0.1</version>
+                <version>0.0.3</version>
                 <executions>
                     <execution>
                         <id>konfig-dox-plugin</id>
