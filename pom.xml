@@ -82,11 +82,7 @@
         <dependency>
             <groupId>org.knowm.xchart</groupId>
             <artifactId>xchart</artifactId>
-<<<<<<< HEAD
             <version>3.6.4</version>
-=======
-            <version>3.6.3</version>
->>>>>>> 4f585e721d031691e884d432b84b7e8e3d0f4a3c
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
