@@ -10,7 +10,7 @@ In a nutshell, JSpice is very limited compared to mainstream SPICE versions and 
 
 JSpice was originally written at a time before any mainstream SPICE applications supported simulation of memristors, and at that point we felt it would be easier to write a custom version of SPICE in Java rather than to try to figure out how to natively integrate memristor devices into existing SPICE versions. More recently, other, more capable simulators such as Xyce, have appeared with [native support for memristors](http://knowm.org/native-memristor-device-development-in-xyce/), and we are now leveraging those tools for CMOS + memristor circuit simulations.
 
-JSpice is however still useful for rapid prototyping and serves as the simulation engine for [mem-sim](https://github.com/knowm/mem-sim). JSpice may interest you if you are interested in learning the mechanics of modified nodal analysis and your favorite programming langauge is Java. 
+JSpice is however still useful for rapid prototyping and serves as the simulation engine for [memristor-discovery](https://github.com/knowm/memristor-discovery). JSpice may interest you if you are interested in learning the mechanics of modified nodal analysis and your favorite programming langauge is Java. 
 
 ## Flow Chart of JSpice
 
