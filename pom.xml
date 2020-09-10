@@ -82,7 +82,7 @@
         <dependency>
             <groupId>org.knowm.xchart</groupId>
             <artifactId>xchart</artifactId>
-            <version>3.6.4</version>
+            <version>3.6.5</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -114,7 +114,7 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.16.0</version>
+            <version>3.17.2</version>
             <scope>test</scope>
         </dependency>
 
